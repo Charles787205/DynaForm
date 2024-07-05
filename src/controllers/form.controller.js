@@ -11,5 +11,7 @@ const post = async (req, res) => {
   // res.render("index", { message: "hello" });
 };
 
-const createForm = async (req, res) => {};
+const createForm = async (req, res) => {
+  //[objects]
+};
 export default { get, post, createForm };

@@ -1,4 +1,4 @@
-import FormComponent from "../objects/FormComponent.js";
+import FormComponent from "../objects/formComponent.js";
 
 const getComponent = async (req, res) => {
   const componentName = req.params.name;

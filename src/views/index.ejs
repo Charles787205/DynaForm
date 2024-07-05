@@ -41,13 +41,15 @@
           <form
             action=""
             method=""
-            submit="submit(event)"
+            onsubmit="onSubmit(event)"
             id="form"
             class="w-full xl:w-1/2 px-4 flex flex-col h-full p-4 gap-4"
           >
             <div
               hx-get="/components/tooltip"
-              hx-trigger="load target:#tool"
+              hx-trigger="load"
+              hx-swap="outerHTML"
+              id="tool"
             ></div>
             <div
               hx-get="components/fields/heading"
@@ -99,16 +101,11 @@
           let newElement = element.nextElementSibling;
 
           if (!element.id && newElement) {
-            console.log("ASDSADASDASD");
             element.setAttribute("id", "element_" + index);
           } else if (element.id && newElement) {
             newElement.setAttribute("id", "element_" + index);
           }
           index++;
-
-          console.log(element.id);
-          console.log("added: ", element);
-          console.log("next:", element.nextElementSibling);
 
           element.addEventListener("focus", function () {
             const rect = element.getBoundingClientRect();
@@ -137,7 +134,7 @@
         }
       });
     </script>
-    <script src="/js/script.js"></script>
+    <script src="/js/scripts.js"></script>
     <script src="/js/htmx.min.js"></script>
     <script src="/js/Sortable.min.js"></script>
   </body>

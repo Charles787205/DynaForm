@@ -60,7 +60,9 @@
 
     "passport-google-oauth20": "^2.0.0",
 
-    "run-p": "^0.0.0"
+    "run-p": "^0.0.0",
+
+    "sortablejs": "^1.15.2"
 
   },
 

@@ -1,4 +1,4 @@
-import Component from "../objects/Component.js";
+import FormComponent from "../objects/FormComponent.js";
 
 const getComponent = async (req, res) => {
   const componentName = req.params.name;
@@ -14,19 +14,8 @@ const getComponent = async (req, res) => {
 const getField = async (req, res) => {
   const componentName = req.params.name;
 
-  const options = {
-    fontSize: req.query.fontSize || "100pt",
-    placeholder: req.query.placeholder || "",
-    focus: req.query.focus || false,
-  };
-  const component = new Component({
-    id: req.query.id,
-    name: req.query.name,
-    value: req.query.value,
-    type: req.query.type,
-    className: req.query.className,
-  });
-  res.render(`components/fields/${componentName}`, { component, ...options });
+  const query = req.query;
+  res.render(`components/fields/${componentName}`, { query });
 };
 
 export default {

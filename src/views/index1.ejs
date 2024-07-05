@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/css/app.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div
+      class="text-yellow-400 font-bold h-screen bg-slate-900"
+      hx-target="this"
+      hx-swap="outerHTML"
+    >
+      <button hx-get="/components/textfield">Click me</button>
+    </div>
+    <script src="/js/htmx.min.js"></script>
+  </body>
+</html>

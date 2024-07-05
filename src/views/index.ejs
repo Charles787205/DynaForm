@@ -58,6 +58,7 @@
             <div
               hx-get="components/fields/inputfield"
               hx-trigger="load target:#tool"
+              hx-vals="{'focus': true}"
               hx-swap="outerHTML"
               class="form-field"
             ></div>
@@ -89,51 +90,42 @@
         const inputs = form.querySelectorAll("input, textarea, radio, select");
         return `input${inputs.length + 1}`;
       }
+
+      function showTooltip(element) {
+        const rect = element.getBoundingClientRect();
+        const tooltip = document.getElementById("tooltip");
+        tooltip.classList.remove("hidden");
+        tooltip.style.top =
+          rect.bottom - 25 + window.scrollY - element.offsetHeight / 2 + "px";
+        tooltip.style.left = rect.left - 250 + "px";
+        tooltip.setAttribute("hx-target", "#" + element.id);
+      }
+
       let index = 0;
       document.addEventListener("htmx:afterSwap", function (e) {
         let element = e.target;
-        // console.log(element);
         if (element.id != "tooltip" && element.closest("#form")) {
-          const tooltip = document.getElementById("tooltip");
-
           let newElement = element.nextElementSibling;
-
-          if (!element.id && newElement) {
-            console.log("ASDSADASDASD");
+          if (!element.id) {
             element.setAttribute("id", "element_" + index);
           } else if (element.id && newElement) {
             newElement.setAttribute("id", "element_" + index);
           }
           index++;
-
-          console.log(element.id);
-          console.log("added: ", element);
-          console.log("next:", element.nextElementSibling);
-
           element.addEventListener("focus", function () {
-            const rect = element.getBoundingClientRect();
-            tooltip.classList.remove("hidden");
-            tooltip.style.top =
-              rect.bottom -
-              20 +
-              window.scrollY -
-              element.offsetHeight / 2 +
-              "px";
-            tooltip.style.left = rect.left - 200 + "px";
-            tooltip.setAttribute("hx-target", "#" + element.id);
+            showTooltip(element);
           });
-          newElement.addEventListener("focus", function () {
-            const rect = newElement.getBoundingClientRect();
-            tooltip.classList.remove("hidden");
-            tooltip.style.top =
-              rect.bottom -
-              50 +
-              window.scrollY -
-              -newElement.offsetHeight / 2 +
-              "px";
-            tooltip.style.left = rect.left - 200 + "px";
-            tooltip.setAttribute("hx-target", "#" + newElement.id);
+          element.addEventListener("mouseenter", function () {
+            showTooltip(element);
           });
+          if (newElement) {
+            newElement.addEventListener("focus", function () {
+              showTooltip(newElement);
+            });
+            newElement.addEventListener("mouseenter", function () {
+              showTooltip(newElement);
+            });
+          }
         }
       });
     </script>

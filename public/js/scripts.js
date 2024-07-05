@@ -11,19 +11,12 @@ function auto_grow(element) {
   showTooltip(element);
 }
 
-function generateName() {
-  const form = document.getElementById("form");
-  const inputs = form.querySelectorAll("input, textarea, radio, select");
-  return `input${inputs.length + 1}`;
-}
-
 function showTooltip(element) {
   const rect = element.getBoundingClientRect();
   const tooltip = document.getElementById("tooltip");
-  tooltip.classList.remove("hidden");
   tooltip.style.top =
     rect.bottom - 25 + window.scrollY - element.offsetHeight / 2 + "px";
-  tooltip.style.left = rect.left - 250 + "px";
+  tooltip.style.left = rect.left - 260 + "px";
   tooltip.setAttribute("hx-target", "#" + element.id);
 }
 
@@ -38,12 +31,15 @@ document.addEventListener("htmx:afterSwap", function (e) {
       newElement.setAttribute("id", "element_" + index);
     }
     index++;
-    element.addEventListener("focus", function () {
-      showTooltip(element);
-    });
-    element.addEventListener("mouseenter", function () {
-      showTooltip(element);
-    });
+    if (element) {
+      element.addEventListener("focus", function () {
+        showTooltip(element);
+      });
+      element.addEventListener("mouseenter", function () {
+        showTooltip(element);
+      });
+    }
+
     if (newElement) {
       newElement.addEventListener("focus", function () {
         showTooltip(newElement);

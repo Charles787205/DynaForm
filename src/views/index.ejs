@@ -54,12 +54,14 @@
             <div
               hx-get="components/fields/heading"
               hx-trigger="load target:#tool"
+              hx-vals='{"placeholder": "Add a heading"}'
               hx-swap="outerHTML"
               class="form-field"
             ></div>
             <div
               hx-get="components/fields/inputfield"
               hx-trigger="load target:#tool"
+              hx-vals="{'focus': true}"
               hx-swap="outerHTML"
               class="form-field"
             ></div>
@@ -79,61 +81,6 @@
         </div>
       </main>
     </div>
-    <script type="text/javascript">
-      function auto_grow(element) {
-        element.style.height = "5px";
-        element.style.height = element.scrollHeight + "px";
-        showTooltip(element);
-      }
-
-      function generateName() {
-        const form = document.getElementById("form");
-        const inputs = form.querySelectorAll("input, textarea, radio, select");
-        return `input${inputs.length + 1}`;
-      }
-      let index = 0;
-      document.addEventListener("htmx:afterSwap", function (e) {
-        let element = e.target;
-        // console.log(element);
-        if (element.id != "tooltip" && element.closest("#form")) {
-          const tooltip = document.getElementById("tooltip");
-
-          let newElement = element.nextElementSibling;
-
-          if (!element.id && newElement) {
-            element.setAttribute("id", "element_" + index);
-          } else if (element.id && newElement) {
-            newElement.setAttribute("id", "element_" + index);
-          }
-          index++;
-
-          element.addEventListener("focus", function () {
-            const rect = element.getBoundingClientRect();
-            tooltip.classList.remove("hidden");
-            tooltip.style.top =
-              rect.bottom -
-              20 +
-              window.scrollY -
-              element.offsetHeight / 2 +
-              "px";
-            tooltip.style.left = rect.left - 200 + "px";
-            tooltip.setAttribute("hx-target", "#" + element.id);
-          });
-          newElement.addEventListener("focus", function () {
-            const rect = newElement.getBoundingClientRect();
-            tooltip.classList.remove("hidden");
-            tooltip.style.top =
-              rect.bottom -
-              50 +
-              window.scrollY -
-              -newElement.offsetHeight / 2 +
-              "px";
-            tooltip.style.left = rect.left - 200 + "px";
-            tooltip.setAttribute("hx-target", "#" + newElement.id);
-          });
-        }
-      });
-    </script>
     <script src="/js/scripts.js"></script>
     <script src="/js/htmx.min.js"></script>
     <script src="/js/Sortable.min.js"></script>

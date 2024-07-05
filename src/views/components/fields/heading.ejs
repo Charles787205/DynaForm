@@ -3,9 +3,9 @@
     <div
       contentEditable="true"
       on-focus="(true)"
-      class="resize-none w-full overflow-hidden text-neutral-600 py-2 text-[3rem] outline-none font-bold"
-    >
-      <%= query.placeholder %>
-    </div>
+      onfocus="showTooltip(this)"
+      placeholder="<%=query.placeholder %>"
+      class="content-container resize-none w-full overflow-hidden text-black py-2 text-[3rem] outline-none font-bold"
+    ></div>
   </div>
 </div>

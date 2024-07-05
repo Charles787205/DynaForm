@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .content-container {
+.content-container {
   position: relative;
   color: #333;
 }
@@ -12,10 +12,16 @@
   pointer-events: none;
   content: attr(placeholder);
 }
+/* 
+[contenteditable="true"]:empty:not(:focus):before {
+  content: attr(placeholder);
+  color: grey;
+  font-style: italic;
+} */
 
-[on-focus="true"]:empty:not(:focus):before {
+[on-focus="(true)"]:empty:not(:focus):before {
   color: #888;
   font-weight: bold;
   pointer-events: none;
   content: attr(placeholder);
-} */
+}

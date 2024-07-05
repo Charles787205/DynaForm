@@ -20,17 +20,23 @@
 <body>
   <div class="app">
     <div hx-get="/components/navbar" hx-trigger="load" hx-swap="outerHTML"></div>
-    <main class="relative flex items-center justify-center min-h-screen h-full">
-      <form action="" method="" id="form" class="w-full xl:w-1/2 px-4 flex flex-col h-full p-4 gap-4">
-        <div hx-get="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div>
-        <div hx-get="components/heading?placeholder=Add a heading" hx-trigger="load target:#tool" hx-swap="outerHTML"
-          class="form-field"></div>
-        <div hx-get="components/labelfield?focus=true" hx-trigger="load target:#tool" hx-swap="outerHTML"
-          class="form-field"></div>
-        <div hx-get="components/labelfield" hx-trigger="load target:#tool" hx-swap="outerHTML" class="form-field"></div>
+    <main class="w-screen items-start inline-flex">
+      <div class="flex flex-row" hx-get="/components/sidebar" hx-trigger="load" hx-swap="innerHTML">
+        <!-- THE SIDEBAR -->
+      </div>
+      <div class="ml-[56px] relative flex items-center justify-center min-h-screen w-full">
+        <form action="" method="" id="form" class="w-full xl:w-1/2 px-4 flex flex-col h-full p-4 gap-4">
+          <div hx-get="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div>
+          <div hx-get="components/fields/heading?placeholder=Add a heading" hx-trigger="load target:#tool"
+            hx-swap="outerHTML" class="form-field"></div>
+          <div hx-get="components/fields/labelfield" hx-trigger="load target:#tool" hx-swap="outerHTML"
+            class="form-field"></div>
+          <div hx-get="components/fields/labelfield" hx-trigger="load target:#tool" hx-swap="outerHTML"
+            class="form-field"></div>
 
-        <div hx-get="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
-      </form>
+          <div hx-get="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
+        </form>
+      </div>
     </main>
   </div>
   <script type="text/javascript">
@@ -94,6 +100,7 @@
   </script>
 
   <script src="/js/htmx.min.js"></script>
+  <script src="/js/Sortable.min.js"></script>
 </body>
 
 </html>

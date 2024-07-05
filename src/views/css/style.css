@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.content-container {
+  position: relative;
+  color: #333;
+}
+
+[on-focus="false"]:focus:empty:before {
+  color: #888;
+  pointer-events: none;
+  content: attr(placeholder);
+}
+
+[on-focus="true"]:empty:not(:focus):before {
+  color: #888;
+  font-weight: bold;
+  pointer-events: none;
+  content: attr(placeholder);
+}

@@ -15,7 +15,6 @@ const getField = async (req, res) => {
   const componentName = req.params.name;
 
   const options = {
-    fontSize: req.query.fontSize || "100pt",
     placeholder: req.query.placeholder || "",
     focus: req.query.focus || false,
   };

@@ -28,7 +28,9 @@
         <div hx-get="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div>
         <div hx-get="/components/fields/heading" hx-vals='{"placeholder": "Add a heading", "fontSize": "100pt"}'
           hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
-        <div hx-get="components/fields/textfield" hx-vals='{"focus": true}' hx-trigger="load target:#tool"
+          
+        
+          <div hx-get="components/fields/textfield" hx-vals='{"focus": true}' hx-trigger="load target:#tool"
           hx-swap="outerHTML">
         </div>
         <div hx-get="components/fields/textfield" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>

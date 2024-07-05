@@ -21,4 +21,4 @@ class FormComponent {
   }
 }
 
-export default Component;
+export default FormComponent;

@@ -1,0 +1,13 @@
+<% const items={ texts: ["Heading1", "Heading 2" , "Heading 3" ], labels: ["Text Label", "Text Area" , "Radio Button"
+    , "Check Box" ], }; %>
+
+    <% if (type==="text" ) { %>
+        <% items.texts.forEach(element=> { %>
+            <div
+                class="handle self-stretch h-16 border border-stone-300 justify-center items-center gap-2.5 inline-flex">
+                <div class="text-neutral-600 text-xl font-bold font-['Inter']">
+                    <%= element %>
+                </div>
+            </div>
+            <% }); %>
+                <% } %>

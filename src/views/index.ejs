@@ -11,11 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
-  <!-- <script src="https://cdn.tiny.cloud/1/usix0mtahx5sxqq82e0cg1mo5bgktoi3t4jih0mqtgq4hoty/tinymce/7/tinymce.min.js"
-    referrerpolicy="origin"></script>
-  <script> -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
 </head>
@@ -23,6 +20,7 @@
 <body>
   <div class="app">
     <div hx-get="/components/navbar" hx-trigger="load" hx-swap="outerHTML"></div>
+<<<<<<< HEAD
     <main class="relative flex items-center justify-center min-h-screen h-full px-96">
       <form action="/submit" method="POST" id="form" class="w-full xl:w- px-4 flex flex-col h-full p-4 gap-4 my-20">
         <div hx-get="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div>
@@ -35,12 +33,27 @@
         <div hx-get="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
         <button type="button" id="btn">show inner hml</button>
       </form>
-    </main>
+=======
+    <main class="w-screen items-start inline-flex">
+      <div class="flex flex-row" hx-get="/components/sidebar" hx-trigger="load" hx-swap="innerHTML">
+      </div>
+      <div class="ml-[56px] relative flex items-center justify-center min-h-screen w-full">
+        <form action="" method="" id="form" class="w-full xl:w-1/2 px-4 flex flex-col h-full p-4 gap-4">
+          <div hx-get="components/fields/heading" hx-trigger="load target:#tool" hx-swap="outerHTML" class="form-field">
+          </div>
+          <div hx-get="components/fields/inputfield" hx-trigger="load target:#tool" hx-swap="outerHTML"
+            class="form-field"></div>
+          <div hx-get="components/fields/textarea" hx-trigger="load target:#tool" hx-swap="outerHTML"
+            class="form-field"></div>
 
+
+          <div hx-get="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
+        </form>
+      </div>
+>>>>>>> 1e561ff143a91460510460dac5f7418e746ac6c7
+    </main>
   </div>
   <script type="text/javascript">
-
-
     function auto_grow(element) {
       element.style.height = "5px";
       element.style.height = element.scrollHeight + "px";
@@ -53,6 +66,7 @@
       return `input${inputs.length + 1}`;
     }
     let index = 0;
+<<<<<<< HEAD
 
   
 
@@ -70,38 +84,58 @@
       console.log(document.querySelectorAll("[]"));
     })
 
+=======
+>>>>>>> 1e561ff143a91460510460dac5f7418e746ac6c7
     document.addEventListener("htmx:afterSwap", function (e) {
       let element = e.target;
+      // console.log(element);
       if (element.id != "tooltip" && element.closest("#form")) {
+        const tooltip = document.getElementById("tooltip");
+
         let newElement = element.nextElementSibling;
 
-
-        if (!element.id) {
+        if (!element.id && newElement) {
+          console.log("ASDSADASDASD");
           element.setAttribute("id", "element_" + index);
         } else if (element.id && newElement) {
           newElement.setAttribute("id", "element_" + index);
         }
         index++;
 
+        console.log(element.id);
+        console.log("added: ", element);
+        console.log("next:", element.nextElementSibling);
+
         element.addEventListener("focus", function () {
-          showTooltip(element);
+          const rect = element.getBoundingClientRect();
+          tooltip.classList.remove("hidden");
+          tooltip.style.top =
+            rect.bottom -
+            20 +
+            window.scrollY -
+            element.offsetHeight / 2 +
+            "px";
+          tooltip.style.left = rect.left - 200 + "px";
+          tooltip.setAttribute("hx-target", "#" + element.id);
         });
-        element.addEventListener("mouseenter", function () {
-          showTooltip(element);
+        newElement.addEventListener("focus", function () {
+          const rect = newElement.getBoundingClientRect();
+          tooltip.classList.remove("hidden");
+          tooltip.style.top =
+            rect.bottom -
+            50 +
+            window.scrollY -
+            -newElement.offsetHeight / 2 +
+            "px";
+          tooltip.style.left = rect.left - 200 + "px";
+          tooltip.setAttribute("hx-target", "#" + newElement.id);
         });
-        if (newElement) {
-          newElement.addEventListener("focus", function () {
-            showTooltip(newElement);
-          });
-          newElement.addEventListener("mouseenter", function () {
-            showTooltip(newElement);
-          });
-        }
       }
     });
   </script>
 
   <script src="/js/htmx.min.js"></script>
+  <script src="/js/Sortable.min.js"></script>
 </body>
 
 </html>

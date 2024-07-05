@@ -1,7 +1,9 @@
-<div
-  contentEditable="true"
-  on-focus="(true)"
-  placeholder="<%=placeholder %>"
-  class="resize-none w-full overflow-hidden text-neutral-600 py-2 text-[3rem] outline-none font-bold"
-></div>
-<input type="hidden" name="type" value="asd" />
+<div class="input-block">
+  <textarea
+    placeholder="<%=placeholder %>"
+    class="resize-none w-full overflow-hidden text-neutral-600 py-2 text-[3rem] outline-none font-bold h-auto"
+    rows="1"
+    oninput="auto_grow(this)"
+    data-type="heading"
+  ></textarea>
+</div>

@@ -18,6 +18,7 @@ const getField = async (req, res) => {
     placeholder: req.query.placeholder || "",
     focus: req.query.focus || false,
   };
+
   const component = new Component({
     id: req.query.id,
     name: req.query.name,

@@ -620,10 +620,6 @@ video {
   display: inline-flex;
 }
 
-.hidden {
-  display: none;
-}
-
 .h-10 {
   height: 2.5rem;
 }
@@ -634,6 +630,10 @@ video {
 
 .h-16 {
   height: 4rem;
+}
+
+.h-28 {
+  height: 7rem;
 }
 
 .h-\[27px\] {
@@ -657,16 +657,16 @@ video {
   height: 100vh;
 }
 
-.h-28 {
-  height: 7rem;
-}
-
 .min-h-screen {
   min-height: 100vh;
 }
 
 .w-56 {
   width: 14rem;
+}
+
+.w-80 {
+  width: 20rem;
 }
 
 .w-96 {
@@ -688,10 +688,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-80 {
-  width: 20rem;
 }
 
 .max-w-screen-xl {
@@ -831,12 +827,17 @@ video {
   background-color: rgb(244 244 245 / var(--tw-bg-opacity));
 }
 
+.p-2 {
+  padding: 0.5rem;
+}
+
 .p-4 {
   padding: 1rem;
 }
 
-.p-2 {
-  padding: 0.5rem;
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .px-4 {
@@ -869,11 +870,6 @@ video {
   padding-bottom: 0.75rem;
 }
 
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
 .text-center {
   text-align: center;
 }
@@ -902,12 +898,12 @@ video {
   font-weight: 700;
 }
 
-.font-light {
-  font-weight: 300;
-}
-
 .font-extralight {
   font-weight: 200;
+}
+
+.font-light {
+  font-weight: 300;
 }
 
 .text-black {
@@ -946,7 +942,7 @@ video {
   outline-offset: 2px;
 }
 
-.content-container {
+/* .content-container {
   position: relative;
   color: #333;
 }
@@ -962,6 +958,22 @@ video {
   font-weight: bold;
   pointer-events: none;
   content: attr(placeholder);
+} */
+
+.placeholder\:invisible::-moz-placeholder {
+  visibility: hidden;
+}
+
+.placeholder\:invisible::placeholder {
+  visibility: hidden;
+}
+
+.focus\:placeholder\:visible:focus::-moz-placeholder {
+  visibility: visible;
+}
+
+.focus\:placeholder\:visible:focus::placeholder {
+  visibility: visible;
 }
 
 @media (min-width: 1280px) {

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.content-container {
+/* .content-container {
   position: relative;
   color: #333;
 }
@@ -18,4 +18,4 @@
   font-weight: bold;
   pointer-events: none;
   content: attr(placeholder);
-}
+} */

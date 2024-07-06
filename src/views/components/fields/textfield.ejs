@@ -1,7 +1,17 @@
-<div contentEditable=true on-focus="false" hx-params="*" class="text-[1.5rem] outline-none resize-none" <%= query.focus
-  ? "autofocus" : "" %>
-  placeholder="Start typing text or add a block."></div>
+<div class="input-block" draggable="true">
+  <div class="block-container ">
+    <div contenteditable="true" show-pl-click="false"
+      class="content-container text-[1.1rem] w-full outline-none resize-none focus:placeholder:visible placeholder:invisible"
+      <%=query.focus ? "autofocus" : "" %>
+      placeholder="Start typing text or add a block."></div>
+    <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+    <div class="move-dropzone" data-position="left"></div>
+    <div class="move-dropzone" data-position="right"></div>
+    <div class="move-dropzone" data-position="below"></div>
+    <div class="move-dropzone" data-position="top"></div>
+  </div>
+
+
+
 </div>
-<div class="w-80 h-10 p-2 rounded-lg shadow border border-zinc-400 justify-start items-center gap-2.5 inline-flex">
-  <div class="text-neutral-600 text-xs font-extralight font-['Inter']">Place Holder...</div>
 </div>

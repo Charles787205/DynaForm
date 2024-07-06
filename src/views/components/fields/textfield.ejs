@@ -1,9 +1,17 @@
-<div>
-  <div contenteditable="true" class="text-[1.5rem] w-full outline-none resize-none focus:placeholder:visible placeholder:invisible" 
-  on-focus="false"
-  <%=query.focus
-    ? "autofocus" : "" %>
-    onfocus="showTooltip(this)"
-    placeholder="Start typing text or add a block."></div>
+<div class="input-block" draggable="true">
+  <div class="block-container ">
+    <div contenteditable="true" show-pl-click="false"
+      class="content-container text-[1.1rem] w-full outline-none resize-none focus:placeholder:visible placeholder:invisible"
+      <%=query.focus ? "autofocus" : "" %>
+      placeholder="Start typing text or add a block."></div>
+    <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+    <div class="move-dropzone" data-position="left"></div>
+    <div class="move-dropzone" data-position="right"></div>
+    <div class="move-dropzone" data-position="below"></div>
+    <div class="move-dropzone" data-position="top"></div>
   </div>
+
+
+
+</div>
 </div>

@@ -1,11 +1,13 @@
-<div class="block w-full header">
-  <div class="block max-w-xl right-0 left-0 mr-0 ml-0 relative">
-    <div
-      contentEditable="true"
-      on-focus="(true)"
-      onfocus="showTooltip(this)"
-      placeholder="<%=query.placeholder %>"
-      class="content-container resize-none w-full overflow-hidden text-black py-2 text-[3rem] outline-none font-bold"
-    ></div>
+<div class="input-block title">
+  <div class="block-container">
+    <div show-pl-click=true contenteditable=true placeholder="<%=query.placeholder %>"
+      class="content-container text-black text-[3rem] outline-none font-bold w-full"></div>
+    <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+    <div class="move-dropzone" data-position="right"></div>
+    <div class="move-dropzone" data-position="left"></div>
+    <div class="move-dropzone" data-position="below"></div>
+    <div class="move-dropzone" data-position="top"></div>
   </div>
+
+</div>
 </div>

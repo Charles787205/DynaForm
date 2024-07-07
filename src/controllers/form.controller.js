@@ -1,7 +1,5 @@
 const get = async (req, res) => {
-  const data = {};
-
-  res.render("index", { data });
+  res.redirect("/create");
 };
 
 const post = async (req, res) => {
@@ -12,6 +10,8 @@ const post = async (req, res) => {
 };
 
 const createForm = async (req, res) => {
-  //[objects]
+  const data = {};
+
+  res.render("index", { data });
 };
 export default { get, post, createForm };

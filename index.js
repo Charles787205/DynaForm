@@ -4,17 +4,13 @@ import passport from "passport";
 import session from "express-session";
 import googlePassport from "passport-google-oauth20";
 
-dotenv.config();
-
 // app.js (or index.js)
 import express from "express";
 import router from "./src/routes/routes.js";
 import dbRouter from "./src/routes/dbRoutes.js"; // api routes for db bridge
 import mongoose from "mongoose";
 
-import { configDotenv } from "dotenv";
-
-configDotenv();
+dotenv.config();
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -23,7 +19,7 @@ app.set("views", "src/views"); // Set the views directory1
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "",
+    secret: process.env.SESSION_SECRET || "dxfcv",
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -33,14 +29,10 @@ app.use(
 );
 
 app.use(passport.initialize());
-
-app.use(passport.authenticate("session"));
 app.use(passport.session());
+
 app.use(express.static("public"));
 app.use(express.json());
-app.use;
-
-app.get("*/*", router);
 
 app.use("/db", dbRouter);
 

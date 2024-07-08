@@ -29,8 +29,8 @@
           hx-trigger="load"
           hx-swap="innerHTML"
         ></div> -->
-      <div class="relative min-h-screen w-screen pt-16">
-        <div class="h-80 inset-2 header-image">
+      <div class="relative min-h-screen w-screen pt-16" action="" method="" onsubmit="onSubmit(event)" id="form">
+        <div class="h-80 inset-2 header-image" id="image-wrapper">
           <div class="cover-wrapper relative h-full w-full flex justify-center items-center gap-4">
             <img id="image-cover" src="#" class="w-full h-full object-cover" image-loaded="false" />
             <button class="flex gap-1 justify-center items-center hover:shadow-md rounded-md" id="add-cover-btn"
@@ -43,7 +43,6 @@
               <span>Add Cover</span>
             </button>
             <input type="file" id="cover-input" class="hidden" accept="image/*" onchange="previewFile()" />
-            <!-- <input type="hidden" id="cover-data" name="coverData" /> -->
             <button class="flex gap-1 justify-center items-center hover:shadow-md rounded-md" id="remove-cover-btn">
               <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -55,37 +54,78 @@
           </div>
         </div>
         <div class="w-full flex justify-center">
-          <form action="" method="" onsubmit="onSubmit(event)" id="form"
-            class=" flex flex-col h-full gap-1 w-full max-w-screen-lg px-10">
+          <form class=" flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
             <!-- <div hx-get="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div> -->
             <div hx-get="components/fields/heading" hx-trigger="load target:#tool"
-              hx-vals='{"placeholder": "Add a heading"}' hx-swap="outerHTML" class="form-field"></div>
-            <div hx-get="components/fields/textfield" hx-trigger="load target:#tool" hx-vals='{"focus": true}'
-              hx-swap="outerHTML" class="form-field"></div>
-            <div hx-get="components/fields/textfield" hx-trigger="load target:#tool" hx-swap="outerHTML"
-              class="form-field"></div>
-            <div hx-get="components/fields/textfield" hx-trigger="load target:#tool" hx-swap="outerHTML"
+              hx-vals='{"placeholder": "Add a heading", "type": "heading", "name": "field_name"}' hx-swap="outerHTML"
               class="form-field"></div>
 
+            <div hx-get="components/fields/textfield" hx-trigger="load target:#tool"
+              hx-vals='{"focus": true, "name": "field_name"}' hx-swap="outerHTML" class="form-field">
+            </div>
+
+            <div hx-get="components/fields/textfield" hx-trigger="load target:#tool" hx-swap="outerHTML"
+              hx-vals='{"name": "field_name"}' class="form-field"></div>
+            <div hx-get="components/fields/textfield" hx-trigger="load target:#tool" hx-swap="outerHTML"
+              hx-vals='{"name": "field_name"}' class="form-field"></div>
+            <div hx-get="components/fields/inputfield" hx-trigger="load target:#tool"
+              hx-vals='{"placeholder": "Type a placeholder", "name": "field_name"}' hx-swap="outerHTML"
+              class="form-field"></div>
             <div hx-get="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
           </form>
-        </div>
-      </div>
     </main>
   </div>
   <script>
+    const removeImageBtn = document.getElementById("remove-cover-btn");
+
+    removeImageBtn.addEventListener("click", function () {
+      removeCover()
+    })
+
+    function showCover() {
+      removeImageBtn.style.display = "flex";
+      document.querySelector("#image-wrapper").classList.remove("h-fit")
+      document.querySelector("img").setAttribute("image-loaded", "true")
+    }
+    function removeCover() {
+      var preview = document.querySelector('img');
+      var fileInput = document.querySelector('input[type=file]');
+
+      preview.src = "";
+      preview.setAttribute("image-loaded", "false");
+      document.querySelector("#image-wrapper").classList.add("h-fit");
+      removeImageBtn.style.display = "none";
+
+      fileInput.value = "";
+    }
+
+    function captureContentAndSubmit() {
+      const editableDiv = document.querySelector('.content-container');
+      const hiddenInput = document.querySelectorAll('.input-hidden');
+      hiddenInput.forEach((input) => {
+        hiddenInput.value = input.closest(".content-container").innerHTML
+        console.log('val: ', hiddenInput.value)
+      })
+    }
+
     function previewFile() {
       var preview = document.querySelector('img');
       var file = document.querySelector('input[type=file]').files[0];
       var reader = new FileReader();
 
       reader.onloadend = function () {
+        console.log(reader.result)
         preview.src = reader.result;
         preview.setAttribute("image-loaded", "true");
+
+        file.value = "";
       }
 
       if (file) {
+        console.log("ASD")
         reader.readAsDataURL(file);
+        showCover()
+
       } else {
         preview.src = "";
       }

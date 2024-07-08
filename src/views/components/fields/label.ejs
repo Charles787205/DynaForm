@@ -1,0 +1,13 @@
+<div class="input-block" draggable="true" id="<%= query.id %>">
+    <div class="block-container">
+        <div contenteditable="true" show-pl-click="true" class="content-container label text-[1rem] outline-none"
+            data-type="label" data-name="<%= query.name %>_<%= query.id %>" id="input_<%= query.id %>"
+            placeholder="<%= query.placeholder %>"></div>
+        <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+    </div>
+    <div class="move-dropzone" data-position="left"></div>
+    <div class="move-dropzone" data-position="right"></div>
+    <div class="move-dropzone" data-position="below"></div>
+    <div class="move-dropzone" data-position="top"></div>
+</div>
+</div>

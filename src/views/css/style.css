@@ -16,11 +16,27 @@
   line-height: 1.5;
 }
 
+[data-type="input"] {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  resize: both;
+  display: block;
+  color: #888;
+  min-height: 36px;
+  width: 100%;
+  min-width: 200px;
+  max-width: 320px;
+  height: 36px;
+  border-radius: 6px;
+  padding: 5px 10px 5px 10px;
+}
 .title {
-  margin-bottom: 30px;
-  margin-top: 30px;
+  margin: 20px 0px 10px 0px;
 }
 
+.label[contenteditable="true"] {
+  font-weight: bold;
+}
 .header-image {
   display: flex;
   align-items: center;
@@ -70,6 +86,21 @@ img[image-loaded="true"]:hover,
   visibility: visible;
 }
 
+.block-container .option {
+  opacity: 0;
+  padding: 2px 4px 2px 4px;
+  color: #b9b9b9;
+  font-weight: 500;
+  z-index: 10;
+}
+
+.block-container .content-container[contenteditable="true"]:focus + .option {
+  opacity: 100;
+}
+.option:hover {
+  opacity: 100;
+}
+
 .move-dropzone {
   position: absolute;
   width: 100%;
@@ -84,6 +115,8 @@ img[image-loaded="true"]:hover,
 .input-block {
   display: flex;
   justify-content: center;
+  line-height: 1.5;
+  padding: 3px 0px;
   width: 100%;
 }
 
@@ -122,11 +155,10 @@ img[image-loaded="true"]:hover,
   width: 3px;
 }
 
-.block-container:hover .content-container:not(:focus),
+/* .block-container:hover .content-container:not(:focus),
 .actions:hover .content-container:not(:focus) {
   transition: all 0.3s;
-  box-shadow: inset 4px 0 0 #242424;
-}
+} */
 
 .actions {
   opacity: 0;
@@ -140,6 +172,9 @@ img[image-loaded="true"]:hover,
 }
 
 .content-container:focus ~ .actions {
+  opacity: 1;
+}
+.content-container:hover ~ .actions {
   opacity: 1;
 }
 .actions:hover {

@@ -1,9 +1,77 @@
-const onSubmit = (event) => {
-  console.log("hesdfds");
-  event.preventDefault();
-  const form = event.target;
-  console.log(form);
-};
+function submitForm() {
+  const form = document.getElementById("form");
+  const formName = form.getAttribute("data-form-name") || "defaultFormName";
+  const formDescription =
+    form.getAttribute("data-form-description") || "defaultDescription";
+
+  const formComponents = Array.from(form.querySelectorAll(".input-block")).map(
+    (block) => {
+      const contentContainer = block.querySelector(".content-container");
+      const label =
+        block.querySelector(".label") &&
+        (block.querySelector(".label").innerHTML ?? undefined);
+      const id = block.id;
+      const name = contentContainer.getAttribute("data-name");
+      const type = contentContainer.getAttribute("data-type");
+      const required = contentContainer.getAttribute("required");
+      var placeholder = contentContainer.getAttribute("placeholder");
+      const content = contentContainer.innerHTML;
+      const checked = contentContainer.getAttribute("checked");
+      const focus = contentContainer.hasAttribute("autofocus")
+        ? "true"
+        : undefined;
+
+      const component = { id, name, type };
+
+      if (content) {
+        component.content = content;
+      }
+      if (label) {
+        component.label = label;
+      }
+      if (checked) {
+        component.checked = checked;
+      }
+      if (type == "input") {
+        placeholder = contentContainer.innerHTML;
+      }
+      if (focus) {
+        component.focus = focus;
+      }
+      if (required) {
+        component.required = required;
+      }
+      if (placeholder) {
+        component.placeholder = placeholder;
+      }
+      // to be continued
+      return component;
+    }
+  );
+
+  const formData = {
+    formName,
+    formDescription,
+    formComponents,
+  };
+
+  console.log("Submitting form data:", formData);
+
+  // fetch("/submit", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(formData),
+  // })
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log("Success:", data);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error:", error);
+  //   });
+}
 
 function auto_grow(element) {
   element.style.height = "5px";
@@ -150,16 +218,16 @@ document.addEventListener("DOMContentLoaded", function () {
 let index = 0;
 
 document.addEventListener("htmx:afterSwap", function (e) {
-  let element = e.target;
+  const element = e.target;
   if (!element.classList.contains("actions") && element.closest("#form")) {
     initalizeDropzones();
-    let newElement = element.nextElementSibling;
-    if (!element.id) {
-      element.setAttribute("id", "element_" + index);
-    } else if (element.id && newElement) {
-      newElement.setAttribute("id", "element_" + index);
+    if (element.classList.contains("label")) {
+      const addButton = element
+        .closest(".input-block")
+        .querySelector(".option");
+      if (addButton) {
+        addButton.style.display = "none"; // to be fixed
+      }
     }
-
-    index++;
   }
 });

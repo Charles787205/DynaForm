@@ -904,6 +904,10 @@ video {
   font-size: 1.1rem;
 }
 
+.text-\[1rem\] {
+  font-size: 1rem;
+}
+
 .text-\[3rem\] {
   font-size: 3rem;
 }
@@ -978,9 +982,27 @@ video {
   line-height: 1.5;
 }
 
+[data-type="input"] {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  resize: both;
+  display: block;
+  color: #888;
+  min-height: 36px;
+  width: 100%;
+  min-width: 200px;
+  max-width: 320px;
+  height: 36px;
+  border-radius: 6px;
+  padding: 5px 10px 5px 10px;
+}
+
 .title {
-  margin-bottom: 30px;
-  margin-top: 30px;
+  margin: 20px 0px 10px 0px;
+}
+
+.label[contenteditable="true"] {
+  font-weight: bold;
 }
 
 .header-image {
@@ -1032,6 +1054,22 @@ img[image-loaded="true"]:hover,
   visibility: visible;
 }
 
+.block-container .option {
+  opacity: 0;
+  padding: 2px 4px 2px 4px;
+  color: #b9b9b9;
+  font-weight: 500;
+  z-index: 10;
+}
+
+.block-container .content-container[contenteditable="true"]:focus + .option {
+  opacity: 100;
+}
+
+.option:hover {
+  opacity: 100;
+}
+
 .move-dropzone {
   position: absolute;
   width: 100%;
@@ -1046,6 +1084,8 @@ img[image-loaded="true"]:hover,
 .input-block {
   display: flex;
   justify-content: center;
+  line-height: 1.5;
+  padding: 3px 0px;
   width: 100%;
 }
 
@@ -1089,11 +1129,10 @@ img[image-loaded="true"]:hover,
   width: 3px;
 }
 
-.block-container:hover .content-container:not(:focus),
+/* .block-container:hover .content-container:not(:focus),
 .actions:hover .content-container:not(:focus) {
   transition: all 0.3s;
-  box-shadow: inset 4px 0 0 #242424;
-}
+} */
 
 .actions {
   opacity: 0;
@@ -1108,6 +1147,10 @@ img[image-loaded="true"]:hover,
 }
 
 .content-container:focus ~ .actions {
+  opacity: 1;
+}
+
+.content-container:hover ~ .actions {
   opacity: 1;
 }
 
@@ -1139,14 +1182,6 @@ img[image-loaded="true"]:hover,
   content: attr(placeholder);
 }
 
-.placeholder\:invisible::-moz-placeholder {
-  visibility: hidden;
-}
-
-.placeholder\:invisible::placeholder {
-  visibility: hidden;
-}
-
 .hover\:font-semibold:hover {
   font-weight: 600;
 }
@@ -1155,14 +1190,6 @@ img[image-loaded="true"]:hover,
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.focus\:placeholder\:visible:focus::-moz-placeholder {
-  visibility: visible;
-}
-
-.focus\:placeholder\:visible:focus::placeholder {
-  visibility: visible;
 }
 
 @media (min-width: 1536px) {

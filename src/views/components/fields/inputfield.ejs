@@ -1,3 +1,18 @@
-<div class="div">
-  <input type="text" placeholder="Enter your Suggestion" class="bordered " />
+<div class="input-block" draggable="true" id="<%= query.id %>">
+  <div class="block-container">
+    <div class="flex">
+      <div contenteditable="true" show-pl-click="false" class="content-container text-[1.1rem] outline-none"
+        data-type="input" data-name="<%= query.name %>_<%= query.id %>" id="input_<%= query.id %>"
+        <%=query.focus==="true" ? "autofocus" : "" %>
+        placeholder="<%= query.placeholder || "Type a placeholder" %>"></div>
+      <button class="option" type="button" hx-get="/components/fields/label" hx-trigger="click"
+        hx-target="closest .input-block" hx-vals='{"placeholder": "Label"}' hx-swap="beforebegin">Add
+        label</button>
+      <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+    </div>
+    <div class="move-dropzone" data-position="left"></div>
+    <div class="move-dropzone" data-position="right"></div>
+    <div class="move-dropzone" data-position="below"></div>
+    <div class="move-dropzone" data-position="top"></div>
+  </div>
 </div>

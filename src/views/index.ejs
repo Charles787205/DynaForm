@@ -29,28 +29,28 @@
         hx-swap="outerHTML"
       ></div>
       <main class="w-screen items-start inline-flex">
-        <div
+        <!-- <div
           class="flex flex-row"
           hx-get="/components/sidebar"
           hx-trigger="load"
           hx-swap="innerHTML"
-        ></div>
+        ></div> -->
         <div
-          class="ml-[56px] relative flex items-center justify-center min-h-screen w-full"
+          class="relative flex items-center justify-center min-h-screen w-full"
         >
           <form
             action=""
             method=""
             onsubmit="onSubmit(event)"
             id="form"
-            class="w-full xl:w-1/2 px-4 flex flex-col h-full p-4 gap-4"
+            class="xl:w-1/2 px-4 flex flex-col h-full p-4 gap-4"
           >
-            <div
+            <!-- <div
               hx-get="/components/tooltip"
               hx-trigger="load"
               hx-swap="outerHTML"
               id="tool"
-            ></div>
+            ></div> -->
             <div
               hx-get="components/fields/heading"
               hx-trigger="load target:#tool"
@@ -61,21 +61,37 @@
             <div
               hx-get="components/fields/inputfield"
               hx-trigger="load target:#tool"
-              hx-vals="{'focus': true}"
+              hx-vals='{"placeholder": "Add a heading"}'
               hx-swap="outerHTML"
               class="form-field"
             ></div>
             <div
               hx-get="components/fields/textarea"
               hx-trigger="load target:#tool"
+              hx-vals='{"placeholder": "Add a heading"}'
               hx-swap="outerHTML"
               class="form-field"
             ></div>
-
             <div
-              hx-get="components/button"
+              hx-get="components/fields/radiobox"
               hx-trigger="load target:#tool"
+              hx-vals='{"placeholder": "Add a heading"}'
               hx-swap="outerHTML"
+              class="form-field"
+            ></div>
+            <div
+              hx-get="components/fields/checkbox"
+              hx-trigger="load target:#tool"
+              hx-vals='{"placeholder": "Add a heading"}'
+              hx-swap="outerHTML"
+              class="form-field"
+            ></div>
+            <div
+              hx-get="components/fields/dropdown"
+              hx-trigger="load target:#tool"
+              hx-vals='{"placeholder": "Add a heading"}'
+              hx-swap="outerHTML"
+              class="form-field"
             ></div>
           </form>
         </div>

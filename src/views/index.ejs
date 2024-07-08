@@ -66,6 +66,13 @@
               class="form-field"
             ></div>
             <div
+              hx-get="components/fields/divider"
+              hx-trigger="load target:#tool"
+              hx-vals='{"placeholder": "Add a heading"}'
+              hx-swap="outerHTML"
+              class="form-field"
+            ></div>
+            <div
               hx-get="components/fields/textarea"
               hx-trigger="load target:#tool"
               hx-vals='{"placeholder": "Add a heading"}'

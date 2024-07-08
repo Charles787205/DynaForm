@@ -1,13 +1,21 @@
-<div class="input-block" draggable="true" id="<%= query.id %>">
-    <div class="block-container">
-        <div contenteditable="true" show-pl-click="true" class="content-container label text-[1rem] outline-none"
-            data-type="label" data-name="<%= query.name %>_<%= query.id %>" id="input_<%= query.id %>"
+<div contenteditable="true" draggable="true" data-type="label" id="label-<%= query.id %>" show-pl-click="true" spellcheck="false"
+    class="text-[1rem] w-full label outline-none resize-none">
+    <%= query.placeholder %>
+</div>
+
+
+<!-- <div class="input-block" draggable="true" id="<%= query.id %>">
+    <div class="block-container ">
+        <div contenteditable="true" show-pl-click="true"
+            class="content-container text-[1rem] label outline-none resize-none" data-type="label"
+            data-name="<%= query.name %>_<%= query.id %>" id="input_<%= query.id %>"
             placeholder="<%= query.placeholder %>"></div>
+        <label for="input_<%= query.id %>">
+        </label>
         <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+        <div class="move-dropzone" data-position="left"></div>
+        <div class="move-dropzone" data-position="right"></div>
+        <div class="move-dropzone" data-position="below"></div>
+        <div class="move-dropzone" data-position="top"></div>
     </div>
-    <div class="move-dropzone" data-position="left"></div>
-    <div class="move-dropzone" data-position="right"></div>
-    <div class="move-dropzone" data-position="below"></div>
-    <div class="move-dropzone" data-position="top"></div>
-</div>
-</div>
+</div> -->

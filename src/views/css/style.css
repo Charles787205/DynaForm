@@ -2,20 +2,202 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .content-container {
-  position: relative;
-  color: #333;
+:root {
+  font-family: "Varela Round", sans-serif;
+  font-weight: 350;
+  font-style: normal;
 }
 
-[on-focus="false"]:focus:empty:before {
+.content-container {
+  position: relative;
+  color: #333;
+  min-height: 30px;
+  line-height: 1.5;
+}
+
+[data-type="input"] {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  resize: both;
+  display: block;
+  color: #888;
+  width: 100%;
+  min-width: 200px;
+  max-width: 320px;
+  border-radius: 6px;
+  padding: 5px 10px 5px 10px;
+}
+
+.title {
+  margin: 20px 0px 10px 0px;
+}
+
+.label[contenteditable="true"] {
+  font-weight: bold;
+}
+.header-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  cursor: pointer;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transition: all 0.3s ease;
+  opacity: 100%;
+}
+
+.cover-wrapper > button {
+  visibility: hidden;
+  padding: 2px 4px 2px 4px;
+  color: #b9b9b9;
+  font-weight: 500;
+  z-index: 10;
+}
+
+img[image-loaded="false"] {
+  opacity: 0;
+}
+
+.cover-wrapper {
+  transition: background-color 0.5s ease;
+}
+
+.cover-wrapper:hover {
+  background-color: #efefefb8;
+}
+
+img[image-loaded="true"]:hover,
+.cover-wrapper button:hover {
+  filter: brightness(50%);
+}
+
+.header-image img {
+  position: absolute;
+  z-index: 10;
+  transition: filter 0.3s ease;
+}
+
+.cover-wrapper:hover button {
+  visibility: visible;
+}
+
+.block-container .option {
+  opacity: 0;
+  padding: 2px 4px 2px 4px;
+  color: #b9b9b9;
+  font-weight: 500;
+  z-index: 10;
+}
+
+.block-container .content-container[contenteditable="true"]:focus + .option {
+  opacity: 100;
+}
+.option:hover {
+  opacity: 100;
+}
+
+.move-dropzone {
+  position: absolute;
+  width: 100%;
+  z-index: 50;
+  transition: background-color 0.2s;
+}
+
+.move-dropzone.drag-over {
+  background-color: rgb(61, 135, 246);
+}
+
+.input-block {
+  display: flex;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 3px 0px;
+  width: 100%;
+}
+
+.input-block-flex {
+  display: grid;
+  gap: 2px;
+  justify-content: start;
+  width: 100%;
+}
+.block-container {
+  width: 100%;
+  position: relative;
+}
+[data-position="below"] {
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 3px;
+}
+[data-position="top"] {
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 3px;
+}
+[data-position="right"] {
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+}
+[data-position="left"] {
+  left: -6px;
+  top: 0;
+  height: 100%;
+  width: 3px;
+}
+
+/* .block-container:hover .content-container:not(:focus),
+.actions:hover .content-container:not(:focus) {
+  transition: all 0.3s;
+} */
+
+.actions {
+  opacity: 0;
+}
+.action-button {
+  cursor: pointer;
+}
+
+.actions:hover .action-button:hover {
+  background-color: #f0f0f0;
+}
+
+.content-container:focus ~ .actions {
+  opacity: 1;
+}
+.content-container:hover ~ .actions {
+  opacity: 1;
+}
+.actions:hover {
+  opacity: 1;
+}
+
+[show-pl-click="false"]:focus:empty:before {
   color: #888;
   pointer-events: none;
   content: attr(placeholder);
 }
+/* 
+[contenteditable="true"]:empty:not(:focus):before {
+  content: attr(placeholder);
+  color: grey;
+  font-style: italic;
+} */
 
-[on-focus="true"]:empty:not(:focus):before {
+/* [contentEditable="true"]:empty:not(:focus):before {
+  content: attr(placeholder);
+} */
+
+[show-pl-click="true"]:empty:not(:focus):before {
   color: #888;
   font-weight: bold;
   pointer-events: none;
   content: attr(placeholder);
-} */
+}

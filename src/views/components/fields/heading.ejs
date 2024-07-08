@@ -1,11 +1,15 @@
-<div class="block w-full header">
-  <div class="block max-w-xl right-0 left-0 mr-0 ml-0 relative">
-    <div
-      contentEditable="true"
-      on-focus="(true)"
-      class="resize-none w-full overflow-hidden text-neutral-600 py-2 text-[3rem] outline-none font-bold"
-    >
-      <%= query.placeholder %>
-    </div>
+<div class="input-block title" draggable="true" id="<%= query.id %>">
+  <div class="block-container">
+    <div show-pl-click=true contenteditable=true placeholder="<%=query.placeholder %>" data-type="heading"
+      spellcheck="false" data-name="<%= query.name %>_<%= query.id %>" id="input_<%= query.id %>"
+      class="content-container text-black text-[3rem] outline-none font-bold w-full"></div>
+    <label for="input_<%= query.id %>"></label>
+    </label>
+    <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+    <div class="move-dropzone" data-position="right"></div>
+    <div class="move-dropzone" data-position="left"></div>
+    <div class="move-dropzone" data-position="below"></div>
+    <div class="move-dropzone" data-position="top"></div>
   </div>
+</div>
 </div>

@@ -11,7 +11,6 @@
 .content-container {
   position: relative;
   color: #333;
-  padding: 2px 3px 3px 2px;
   min-height: 30px;
   line-height: 1.5;
 }
@@ -22,14 +21,13 @@
   resize: both;
   display: block;
   color: #888;
-  min-height: 36px;
   width: 100%;
   min-width: 200px;
   max-width: 320px;
-  height: 36px;
   border-radius: 6px;
   padding: 5px 10px 5px 10px;
 }
+
 .title {
   margin: 20px 0px 10px 0px;
 }

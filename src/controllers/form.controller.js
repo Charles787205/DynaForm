@@ -1,5 +1,7 @@
 const get = async (req, res) => {
+
   res.redirect("pages/create");
+
 };
 
 const post = async (req, res) => {
@@ -11,6 +13,7 @@ const post = async (req, res) => {
 const createForm = async (req, res) => {
   const data = {};
 
+
   res.render("pages/create", { data });
 };
 
@@ -21,3 +24,4 @@ const editForm = async (req, res) => {
 };
 
 export default { get, post, createForm };
+

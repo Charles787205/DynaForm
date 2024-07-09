@@ -177,6 +177,7 @@ function handleDrop(dropZone) {
     if (draggedElement.getAttribute("data-type") == "label") {
       inputFlexContainer = draggedElement
         .closest(".input-block").querySelector(".input-flex");
+
       parentInputBlock = inputFlexContainer;
       console.log("dropped to parent: ", inputFlexContainer);
     }

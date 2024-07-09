@@ -1,12 +1,13 @@
 <style>
-    .handle {
-        cursor: grab;
-    }
+  .handle {
+    cursor: grab;
+  }
 
-    .ghost {
-        opacity: 0.5;
-    }
+  .ghost {
+    opacity: 0.5;
+  }
 </style>
+
 <div class="mt-[65px] min-h-screen flex flex-row bg-gray-100">
     <div class="flex flex-col w-56 bg-white rounded-r-sm overflow-hidden">
         <div class="w-96 h-12 px-5 border border-stone-300 justify-between items-center inline-flex">
@@ -21,9 +22,17 @@
             hx-swap="innerHTML" id="sortable-list">
 
         </div> -->
+
     </div>
+    <div class="self-stretch h-px border-2 border-neutral-400"></div>
+    <!-- <div
+      class="move self-stretch flex flex-col"
+      hx-get="components/selection?type=text"
+      hx-trigger="load"
+      hx-swap="innerHTML"
+      id="sortable-list"
+    ></div> -->
+  </div>
 </div>
 
-<script>
-
-</script>
+<script></script>

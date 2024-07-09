@@ -19,7 +19,7 @@ const getField = async (req, res) => {
     ...req.query,
   };
 
-  //console.log(query);
+
 
   res.render(`components/fields/${componentName}`, { query });
 };

@@ -3,8 +3,10 @@ import { Router } from "express";
 const authRouter = new Router();
 import passport from "passport";
 import googlePassport from "passport-google-oauth20";
-import { configDotenv } from "dotenv";
-configDotenv();
+
+import dotenv from "dotenv";
+
+dotenv.config();
 
 passport.use(
 	new googlePassport.Strategy(
@@ -14,7 +16,9 @@ passport.use(
 			callbackURL: process.env.GOOGLE_CALLBACK_URL,
 		},
 		(accessToken, refreshToken, profile, done) => {
-			console.log(profile);
+			//console.log(profile);
+			//diri i save ang user sa database
+			return done(null, profile);
 		}
 	)
 );

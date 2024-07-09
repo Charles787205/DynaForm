@@ -13,6 +13,9 @@
   <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.2/dist/umd/uuidv4.min.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,12 +26,7 @@
   <div class="app">
     <div hx-get="/components/navbar" hx-trigger="load" hx-swap="outerHTML"></div>
     <main class="w-screen items-start inline-flex">
-      <!-- <div
-          class="flex flex-row"
-          hx-get="/components/sidebar"
-          hx-trigger="load"
-          hx-swap="innerHTML"
-        ></div> -->
+      <!-- <div class="flex flex-row" hx-get="/components/sidebar" hx-trigger="load" hx-swap="innerHTML"></div> -->
       <div class="relative min-h-screen w-screen pt-16" action="" method="" onsubmit="onSubmit(event)" id="form">
         <div class="h-80 inset-2 header-image" id="image-wrapper">
           <div class="cover-wrapper relative h-full w-full flex justify-center items-center gap-4">
@@ -54,7 +52,7 @@
           </div>
         </div>
         <div class="w-full flex justify-center">
-          <form class=" flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
+          <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
             <!-- <div hx-get="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div> -->
             <div hx-get="components/fields/heading" hx-trigger="load target:#tool"
               hx-vals='{"placeholder": "Add a heading", "type": "heading", "name": "field_name"}' hx-swap="outerHTML"
@@ -71,6 +69,9 @@
             <div hx-get="components/fields/inputfield" hx-trigger="load target:#tool"
               hx-vals='{"placeholder": "Type a placeholder", "name": "field_name"}' hx-swap="outerHTML"
               class="form-field"></div>
+            <div hx-get="components/fields/inputfield" hx-trigger="load target:#tool"
+              hx-vals='{"placeholder": "Type a placeholder", "name": "field_name"}' hx-swap="outerHTML"
+              class="form-field"></div>
             <div hx-get="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
           </form>
     </main>
@@ -79,57 +80,48 @@
     const removeImageBtn = document.getElementById("remove-cover-btn");
 
     removeImageBtn.addEventListener("click", function () {
-      removeCover()
-    })
+      removeCover(removeImageBtn);
+    });
+
+    function previewFile() {
+      var preview = document.querySelector("img");
+      var file = document.querySelector("input[type=file]").files[0];
+      var reader = new FileReader();
+
+      reader.onloadend = function () {
+        preview.src = reader.result;
+        preview.setAttribute("image-loaded", "true");
+        file.value = "";
+      };
+
+      if (file) {
+        showCover();
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = "";
+      }
+    }
 
     function showCover() {
       removeImageBtn.style.display = "flex";
-      document.querySelector("#image-wrapper").classList.remove("h-fit")
-      document.querySelector("img").setAttribute("image-loaded", "true")
+      document.querySelector("#image-wrapper").classList.remove("h-fit");
+      document.querySelector("img").setAttribute("image-loaded", "true");
     }
-    function removeCover() {
-      var preview = document.querySelector('img');
-      var fileInput = document.querySelector('input[type=file]');
+
+    function removeCover(button) {
+      var preview = document.querySelector("img");
+      var fileInput = document.querySelector("input[type=file]");
 
       preview.src = "";
       preview.setAttribute("image-loaded", "false");
       document.querySelector("#image-wrapper").classList.add("h-fit");
-      removeImageBtn.style.display = "none";
+      button.style.display = "none";
 
       fileInput.value = "";
     }
 
-    function captureContentAndSubmit() {
-      const editableDiv = document.querySelector('.content-container');
-      const hiddenInput = document.querySelectorAll('.input-hidden');
-      hiddenInput.forEach((input) => {
-        hiddenInput.value = input.closest(".content-container").innerHTML
-        console.log('val: ', hiddenInput.value)
-      })
-    }
 
-    function previewFile() {
-      var preview = document.querySelector('img');
-      var file = document.querySelector('input[type=file]').files[0];
-      var reader = new FileReader();
-
-      reader.onloadend = function () {
-        console.log(reader.result)
-        preview.src = reader.result;
-        preview.setAttribute("image-loaded", "true");
-
-        file.value = "";
-      }
-
-      if (file) {
-        console.log("ASD")
-        reader.readAsDataURL(file);
-        showCover()
-
-      } else {
-        preview.src = "";
-      }
-    }</script>
+  </script>
   <script type="module" src="/js/htmx.min.js"></script>
   <script src="/js/Sortable.min.js"></script>
 </body>

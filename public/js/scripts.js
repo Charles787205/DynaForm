@@ -85,11 +85,10 @@ let targetBlock = null;
 
 function initializeDragAndDrop() {
   document.addEventListener("dragstart", (event) => {
-    if (event.target.classList.contains("input-block")) {
-      draggedElement = event.target;
-      event.dataTransfer.setData("text/plain", null);
-      event.target.style.opacity = 0.5;
-    }
+    draggedElement = event.target;
+    event.dataTransfer.setData("text/plain", null);
+    event.target.style.opacity = 0.5;
+    console.log("dragged", draggedElement);
   });
 
   document.addEventListener("dragend", (event) => {
@@ -129,7 +128,6 @@ function initalizeDropzones() {
       event.preventDefault();
 
       const target = event.target.closest(".input-block");
-      console.log(target);
 
       targetBlock = target;
       if (target && target !== draggedElement) {
@@ -165,16 +163,23 @@ function initalizeDropzones() {
         currentDropZone.classList.remove("drag-over");
         handleDrop(currentDropZone);
         currentDropZone = null;
+        console.log("dropped at: ", event.target);
       }
     });
   });
 }
-
 function handleDrop(dropZone) {
   if (draggedElement) {
     const position = dropZone.getAttribute("data-position");
-    const parentInputBlock = dropZone.closest(".input-block");
+    let parentInputBlock = dropZone.closest(".input-block");
     const targetIsEmpty = targetBlock.textContent.trim() == "";
+    let inputFlexContainer = null;
+    if (draggedElement.getAttribute("data-type") == "label") {
+      inputFlexContainer = draggedElement
+        .closest(".input-block").querySelector(".input-flex");
+      parentInputBlock = inputFlexContainer;
+      console.log("dropped to parent: ", inputFlexContainer);
+    }
 
     if (position === "left" || position === "right") {
       const wrapper = document.createElement("div");
@@ -190,10 +195,10 @@ function handleDrop(dropZone) {
       if (position === "left") {
         parentInputBlock.parentNode.insertBefore(wrapper, parentInputBlock);
         wrapper.appendChild(draggedElement);
-        wrapper.appendChild(parentInputBlock);
+        wrapper.appendChild(inputFlexContainer ?? parentInputBlock);
       } else if (position === "right") {
         parentInputBlock.parentNode.insertBefore(wrapper, parentInputBlock);
-        wrapper.appendChild(parentInputBlock);
+        wrapper.appendChild(inputFlexContainer ?? parentInputBlock);
         wrapper.appendChild(draggedElement);
       }
     } else {
@@ -211,23 +216,48 @@ function handleDrop(dropZone) {
   }
 }
 
+let labelled = [];
+function handleClick(element) {
+  element.classList.add("hidden");
+
+  const inputBlock = element.closest(".input-block");
+  if (inputBlock) {
+    inputBlock.setAttribute("data-labelled", "true");
+
+    labelled.push(inputBlock.getAttribute("id"));
+
+    console.log(inputBlock);
+  }
+  console.log("labelled:", labelled);
+}
+
+function handleSwap(e) {
+  const element = e.target;
+
+  if (element.closest("#form")) {
+    initalizeDropzones();
+  }
+
+  if (element.classList.contains("actions")) {
+    element.querySelector(".delete").addEventListener("click", function () {
+      console.log(element.closest(".content-container"));
+      var inputblocks = document.querySelectorAll(".input-block");
+      inputblocks.forEach((block) => {
+        if (labelled.includes(block.id)) {
+          block.querySelector(".option").classList.remove("hidden");
+        }
+      });
+
+      element.closest(".input-block").remove();
+    });
+  }
+}
+//Listeners
+
 document.addEventListener("DOMContentLoaded", function () {
   initializeDragAndDrop();
 });
 
-let index = 0;
-
 document.addEventListener("htmx:afterSwap", function (e) {
-  const element = e.target;
-  if (!element.classList.contains("actions") && element.closest("#form")) {
-    initalizeDropzones();
-    if (element.classList.contains("label")) {
-      const addButton = element
-        .closest(".input-block")
-        .querySelector(".option");
-      if (addButton) {
-        addButton.style.display = "none"; // to be fixed
-      }
-    }
-  }
+  handleSwap(e);
 });

@@ -13,4 +13,11 @@ const createForm = async (req, res) => {
 
   res.render("index", { data });
 };
+
+const editForm = async (req, res) => {
+  const data = {};
+
+  res.render("index", { data });
+};
+
 export default { get, post, createForm };

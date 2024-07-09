@@ -28,6 +28,12 @@
   padding: 5px 10px 5px 10px;
 }
 
+input[type="checkbox"], input[type="radio"] {
+  outline: none !important;
+  box-shadow: none;
+}
+
+
 .title {
   margin: 20px 0px 10px 0px;
 }
@@ -59,14 +65,6 @@
 
 img[image-loaded="false"] {
   opacity: 0;
-}
-
-.cover-wrapper {
-  transition: background-color 0.5s ease;
-}
-
-.cover-wrapper:hover {
-  background-color: #efefefb8;
 }
 
 img[image-loaded="true"]:hover,

@@ -4,6 +4,12 @@ const get = async (req, res) => {
 	res.redirect("/create");
 };
 
+const post = async (req, res) => {
+	console.log(req.body);
+	console.log("hello");
+	res.send(req.body);
+};
+
 const createForm = async (req, res) => {
 	const { name, description, components } = req.body;
 

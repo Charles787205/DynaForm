@@ -38,16 +38,6 @@ Component.discriminator(
 			required: true,
 			enum: ["Title", "Heading", "SmallText"],
 		},
-		label: {
-			type: String,
-			required: true,
-			maxLength: 50,
-		},
-		name: {
-			type: String,
-			required: true,
-			maxLength: 50,
-		},
 	})
 );
 

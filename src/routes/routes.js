@@ -6,7 +6,7 @@ const router = Router();
 router.route("/").get(FormController.get).post(FormController.post);
 router.get("/components/:name", Components.getComponent);
 router.get("/components/fields/:name", Components.getField);
-router.get("/create", FormController.createForm);
+router.post("/create", FormController.createForm); // save form to the database
 router.post("/submit", FormController.post);
 
 export default router;

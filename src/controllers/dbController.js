@@ -1,4 +1,4 @@
-import formModels from "../models/formModels.js";
+import formModels from "../models/form.models.js";
 
 const add = async (req, res) => {
 	const { title, component } = req.body;

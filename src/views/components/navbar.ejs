@@ -1,14 +1,26 @@
 <nav
-  class="w-screen fixed h-fit z-20 bg-white py-3 border-b border-neutral-400/opacity-80 mr-0 ml-0 px-10 content-center flex justify-center">
-  <div class="max-w-screen-lg 2xl:max-w-screen-xl justify-between items-center inline-flex w-full">
+  class="w-screen fixed h-fit z-20 bg-white py-3 border-b border-neutral-400/opacity-80 mr-0 ml-0 px-10 content-center flex justify-center"
+>
+  <div
+    class="max-w-screen-lg 2xl:max-w-screen-xl justify-between items-center inline-flex w-full"
+  >
     <div class="w-[108px] h-[27px] text-black text-xl font-black">
       DynaForm<br />
     </div>
-    <div class="flex gap-6 items-center ">
-
+    <div class="flex gap-6 items-center">
       <button class="py-2 px-2 hover:font-semibold">Preview</button>
-      <button class="py-2 px-2 hover:font-semibold">My Forms</button>
-      <button class="rounded-full text-white text-center px-4 py-2 bg-neutral-800">
+      <button
+        class="py-2 px-2 hover:font-semibold"
+        hx-get="/listform"
+        hx-trigger="click"
+        hx-target=".mainscreen"
+        hx-swap="outerHTML"
+      >
+        My Forms
+      </button>
+      <button
+        class="rounded-full text-white text-center px-4 py-2 bg-neutral-800"
+      >
         Export
       </button>
     </div>

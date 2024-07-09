@@ -14,4 +14,10 @@ const createForm = async (req, res) => {
 
   res.render("index", { data });
 };
-export default { get, post, createForm };
+
+const listForm = async (req, res) => {
+  const data = {};
+
+  res.render("pages/listForm", { data });
+};
+export default { get, post, createForm, listForm };

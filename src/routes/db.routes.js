@@ -1,5 +1,5 @@
 import { Router } from "express";
-import DbConnect from "../controllers/dbcontroller.js";
+import DbConnect from "../controllers/db.controller.js";
 const dbRouter = Router();
 
 dbRouter.post("/", DbConnect.add);

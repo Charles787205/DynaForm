@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 // app.js (or index.js)
 import express from "express";
 import router from "./src/routes/routes.js";
-import dbRouter from "./src/routes/dbRoutes.js"; // api routes for db bridge
+import dbRouter from "./src/routes/db.routes.js"; // api routes for db bridge
 // import mongoose from "mongoose";
 
 dotenv.config();

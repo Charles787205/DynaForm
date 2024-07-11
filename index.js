@@ -55,7 +55,6 @@ mongoose
     });
   })
   .catch((error) => console.log(error));
-*/
 
 const PORT = process.env.PORT || 3000;
 

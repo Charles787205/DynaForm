@@ -1,0 +1,15 @@
+<!-- This symbol (<%- %>) - rendered the ejs file in html format  -->
+<!-- include keyword requires a filename option or file directory -->
+
+<!-- Text Components -->
+<div class="flex flex-col gap-3">
+	<p class="text-lg font-sem-bold text-center">Text Blocks</p>
+
+	<!-- Heading -->
+	<%- include('./button.ejs', {buttonName: 'Heading', description:"Use this for displaying prominent headings and section titles, ensuring clear and visually appealing text." }) %>
+
+	<!-- Normal Text -->
+	<%- include('./button.ejs', {buttonName: 'Normal Text', description:"Use this for standard body text, paragraphs, and general content where readability and simplicity are key." }) %>
+
+	
+</div>

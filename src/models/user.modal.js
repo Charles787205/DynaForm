@@ -11,7 +11,23 @@ const userSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		password: {
+		first_name: {
+			type: String,
+			required: true,
+		},
+		last_name: {
+			type: String,
+			required: true,
+		},
+		accessTOken: {
+			type: String,
+			required: true,
+		},
+		googleID: {
+			type: String,
+			required: true,
+		},
+		img_url: {
 			type: String,
 			required: true,
 		},

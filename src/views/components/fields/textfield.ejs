@@ -6,7 +6,6 @@
       id="input_<%= query.id %>" <%=query.focus==="true" ? "autofocus" : "" %>
 
       placeholder="Start typing text or add a block."></div>
-
     <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
     <div class="move-dropzone" data-position="left"></div>
     <div class="move-dropzone" data-position="right"></div>

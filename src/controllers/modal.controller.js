@@ -1,4 +1,5 @@
 import Component from "../controllers/components.controller.js";
+
 const get_title = async (req, res) => {
 	const { title, description } = req.query;
 

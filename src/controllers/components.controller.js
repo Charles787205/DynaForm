@@ -1,6 +1,5 @@
 import FormComponent from "../objects/formComponent.js";
 import { v4 as uuidv4 } from "uuid";
-
 let counter = 0;
 
 const getComponent = async (req, res) => {
@@ -19,12 +18,15 @@ const getField = async (req, res) => {
     ...req.query,
   };
 
-
-
   res.render(`components/fields/${componentName}`, { query });
 };
 
+// return the modal that holds the components for the form
+const getModal = async (req, res) => {
+  res.render("components/modal");
+};
 export default {
   getComponent,
   getField,
+  getModal,
 };

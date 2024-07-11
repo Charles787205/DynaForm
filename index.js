@@ -1,14 +1,14 @@
 import dotenv from "dotenv";
-// import authRouter from "./src/routes/auth.routes.js";
-// import passport from "passport";
-// import session from "express-session";
+import authRouter from "./src/routes/auth.routes.js";
+import passport from "passport";
+import session from "express-session";
+
 // import googlePassport from "passport-google-oauth20";
 
 // app.js (or index.js)
 import express from "express";
 import router from "./src/routes/routes.js";
-import dbRouter from "./src/routes/db.routes.js"; // api routes for db bridge
-// import mongoose from "mongoose";
+import mongoose from "mongoose";
 
 dotenv.config();
 const app = express();
@@ -17,73 +17,45 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs"); // Set the view engine to ejs
 app.set("views", "src/views"); // Set the views directory1
 
-// app.use(
-//   session({
-//     secret: process.env.SESSION_SECRET || "dxfcv",
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//       maxAge: 1000 * 60 * 100,
-//     },
-//   })
-// );
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET || "dxfcv",
+		resave: false,
+		saveUninitialized: true,
+		cookie: {
+			maxAge: 1000 * 60 * 100,
+		},
+	})
+);
 
-// app.use(passport.initialize());
+app.use(passport.initialize());
 
-// app.use(passport.authenticate("session"));
-// app.use(passport.session());
+app.use(passport.authenticate("session"));
+app.use(passport.session());
 app.use(express.static("public"));
 app.use(express.json());
-
-app.use("/db", dbRouter);
-
-// Database Connection with mongoDB
-
-// mongoose
-//   .connect(process.env.MONGO_URI)
-//   .then(() => {
-//     // Listen for request only after connecting to MongoDB
-//     app.listen(process.env.PORT, (error) => {
-//       if (!error) {
-//         console.log(
-//           "Server is connected to MongoDB & running on port",
-//           process.env.PORT
-//         );
-//       } else {
-//         console.log(`Error ${error}`);
-//       }
-//     });
-//   })
-//   .catch((error) => console.log(error));
-/*
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    // Listen for request only after connecting to MongoDB
-    app.listen(process.env.PORT, (error) => {
-      if (!error) {
-        console.log(
-          "Server is connected to MongoDB & running on port",
-          process.env.PORT
-        );
-      } else {
-        console.log(`Error ${error}`);
-      }
-    });
-  })
-  .catch((error) => console.log(error));
-*/
-
-const PORT = process.env.PORT || 3000;
+app.get("*/*", router);
+app.post("*/*", router);
+app.get("*/*", authRouter);
+app.post("*/*", authRouter);
 
 app.use(express.urlencoded({ extended: true | false }));
 
-app.get("*/*", router);
-app.post("*/*", router);
+// Database Connection with mongoDB
 
-// app.get("*/*", authRouter);
-// app.post("*/*", authRouter);
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+mongoose
+	.connect(process.env.MONGO_URI)
+	.then(() => {
+		// Listen for request only after connecting to MongoDB
+		app.listen(process.env.PORT, (error) => {
+			if (!error) {
+				console.log(
+					"Server is connected to MongoDB & running on port",
+					process.env.PORT
+				);
+			} else {
+				console.log(`Error ${error}`);
+			}
+		});
+	})
+	.catch((error) => console.log(error));

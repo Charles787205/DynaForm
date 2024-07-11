@@ -8,8 +8,7 @@ import session from "express-session";
 // app.js (or index.js)
 import express from "express";
 import router from "./src/routes/routes.js";
-import dbRouter from "./src/routes/db.routes.js"; // api routes for db bridge
-// import mongoose from "mongoose";
+import mongoose from "mongoose";
 
 dotenv.config();
 const app = express();
@@ -35,28 +34,11 @@ app.use(passport.authenticate("session"));
 app.use(passport.session());
 app.use(express.static("public"));
 app.use(express.json());
-
-app.use("/db", dbRouter);
+app.get("*/*", router);
+app.post("*/*", router);
 
 // Database Connection with mongoDB
 
-// mongoose
-//   .connect(process.env.MONGO_URI)
-//   .then(() => {
-//     // Listen for request only after connecting to MongoDB
-//     app.listen(process.env.PORT, (error) => {
-//       if (!error) {
-//         console.log(
-//           "Server is connected to MongoDB & running on port",
-//           process.env.PORT
-//         );
-//       } else {
-//         console.log(`Error ${error}`);
-//       }
-//     });
-//   })
-//   .catch((error) => console.log(error));
-/*
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {

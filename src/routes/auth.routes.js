@@ -25,29 +25,24 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user); // Serialize the entire user object into the session
+  // Code to serialize user data
 });
 
-passport.deserializeUser((user, done) => {
-  done(null, user); // Deserialize the user from the session
+passport.deserializeUser((id, done) => {
+  // Code to deserialize user data
 });
 
 // Initiates the Google OAuth 2.0 authentication flow
 authRouter.get(
   "/auth/google",
-
-  passport.authenticate("google", { scope: ["profile"] }, (req, res) => {
-    console.log(req);
-  })
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 // Callback URL for handling the OAuth 2.0 response
 authRouter.get(
   "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/",
-  }),
-  (req, res, next) => {
+  passport.authenticate("google", { failureRedirect: "/" }),
+  (req, res) => {
     console.log(req);
     res.redirect("/");
   }

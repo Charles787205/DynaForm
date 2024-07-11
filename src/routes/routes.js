@@ -10,6 +10,7 @@ router.get("/components/fields/:name", Components.getField);
 router.get("/components/modal", Components.getModal); // view the modal that holds the components for the form
 router.get("/create", FormController.createForm);
 router.get("/listform", FormController.listForm);
+router.get("/viewform", FormController.viewForm);
 router.post("/submit", FormController.post);
 
 // modal route

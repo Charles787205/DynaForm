@@ -16,36 +16,25 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     (accessToken, refreshToken, profile, done) => {
-      console.log(profile);
       //diri i save ang user sa database
-      console.log({
-        accessToken,
-        id: profile.id,
-        name: profile.displayName,
-        email: profile.emails[0].value,
-        image: profile.photos[0].value,
-        username: profile.username,
-      });
-      /*
-      
+
       const query = User.findOne({ googleId: profile.id });
       query.exec().then((user) => {
         if (user) {
           console.log("User already exists");
         } else {
           const newUser = new User({
-            googleId: profile.id,
+            google_id: profile.id,
             name: profile.displayName,
             email: profile.emails[0].value,
-            image: profile.photos[0].value,
-            username: profile.username,
+            img_url: profile.photos[0].value,
+            accessToken: accessToken,
           });
           newUser.save().then((user) => {
-            console.log("User saved to database");
+            console.log(user);
           });
         }
       });
-      */
 
       return done(null, profile);
     }

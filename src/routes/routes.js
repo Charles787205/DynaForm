@@ -11,6 +11,7 @@ router.get("/components/modal", Components.getModal); // view the modal that hol
 router.get("/create", FormController.createForm);
 router.get("/listform", FormController.listForm);
 router.get("/viewform", FormController.viewForm);
+router.get("/template/:template", Components.getTemplate);
 router.post("/submit", FormController.post);
 
 // modal route

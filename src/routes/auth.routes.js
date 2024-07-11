@@ -18,6 +18,7 @@ passport.use(
     (accessToken, refreshToken, profile, done) => {
       //console.log(profile);
       //diri i save ang user sa database
+      console.log({ accessToken, profile });
       return done(null, profile);
     }
   )

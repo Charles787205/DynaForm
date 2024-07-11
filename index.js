@@ -7,8 +7,7 @@ import dotenv from "dotenv";
 // app.js (or index.js)
 import express from "express";
 import router from "./src/routes/routes.js";
-import dbRouter from "./src/routes/db.routes.js"; // api routes for db bridge
-// import mongoose from "mongoose";
+import mongoose from "mongoose";
 
 dotenv.config();
 const app = express();
@@ -34,56 +33,38 @@ app.set("views", "src/views"); // Set the views directory1
 // app.use(passport.session());
 app.use(express.static("public"));
 app.use(express.json());
-
-app.use("/db", dbRouter);
+app.get("*/*", router);
+app.post("*/*", router);
 
 // Database Connection with mongoDB
 
-// mongoose
-//   .connect(process.env.MONGO_URI)
-//   .then(() => {
-//     // Listen for request only after connecting to MongoDB
-//     app.listen(process.env.PORT, (error) => {
-//       if (!error) {
-//         console.log(
-//           "Server is connected to MongoDB & running on port",
-//           process.env.PORT
-//         );
-//       } else {
-//         console.log(`Error ${error}`);
-//       }
-//     });
-//   })
-//   .catch((error) => console.log(error));
-/*
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    // Listen for request only after connecting to MongoDB
-    app.listen(process.env.PORT, (error) => {
-      if (!error) {
-        console.log(
-          "Server is connected to MongoDB & running on port",
-          process.env.PORT
-        );
-      } else {
-        console.log(`Error ${error}`);
-      }
-    });
-  })
-  .catch((error) => console.log(error));
-*/
+	.connect(process.env.MONGO_URI)
+	.then(() => {
+		// Listen for request only after connecting to MongoDB
+		app.listen(process.env.PORT, (error) => {
+			if (!error) {
+				console.log(
+					"Server is connected to MongoDB & running on port",
+					process.env.PORT
+				);
+			} else {
+				console.log(`Error ${error}`);
+			}
+		});
+	})
+	.catch((error) => console.log(error));
 
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
-app.use(express.urlencoded({ extended: true | false }));
+// app.use(express.urlencoded({ extended: true | false }));
 
-app.get("*/*", router);
-app.post("*/*", router);
+// app.get("*/*", router);
+// app.post("*/*", router);
 
 // app.get("*/*", authRouter);
 // app.post("*/*", authRouter);
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+// 	console.log(`Server is running on http://localhost:${PORT}`);
+// });

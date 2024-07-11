@@ -37,6 +37,8 @@ app.use(express.json());
 app.get("*/*", router);
 app.post("*/*", router);
 
+app.use(express.urlencoded({ extended: true | false }));
+
 // Database Connection with mongoDB
 
 mongoose
@@ -55,17 +57,3 @@ mongoose
     });
   })
   .catch((error) => console.log(error));
-
-const PORT = process.env.PORT || 3000;
-
-app.use(express.urlencoded({ extended: true | false }));
-
-app.get("*/*", router);
-app.post("*/*", router);
-
-app.get("*/*", authRouter);
-app.post("*/*", authRouter);
-//Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});

@@ -18,14 +18,14 @@ app.set("view engine", "ejs"); // Set the view engine to ejs
 app.set("views", "src/views"); // Set the views directory1
 
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "dxfcv",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 1000 * 60 * 100,
-    },
-  })
+	session({
+		secret: process.env.SESSION_SECRET || "dxfcv",
+		resave: false,
+		saveUninitialized: true,
+		cookie: {
+			maxAge: 1000 * 60 * 100,
+		},
+	})
 );
 
 app.use(passport.initialize());
@@ -42,18 +42,18 @@ app.use(express.urlencoded({ extended: true | false }));
 // Database Connection with mongoDB
 
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    // Listen for request only after connecting to MongoDB
-    app.listen(process.env.PORT, (error) => {
-      if (!error) {
-        console.log(
-          "Server is connected to MongoDB & running on port",
-          process.env.PORT
-        );
-      } else {
-        console.log(`Error ${error}`);
-      }
-    });
-  })
-  .catch((error) => console.log(error));
+	.connect(process.env.MONGO_URI)
+	.then(() => {
+		// Listen for request only after connecting to MongoDB
+		app.listen(process.env.PORT, (error) => {
+			if (!error) {
+				console.log(
+					"Server is connected to MongoDB & running on port",
+					process.env.PORT
+				);
+			} else {
+				console.log(`Error ${error}`);
+			}
+		});
+	})
+	.catch((error) => console.log(error));

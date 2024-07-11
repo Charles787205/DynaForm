@@ -3,9 +3,9 @@
 <!-- (<%= %>) - rendered the value or text into html -->
 
 <button
-	hx-get="/components/modal/title"
+	hx-get="/components/modal/preview"
 	hx-trigger="click"
-	hx-vals='{"title": "<%= buttonName %>", "description": "<%= description %>"}'
+	hx-vals='{"title": "<%= buttonName %>", "description": "<%= description %>" , "path": "<%= path %>"}'
 	hx-target="#preview"
 	class="w-full focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium text-sm py-1 text-left pl-5"
 >

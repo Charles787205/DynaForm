@@ -4,17 +4,44 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="/css/app.css" />
 
+    <script
+      src="https://unpkg.com/htmx.org@2.0.0"
+      integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <script src="/js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.2/dist/umd/uuidv4.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+
   <body>
-    <div
-      class="text-yellow-400 font-bold h-screen bg-slate-900"
-      hx-target="this"
-      hx-swap="outerHTML"
-    >
-      <button hx-get="/components/textfield">Click me</button>
+    <div class="app">
+      <div
+        hx-get="/components/navbar"
+        hx-trigger="load"
+        hx-swap="outerHTML"
+      ></div>
+      <main class="w-screen items-start inline-flex">
+        <!--  ARI ANG CONTENT -->
+      </main>
     </div>
-    <script src="/js/htmx.min.js"></script>
+    <script>
+      <!-- Scripts na applyable sa tanan -->
+    </script>
+    <script type="module" src="/js/htmx.min.js"></script>
+    <script src="/js/Sortable.min.js"></script>
   </body>
 </html>

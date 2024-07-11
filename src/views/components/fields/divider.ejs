@@ -1,0 +1,12 @@
+<div class="input-block" draggable="true" id="<%= query.id %>">
+    <div class="block-container ">
+        <div class="content-container">
+            <div class="self-stretch h-px my-4  border border-neutral-400"></div>
+        </div>
+        <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+        <div class="move-dropzone" data-position="left"></div>
+        <div class="move-dropzone" data-position="right"></div>
+        <div class="move-dropzone" data-position="below"></div>
+        <div class="move-dropzone" data-position="top"></div>
+    </div>
+</div>

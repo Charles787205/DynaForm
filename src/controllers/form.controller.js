@@ -11,21 +11,18 @@ const post = async (req, res) => {
 const createForm = async (req, res) => {
 	const data = {};
 
-	res.render("index", { data });
+	res.render("pages/create", { data });
 };
-export default { get, post, createForm };
 
-// const createForm = async (req, res) => {
-// 	const { name, description, components } = req.body;
+const editForm = async (req, res) => {
+	const data = {};
 
-// 	try {
-// 		const create = await Form.create({
-// 			name,
-// 			description,
-// 			components,
-// 		});
-// 		res.status(200).json(create);
-// 	} catch (error) {
-// 		res.status(400).json({ message: error.message });
-// 	}
-// };
+	res.render("pages/create", { data });
+};
+
+const listForm = async (req, res) => {
+	const data = {};
+	res.render("pages/listform");
+};
+
+export default { get, post, createForm, listForm, editForm };

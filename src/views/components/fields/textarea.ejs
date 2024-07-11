@@ -1,7 +1,16 @@
-<div
-  class="w-80 h-28 px-2 py-2.5 rounded-lg shadow border border-zinc-400 flex-col justify-start items-start gap-2.5 inline-flex"
->
-  <div class="text-neutral-600 text-xs font-extralight font-['Inter']">
-    Place Holder...
+<div class="input-block" draggable="true" id="<%= query.id %>">
+  <div class="block-container ">
+      <div
+        class="content-container w-full max-w-80 h-28 overflow-y-scroll px-2 py-2.5 rounded-lg shadow border border-zinc-400 self-stretch grow shrink basis-0 text-neutral-600 text-[1rem] font-extralight outline-none"
+        contentEditable="true"
+        show-pl-click="true"
+        placeholder="Start typing a placeholder"
+      >
+      </div>
+    <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+    <div class="move-dropzone" data-position="left"></div>
+    <div class="move-dropzone" data-position="right"></div>
+    <div class="move-dropzone" data-position="below"></div>
+    <div class="move-dropzone" data-position="top"></div>
   </div>
 </div>

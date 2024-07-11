@@ -13,7 +13,7 @@ router.get("/listform", FormController.listForm);
 router.post("/submit", FormController.post);
 
 // modal route
-router.get("/components/modal/title", Modal.get_title);
+router.get("/components/modal/preview", Modal.get_title);
 
 export default router;
 

@@ -1,24 +1,41 @@
-<div class="input-block" draggable="true" id="<%= query.id %>"> 
-  <div class="block-container">
+<% if(query.view){ %>
 
-    <div class="flex input-flex py-2 gap-3">
-      <div contenteditable="true" show-pl-click="false" spellcheck="false"
-        class="content-container text-[1.1rem] w-full outline-none resize-none" data-type="input"
-        data-name="<%= query.name %>_<%= query.id %>" id="input_<%= query.id %>" <%=query.focus==="true" ? "autofocus"
-        : "" %>
-        placeholder="<%= query.placeholder || "Type a placeholder" %>"></div>
-      <button class="option" type="button" hx-get="/components/fields/label" hx-trigger="click"
-        hx-target="closest .input-flex" hx-vals='{"placeholder": "Label", "for": "<%= query.id %>"}'
-        hx-swap="beforebegin" onclick="handleClick(this)">Add
-        label</button>
-      <!-- <button class="option" type="button" onclick="handleClick(this)">Add
-        label</button> -->
-      <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+  <div class="input-block">
+    <div class="block-container">
+        <div hx-get="/components/fields/label" hx-trigger="load"
+          hx-vals='{"label": "<%= query.label %>", "for": "<%= query.id %>"}'
+          hx-swap="outerHTML"></div>
+        <input data-type="inputfield" class="content-container text-[1.1rem] w-full outline-none resize-none"
+        id="input_<%= query.id %>"
+        placeholder="<%= query.content %>"
+        ></input>
     </div>
-    <div class="move-dropzone" data-position="left"></div>
-    <div class="move-dropzone" data-position="right"></div>
-    <div class="move-dropzone" data-position="below"></div>
-    <div class="move-dropzone" data-position="top"></div>
   </div>
-</div>
+
+<% } else { %> 
+  <div class="input-block" draggable="true" id="<%= query.id %>">
+    <div class="block-container">
+      <div class="flex input-flex py-2 gap-3">
+        <div contenteditable="true" show-pl-click="false" spellcheck="false"
+          class="content-container text-[1.1rem] w-full outline-none resize-none" data-type="inputfield"
+          data-name="<%= query.name %>_<%= query.id %>" id="input_<%= query.id %>" <%=query.focus==="true" ? "autofocus"
+          : "" %>
+          placeholder="<%= query.placeholder || "Type a placeholder" %>"></div>
+        <button class="option" type="button" hx-get="/components/fields/label" hx-trigger="click"
+          hx-target="closest .input-flex" hx-vals='{"placeholder": "Label", "for": "<%= query.id %>"}'
+          hx-swap="beforebegin" onclick="handleClick(this)">Add
+          label</button>
+        <!-- <button class="option" type="button" onclick="handleClick(this)">Add
+          label</button> -->
+        <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+      </div>
+      <div class="move-dropzone" data-position="left"></div>
+      <div class="move-dropzone" data-position="right"></div>
+      <div class="move-dropzone" data-position="below"></div>
+      <div class="move-dropzone" data-position="top"></div>
+    </div>
+
+  </div>
+
+<% } %>
 

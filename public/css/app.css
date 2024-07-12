@@ -598,10 +598,6 @@ video {
   z-index: 50;
 }
 
-.m-3 {
-  margin: 0.75rem;
-}
-
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -639,6 +635,10 @@ video {
 
 .mr-0 {
   margin-right: 0px;
+}
+
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .mt-\[65px\] {
@@ -949,6 +949,16 @@ video {
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
+.border-gray-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+}
+
+.border-gray-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
+}
+
 .border-green-500 {
   --tw-border-opacity: 1;
   border-color: rgb(34 197 94 / var(--tw-border-opacity));
@@ -1047,6 +1057,11 @@ video {
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .py-1 {
@@ -1231,11 +1246,9 @@ video {
 .content-container {
   position: relative;
   color: #333;
-  min-height: 30px;
-  line-height: 1.5;
 }
 
-[data-type="input"] {
+[data-type="inputfield"] {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
     rgb(209, 213, 219) 0px 0px 0px 1px inset;
   resize: both;
@@ -1257,7 +1270,7 @@ input[type="checkbox"], input[type="radio"] {
   margin: 20px 0px 10px 0px;
 }
 
-.label[contenteditable="true"] {
+.label {
   font-weight: bold;
 }
 

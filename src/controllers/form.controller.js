@@ -25,4 +25,9 @@ const listForm = async (req, res) => {
 	res.render("pages/listform");
 };
 
-export default { get, post, createForm, listForm, editForm };
+const viewForm = async (req, res) => {
+  const data = {};
+  res.render("pages/viewform");
+};
+
+export default { get, post, createForm, listForm, editForm, viewForm };

@@ -1,5 +1,5 @@
 import { Router } from "express";
-
+import User from "../models/user.model.js";
 const authRouter = new Router();
 import passport from "passport";
 import googlePassport from "passport-google-oauth20";
@@ -16,20 +16,37 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     (accessToken, refreshToken, profile, done) => {
-      //console.log(profile);
       //diri i save ang user sa database
-      console.log({ accessToken, profile });
+
+      const query = User.findOne({ googleId: profile.id });
+      query.exec().then((user) => {
+        if (user) {
+          console.log("User already exists");
+        } else {
+          const newUser = new User({
+            google_id: profile.id,
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            img_url: profile.photos[0].value,
+            accessToken: accessToken,
+          });
+          newUser.save().then((user) => {
+            console.log(user);
+          });
+        }
+      });
+
       return done(null, profile);
     }
   )
 );
 
 passport.serializeUser((user, done) => {
-  // Code to serialize user data
+  return done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  // Code to deserialize user data
+  return done(null, id);
 });
 
 // Initiates the Google OAuth 2.0 authentication flow
@@ -43,15 +60,17 @@ authRouter.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    console.log(req);
     res.redirect("/");
   }
 );
 
 // Logout route
 authRouter.get("/logout", (req, res) => {
-  req.logout();
+  req.logout(() => {
+    return res.redirect("/");
+  });
   res.redirect("/");
 });
 
 export default authRouter;
+//ya29.a0AXooCgs1-Ag9NByMXE-VZupl4d34P-vwEP5Jb_sTDLJx3qw4Oxm4okTw7lqMzQi1HqivOZW-JiEefejVP0tRyJrKSU4KxKrHiS1sCukDxO0MmNtVWK5UjlskZV-zUOjh8pEiIwkKX5ywoyyTSRxVTQKp5btzNnNfquAtaCgYKAZkSARMSFQHGX2Miq7qgt4YlDldxBi90Pn0LrQ0171

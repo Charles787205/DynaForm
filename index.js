@@ -36,6 +36,8 @@ app.use(express.static("public"));
 app.use(express.json());
 app.get("*/*", router);
 app.post("*/*", router);
+app.get("*/*", authRouter);
+app.post("*/*", authRouter);
 
 app.use(express.urlencoded({ extended: true | false }));
 

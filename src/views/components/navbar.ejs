@@ -1,15 +1,17 @@
 <nav
 
-  class="w-screen fixed h-fit z-20 py-3  mr-0 ml-0 px-10 content-center flex justify-center"
+  class="w-screen fixed h-fit z-20 py-3  bg-white mr-0 ml-0 px-10 content-center flex justify-center"
 >
   <div
     class="max-w-screen-xl 2xl:max-w-screen-xl justify-between items-center inline-flex w-full"
   >
-    <button class="outline-none w-[108px] h-[27px] text-black text-md font-black" 
-    hx-get="/create"
-    hx-trigger="click"
-    hx-target=".mainscreen"
-    hx-swap="outerHTML">
+    <button
+      class="outline-none w-[108px] h-[27px] text-black text-md font-black"
+      hx-get="/create"
+      hx-trigger="click"
+      hx-target=".mainscreen"
+      hx-swap="outerHTML"
+    >
       DynaForm<br />
     </button>
     <div class="flex gap-6 items-center">
@@ -26,15 +28,14 @@
       </svg>
       <div
         class="absolute shadow-lg -bottom-40 w-fit left-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2">
-        <span class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
-    
-          <p>Survey</p>
-        </span>
-        <span class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
+          <span hx-get="template/default" hx-swap="outerHTML" hx-target=".template" class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
+            <p>Survey</p>
+          </span>
+        <span hx-get="template/feedback" hx-swap="outerHTML" hx-target=".template" class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
 
           <p>Information</p>
         </span>
-        <span class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
+        <span hx-get="template/feedback" hx-swap="outerHTML" hx-target=".template" class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
 
           <p>Feedback</p>
         </span>
@@ -42,13 +43,22 @@
     </button>
 
       <button
-        class="p-2 text-sm  hover:font-semibold"
+        class="p-2 text-sm hover:font-semibold"
         hx-get="/listform"
         hx-trigger="click"
         hx-target=".mainscreen"
         hx-swap="outerHTML"
       >
         My Forms
+      </button>
+      <button
+        class="p-2 text-sm hover:font-semibold"
+        hx-get="/viewform"
+        hx-trigger="click"
+        hx-target=".mainscreen"
+        hx-swap="outerHTML"
+      >
+        test
       </button>
       <button
         class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"

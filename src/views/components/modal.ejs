@@ -9,45 +9,45 @@
 
 <!-- Modal -->
 <div
-	class="modal fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50"
+  class="modal fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50"
 >
-	<div class="bg-white rounded-lg shadow-lg w-1/2 border border-blue-500">
-		<!-- Modal header -->
-		<div
-			class="px-4 py-2 border-b border-gray-300 flex justify-between items-center"
-		>
-			<!-- Title  -->
-			<h2 class="text-lg font-semibold">Component</h2>
-			<!-- close mark -->
-			<button class="text-gray-600 hover:text-gray-900"
-				hx-get="/"
-				hx-trigger="click"
-				hx-swap="delete"
-				hx-target=".modal"
-			>&times;</button>
-		</div>
+  <div class="bg-white rounded-lg shadow-lg w-1/2 border border-blue-500">
+    <!-- Modal header -->
+    <div
+      class="px-4 py-2 border-b border-gray-300 flex justify-between items-center"
+    >
+      <!-- Title  -->
+      <h2 class="text-lg font-semibold">Component</h2>
+      <!-- close mark -->
+      <button
+        class="text-gray-600 hover:text-gray-900"
+        hx-get="/"
+        hx-trigger="click"
+        hx-swap="delete"
+        hx-target=".modal"
+      >
+        &times;
+      </button>
+    </div>
 
-		<!-- Modal Body -->
-		<div class="p-5 flex">
-			<!-- Component List -->
-			<div
-				class="border-2 border-black flex flex-col gap-3 p-y w-64 max-h-[400px] overflow-auto"
-			>
-				<!-- Text -->
-				<div
-					hx-get="/modal/texts"
-					hx-trigger="load"
-					hx-swap="outerHTML"
-					>sdfsdf
-				</div>
+    <!-- Modal Body -->
+    <div class="p-5 flex">
+      <!-- Component List -->
+      <div
+        class="border-2 border-black flex flex-col gap-3 p-y w-64 max-h-[400px] overflow-auto"
+      >
+        <!-- Text -->
+        <div hx-get="/modal/texts" hx-trigger="load" hx-swap="outerHTML">
+          sdfsdf
+        </div>
 
-				<!-- Input -->
-			</div>
+        <!-- Input -->
+      </div>
 
-			<!-- Preview -->
-			<div id="preview" class="border-2 border-blue-500 w-full"></div>
-		</div>
+      <!-- Preview -->
+      <div id="preview" class="border-2 border-blue-500 w-full"></div>
+    </div>
 
-		<hr />
-	</div>
+    <hr />
+  </div>
 </div>

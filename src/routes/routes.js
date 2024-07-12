@@ -8,7 +8,10 @@ router.route("/").get(FormController.get).post(FormController.post);
 router.get("/components/:name", Components.getComponent);
 router.get("/components/fields/:name", Components.getField);
 router.get("/components/modal", Components.getModal); // view the modal that holds the components for the form
-router.get("/create", FormController.createForm);
+router
+  .route("/create")
+  .get(FormController.createForm)
+  .post(FormController.submitForm);
 router.get("/listform", FormController.listForm);
 router.get("/viewform", FormController.viewForm);
 router.get("/template/:template", Components.getTemplate);

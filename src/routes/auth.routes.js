@@ -73,4 +73,3 @@ authRouter.get("/logout", (req, res) => {
 });
 
 export default authRouter;
-//ya29.a0AXooCgs1-Ag9NByMXE-VZupl4d34P-vwEP5Jb_sTDLJx3qw4Oxm4okTw7lqMzQi1HqivOZW-JiEefejVP0tRyJrKSU4KxKrHiS1sCukDxO0MmNtVWK5UjlskZV-zUOjh8pEiIwkKX5ywoyyTSRxVTQKp5btzNnNfquAtaCgYKAZkSARMSFQHGX2Miq7qgt4YlDldxBi90Pn0LrQ0171

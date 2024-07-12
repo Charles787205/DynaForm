@@ -1,16 +1,13 @@
-function submitForm() {
+async function submitForm() {
   const form = document.getElementById("form");
   const formName = form.getAttribute("data-form-name") || "defaultFormName";
   const formDescription =
     form.getAttribute("data-form-description") || "defaultDescription";
-  
-  
-
 
   const formComponents = Array.from(form.querySelectorAll(".input-block")).map(
     (block) => {
       const contentContainer = block.querySelector(".content-container");
-      
+
       const label =
         block.querySelector(".label") &&
         (block.querySelector(".label").innerHTML ?? undefined);
@@ -25,9 +22,7 @@ function submitForm() {
         ? "true"
         : undefined;
 
-      
-        const component = { id };
-
+      const component = { id };
 
       if (content) {
         component.content = content;
@@ -67,7 +62,22 @@ function submitForm() {
   };
 
   console.log("Submitting form data:", formData);
-  
+
+  fetch("/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+
   // fetch("/submit", {
   //   method: "POST",
   //   headers: {
@@ -187,7 +197,8 @@ function handleDrop(dropZone) {
     let inputFlexContainer = null;
     if (draggedElement.getAttribute("data-type") == "label") {
       inputFlexContainer = draggedElement
-        .closest(".input-block").querySelector(".input-flex");
+        .closest(".input-block")
+        .querySelector(".input-flex");
 
       parentInputBlock = inputFlexContainer;
       console.log("dropped to parent: ", inputFlexContainer);

@@ -3,10 +3,14 @@ function submitForm() {
   const formName = form.getAttribute("data-form-name") || "defaultFormName";
   const formDescription =
     form.getAttribute("data-form-description") || "defaultDescription";
+  
+  
+
 
   const formComponents = Array.from(form.querySelectorAll(".input-block")).map(
     (block) => {
       const contentContainer = block.querySelector(".content-container");
+      
       const label =
         block.querySelector(".label") &&
         (block.querySelector(".label").innerHTML ?? undefined);
@@ -21,10 +25,18 @@ function submitForm() {
         ? "true"
         : undefined;
 
-      const component = { id, name, type };
+      
+        const component = { id };
+
 
       if (content) {
         component.content = content;
+      }
+      if (name) {
+        component.name = name;
+      }
+      if (type) {
+        component.type = type;
       }
       if (label) {
         component.label = label;
@@ -44,7 +56,6 @@ function submitForm() {
       if (placeholder) {
         component.placeholder = placeholder;
       }
-      // to be continued
       return component;
     }
   );
@@ -56,7 +67,7 @@ function submitForm() {
   };
 
   console.log("Submitting form data:", formData);
-
+  
   // fetch("/submit", {
   //   method: "POST",
   //   headers: {

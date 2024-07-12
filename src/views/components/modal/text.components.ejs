@@ -6,10 +6,8 @@
 	<p class="text-lg font-sem-bold text-center">Text Blocks</p>
 
 	<!-- Heading -->
-	<%- include('./button.ejs', {buttonName: 'Heading', description:"Use this for displaying prominent headings and section titles, ensuring clear and visually appealing text." }) %>
+	<%- include('./button.ejs', {buttonName: 'Heading', description:"Use this for standard body text, paragraphs, and general content where readability and simplicity are key." , path:'heading'}) %>
 
 	<!-- Normal Text -->
-	<%- include('./button.ejs', {buttonName: 'Normal Text', description:"Use this for standard body text, paragraphs, and general content where readability and simplicity are key." }) %>
-
-	
+	<%- include('./button.ejs', {buttonName: 'Normal Text', description:"Use this for standard body text, paragraphs, and general content where readability and simplicity are key.", path:'textfield'	}) %>
 </div>

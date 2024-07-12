@@ -1,32 +1,52 @@
 <% if(query.view){ %>
-    <label
-        for="input_<%= query.id %>"
-        data-type="label"
-        class="text-[1rem] w-full label outline-none resize-none mt-4">
-        <%=query.label %>
-    </label>
+<label
+  for="input_<%= query.id %>"
+  data-type="label"
+  class="text-[1rem] w-full label outline-none resize-none mt-4"
+>
+  <%=query.label %>
+</label>
 <% }else{ %>
-    <div contenteditable="true" draggable="true" data-type="label" id="label-<%= query.id %>" show-pl-click="true"
-        spellcheck="false" class="text-[1rem] w-full label outline-none resize-none mt-4">
-        <%=query.placeholder %>
-    </div>
-<% } %>
-
-
-
-
 <!-- <div class="input-block" draggable="true" id="<%= query.id %>">
-    <div class="block-container ">
-        <div contenteditable="true" show-pl-click="true"
-            class="content-container text-[1rem] label outline-none resize-none" data-type="label"
-            data-name="<%= query.name %>_<%= query.id %>" id="input_<%= query.id %>"
-            placeholder="<%= query.placeholder %>"></div>
-        <label for="input_<%= query.id %>">
-        </label>
-        <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
-        <div class="move-dropzone" data-position="left"></div>
-        <div class="move-dropzone" data-position="right"></div>
-        <div class="move-dropzone" data-position="below"></div>
-        <div class="move-dropzone" data-position="top"></div>
+  <div class="block-container">
+    <div
+      contenteditable="true"
+      draggable="true"
+      data-type="label"
+      id="label-<%= query.id %>"
+      data-name="label_<%= query.id %>"
+      show-pl-click="true"
+      spellcheck="false"
+      class="text-[1rem] w-full label outline-none resize-none mt-4"
+    >
+      <%=query.placeholder || "Label"%>
     </div>
+    <% } %>
+  </div>
 </div> -->
+
+<div class="input-block" draggable="true" id="<%= query.id %>">
+  <div class="block-container">
+    <div
+      contenteditable="true"
+      show-pl-click="true"
+      class="content-container text-[1rem] label outline-none resize-none"
+      data-type="label"
+      data-for="<%= query.for %>"
+      data-name="label_<%= query.id %>"
+      id="input_<%= query.id %>"
+      placeholder="<%= query.placeholder ?? 'Label'%>"
+    >
+      <%= query.content %>
+    </div>
+    <div
+      hx-get="components/tooltip"
+      hx-swap="outerHTML"
+      hx-trigger="load"
+    ></div>
+    <div class="move-dropzone" data-position="left"></div>
+    <div class="move-dropzone" data-position="right"></div>
+    <div class="move-dropzone" data-position="below"></div>
+    <div class="move-dropzone" data-position="top"></div>
+  </div>
+</div>

@@ -4,9 +4,13 @@ import FormObject from "../objects/Form.js";
 import Form from "../models/form.models.js";
 const get = async (req, res) => {
   res.redirect("/create");
+  res.redirect("/create");
 };
 
 const post = async (req, res) => {
+  console.log(req.body);
+  console.log("hello");
+  res.send(req.body);
   console.log(req.body);
   console.log("hello");
   res.send(req.body);
@@ -14,7 +18,9 @@ const post = async (req, res) => {
 
 const createForm = async (req, res) => {
   const data = {};
+  const data = {};
 
+  res.render("pages/create", { data });
   res.render("pages/create", { data });
 };
 const submitForm = async (req, res) => {
@@ -49,11 +55,16 @@ const submitForm = async (req, res) => {
 
 const editForm = async (req, res) => {
   const data = {};
+  const data = {};
 
   res.render("pages/create", { data });
+  res.render("pages/create", { data });
 };
+``;
 
 const listForm = async (req, res) => {
+  const data = {};
+  res.render("pages/listform");
   const data = {};
   res.render("pages/listform");
 };

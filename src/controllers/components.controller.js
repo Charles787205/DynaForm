@@ -29,9 +29,18 @@ const getTemplate = async (req,res) => {
 const getModal = async (req, res) => {
   res.render("components/modal");
 };
+
+const designModal = async (req, res) => {
+  const modals = req.params.modals;
+  const { button, description, path } = req.query;
+  console.log(button, description, path);
+  res.render(`components/modal/${modals}`, {button, description, path});
+};
+
 export default {
   getComponent,
   getField,
   getModal,
-  getTemplate
+  getTemplate,
+  designModal
 };

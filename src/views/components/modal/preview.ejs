@@ -7,11 +7,30 @@
 	<div class="flex flex-col gap-5">
 		<!-- Title -->
 		<h3 class="text-lg font-semibold"><%= title %></h3>
-
 		<!-- Description -->
-		<p class="text-sm text-gray-500"><%= description %></p>
+		<p class="text-sm text-gray-500 border-2"><%= description %></p>
 	</div>
-	<div class="border-2 border-black">
+
+	<div class="grid gap-2">
 		<h1>Example</h1>
+		<div
+			hx-get="/components/fields/<%= path %>"
+			hx-trigger="load"
+			hx-swap="innerHTML"
+			class="border-2 border-black"
+		></div>
+		<div class="flex justify-end">
+			<!-- Insert Button -->
+			<button
+				hx-get="/components/fields/<%= path %>"
+				hx-vals='{"focus": true, "type": "text", "name": "field_name"}'
+				hx-trigger="click"
+				hx-swap="outerHTML"
+				hx-target=".modal"
+				class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+			>
+				Insert
+			</button>
+		</div>
 	</div>
 </div>

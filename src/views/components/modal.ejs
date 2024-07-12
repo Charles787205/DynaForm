@@ -34,7 +34,12 @@
 				class="border-2 border-black flex flex-col gap-3 p-y w-64 max-h-[400px] overflow-auto"
 			>
 				<!-- Text -->
-				<%- include('./modal/text.components.ejs') %>
+				<div
+					hx-get="/modal/texts"
+					hx-trigger="load"
+					hx-swap="outerHTML"
+					>sdfsdf
+				</div>
 
 				<!-- Input -->
 			</div>

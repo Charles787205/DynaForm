@@ -3,35 +3,17 @@
     <div class="flex input-flex gap-3">
       <div class="justify-start items-center gap-2.5 inline-flex">
         <div class="ml-4 w-4 h-4 border rounded-full border-gray-600"></div>
-        <div
-          contenteditable="true"
-          show-pl-click="true"
+        <div contenteditable="true" show-pl-click="true"
           class="content-container text-neutral-600 text-md font-extralight outline-none min-w-28 max-w-80"
-          data-type="radiobox"
-          data-for="<%= query.for %>"
-          placeholder="Radio"
-          data-name="radio_<%= query.id %>"
-        >
+          data-type="radiobox" data-for="<%= query.for %>" placeholder="Radio" data-name="radio_<%= query.id %>">
           <%= query.content %>
         </div>
-        <button
-          class="option"
-          type="button"
-          hx-get="/components/fields/radiobox"
-          tabindex="-1"
-          hx-trigger="click"
-          hx-target="closest .input-block"
-          hx-vals='{"placeholder": "Label", "id": "<%= query.id %>"}'
-          hx-swap="afterend"
-          onclick="handleClick(this)"
-        >
+        <button class="option" type="button" hx-get="/components/fields/radiobox" tabindex="-1" hx-trigger="click"
+          hx-target="closest .input-block" hx-vals='{"id": "<%= query.id %>"}' hx-swap="afterend"
+          onclick="handleClick(this)">
           Add option
         </button>
-        <div
-          hx-get="components/tooltip"
-          hx-swap="outerHTML"
-          hx-trigger="load"
-        ></div>
+        <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
       </div>
     </div>
     <div class="move-dropzone" data-position="left"></div>

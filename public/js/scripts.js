@@ -67,22 +67,7 @@ async function submitForm() {
 
   console.log("Submitting form data:", formData);
 
-  fetch("/create", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-
-  // fetch("/submit", {
+  // fetch("/create", {
   //   method: "POST",
   //   headers: {
   //     "Content-Type": "application/json",
@@ -96,6 +81,21 @@ async function submitForm() {
   //   .catch((error) => {
   //     console.error("Error:", error);
   //   });
+
+  fetch("/submit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(JSON.stringify(data, null, 2));
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 function auto_grow(element) {

@@ -4,10 +4,12 @@ import Components from "../controllers/components.controller.js";
 import Modal from "../controllers/modal.controller.js";
 const router = Router();
 
+// COMPONENTS
 router.route("/").get(FormController.get).post(FormController.post);
 router.get("/components/:name", Components.getComponent);
 router.get("/components/fields/:name", Components.getField);
-router.get("/components/modal", Components.getModal); // view the modal that holds the components for the form
+
+//FORMS
 router
   .route("/create")
   .get(FormController.createForm)
@@ -15,11 +17,11 @@ router
 router.get("/listform", FormController.listForm);
 router.get("/viewform", FormController.viewForm);
 router.get("/template/:template", Components.getTemplate);
-router.get("/modal/:modals", Components.designModal);
 router.post("/submit", FormController.post);
 
-// modal route
-router.get("/components/modal/preview", Modal.get_title);
+// MODAL
+router.get("/components/modal/components", Components.showModal);
+router.get("/components/modal/preview", Components.showComponentPreview);
 
 export default router;
 

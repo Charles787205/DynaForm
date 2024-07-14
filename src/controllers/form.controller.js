@@ -13,10 +13,9 @@ const post = async (req, res) => {
 };
 
 const createForm = async (req, res) => {
-  const data = {};
-
-  res.render("pages/create", { data });
+  res.render("pages/create", { layout: "./layouts/main" });
 };
+
 const submitForm = async (req, res) => {
   try {
     // Assuming req.body contains the JSON data sent via fetch

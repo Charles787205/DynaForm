@@ -7,6 +7,9 @@
   font-weight: 350;
   font-style: normal;
 }
+.app {
+  overflow-x: hidden;
+}
 
 .content-container {
   position: relative;

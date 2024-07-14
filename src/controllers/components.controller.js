@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
+import { texts, inputs } from "../data/fields.js";
 
+//COMPONENTS
 const getComponent = async (req, res) => {
   const componentName = req.params.name;
   const options = {
@@ -16,31 +18,32 @@ const getField = async (req, res) => {
     ...req.query,
   };
 
+  console.log(req.query);
   res.render(`components/fields/${componentName}`, { query });
 };
 
-const getTemplate = async (req,res) => {
+//TEMPLATES
+const getTemplate = async (req, res) => {
   const template = req.params.template;
-
-  res.render(`template/${template}`)
-}
-
-// return the modal that holds the components for the form
-const getModal = async (req, res) => {
-  res.render("components/modal");
+  res.render(`template/${template}`);
 };
 
-const designModal = async (req, res) => {
-  const modals = req.params.modals;
-  const { button, description, path } = req.query;
-  console.log(button, description, path);
-  res.render(`components/modal/${modals}`, {button, description, path});
+// MODALS
+const showModal = async (req, res) => {
+  res.render("components/modal/index", {
+    texts: texts,
+    inputs: inputs,
+  });
+};
+
+const showComponentPreview = async (req, res) => {
+  res.render("components/modal/preview", { ...req.query, view: true });
 };
 
 export default {
   getComponent,
   getField,
-  getModal,
+  showModal,
   getTemplate,
-  designModal
+  showComponentPreview,
 };

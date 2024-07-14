@@ -1,0 +1,76 @@
+<!-- This symbol (<%- %>) - rendered the ejs file in html format  -->
+<!-- include keyword requires a filename option or file directory -->
+
+<!-- Modal Overlay -->
+<!-- <div
+	class="fixed inset-0 bg-gray-800 bg-opacity-75 z-40"
+	aria-hidden="true"
+></div> -->
+
+<!-- Modal -->
+<div class="modal fixed inset-0 bg-gray-800 bg-opacity-75 p-2 flex items-center justify-center z-30">
+  <div
+    class="bg-white z-50 rounded-lg shadow-lg w-full max-w-[45rem] flex flex-col h-full max-h-[35rem] border overflow-hidden pb-5">
+    <!-- Modal header -->
+    <div class="px-4 py-2 flex justify-between items-center">
+      <!-- Title  -->
+      <h2 class="text-lg font-semibold">Component</h2>
+      <!-- close mark -->
+      <button class="text-gray-600 hover:text-gray-900 cursor-pointer" hx-get="/" hx-trigger="click" hx-swap="delete"
+        hx-target=".modal">
+        &times;
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="flex h-full">
+      <!-- Component List -->
+      <div class="border-r-2 h-full flex flex-col gap-3 p-y max-h-full w-60 max-w-60 overflow-auto">
+        <!-- Text -->
+        <div class="flex flex-col gap-2">
+          <p class="text-md font-bold text-gray-500 text-start px-4">Text blocks</p>
+          <div>
+            <% texts.forEach(function(item) { console.log(item); %>
+              <button hx-get="/components/modal/preview" hx-trigger="click" hx-swap="innerHTML"
+                hx-vals='{"title": "<%= item.title %>", "description": "<%= item.description %>", "type": "<%= item.type %>", "example_text": "<%= item.example_text %>" }'
+                hx-target=".preview" class="w-full focus:outline-none px-4 hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium text-sm py-1
+                text-left ">
+                <%= item.title %>
+              </button>
+              <% }); %>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <p class="text-md font-bold text-gray-500 text-start px-4">Input blocks</p>
+          <div>
+            <% inputs.forEach(function(item) { console.log(item); %>
+              <button hx-get="/components/modal/preview" hx-trigger="click" hx-swap="innerHTML"
+                hx-vals='{"title": "<%= item.title %>", "description": "<%= item.description %>", "type": "<%= item.type %>", "example_text": "<%= item.example_text %>" }'
+                hx-target=".preview" class="w-full focus:outline-none px-4 hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium text-sm py-1
+                                text-left ">
+                <%= item.title %>
+              </button>
+              <% }); %>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview relative w-full h-full">
+        <div class="h-full flex justify-center items-center">
+          <h1>
+            Choose a block from the
+            list
+          </h1>
+
+        </div>
+
+      </div>
+
+      <!-- Input -->
+    </div>
+
+    <!-- Preview -->
+  </div>
+
+</div>
+</div>

@@ -14,6 +14,7 @@ async function submitForm() {
       const id = block.id;
       const name = contentContainer.getAttribute("data-name");
       const type = contentContainer.getAttribute("data-type");
+      const labelFor = contentContainer.getAttribute("data-for");
       const required = contentContainer.getAttribute("required");
       var placeholder = contentContainer.getAttribute("placeholder");
       const content = contentContainer.innerHTML;
@@ -26,6 +27,9 @@ async function submitForm() {
 
       if (content) {
         component.content = content;
+      }
+      if (labelFor) {
+        component.for = labelFor;
       }
       if (name) {
         component.name = name;
@@ -63,22 +67,7 @@ async function submitForm() {
 
   console.log("Submitting form data:", formData);
 
-  fetch("/create", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-
-  // fetch("/submit", {
+  // fetch("/create", {
   //   method: "POST",
   //   headers: {
   //     "Content-Type": "application/json",
@@ -92,6 +81,21 @@ async function submitForm() {
   //   .catch((error) => {
   //     console.error("Error:", error);
   //   });
+
+  fetch("/submit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(JSON.stringify(data, null, 2));
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 function auto_grow(element) {

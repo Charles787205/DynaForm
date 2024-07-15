@@ -7,14 +7,17 @@
   font-weight: 350;
   font-style: normal;
 }
+.app {
+  overflow-x: hidden;
+}
 
 .content-container {
   position: relative;
   color: #333;
-
 }
 
-[data-type="inputfield"] {
+[data-type="inputfield"],
+[data-type="dropdown"] {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
     rgb(209, 213, 219) 0px 0px 0px 1px inset;
   resize: both;
@@ -27,11 +30,11 @@
   padding: 5px 10px 5px 10px;
 }
 
-input[type="checkbox"], input[type="radio"] {
+input[type="checkbox"],
+input[type="radio"] {
   outline: none !important;
   box-shadow: none;
 }
-
 
 .title {
   margin: 20px 0px 10px 0px;
@@ -81,15 +84,15 @@ img[image-loaded="true"]:hover,
   visibility: visible;
 }
 
-.block-container .option {
+.option {
   opacity: 0;
   padding: 2px 4px 2px 4px;
-  color: #b9b9b9;
+  color: #ff0000;
   font-weight: 500;
   z-index: 10;
 }
 
-.block-container .content-container[contenteditable="true"]:focus + .option {
+.content-container[contenteditable="true"]:focus ~ .option {
   opacity: 100;
 }
 .option:hover {
@@ -194,7 +197,6 @@ img[image-loaded="true"]:hover,
 
 [show-pl-click="true"]:empty:not(:focus):before {
   color: #888;
-  font-weight: bold;
   pointer-events: none;
   content: attr(placeholder);
 }

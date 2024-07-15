@@ -66,14 +66,7 @@
         <div hx-get="components/fields/label" hx-trigger="load target:#tool"
           hx-vals='{"content": "Preferred T-Shirt size: "}' hx-swap="outerHTML" class="form-field"></div>
         <div hx-get="components/fields/dropdown" hx-trigger="load target:#tool"
-          hx-vals='{"content": "Small", "id": "option-1"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-get="components/fields/dropdown" hx-trigger="load target:#tool"
-          hx-vals='{"content": "Medium", "for": "option-1"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-get="components/fields/dropdown" hx-trigger="load target:#tool"
-          hx-vals='{"content": "Large", "for": "option-1"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-get="components/fields/label" hx-trigger="load target:#tool"
-          hx-vals='{"content": "What are your thoughts on the event?", "for": "textarea-1"}' hx-swap="outerHTML"
-          class="form-field"></div>
+          hx-vals='{"content": ["Small","Large","Medium"], "id": "option-1"}' hx-swap="outerHTML" class="form-field"></div>
         <div hx-get="components/fields/textarea" hx-trigger="load target:#tool" hx-vals='{"id": "textarea-1"}'
           hx-swap="outerHTML" class="form-field"></div>
         <div hx-get="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>

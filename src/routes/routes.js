@@ -5,19 +5,16 @@ import Modal from "../controllers/modal.controller.js";
 const router = Router();
 
 // COMPONENTS
-router.route("/").get(FormController.get).post(FormController.post);
+router.route("/").get(FormController.get);
 router.get("/components/:name", Components.getComponent);
 router.get("/components/fields/:name", Components.getField);
 
 //FORMS
-router
-  .route("/create")
-  .get(FormController.createForm)
-  .post(FormController.submitForm);
+router.route("/create").post(FormController.submitForm);
+router.get("/create/:form_id", FormController.createForm);
 router.get("/listform", FormController.listForm);
 router.get("/viewform", FormController.viewForm);
 router.get("/template/:template", Components.getTemplate);
-router.post("/submit", FormController.post);
 
 // MODAL
 router.get("/components/modal/components", Components.showModal);

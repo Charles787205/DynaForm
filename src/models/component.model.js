@@ -41,7 +41,7 @@ Component.discriminator(
 		type: {
 			type: String,
 			required: false,
-			enum: ["heading"],
+			enum: ["heading", "label", "textfield"],
 		},
 	})
 );
@@ -50,20 +50,10 @@ Component.discriminator(
 Component.discriminator(
 	"input",
 	new Schema({
-		input_type: {
+		type: {
 			type: String,
-			required: [true, "input is required"],
-			enum: [
-				"checkbox",
-				"divider",
-				"heading",
-				"dropdown",
-				"inputfield",
-				"label",
-				"radiobox",
-				"textarea",
-				"textfield",
-			],
+			required: true,
+			enum: ["textarea", "checkbox", "radiobox", "inputfield", "dropdown"],
 		},
 		placeholder: {
 			type: String,

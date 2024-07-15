@@ -26,7 +26,10 @@ async function submitForm() {
 			const component = { id };
 
 			if (content) {
-				component.content = content;
+				if (type === "dropdown") {
+					const components = [];
+					component.content = content;
+				} else component.content = content;
 			}
 			if (labelFor) {
 				component.for = labelFor;

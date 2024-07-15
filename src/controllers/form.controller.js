@@ -16,12 +16,12 @@ const submitForm = async (req, res) => {
 		// Assuming req.body contains the JSON data sent via fetch
 		const formData = req.body;
 
-		console.log(formData);
+		console.log("formData", formData);
 
 		const components = [];
 		formData.formComponents.forEach((component) => {
 			const formComponent = new FormComponent(component);
-
+			console.log("formComponent", formComponent);
 			const newComponent = new Component(formComponent.toCreateFormModel());
 			components.push(newComponent);
 		});
@@ -33,11 +33,10 @@ const submitForm = async (req, res) => {
 		});
 
 		await new Form(form.toCreateFormModel()).save();
-
 		return res.json({ form });
 	} catch (error) {
 		console.error("Error processing form:", error);
-		res.status(500).send("Error processing form");
+		return res.status(500).send(error);
 	}
 };
 

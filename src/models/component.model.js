@@ -20,7 +20,7 @@ const components = new Schema(
     },
     content: {
       type: String,
-      required: false,
+      required: true,
       maxLength: 255,
     },
     className: {

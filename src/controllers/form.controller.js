@@ -27,6 +27,7 @@ const submitForm = async (req, res) => {
     const components = [];
     formData.formComponents.forEach((component) => {
       const formComponent = new FormComponent(component);
+
       const newComponent = new Component(formComponent.toCreateFormModel());
       components.push(newComponent);
     });
@@ -40,7 +41,6 @@ const submitForm = async (req, res) => {
     new Form(form.toCreateFormModel()).save();
 
     return res.json({ form });
-    res.render("pages/create", { data: formData });
   } catch (error) {
     console.error("Error processing form:", error);
     res.status(500).send("Error processing form");

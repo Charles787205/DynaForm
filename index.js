@@ -21,7 +21,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET || "dxfcv",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       maxAge: 1000 * 60 * 100,
     },
@@ -34,6 +34,10 @@ app.use(passport.authenticate("session"));
 app.use(passport.session());
 app.use(express.static("public"));
 app.use(express.json());
+app.use(function (req, res, next) {
+  res.locals.isLogin = req.isAuthenticated();
+  next();
+});
 app.get("*/*", router);
 app.post("*/*", router);
 app.get("*/*", authRouter);

@@ -14,7 +14,7 @@ const components = new Schema(
 			},
 		},
 		content: {
-			type: String,
+			type: [String],
 			required: false,
 			maxLength: 255,
 		},
@@ -50,14 +50,22 @@ Component.discriminator(
 Component.discriminator(
 	"input",
 	new Schema({
+		input_type: {
+			type: String,
+			required: [true, "Input type is required"],
+			enum: {
+				values: ["dropdown"],
+				message: "{VALUE} is not supported",
+			},
+		},
 		type: {
 			type: String,
 			required: false,
 			enum: [
 				"checkbox",
 				"divider",
-				"dropdown",
 				"heading",
+				"dropdown",
 				"inputfield",
 				"label",
 				"radiobox",

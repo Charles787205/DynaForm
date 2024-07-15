@@ -6,12 +6,6 @@ const get = async (req, res) => {
   res.redirect("/create");
 };
 
-const post = async (req, res) => {
-  console.log(req.body);
-  console.log("hello");
-  res.send(req.body);
-};
-
 const createForm = async (req, res) => {
   res.render("pages/create", { layout: "./layouts/main" });
 };
@@ -38,7 +32,7 @@ const submitForm = async (req, res) => {
     });
 
     new Form(form.toCreateFormModel()).save();
-
+    console.log("Form saved successfully");
     return res.json({ form });
   } catch (error) {
     console.error("Error processing form:", error);
@@ -65,7 +59,6 @@ const viewForm = async (req, res) => {
 
 export default {
   get,
-  post,
   createForm,
   submitForm,
   listForm,

@@ -82,7 +82,7 @@ async function submitForm() {
   //     console.error("Error:", error);
   //   });
 
-  fetch("/submit", {
+  fetch("/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

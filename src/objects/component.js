@@ -40,7 +40,7 @@ class FormComponent {
         input_type: this.type,
         content: "",
         focused_bool: false,
-        element_id: this.id,
+        id: this.id,
         placeholder: this.content,
       };
     } else if (textTypes.includes(this.type)) {
@@ -50,14 +50,14 @@ class FormComponent {
         className: "",
         input_type: this.type,
         content: this.content,
-        element_id: this.id,
+        id: this.id,
       };
     } else if (button.includes(this.type)) {
       return {
         component_type: "input",
         type: "submit",
         name: this.name,
-        element_id: this.id,
+        id: this.id,
         content: this.content,
         className: this.className,
       };

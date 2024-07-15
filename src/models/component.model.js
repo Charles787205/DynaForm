@@ -13,17 +13,17 @@ const components = new Schema(
         message: "{VALUE} is not supported",
       },
     },
-    element_id: {
-      type: String,
-      required: true,
-      required: [true, "Element id is required"],
-    },
     content: {
       type: String,
-      required: true,
+      required: false,
       maxLength: 255,
     },
-    className: {
+    id: {
+      type: String,
+      required: false,
+      maxLength: 50,
+    },
+    name: {
       type: String,
       required: false,
       maxLength: 50,
@@ -41,7 +41,7 @@ Component.discriminator(
     type: {
       type: String,
       required: false,
-      enum: ["title", "heading", "smalltext"],
+      enum: ["heading"],
     },
   })
 );
@@ -50,33 +50,34 @@ Component.discriminator(
 Component.discriminator(
   "input",
   new Schema({
-    name: {
-      type: String,
-      required: true,
-      maxLength: 50,
-    },
     type: {
       type: String,
       required: false,
-      enum: ["text", "number"],
+      enum: [
+        "checkbox",
+        "divider",
+        "dropdown",
+        "heading",
+        "inputfield",
+        "label",
+        "radiobox",
+        "textarea",
+        "textfield",
+      ],
     },
     placeholder: {
       type: String,
-      required: true,
+      required: false,
       maxLength: 50,
     },
-    input_type: {
-      type: String,
-      required: true,
-      maxLength: 50,
-    },
-    focused_bool: {
-      type: Boolean,
-      required: true,
-    },
-    required: {
+    focus: {
       type: Boolean,
       required: false,
+    },
+    for: {
+      type: String,
+      required: false,
+      maxLength: 50,
     },
   })
 );

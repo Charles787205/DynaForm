@@ -9,7 +9,7 @@ const components = new Schema(
 			type: String,
 			required: [true, "Component type is required"],
 			enum: {
-				values: ["text", "input"],
+				values: ["text", "input", "divider"],
 				message: "{VALUE} is not supported",
 			},
 		},
@@ -71,7 +71,16 @@ Component.discriminator(
 		},
 	})
 );
-Component.discriminator("divider", new Schema({}));
+Component.discriminator(
+	"divider",
+	new Schema({
+		type: {
+			type: String,
+			required: true,
+			enum: ["divider"],
+		},
+	})
+);
 
 Component.discriminator(
 	"button",

@@ -1,43 +1,41 @@
 <% if (query.view) { %>
-<div class="input-block" id="<%= query.id %>">
-  <div class="block-container">
-    <div class="flex input-flex gap-3">
-      <div class="justify-start items-center gap-2.5 inline-flex">
-        <input id="<%= query.id %>" 
-        type="radio" 
-        data-type="radiobox"
-        value="<%= query.content %>" 
-        name="<%= query.for %>" 
-        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-        <%= query.content %>
-        </input>
-      </div>
-    </div>
-  </div>
-</div>
-<% } else { %>
-  <div class="input-block" draggable="true" id="<%= query.id %>">
-  <div class="block-container">
-    <div class="flex input-flex gap-3">
-      <div class="justify-start items-center gap-2.5 inline-flex">
-        <div class="ml-4 w-4 h-4 border rounded-full border-gray-600"></div>
-        <div contenteditable="true" show-pl-click="true"
-          class="content-container text-neutral-600 text-md font-extralight outline-none min-w-28 max-w-80"
-          data-type="radiobox" data-for="<%= query.for %>" placeholder="Radio" data-name="radio_<%= query.id %>">
+  <div class="input-block" id="<%= query.id %>">
+    <div class="block-container">
+      <div class="flex input-flex gap-3">
+        <div class="justify-start items-center gap-2.5 inline-flex">
+          <input id="<%= query.id %>" type="radio" data-type="radiobox" value="<%= query.content %>"
+            name="<%= query.for %>"
+            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
           <%= query.content %>
+            </input>
         </div>
-        <button class="option" type="button" hx-get="/components/fields/radiobox" tabindex="-1" hx-trigger="click"
-          hx-target="closest .input-block" hx-vals='{"id": "<%= query.id %>"}' hx-swap="afterend"
-          onclick="handleClick(this)">
-          Add option
-        </button>
-        <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
       </div>
     </div>
-    <div class="move-dropzone" data-position="left"></div>
-    <div class="move-dropzone" data-position="right"></div>
-    <div class="move-dropzone" data-position="below"></div>
-    <div class="move-dropzone" data-position="top"></div>
   </div>
-</div>
-<% } %>
+  <% } else { %>
+    <div class="input-block" draggable="true" id="<%= query.id %>">
+      <div class="block-container">
+        <div class="flex input-flex gap-3">
+          <div class="justify-start items-center gap-2.5 inline-flex">
+            <div class="ml-4 w-4 h-4 border rounded-full border-gray-600"></div>
+            <div contenteditable="true" show-pl-click="true"
+              class="content-container text-neutral-600 text-md font-extralight outline-none min-w-28 max-w-80"
+              data-type="radiobox" data-for="<%= query.for %>" placeholder="Radio" data-name="radio_<%= query.id %>">
+              <%= query.content %>
+            </div>
+            <button class="option" type="button" hx-post="/components/fields/radiobox" tabindex="-1" hx-trigger="click"
+              hx-target="closest .input-block" hx-vals='js:{"id": "<%= query.id %>"}' hx-swap="afterend"
+              onclick="handleClick(this)">
+              Add option
+            </button>
+            <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
+            <%- include("../tooltip") %>
+          </div>
+        </div>
+        <div class="move-dropzone" data-position="left"></div>
+        <div class="move-dropzone" data-position="right"></div>
+        <div class="move-dropzone" data-position="below"></div>
+        <div class="move-dropzone" data-position="top"></div>
+      </div>
+    </div>
+    <% } %>

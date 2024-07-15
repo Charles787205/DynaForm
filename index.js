@@ -36,6 +36,7 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(function (req, res, next) {
   res.locals.isLogin = req.isAuthenticated();
+  res.locals.user = req.user;
   next();
 });
 app.get("*/*", router);

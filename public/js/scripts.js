@@ -8,13 +8,10 @@ async function submitForm() {
 		(block) => {
 			const contentContainer = block.querySelector(".content-container");
 
-			const label =
-				block.querySelector(".label") &&
-				(block.querySelector(".label").innerHTML ?? undefined);
 			const id = block.id;
 			const name = contentContainer.getAttribute("data-name");
 			const type = contentContainer.getAttribute("data-type");
-			const labelFor = contentContainer.getAttribute("data-for");
+			const forAttr = contentContainer.getAttribute("data-for");
 			const required = contentContainer.getAttribute("required");
 			var placeholder = contentContainer.getAttribute("placeholder");
 			const content = contentContainer.innerHTML;
@@ -31,17 +28,14 @@ async function submitForm() {
 					component.content = content;
 				} else component.content = content;
 			}
-			if (labelFor) {
-				component.for = labelFor;
+			if (forAttr) {
+				component.forAttr = forAttr;
 			}
 			if (name) {
 				component.name = name;
 			}
 			if (type) {
 				component.type = type;
-			}
-			if (label) {
-				component.label = label;
 			}
 			if (checked) {
 				component.checked = checked;
@@ -68,23 +62,9 @@ async function submitForm() {
 		formComponents,
 	};
 
-	console.log("Submitting form data:", formData);
+	console.log(JSON.stringify(formData, null, 2));
 
-	// fetch("/create", {
-	//   method: "POST",
-	//   headers: {
-	//     "Content-Type": "application/json",
-	//   },
-	//   body: JSON.stringify(formData),
-	// })
-	//   .then((response) => response.json())
-	//   .then((data) => {
-	//     console.log("Success:", data);
-	//   })
-	//   .catch((error) => {
-	//     console.error("Error:", error);
-	//   });
-
+	console.log("AFTER PARSE");
 	fetch("/create", {
 		method: "POST",
 		headers: {

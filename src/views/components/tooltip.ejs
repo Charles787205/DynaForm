@@ -1,5 +1,5 @@
-<div class="mx-4 actions absolute rounded-2xl flex-col justify-center bg-white -ml-32 top-0 bottom-0 items-center gap-2"
-  id="<%= options.id %>">
+<div
+  class="mx-4 actions absolute rounded-2xl flex-col justify-center bg-white -ml-32 top-0 bottom-0 items-center gap-2">
   <div class="self-stretch h-full justify-center items-center inline-flex">
     <div class="action-button delete" hx>
       <svg width="45" height="30" viewBox="-4 -2 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Open Modal -->
-    <div class="action-button add" hx-get="/components/modal/components" hx-trigger="click" hx-swap="afterend"
+    <div class="action-button add" hx-post="/components/modal/show" hx-trigger="click" hx-swap="afterend"
       hx-target="closest .input-block">
       <svg width="45" height="30" viewBox="-1 -1 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M6.71954 10.8449V1.15509M1.87463 6H11.5644" stroke="black" stroke-width="0.968982" />

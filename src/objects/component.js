@@ -4,6 +4,8 @@ class FormComponent {
 		name = "",
 		content = "",
 		type = "",
+		classes = [],
+		className = "",
 		placeHolder = "",
 		focus = false,
 		required = false,
@@ -12,6 +14,8 @@ class FormComponent {
 		this.name = name;
 		this.content = content;
 		this.type = type;
+		this.classes = classes;
+		this.className = className;
 		this.placeHolder = placeHolder;
 		this.focus = focus;
 		this.required = required;
@@ -26,13 +30,14 @@ class FormComponent {
 			"checkbox",
 			"dropdown",
 		];
-
 		const textTypes = ["heading", "label", "textfield"];
-		const button = ["button", "divider"];
+		const button = ["button"];
+		const divider = ["divider"];
 		if (inputTypes.includes(this.type)) {
 			return {
 				component_type: "input",
 				name: this.name,
+				className: "",
 				type: this.type,
 				content: "",
 				focused_bool: false,
@@ -43,6 +48,7 @@ class FormComponent {
 			return {
 				component_type: "text",
 				name: this.name,
+				className: "",
 				type: this.type,
 				content: this.content,
 				id: this.id,
@@ -51,6 +57,15 @@ class FormComponent {
 			return {
 				component_type: "input",
 				type: "submit",
+				name: this.name,
+				id: this.id,
+				content: this.content,
+				className: this.className,
+			};
+		} else if (divider.includes(this.type)) {
+			return {
+				component_type: "divider",
+				type: "divider",
 				name: this.name,
 				id: this.id,
 				content: this.content,

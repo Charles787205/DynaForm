@@ -6,21 +6,22 @@ const router = Router();
 
 // COMPONENTS
 router.route("/").get(FormController.get);
-router.get("/components/:name", Components.getComponent);
-router.get("/components/fields/:name", Components.getField);
+router.post("/components/:name", Components.getComponent);
+router.post("/components/fields/:name", Components.getField);
 
 //FORMS
 router
   .route("/create")
-  .get(FormController.createForm)
-  .post(FormController.submitForm);
-router.get("/listform", FormController.listForm);
-router.get("/viewform", FormController.viewForm);
-router.get("/template/:template", Components.getTemplate);
+  .get(FormController.create)
+  .post(FormController.submit);
+router.get("/forms", FormController.list);
+router.get("/view", FormController.view);
+router.post("/template/:template", Components.getTemplate);
+// router.post("/submit", FormController.post);
 
 // MODAL
-router.get("/components/modal/components", Components.showModal);
-router.get("/components/modal/preview", Components.showComponentPreview);
+router.post("/components/modal/show", Components.showModal);
+router.post("/components/modal/preview", Components.showComponentPreview);
 
 export default router;
 

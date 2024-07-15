@@ -26,7 +26,7 @@
 <body>
 	<div class="app">
 		<header>
-			<div hx-get="/components/navbar" hx-trigger="load once" hx-swap="outerHTML"></div>
+			<div hx-post="/components/navbar" hx-trigger="load once" hx-swap="outerHTML"></div>
 		</header>
 		<main class="mainscreen w-screen items-start inline-flex">
 			<%- body -%>

@@ -54,7 +54,7 @@ const listForm = async (req, res) => {
 };
 
 const viewForm = async (req, res) => {
-	const { form_id } = req.body;
+	const { form_id } = req.query;
 	try {
 		const get_form = await Form.findById(form_id);
 

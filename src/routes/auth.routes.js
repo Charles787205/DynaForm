@@ -18,10 +18,15 @@ passport.use(
     (accessToken, refreshToken, profile, done) => {
       //diri i save ang user sa database
 
-      const query = User.findOne({ googleId: profile.id });
+      const query = User.findOne({ google_id: profile.id });
+
       query.exec().then((user) => {
+        console.log(user);
         if (user) {
-          console.log("User already exists");
+          user.accessToken = accessToken;
+          user.save().then((user) => {
+            console.log(user);
+          });
         } else {
           const newUser = new User({
             google_id: profile.id,
@@ -31,7 +36,7 @@ passport.use(
             accessToken: accessToken,
           });
           newUser.save().then((user) => {
-            console.log(user);
+            console.log("user registered");
           });
         }
       });
@@ -46,7 +51,9 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  return done(null, id);
+  User.findById(id).then((err, user) => {
+    return done(err, user);
+  });
 });
 
 // Initiates the Google OAuth 2.0 authentication flow

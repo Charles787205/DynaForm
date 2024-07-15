@@ -1,82 +1,83 @@
 <nav
-  class="w-screen fixed h-fit z-20 py-3 bg-white mr-0 ml-0 px-10 content-center flex justify-center"
+	class="w-screen fixed h-fit z-20 py-3 bg-white mr-0 ml-0 px-10 content-center flex justify-center"
 >
-  <div
-    class="max-w-screen-xl 2xl:max-w-screen-xl justify-between items-center inline-flex w-full"
-  >
-    <button
-      class="outline-none w-[108px] h-[27px] text-black text-md font-black"
-      hx-get="/create"
-      hx-trigger="click"
-      hx-target=".mainscreen"
-      hx-swap="outerHTML"
-      hx-push-url="true"
-    >
-      DynaForm<br />
-    </button>
-    <div class="flex gap-6 items-center">
-      <button
-        class="p-2 hover:font-semibold text-sm"
-        hx-get="/viewform"
-        hx-trigger="click"
-        hx-target=".mainscreen"
-        hx-swap="outerHTML"
-      >
-        Preview
-      </button>
-      <button
-        class="relative group transition-all duration-200 py-2 ml-2 focus:overflow-visible overflow-hidden flex flex-row items-center justify-center gap-1 rounded-lg"
-      >
-        <span class="text-sm"> Templates </span>
-        <svg
-          class="rotate-180 group-focus:rotate-0"
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill="currentColor"
-            d="m12 10.8l-3.9 3.9q-.275.275-.7.275t-.7-.275q-.275-.275-.275-.7t.275-.7l4.6-4.6q.3-.3.7-.3t.7.3l4.6 4.6q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275z"
-          />
-        </svg>
-        <div
-          class="absolute shadow-lg -bottom-40 w-fit left-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2"
-        >
-          <span
-            hx-get="template/default"
-            hx-swap="outerHTML"
-            hx-target=".template"
-            class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
-          >
-            <p>Survey</p>
-          </span>
-          <span
-            hx-get="template/feedback"
-            hx-swap="outerHTML"
-            hx-target=".template"
-            class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
-          >
-            <p>Information</p>
-          </span>
-          <span
-            hx-get="template/feedback"
-            hx-swap="outerHTML"
-            hx-target=".template"
-            class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
-          >
-            <p>Feedback</p>
-          </span>
-        </div>
-      </button>
+	<div
+		class="max-w-screen-xl 2xl:max-w-screen-xl justify-between items-center inline-flex w-full"
+	>
+		<button
+			class="outline-none w-[108px] h-[27px] text-black text-md font-black"
+			hx-get="/create"
+			hx-trigger="click"
+			hx-target=".mainscreen"
+			hx-swap="outerHTML"
+			hx-push-url="true"
+		>
+			DynaForm<br />
+		</button>
+		<div class="flex gap-6 items-center">
+			<button
+				class="p-2 hover:font-semibold text-sm"
+				hx-get="/viewform"
+				hx-trigger="click"
+				hx-target=".mainscreen"
+				hx-swap="outerHTML"
+				hx-vals='{"form_id": "6694b7ac1edb841af824008d"}'
+			>
+				Preview
+			</button>
+			<button
+				class="relative group transition-all duration-200 py-2 ml-2 focus:overflow-visible overflow-hidden flex flex-row items-center justify-center gap-1 rounded-lg"
+			>
+				<span class="text-sm"> Templates </span>
+				<svg
+					class="rotate-180 group-focus:rotate-0"
+					xmlns="http://www.w3.org/2000/svg"
+					width="22"
+					height="22"
+					viewBox="0 0 24 24"
+				>
+					<path
+						fill="currentColor"
+						d="m12 10.8l-3.9 3.9q-.275.275-.7.275t-.7-.275q-.275-.275-.275-.7t.275-.7l4.6-4.6q.3-.3.7-.3t.7.3l4.6 4.6q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275z"
+					/>
+				</svg>
+				<div
+					class="absolute shadow-lg -bottom-40 w-fit left-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2"
+				>
+					<span
+						hx-get="template/default"
+						hx-swap="outerHTML"
+						hx-target=".template"
+						class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
+					>
+						<p>Survey</p>
+					</span>
+					<span
+						hx-get="template/feedback"
+						hx-swap="outerHTML"
+						hx-target=".template"
+						class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
+					>
+						<p>Information</p>
+					</span>
+					<span
+						hx-get="template/feedback"
+						hx-swap="outerHTML"
+						hx-target=".template"
+						class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
+					>
+						<p>Feedback</p>
+					</span>
+				</div>
+			</button>
 
-      <!--<button class="p-2 text-sm hover:font-semibold" hx-get="/listform" hx-trigger="click" hx-target=".mainscreen" -->
-      <a class="p-2 text-sm hover:font-semibold" href="/listform"> My Forms </a>
-      <button
-        class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
-      >
-        Export
-      </button>
-    </div>
-  </div>
+			<!--<button class="p-2 text-sm hover:font-semibold" hx-get="/listform" hx-trigger="click" hx-target=".mainscreen" -->
+			<a class="p-2 text-sm hover:font-semibold" href="/listform"> My Forms </a>
+			<button
+				class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
+			>
+				Export
+			</button>
+		</div>
+	</div>
 </nav>

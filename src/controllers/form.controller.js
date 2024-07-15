@@ -56,8 +56,10 @@ const editForm = async (req, res) => {
 };
 
 const listForm = async (req, res) => {
-	const data = {};
-	res.render("pages/listform");
+	const allForms = await Form.find();
+	const forms_id = allForms.map((form) => form._id);
+	res.status(200).json({ forms: forms_id });
+	// res.render("pages/listform");
 };
 
 const viewForm = async (req, res) => {

@@ -11,9 +11,9 @@ router.get("/components/fields/:name", Components.getField);
 
 //FORMS
 router
-  .route("/create")
-  .get(FormController.createForm)
-  .post(FormController.submitForm);
+	.route("/create")
+	.get(FormController.createForm)
+	.post(FormController.submitForm);
 router.get("/listform", FormController.listForm);
 router.get("/viewform", FormController.viewForm);
 router.get("/template/:template", Components.getTemplate);

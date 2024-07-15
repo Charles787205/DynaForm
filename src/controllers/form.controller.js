@@ -54,17 +54,15 @@ const listForm = async (req, res) => {
 };
 
 const viewForm = async (req, res) => {
-	const { form_id } = req.params;
+	const { form_id } = req.body;
 	try {
 		const get_form = await Form.findById(form_id);
 
-		res.status(200).json({ form: get_form });
+		res.render("pages/viewform", { get_form });
 	} catch (error) {
 		console.error("Error retrieving form:", error);
 		res.status(500).send("Error retrieving form");
 	}
-
-	// res.render("pages/viewform");
 };
 
 export default {

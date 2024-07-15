@@ -13,7 +13,7 @@ router.get("/components/fields/:name", Components.getField);
 router.route("/create").post(FormController.submitForm);
 router.get("/create/", FormController.createForm);
 router.get("/listform", FormController.listForm);
-router.get("/viewform/:form_id", FormController.viewForm);
+router.get("/viewform", FormController.viewForm);
 router.get("/template/:template", Components.getTemplate);
 
 // MODAL

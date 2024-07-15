@@ -7,7 +7,16 @@ const get = async (req, res) => {
 };
 
 const createForm = async (req, res) => {
-	res.render("pages/create", { layout: "./layouts/main" });
+	const { form_id } = req.params;
+	try {
+		const get_form = await Form.findById(form_id);
+
+		res.status(200).json({ form: get_form });
+	} catch (error) {
+		console.error("Error retrieving form:", error);
+		res.status(500).send("Error retrieving form");
+	}
+	// res.render("pages/create", { layout: "./layouts/main" });
 };
 
 const submitForm = async (req, res) => {
@@ -31,8 +40,8 @@ const submitForm = async (req, res) => {
 			components: components,
 		});
 
-		new Form(form.toCreateFormModel()).save();
-		console.log("Form saved successfully");
+		await new Form(form.toCreateFormModel()).save();
+
 		return res.json({ form });
 	} catch (error) {
 		console.error("Error processing form:", error);
@@ -45,7 +54,6 @@ const editForm = async (req, res) => {
 
 	res.render("pages/create", { data });
 };
-``;
 
 const listForm = async (req, res) => {
 	const data = {};
@@ -54,8 +62,6 @@ const listForm = async (req, res) => {
 
 const viewForm = async (req, res) => {
 	const data = {};
-
-	cons;
 
 	res.render("pages/viewform");
 };

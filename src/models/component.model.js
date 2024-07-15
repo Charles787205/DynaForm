@@ -50,7 +50,7 @@ Component.discriminator(
 Component.discriminator(
 	"input",
 	new Schema({
-		type: {
+		input_type: {
 			type: String,
 			required: [true, "input is required"],
 			enum: [

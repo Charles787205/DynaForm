@@ -23,21 +23,24 @@ class FormComponent {
 
   toCreateFormModel = function () {
     const inputTypes = [
-      "textfield",
       "textarea",
       "checkbox",
       "radiobox",
       "inputfield",
+      "checkbox",
+      "dropdown",
     ];
-    const textTypes = ["heading"];
+    const textTypes = ["heading", "label", "textfield"];
+    const button = ["button", "divider"];
     if (inputTypes.includes(this.type)) {
       return {
         component_type: "input",
         name: this.name,
         className: "",
         input_type: this.type,
-        content: "try",
+        content: "",
         focused_bool: false,
+        element_id: this.id,
         placeholder: this.content,
       };
     } else if (textTypes.includes(this.type)) {
@@ -47,6 +50,16 @@ class FormComponent {
         className: "",
         input_type: this.type,
         content: this.content,
+        element_id: this.id,
+      };
+    } else if (button.includes(this.type)) {
+      return {
+        component_type: "input",
+        type: "submit",
+        name: this.name,
+        element_id: this.id,
+        content: this.content,
+        className: this.className,
       };
     } else {
       console.log("Invalid type");

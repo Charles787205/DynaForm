@@ -13,9 +13,14 @@ const components = new Schema(
         message: "{VALUE} is not supported",
       },
     },
-    content: {
+    element_id: {
       type: String,
       required: true,
+      required: [true, "Element id is required"],
+    },
+    content: {
+      type: String,
+      required: false,
       maxLength: 255,
     },
     className: {
@@ -75,6 +80,7 @@ Component.discriminator(
     },
   })
 );
+Component.discriminator("divider", new Schema({}));
 
 Component.discriminator(
   "button",

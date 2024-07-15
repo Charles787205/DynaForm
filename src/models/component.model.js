@@ -52,7 +52,7 @@ Component.discriminator(
 	new Schema({
 		type: {
 			type: String,
-			required: false,
+			required: [true, "input is required"],
 			enum: [
 				"checkbox",
 				"divider",

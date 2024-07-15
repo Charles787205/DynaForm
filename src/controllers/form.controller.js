@@ -31,9 +31,9 @@ const submitForm = async (req, res) => {
 			components: components,
 		});
 
-		await new Form(form.toCreateFormModel()).save();
-
-		return res.json({ form });
+		const save_form = await new Form(form.toCreateFormModel()).save();
+		console.log(save_form);
+		return res.json({ save_form });
 	} catch (error) {
 		console.error("Error processing form:", error);
 		res.status(500).send("Error processing form");
@@ -54,10 +54,10 @@ const listForm = async (req, res) => {
 };
 
 const viewForm = async (req, res) => {
-	const { form_id } = req.body;
+	const { form_id } = req.query;
 	try {
 		const get_form = await Form.findById(form_id);
-
+		console.log(get_form);
 		res.render("pages/viewform", { get_form });
 	} catch (error) {
 		console.error("Error retrieving form:", error);

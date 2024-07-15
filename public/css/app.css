@@ -598,16 +598,16 @@ video {
   z-index: 20;
 }
 
+.z-30 {
+  z-index: 30;
+}
+
 .z-40 {
   z-index: 40;
 }
 
 .z-50 {
   z-index: 50;
-}
-
-.z-30 {
-  z-index: 30;
 }
 
 .mx-4 {
@@ -779,6 +779,10 @@ video {
   width: 14rem;
 }
 
+.w-60 {
+  width: 15rem;
+}
+
 .w-96 {
   width: 24rem;
 }
@@ -800,36 +804,20 @@ video {
   width: 100vw;
 }
 
-.w-60 {
-  width: 15rem;
-}
-
-.w-72 {
-  width: 18rem;
-}
-
-.w-\[30rem\] {
-  width: 30rem;
-}
-
-.w-\[100rem\] {
-  width: 100rem;
-}
-
 .min-w-28 {
   min-width: 7rem;
 }
 
-.max-w-56 {
-  max-width: 14rem;
+.max-w-60 {
+  max-width: 15rem;
 }
 
 .max-w-80 {
   max-width: 20rem;
 }
 
-.max-w-\[35rem\] {
-  max-width: 35rem;
+.max-w-\[45rem\] {
+  max-width: 45rem;
 }
 
 .max-w-screen-lg {
@@ -842,30 +830,6 @@ video {
 
 .max-w-screen-xl {
   max-width: 1280px;
-}
-
-.max-w-60 {
-  max-width: 15rem;
-}
-
-.max-w-72 {
-  max-width: 18rem;
-}
-
-.max-w-full {
-  max-width: 100%;
-}
-
-.max-w-\[40rem\] {
-  max-width: 40rem;
-}
-
-.max-w-\[50rem\] {
-  max-width: 50rem;
-}
-
-.max-w-\[45rem\] {
-  max-width: 45rem;
 }
 
 .shrink {
@@ -1086,14 +1050,6 @@ video {
   padding: 1.25rem;
 }
 
-.p-20 {
-  padding: 5rem;
-}
-
-.p-10 {
-  padding: 2.5rem;
-}
-
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -1155,10 +1111,6 @@ video {
 
 .pl-10 {
   padding-left: 2.5rem;
-}
-
-.pl-5 {
-  padding-left: 1.25rem;
 }
 
 .pt-16 {

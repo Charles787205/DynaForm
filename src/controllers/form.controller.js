@@ -6,17 +6,13 @@ const get = async (req, res) => {
   res.redirect("/create");
 };
 
-const createForm = async (req, res) => {
-  console.log(req.user);
+const create = async (req, res) => {
   res.render("pages/create", { layout: "./layouts/main" });
 };
 
-const submitForm = async (req, res) => {
+const submit = async (req, res) => {
   try {
-    // Assuming req.body contains the JSON data sent via fetch
     const formData = req.body;
-
-    console.log(formData);
 
     const components = [];
     formData.formComponents.forEach((component) => {
@@ -41,20 +37,20 @@ const submitForm = async (req, res) => {
   }
 };
 
-const editForm = async (req, res) => {
+const edit = async (req, res) => {
   const data = {};
 
   res.render("pages/create", { data });
 };
 
-const listForm = async (req, res) => {
-  const allForms = await Form.find();
-  const forms_id = allForms.map((form) => form._id);
-  res.status(200).json({ forms: forms_id });
-  // res.render("pages/listform");
+const list = async (req, res) => {
+  // const allForms = await Form.find();
+  // const forms_id = allForms.map((form) => form._id);
+  // res.status(200).json({ forms: forms_id });
+  res.render("pages/listform");
 };
 
-const viewForm = async (req, res) => {
+const view = async (req, res) => {
   const { form_id } = req.query;
   try {
     const get_form = await Form.findById(form_id);
@@ -69,9 +65,9 @@ const viewForm = async (req, res) => {
 
 export default {
   get,
-  createForm,
-  submitForm,
-  listForm,
-  editForm,
-  viewForm,
+  create,
+  submit,
+  list,
+  edit,
+  view,
 };

@@ -68,63 +68,63 @@
         data-form-name=""
         data-form-description=""
       >
-        <!-- <div hx-get="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div> -->
+        <!-- <div hx-post="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div> -->
         <div
-          hx-get="components/fields/heading"
+          hx-post="components/fields/heading"
           hx-trigger="load target:#tool"
-          hx-vals='{"placeholder": "Add a heading", "type": "heading"}'
+          hx-vals='js:{"placeholder": "Add a heading", "type": "heading"}'
           hx-swap="outerHTML"
           class="form-field"
         ></div>
 
         <div
-          hx-get="components/fields/textfield"
+          hx-post="components/fields/textfield"
           hx-trigger="load target:#tool"
-          hx-vals='{"focus": true}'
+          hx-vals='js:{"focus": true}'
           hx-swap="outerHTML"
           class="form-field"
         ></div>
         <div
-          hx-get="components/fields/divider"
+          hx-post="components/fields/divider"
           hx-trigger="load target:#tool"
-          hx-vals='{"focus": true}'
+          hx-vals='js:{"focus": true}'
           hx-swap="outerHTML"
           class="form-field"
         ></div>
         <div
-          hx-get="components/fields/checkbox"
-          hx-trigger="load target:#tool"
-          hx-swap="outerHTML"
-          class="form-field"
-        ></div>
-        <div
-          hx-get="components/fields/radiobox"
+          hx-post="components/fields/checkbox"
           hx-trigger="load target:#tool"
           hx-swap="outerHTML"
           class="form-field"
         ></div>
         <div
-          hx-get="components/fields/dropdown"
+          hx-post="components/fields/radiobox"
           hx-trigger="load target:#tool"
           hx-swap="outerHTML"
           class="form-field"
         ></div>
         <div
-          hx-get="components/fields/inputfield"
+          hx-post="components/fields/dropdown"
           hx-trigger="load target:#tool"
-          hx-vals='{"placeholder": "Type a placeholder"}'
           hx-swap="outerHTML"
           class="form-field"
         ></div>
         <div
-          hx-get="components/fields/textarea"
+          hx-post="components/fields/inputfield"
           hx-trigger="load target:#tool"
-          hx-vals='{"placeholder": "Type a placeholder"}'
+          hx-vals='js:{"placeholder": "Type a placeholder"}'
           hx-swap="outerHTML"
           class="form-field"
         ></div>
         <div
-          hx-get="components/button"
+          hx-post="components/fields/textarea"
+          hx-trigger="load target:#tool"
+          hx-vals='js:{"placeholder": "Type a placeholder"}'
+          hx-swap="outerHTML"
+          class="form-field"
+        ></div>
+        <div
+          hx-post="components/button"
           hx-trigger="load target:#tool"
           hx-swap="outerHTML"
         ></div>

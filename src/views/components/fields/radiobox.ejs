@@ -8,12 +8,12 @@
           data-type="radiobox" data-for="<%= query.for %>" placeholder="Radio" data-name="radio_<%= query.id %>">
           <%= query.content %>
         </div>
-        <button class="option" type="button" hx-get="/components/fields/radiobox" tabindex="-1" hx-trigger="click"
-          hx-target="closest .input-block" hx-vals='{"id": "<%= query.id %>"}' hx-swap="afterend"
+        <button class="option" type="button" hx-post="/components/fields/radiobox" tabindex="-1" hx-trigger="click"
+          hx-target="closest .input-block" hx-vals='js:{"id": "<%= query.id %>"}' hx-swap="afterend"
           onclick="handleClick(this)">
           Add option
         </button>
-        <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+        <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
       </div>
     </div>
     <div class="move-dropzone" data-position="left"></div>

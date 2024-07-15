@@ -6,7 +6,7 @@ const getComponent = async (req, res) => {
   const componentName = req.params.name;
   const options = {
     id: uuidv4(),
-    ...req.query,
+    ...req.body,
   };
   res.render(`components/${componentName}`, { options });
 };
@@ -15,10 +15,8 @@ const getField = async (req, res) => {
   const componentName = req.params.name;
   const query = {
     id: uuidv4(),
-    ...req.query,
+    ...req.body,
   };
-
-  console.log(req.query);
   res.render(`components/fields/${componentName}`, { query });
 };
 
@@ -37,7 +35,9 @@ const showModal = async (req, res) => {
 };
 
 const showComponentPreview = async (req, res) => {
-  res.render("components/modal/preview", { ...req.query, view: true });
+  console.log("preview: ", req.body );
+
+  res.render("components/modal/preview", { ...req.body, view: true });
 };
 
 export default {

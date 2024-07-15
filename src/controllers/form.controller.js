@@ -7,21 +7,16 @@ const get = async (req, res) => {
 };
 
 const post = async (req, res) => {
-  console.log(req.body);
-  console.log("hello");
   res.send(req.body);
 };
 
-const createForm = async (req, res) => {
+const create = async (req, res) => {
   res.render("pages/create", { layout: "./layouts/main" });
 };
 
-const submitForm = async (req, res) => {
+const submit = async (req, res) => {
   try {
-    // Assuming req.body contains the JSON data sent via fetch
     const formData = req.body;
-
-    console.log(formData);
 
     const components = [];
     formData.formComponents.forEach((component) => {
@@ -46,19 +41,18 @@ const submitForm = async (req, res) => {
   }
 };
 
-const editForm = async (req, res) => {
+const edit = async (req, res) => {
   const data = {};
 
   res.render("pages/create", { data });
 };
-``;
 
-const listForm = async (req, res) => {
+const list = async (req, res) => {
   const data = {};
   res.render("pages/listform");
 };
 
-const viewForm = async (req, res) => {
+const view = async (req, res) => {
   const data = {};
   res.render("pages/viewform");
 };
@@ -66,9 +60,9 @@ const viewForm = async (req, res) => {
 export default {
   get,
   post,
-  createForm,
-  submitForm,
-  listForm,
-  editForm,
-  viewForm,
+  create,
+  submit,
+  list,
+  edit,
+  view,
 };

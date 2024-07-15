@@ -2,8 +2,8 @@
 
   <div class="input-block">
     <div class="block-container">
-        <div hx-get="/components/fields/label" hx-trigger="load"
-          hx-vals='{"label": "<%= query.label %>", "for": "<%= query.id %>"}'
+        <div hx-post="/components/fields/label" hx-trigger="load"
+          hx-vals='js:{"label": "<%= query.label %>", "for": "<%= query.id %>"}'
           hx-swap="outerHTML"></div>
         <input data-type="inputfield" class="content-container text-[1.1rem] w-full outline-none resize-none"
         id="input_<%= query.id %>"
@@ -24,11 +24,11 @@
  
         <!-- <button class="option" type="button" onclick="handleClick(this)">Add
           label</button> -->
-        <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+        <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
         <% if (query.labelled !== 'true') { %>
-          <button class="option" type="button" hx-get="/components/fields/label" hx-trigger="click"
+          <button class="option" type="button" hx-post="/components/fields/label" hx-trigger="click"
           tabindex="-1"
-          hx-target="closest .input-flex" hx-vals='{"placeholder": "Label", "for": "<%= query.id %>"}'
+          hx-target="closest .input-flex" hx-vals='js:{"placeholder": "Label", "for": "<%= query.id %>"}'
           hx-swap="beforebegin" onclick="handleClick(this)">Add
           label</button>
         <% } %>

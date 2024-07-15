@@ -7,16 +7,12 @@
         class="content-container text-neutral-600 text-md outline-none font-extralight min-w-28 max-w-80"
         ><%= query.content %>
       </div>
-      <button class="option" type="button" hx-get="/components/fields/checkbox" hx-trigger="click"
-        hx-target="closest .input-block" hx-vals='{"id": "<%= query.id %>"}' hx-swap="afterend"
+      <button class="option" type="button" hx-post="/components/fields/checkbox" hx-trigger="click"
+        hx-target="closest .input-block" hx-vals='js:{"id": "<%= query.id %>"}' hx-swap="afterend"
         onclick="handleClick(this)" tabindex="-1">
         Add option
       </button>
-      <% if (query.labelled==='true' ) { %>
-        <div hx-get="/components/fields/label" hx-trigger="load" hx-target="closest .input-block"
-          hx-vals='{"id": "<%= query.id %>", "content": "<%= query.text %>"}' hx-swap="beforebegin"></div>
-        <% } %>
-          <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+          <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
     </div>
   </div>
 

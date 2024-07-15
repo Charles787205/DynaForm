@@ -55,9 +55,9 @@ const listForm = async (req, res) => {
 };
 
 const viewForm = async (req, res) => {
-  const { form_id } = req.body;
-  try {
-    const get_form = await Form.findById(form_id);
+	const { form_id } = req.query;
+	try {
+		const get_form = await Form.findById(form_id);
 
     res.render("pages/viewform", { get_form });
   } catch (error) {

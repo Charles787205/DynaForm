@@ -3,30 +3,25 @@ const Schema = mongoose.Schema;
 
 const option = { discriminatorKey: "component_type" };
 
-const components = new Schema(
+const option_components = new Schema(
   {
     component_type: {
       type: String,
       required: [true, "Component type is required"],
       enum: {
-        values: ["text", "input", "divider"],
+        values: ["text", "input"],
         message: "{VALUE} is not supported",
       },
     },
+    element_id: {
+      type: String,
+      required: true,
+      required: [true, "Element id is required"],
+    },
     content: {
-      type: Schema.Types.Mixed,
-      required: false,
+      type: String,
+      required: true,
       maxLength: 255,
-    },
-    id: {
-      type: String,
-      required: false,
-      maxLength: 50,
-    },
-    name: {
-      type: String,
-      required: false,
-      maxLength: 50,
     },
   },
   option
@@ -41,7 +36,7 @@ Component.discriminator(
     type: {
       type: String,
       required: false,
-      enum: ["heading"],
+      enum: ["title", "heading", "smalltext"],
     },
   })
 );
@@ -50,47 +45,37 @@ Component.discriminator(
 Component.discriminator(
   "input",
   new Schema({
+    name: {
+      type: String,
+      required: true,
+      maxLength: 50,
+    },
     type: {
       type: String,
       required: false,
-      enum: [
-        "checkbox",
-
-        "heading",
-        "dropdown",
-        "inputfield",
-        "label",
-        "radiobox",
-        "textarea",
-        "textfield",
-      ],
+      enum: ["text", "number"],
     },
     placeholder: {
       type: String,
-      required: false,
+      required: true,
       maxLength: 50,
     },
-    focus: {
+    input_type: {
+      type: String,
+      required: true,
+      maxLength: 50,
+    },
+    focused_bool: {
+      type: Boolean,
+      required: true,
+    },
+    required: {
       type: Boolean,
       required: false,
     },
-    for: {
-      type: String,
-      required: false,
-      maxLength: 50,
-    },
   })
 );
-Component.discriminator(
-  "divider",
-  new Schema({
-    type: {
-      type: String,
-      required: true,
-      enum: ["divider"],
-    },
-  })
-);
+Component.discriminator("divider", new Schema({}));
 
 Component.discriminator(
   "button",

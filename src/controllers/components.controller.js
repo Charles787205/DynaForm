@@ -22,16 +22,16 @@ const getField = async (req, res) => {
 
 //TEMPLATES
 const getTemplate = async (req, res) => {
-  const template = req.params.template;
-  res.render(`template/${template}`);
+	const template = req.params.template;
+	res.render(`template/${template}`);
 };
 
 // MODALS
 const showModal = async (req, res) => {
-  res.render("components/modal/index", {
-    texts: texts,
-    inputs: inputs,
-  });
+	res.render("components/modal/index", {
+		texts: texts,
+		inputs: inputs,
+	});
 };
 
 const showComponentPreview = async (req, res) => {
@@ -41,9 +41,9 @@ const showComponentPreview = async (req, res) => {
 };
 
 export default {
-  getComponent,
-  getField,
-  showModal,
-  getTemplate,
-  showComponentPreview,
+	getComponent,
+	getField,
+	showModal,
+	getTemplate,
+	showComponentPreview,
 };

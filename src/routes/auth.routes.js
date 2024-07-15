@@ -18,10 +18,12 @@ passport.use(
     (accessToken, refreshToken, profile, done) => {
       //diri i save ang user sa database
 
-      const query = User.findOne({ googleId: profile.id });
+      const query = User.findOne({ google_id: profile.id });
+
       query.exec().then((user) => {
         if (user) {
-          console.log("User already exists");
+          user.accessToken = accessToken;
+          user.save().then((user) => {});
         } else {
           const newUser = new User({
             google_id: profile.id,
@@ -31,7 +33,7 @@ passport.use(
             accessToken: accessToken,
           });
           newUser.save().then((user) => {
-            console.log(user);
+            console.log("user registered");
           });
         }
       });
@@ -45,8 +47,9 @@ passport.serializeUser((user, done) => {
   return done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
-  return done(null, id);
+passport.deserializeUser(async (id, done) => {
+  const user = await User.findOne({ google_id: id });
+  return done(null, user);
 });
 
 // Initiates the Google OAuth 2.0 authentication flow
@@ -66,10 +69,12 @@ authRouter.get(
 
 // Logout route
 authRouter.get("/logout", (req, res) => {
-  req.logout(() => {
+  req.logout((err) => {
+    if (err) {
+      console.log(err);
+    }
     return res.redirect("/");
   });
-  res.redirect("/");
 });
 
 export default authRouter;

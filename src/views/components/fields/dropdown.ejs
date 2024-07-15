@@ -1,4 +1,16 @@
-<div class="input-block" draggable="true" id="<%= query.id %>">
+<% if (query.view) { %>
+  <div class="input-block" id="<%= query.id %>">
+    <div class="block-container">
+      <div class="h-8 justify-start items-center gap-2.5 inline-flex">
+        <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
+          <option selected>Choose a country</option>
+          <option><%= query.content %></option>
+        </select>
+      </div>
+    </div>
+  </div>
+<% } else { %>
+  <div class="input-block" draggable="true" id="<%= query.id %>">
   <div class="block-container flex gap-3">
       <div contenteditable="true" show-pl-click="true" spellcheck="false"
       data-for="<%= query.for %>"
@@ -36,3 +48,4 @@
     <div class="move-dropzone" data-position="top"></div>
   </div>
 </div>
+<% } %>

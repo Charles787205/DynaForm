@@ -1,15 +1,13 @@
-import Component from "../controllers/components.controller.js";
-
 const get_title = async (req, res) => {
-	const { title, description, path, editable } = req.query;
+  const { title, description, path, editable } = req.query;
 
-	res.render("../views/components/modal/preview", {
-		title: title,
-		description: description,
-		path: path,
-	});
+  res.render("../views/components/modal/preview", {
+    title: title,
+    description: description,
+    path: path,
+  });
 };
 
 export default {
-	get_title,
+  get_title,
 };

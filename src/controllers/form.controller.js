@@ -43,7 +43,7 @@ const edit = async (req, res) => {
   res.render("pages/create", { data });
 };
 
-const listForm = async (req, res) => {
+const list = async (req, res) => {
   const allForms = await Form.find();
   const forms_id = allForms.map((form) => form._id);
   // res.status(200).json({ forms: forms_id });
@@ -65,7 +65,6 @@ const view = async (req, res) => {
 
 export default {
   get,
-  post,
   create,
   submit,
   list,

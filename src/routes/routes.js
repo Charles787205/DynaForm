@@ -5,7 +5,7 @@ import Modal from "../controllers/modal.controller.js";
 const router = Router();
 
 // COMPONENTS
-router.route("/").get(FormController.get).post(FormController.post);
+router.route("/").get(FormController.get);
 router.post("/components/:name", Components.getComponent);
 router.post("/components/fields/:name", Components.getField);
 
@@ -17,7 +17,7 @@ router
 router.get("/forms", FormController.list);
 router.get("/view", FormController.view);
 router.post("/template/:template", Components.getTemplate);
-router.post("/submit", FormController.post);
+// router.post("/submit", FormController.post);
 
 // MODAL
 router.post("/components/modal/show", Components.showModal);

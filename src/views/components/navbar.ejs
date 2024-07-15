@@ -72,11 +72,12 @@
 
       <!--<button class="p-2 text-sm hover:font-semibold" hx-get="/listform" hx-trigger="click" hx-target=".mainscreen" -->
       <a class="p-2 text-sm hover:font-semibold" href="/listform"> My Forms </a>
-      <button
+      <a
+        href='<%= isLogin ? "/logout" : "/auth/google" %>'
         class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
       >
-        Export
-      </button>
+        <%= isLogin ? 'Logout' : 'Login' %>
+      </a>
     </div>
   </div>
 </nav>

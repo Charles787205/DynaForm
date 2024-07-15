@@ -25,39 +25,42 @@ async function submitForm() {
 
 			const component = { id };
 
-			if (content) {
-				component.content = content;
-			}
-			if (labelFor) {
-				component.for = labelFor;
-			}
-			if (name) {
-				component.name = name;
-			}
-			if (type) {
-				component.type = type;
-			}
-			if (label) {
-				component.label = label;
-			}
-			if (checked) {
-				component.checked = checked;
-			}
-			if (type == "input") {
-				placeholder = contentContainer.innerHTML;
-			}
-			if (focus) {
-				component.focus = focus;
-			}
-			if (required) {
-				component.required = required;
-			}
-			if (placeholder) {
-				component.placeholder = placeholder;
-			}
-			return component;
-		}
-	);
+      if (content) {
+        if(type === "dropdown"){
+          const components = [];
+          component.content = content
+        }else component.content = content;
+      }
+      if (labelFor) {
+        component.for = labelFor;
+      }
+      if (name) {
+        component.name = name;
+      }
+      if (type) {
+        component.type = type;
+      }
+      if (label) {
+        component.label = label;
+      }
+      if (checked) {
+        component.checked = checked;
+      }
+      if (type == "input") {
+        placeholder = contentContainer.innerHTML;
+      }
+      if (focus) {
+        component.focus = focus;
+      }
+      if (required) {
+        component.required = required;
+      }
+      if (placeholder) {
+        component.placeholder = placeholder;
+      }
+      return component;
+    }
+  );
 
 	const formData = {
 		formName,

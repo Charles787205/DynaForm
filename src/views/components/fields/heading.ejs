@@ -1,18 +1,20 @@
-<% if(query.view){ %>
-    <div class="content-container text-black text-[3rem] outline-none font-bold w-full"><%=query.content%></div>
-<% } else { %> 
-<div class="input-block title" draggable="true" id="<%= query.id %>">
-  <div class="block-container">
-    <div show-pl-click=true contenteditable=true placeholder="<%=query.placeholder %>" data-type="heading" required
-      spellcheck="false" data-name="<%= query.name %>_<%= query.id %>" id="input_<%= query.id %>"
-      class="content-container text-black text-[3rem] outline-none font-bold w-full"><%= query.content %></div>
-    <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
-    <div class="move-dropzone" data-position="right"></div>
-    <div class="move-dropzone" data-position="left"></div>
-    <div class="move-dropzone" data-position="below"></div>
-    <div class="move-dropzone" data-position="top"></div>
+<% if (query.view) { %>
+  <div class="content-container text-black text-[3rem] outline-none font-bold w-full" spellcheck="false">
+    <%= query.content %>
   </div>
-</div>
-</div>
-
-<% } %>
+  <% } else { %>
+    <div class="input-block title" draggable="true" id="<%= query.id %>">
+      <div class="block-container">
+        <div show-pl-click="true" contenteditable="true" placeholder="<%= query.placeholder %>" data-type="heading"
+          required spellcheck="false" data-name="heading_<%= query.id %>" id="input_<%= query.id %>"
+          class="content-container text-black text-[3rem] outline-none font-bold w-full">
+          <%= query.content %>
+        </div>
+        <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+        <div class="move-dropzone" data-position="right"></div>
+        <div class="move-dropzone" data-position="left"></div>
+        <div class="move-dropzone" data-position="below"></div>
+        <div class="move-dropzone" data-position="top"></div>
+      </div>
+    </div>
+    <% } %>

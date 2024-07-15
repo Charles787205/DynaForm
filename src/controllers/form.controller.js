@@ -3,73 +3,74 @@ import FormComponent from "../objects/component.js";
 import FormObject from "../objects/form.js";
 import Form from "../models/form.models.js";
 const get = async (req, res) => {
-	res.redirect("/create");
+  res.redirect("/create");
 };
 
 const createForm = async (req, res) => {
-	res.render("pages/create", { layout: "./layouts/main" });
+  console.log(req.user);
+  res.render("pages/create", { layout: "./layouts/main" });
 };
 
 const submitForm = async (req, res) => {
-	try {
-		// Assuming req.body contains the JSON data sent via fetch
-		const formData = req.body;
+  try {
+    // Assuming req.body contains the JSON data sent via fetch
+    const formData = req.body;
 
-		console.log(formData);
+    console.log(formData);
 
-		const components = [];
-		formData.formComponents.forEach((component) => {
-			const formComponent = new FormComponent(component);
+    const components = [];
+    formData.formComponents.forEach((component) => {
+      const formComponent = new FormComponent(component);
 
-			const newComponent = new Component(formComponent.toCreateFormModel());
-			components.push(newComponent);
-		});
+      const newComponent = new Component(formComponent.toCreateFormModel());
+      components.push(newComponent);
+    });
 
-		const form = new FormObject({
-			name: formData.formName,
-			description: formData.formDescription,
-			components: components,
-		});
+    const form = new FormObject({
+      name: formData.formName,
+      description: formData.formDescription,
+      components: components,
+    });
 
-		await new Form(form.toCreateFormModel()).save();
+    await new Form(form.toCreateFormModel()).save();
 
-		return res.json({ form });
-	} catch (error) {
-		console.error("Error processing form:", error);
-		res.status(500).send("Error processing form");
-	}
+    return res.json({ form });
+  } catch (error) {
+    console.error("Error processing form:", error);
+    res.status(500).send("Error processing form");
+  }
 };
 
 const editForm = async (req, res) => {
-	const data = {};
+  const data = {};
 
-	res.render("pages/create", { data });
+  res.render("pages/create", { data });
 };
 
 const listForm = async (req, res) => {
-	const allForms = await Form.find();
-	const forms_id = allForms.map((form) => form._id);
-	res.status(200).json({ forms: forms_id });
-	// res.render("pages/listform");
+  const allForms = await Form.find();
+  const forms_id = allForms.map((form) => form._id);
+  res.status(200).json({ forms: forms_id });
+  // res.render("pages/listform");
 };
 
 const viewForm = async (req, res) => {
-	const { form_id } = req.body;
-	try {
-		const get_form = await Form.findById(form_id);
+  const { form_id } = req.body;
+  try {
+    const get_form = await Form.findById(form_id);
 
-		res.render("pages/viewform", { get_form });
-	} catch (error) {
-		console.error("Error retrieving form:", error);
-		res.status(500).send("Error retrieving form");
-	}
+    res.render("pages/viewform", { get_form });
+  } catch (error) {
+    console.error("Error retrieving form:", error);
+    res.status(500).send("Error retrieving form");
+  }
 };
 
 export default {
-	get,
-	createForm,
-	submitForm,
-	listForm,
-	editForm,
-	viewForm,
+  get,
+  createForm,
+  submitForm,
+  listForm,
+  editForm,
+  viewForm,
 };

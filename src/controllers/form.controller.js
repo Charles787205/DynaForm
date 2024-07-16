@@ -6,7 +6,7 @@ const get = async (req, res) => {
   res.redirect("/create");
 };
 
-const create = async (req, res) => {
+const getCreatePage = async (req, res) => {
   res.render("pages/create", { layout: "./layouts/main" });
 };
 
@@ -27,10 +27,10 @@ const submit = async (req, res) => {
       description: formData.formDescription,
       components: components,
     });
+    console.log(req.isAuthenticated());
+    //await new Form(form.toCreateFormModel()).save();
 
-    await new Form(form.toCreateFormModel()).save();
-
-    return res.json({ form });
+    //return res.json({ form });
   } catch (error) {
     console.error("Error processing form:", error);
     res.status(500).send("Error processing form");
@@ -65,7 +65,7 @@ const view = async (req, res) => {
 
 export default {
   get,
-  create,
+  getCreatePage,
   submit,
   list,
   edit,

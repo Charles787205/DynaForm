@@ -12,7 +12,7 @@ router.post("/components/fields/:name", Components.getField);
 //FORMS
 router
   .route("/create")
-  .get(FormController.create)
+  .get(FormController.getCreatePage)
   .post(FormController.submit);
 router.get("/forms", FormController.list);
 router.get("/view", FormController.view);

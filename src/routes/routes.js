@@ -1,7 +1,7 @@
 import { Router } from "express";
 import FormController from "../controllers/form.controller.js";
 import Components from "../controllers/components.controller.js";
-import Modal from "../controllers/modal.controller.js";
+
 const router = Router();
 
 // COMPONENTS

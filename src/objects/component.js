@@ -4,18 +4,16 @@ class FormComponent {
     name = "",
     content = "",
     type = "",
-    classes = [],
-    className = "",
     placeHolder = "",
+    forAttr = "",
     focus = false,
     required = false,
   }) {
+    this.forAttr = forAttr;
     this.id = id;
     this.name = name;
     this.content = content;
     this.type = type;
-    this.classes = classes;
-    this.className = className;
     this.placeHolder = placeHolder;
     this.focus = focus;
     this.required = required;
@@ -37,7 +35,7 @@ class FormComponent {
       return {
         component_type: "input",
         name: this.name,
-        className: "",
+
         type: this.type,
         content: "",
         focused_bool: false,
@@ -45,14 +43,18 @@ class FormComponent {
         placeholder: this.content,
       };
     } else if (textTypes.includes(this.type)) {
-      return {
+      const component = {
         component_type: "text",
         name: this.name,
-        className: "",
+
         type: this.type,
         content: this.content,
         id: this.id,
       };
+      if (this.type === "label") {
+        component.forAttr = this.forAttr;
+      }
+      return component;
     } else if (button.includes(this.type)) {
       return {
         component_type: "input",
@@ -60,7 +62,6 @@ class FormComponent {
         name: this.name,
         id: this.id,
         content: this.content,
-        className: this.className,
       };
     } else if (divider.includes(this.type)) {
       return {

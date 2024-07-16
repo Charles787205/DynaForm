@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/css/app.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="/css/app.css" />
+    <script
+      src="https://unpkg.com/htmx.org@2.0.0"
+      integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <script src="/js/scripts.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
 
-  <script src="https://unpkg.com/htmx.org@2.0.0"
-    integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
-    crossorigin="anonymous"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <script src="/js/scripts.js"></script>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-</head>
-
-<body>
-  <div class="app">
-    <%- include('../components/navbar'); %>
+  <body>
+    <div class="app">
+      <%- include('../components/navbar'); %>
 
       <main class="mainscreen w-screen items-start inline-flex ">
         <div hx-post="template/survey" hx-swap="outerHTML" hx-trigger="load" hx-indicator="#spinner"></div>
         <div class="w-screen h-screen flex justify-center items-center"><img  id="spinner" class="htmx-indicator" src="/assets/1490.gif"/></div>
       </main>
-
-  </div>
-  <!-- <script>
+    </div>
+    <!-- <script>
     const removeImageBtn = document.getElementById("remove-cover-btn");
 
     removeImageBtn.addEventListener("click", function () {
@@ -76,7 +80,6 @@
 
 
   </script> -->
-  <!-- <script src="/js/Sortable.min.js"></script> -->
-</body>
-
+    <!-- <script src="/js/Sortable.min.js"></script> -->
+  </body>
 </html>

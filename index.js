@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import authRouter from "./src/routes/auth.routes.js";
 import passport from "passport";
 import session from "express-session";
+import checkPath from "./src/middleware/middleware.js";
 
 import googlePassport from "passport-google-oauth20";
 
@@ -39,10 +40,28 @@ app.use(function (req, res, next) {
   res.locals.user = req.user;
   next();
 });
-app.get("*/*", router);
+app.all("*", function (req, res, next) {
+  // CORS headers
+  res.header("Access-Control-Allow-Origin", req.path); // restrict it to the required domain
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-type,Accept,X-Custom-Header"
+  );
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  return next();
+});
+
+app.get("*/*", checkPath, router);
 app.post("*/*", router);
 app.get("*/*", authRouter);
 app.post("*/*", authRouter);
+app.delete("*/*", router);
 
 app.use(express.urlencoded({ extended: true | false }));
 

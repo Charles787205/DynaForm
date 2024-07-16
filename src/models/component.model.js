@@ -43,6 +43,11 @@ Component.discriminator(
 			required: false,
 			enum: ["heading", "label", "textfield"],
 		},
+		for: {
+			type: String,
+			required: false,
+			maxLength: 50,
+		},
 	})
 );
 
@@ -63,11 +68,6 @@ Component.discriminator(
 		focus: {
 			type: Boolean,
 			required: false,
-		},
-		for: {
-			type: String,
-			required: false,
-			maxLength: 50,
 		},
 	})
 );

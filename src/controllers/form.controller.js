@@ -43,10 +43,20 @@ const edit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-	// const allForms = await Form.find();
-	// const forms_id = allForms.map((form) => form._id);
-	// res.status(200).json({ forms: forms_id });
-	res.render("pages/listform");
+	const allForms = await Form.find();
+	const forms = allForms.map((form) => {
+		console.log("id", form._id);
+
+		return {
+			id: form._id,
+			name: form.name,
+			description: form.description,
+			date: form.createdAt.toISOString().split("T")[0],
+		};
+	});
+
+	// res.status(200).json({ forms: forms });
+	res.render("pages/listform", { forms });
 };
 
 const view = async (req, res) => {
@@ -62,6 +72,32 @@ const view = async (req, res) => {
 	}
 };
 
+const deleteForm = async (req, res) => {
+	const { form_id } = req.params;
+	try {
+		const deleteForm = await Form.deleteOne({ _id: form_id });
+		if (deleteForm) {
+			console.log("Form deleted:", deleteForm);
+			res.status(200).send(deleteForm);
+		} else {
+			res.status(404).send("Form not found");
+		}
+	} catch (error) {
+		console.error("Error deleting form:", error);
+		res.status(500).send("Error deleting form");
+	}
+};
+
+const deleteAllForms = async (req, res) => {
+	try {
+		await Form.deleteMany({});
+		res.status(200).send("All forms deleted");
+	} catch (error) {
+		console.error("Error deleting forms:", error);
+		res.status(500).send("Error deleting forms");
+	}
+};
+
 export default {
 	get,
 	create,
@@ -69,4 +105,6 @@ export default {
 	list,
 	edit,
 	view,
+	deleteAllForms,
+	deleteForm,
 };

@@ -1,6 +1,6 @@
 async function submitForm() {
 	const form = document.getElementById("form");
-	const formName = form.getAttribute("data-form-name") || "defaultFormName";
+	const formName = form.getAttribute("data-form-name") || "Untitled Form";
 	const formDescription =
 		form.getAttribute("data-form-description") || "defaultDescription";
 

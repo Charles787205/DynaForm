@@ -11,7 +11,7 @@ function submitForm() {
     if (response.ok) {
       console.log("OKAYT");
     } else if (response.status == 401) {
-      window.open("/auth/google", null);
+      window.open("/auth/google", "_self");
     }
   });
 }

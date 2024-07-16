@@ -28,6 +28,7 @@ const submit = async (req, res) => {
 			components: components,
 		});
 
+		console.log("form", form);
 		await new Form(form.toCreateFormModel()).save();
 		return res.json({ form });
 	} catch (error) {
@@ -45,7 +46,7 @@ const edit = async (req, res) => {
 const list = async (req, res) => {
 	const allForms = await Form.find();
 	const forms = allForms.map((form) => {
-		console.log("id", form._id);
+		console.log("id", form);
 
 		return {
 			id: form._id,
@@ -55,8 +56,8 @@ const list = async (req, res) => {
 		};
 	});
 
-	// res.status(200).json({ forms: forms });
-	res.render("pages/listform", { forms });
+	res.status(200).json({ forms: forms });
+	// res.render("pages/listform", { forms });
 };
 
 const view = async (req, res) => {

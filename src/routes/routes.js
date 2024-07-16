@@ -11,10 +11,10 @@ router.post("/components/fields/:name", Components.getField);
 
 //FORMS
 router
-  .route("/create")
-  .get(FormController.getCreatePage)
-  .post(FormController.submit);
-router.get("/forms", FormController.list);
+	.route("/create")
+	.get(FormController.getCreatePage)
+	.post(FormController.submit);
+router.get("/forms", FormController.list); // get all forms
 router.get("/view", FormController.view);
 router.post("/template/:template", Components.getTemplate);
 router.delete("/deleteAll", FormController.deleteAllForms); // delete all form

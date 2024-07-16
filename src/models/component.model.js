@@ -43,11 +43,11 @@ Component.discriminator(
 			required: false,
 			enum: ["heading", "label", "textfield"],
 		},
-		for: {
+		forAttr: {
 			type: String,
-
 			maxLength: 50,
 			validate: {
+				// only field 'for' is allowed for type 'label'
 				validator: function (value) {
 					return this.type === "label" ? !!value : !value;
 				},

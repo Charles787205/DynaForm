@@ -5,6 +5,12 @@ import { Component } from "./component.model.js";
 
 const form_schema = new Schema(
 	{
+		userID: {
+			type: String,
+			required: [true, "User ID is required"],
+			maxLength: 50,
+			ref: "User",
+		},
 		name: {
 			type: String,
 			required: [true, "Name is required"],

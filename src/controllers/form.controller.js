@@ -11,7 +11,7 @@ const getCreatePage = async (req, res) => {
 };
 
 const submit = async (req, res) => {
-  if (req.isUnauthenticated()) return res.redirect("/auth/google");
+  if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
   try {
     const formData = req.body;
 
@@ -24,7 +24,7 @@ const submit = async (req, res) => {
     });
 
     const form = new FormObject({
-      user_id: req.user.google_id,
+      user_id: req.user._id,
       name: formData.formName,
       description: formData.formDescription,
       components: components,

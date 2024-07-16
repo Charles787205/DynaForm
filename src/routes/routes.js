@@ -16,7 +16,7 @@ router
   .post(FormController.submit);
 
 router.get("/forms", FormController.list);
-router.get("/view", FormController.view);
+router.get("/view/:id", FormController.view);
 router.post("/template/:template", Components.getTemplate);
 router.delete("/deleteAll", FormController.deleteAllForms); // delete all form
 router.delete("/delete/:form_id", FormController.deleteForm); // delete form

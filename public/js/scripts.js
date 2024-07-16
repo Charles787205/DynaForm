@@ -11,14 +11,15 @@ function submitForm() {
     if (response.ok) {
       console.log("OKAYT");
     } else if (response.status == 401) {
-      window.open("/auth/google", null);
+      window.open("/auth/google", "_self");
     }
   });
 }
 
 function getFormData() {
   const form = document.getElementById("form");
-  const formName = form.getAttribute("data-form-name") || "Untitled Form";
+  console.log("ASDADASDASDASD: ", document.getElementById("form-title").value);
+  const formName = document.getElementById("form-title").value || "defaultFormName";
   const formDescription =
     form.getAttribute("data-form-description") || "defaultDescription";
 

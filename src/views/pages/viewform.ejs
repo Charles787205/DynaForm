@@ -168,6 +168,7 @@
     }
   ]
 }; %>
+
 <main class="mainscreen w-screen items-start inline-flex">  
   <div class="relative min-h-screen w-screen pt-16" action="" method="" onsubmit="onSubmit(event)" id="form">
       <div class="inset-2 header-image" id="image-wrapper">
@@ -195,12 +196,12 @@
       </div>
       <div class="w-full flex justify-center">
         <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
-          <% get_form.components.forEach(item => { console.log(item.placeholder) 
+          <% get_form.components.forEach(item => {  
             if(item.type === "divider"){
               item.content = "";
             }%>
           <div
-            hx-post="components/fields/<%=item.type%>"
+            hx-post="/components/fields/<%=item.type%>"
             hx-trigger="load"
             hx-swap="innerHTML"
             hx-vals='js:{"view": true, "content": "<%=item.content.replace(/\n\s*/g, "")%>","placeholder":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>"}'

@@ -5,7 +5,7 @@
       <div hx-post="/components/fields/label" hx-trigger="load"
         hx-vals='js:{"label": "<%= query.label %>", "for": "<%= query.id %>"}' hx-swap="outerHTML"></div>
       <input data-type="inputfield" class="content-container text-[1.1rem] w-full outline-none resize-none"
-        id="input_<%= query.id %>" placeholder="<%= query.content %>"></input>
+        id="input_<%= query.id %>" placeholder="<%= query.placeholder %>"></input>
     </div>
   </div>
 

@@ -6,7 +6,7 @@ const get = async (req, res) => {
 	res.redirect("/create");
 };
 
-const create = async (req, res) => {
+const getCreatePage = async (req, res) => {
 	res.render("pages/create", { layout: "./layouts/main" });
 };
 
@@ -68,7 +68,7 @@ const view = async (req, res) => {
 		res.render("pages/viewform", { get_form: get_form.toJSON() });
 	} catch (error) {
 		console.error("Error retrieving form:", error);
-		res.status(500).send({ "Error retrieving form": error });
+		res.status(500).send("Error retrieving form");
 	}
 };
 
@@ -100,11 +100,12 @@ const deleteAllForms = async (req, res) => {
 
 export default {
 	get,
-	create,
+	getCreatePage,
 	submit,
 	list,
 	edit,
 	view,
+
 	deleteAllForms,
 	deleteForm,
 };

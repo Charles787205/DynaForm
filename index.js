@@ -3,10 +3,6 @@ import authRouter from "./src/routes/auth.routes.js";
 import passport from "passport";
 import session from "express-session";
 import checkPath from "./src/middleware/middleware.js";
-
-import googlePassport from "passport-google-oauth20";
-
-// app.js (or index.js)
 import express from "express";
 import router from "./src/routes/routes.js";
 import mongoose from "mongoose";
@@ -30,11 +26,12 @@ app.use(
 );
 
 app.use(passport.initialize());
-
 app.use(passport.authenticate("session"));
 app.use(passport.session());
+
 app.use(express.static("public"));
 app.use(express.json());
+
 app.use(function (req, res, next) {
   res.locals.isLogin = req.isAuthenticated();
   res.locals.user = req.user;

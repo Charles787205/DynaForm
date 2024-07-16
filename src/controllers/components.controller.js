@@ -34,9 +34,9 @@ const showModal = async (req, res) => {
 	});
 };
 
+//Component Preview In Modal
 const showComponentPreview = async (req, res) => {
 	console.log("preview: ", req.body);
-
 	res.render("components/modal/preview", { ...req.body, view: true });
 };
 

@@ -14,13 +14,12 @@ router
   .route("/create")
   .get(FormController.getCreatePage)
   .post(FormController.submit);
-
 router.get("/forms", FormController.list);
-router.get("/view/:id", FormController.view);
+router.get("/form/:id", FormController.viewForm);
+router.route("/form/:id/edit").get(FormController.editForm).post(FormController.updateForm);
 router.post("/template/:template", Components.getTemplate);
-router.delete("/deleteAll", FormController.deleteAllForms); // delete all form
-router.delete("/delete/:form_id", FormController.deleteForm); // delete form
-// router.post("/submit", FormController.post);
+router.delete("/deleteAll", FormController.deleteAllForms); 
+router.delete("/delete/:form_id", FormController.deleteForm);
 
 // RESPONSE
 router.get("/response", FormController.response);
@@ -31,5 +30,3 @@ router.post("/components/modal/show", Components.showModal);
 router.post("/components/modal/preview", Components.showComponentPreview);
 
 export default router;
-
-// router.post("/createForm", FormController.createForm); // save form to the database

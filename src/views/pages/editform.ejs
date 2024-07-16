@@ -58,19 +58,7 @@
             </div>
             <div class="w-full flex justify-center">
               <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
-                <% form.components.forEach(item => {  
-                  if(item.type === "divider"){
-                    item.content = "";
-                  }%>
-                <div
-                  hx-post="/components/fields/<%=item.type%>"
-                  hx-trigger="load"
-                  hx-swap="innerHTML"
-                  hx-vals='js:{"view": true, "content": "<%=item.content.replace(/\n\s*/g, "")%>","placeholder":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>"}'
-                  class="form-field"
-                ></div>
-                <% }); %>
-                
+                    EDIT FORM
               </form>
             </div>
           </div>

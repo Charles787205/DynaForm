@@ -8,8 +8,8 @@ function submitForm() {
     },
     body: JSON.stringify(formData),
   }).then((response) => {
-    if (response.ok) {
-      console.log("OKAYT");
+    if (!response.ok) {
+      throw new Error("Failed adding to database:");
     } else if (response.status == 401) {
       window.open("/auth/google", "_self");
     }

@@ -2,15 +2,18 @@ import { Component } from "../models/component.model.js";
 import FormComponent from "../objects/component.js";
 import FormObject from "../objects/form.js";
 import Form from "../models/form.models.js";
+
+//Return Index
 const get = async (req, res) => {
   res.render("index");
 };
 
-
+//Form Create Page
 const getCreatePage = async (req, res) => {
   res.render("pages/create", { layout: "./layouts/main" });
 };
 
+//Form Save to DB
 const submit = async (req, res) => {
   if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
   try {
@@ -39,12 +42,7 @@ const submit = async (req, res) => {
   }
 };
 
-const edit = async (req, res) => {
-  const data = {};
-
-  res.render("pages/create", { data });
-};
-
+//Form List
 const list = async (req, res) => {
   if(!req.isAuthenticated()) {
     res.redirect("/auth/google")
@@ -66,29 +64,45 @@ const list = async (req, res) => {
   res.render("pages/listform", { forms });
 };
 
-const view = async (req, res) => {
+//Form View
+const viewForm = async (req, res) => {
   const form_id = req.params.id;
   console.log("form ID: ", form_id);
   try {
-    const get_form = await Form.findById(form_id);
-    console.log(get_form.toJSON());
+    const form = await Form.findById(form_id);
+    console.log(form.toJSON());
 
-    res.render("pages/viewform", { get_form: get_form.toJSON() });
+    res.render("pages/viewform", { form: form.toJSON() });
   } catch (error) {
     console.error("Error retrieving form:", error);
     res.status(500).send("Error retrieving form");
   }
 };
 
+
+//Form Edit
+const editForm = async (req, res) => {
+  
+  res.render("pages/editform");
+};
+
+//Form Update
+const updateForm = async (req, res) => {
+  res.send(200, "Form updated");
+};
+
+//Reponse Page
 const response = async (req, res) => {
   res.render("pages/response");
 };
 
+//Input Reponse 
 const getResponse = async (req, res) => {
 	const typeName = req.params.name;
 	res.render(`components/fields/${typeName}`);
 };
 
+//Delete Form
 const deleteForm = async (req, res) => {
   const { form_id } = req.params;
   try {
@@ -120,8 +134,9 @@ export default {
   getCreatePage,
   submit,
   list,
-  edit,
-  view,
+  editForm,
+  viewForm,
+  updateForm,
   response,
   deleteAllForms,
   deleteForm,

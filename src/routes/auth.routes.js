@@ -52,18 +52,29 @@ passport.deserializeUser(async (id, done) => {
   return done(null, user);
 });
 
+authRouter.get("/auth/google", (req, res, next) => {
+  // Store the original URL in session
+  req.session.returnTo = req.query.returnTo || '/';
+  console.log("Prev URL: ", req.session.returnTo);
+  next(); // Proceed to Google OAuth authentication
+});
+
+
 // Initiates the Google OAuth 2.0 authentication flow
 authRouter.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
+
 // Callback URL for handling the OAuth 2.0 response
 authRouter.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    res.redirect("/");
+    const redirectUrl = req.session.returnTo;
+    delete req.session.returnTo; // Clear returnTo session variable
+    res.redirect(redirectUrl);
   }
 );
 

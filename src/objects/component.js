@@ -4,19 +4,16 @@ class FormComponent {
     name = "",
     content = "",
     type = "",
-    classes = [],
-    className = "",
     placeHolder = "",
-    labelFor = "",
+    forAttr = "",
     focus = false,
     required = false,
   }) {
-    this.labelFor = labelFor;
+    this.forAttr = forAttr;
     this.id = id;
     this.name = name;
     this.content = content;
     this.type = type;
-
     this.placeHolder = placeHolder;
     this.focus = focus;
     this.required = required;
@@ -55,7 +52,7 @@ class FormComponent {
         id: this.id,
       };
       if (this.type === "label") {
-        component.labelFor = this.labelFor;
+        component.forAttr = this.forAttr;
       }
       return component;
     } else if (button.includes(this.type)) {

@@ -10,7 +10,7 @@
           class="content-container text-black text-[3rem] outline-none font-bold w-full">
           <%= query.content %>
         </div>
-        <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
+        <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
         <div class="move-dropzone" data-position="right"></div>
         <div class="move-dropzone" data-position="left"></div>
         <div class="move-dropzone" data-position="below"></div>

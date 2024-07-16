@@ -2,43 +2,38 @@
   <div class="input-block" id="<%= query.id %>">
     <div class="block-container">
       <div class="h-8 justify-start items-center gap-2.5 inline-flex">
-        <input id="default-checkbox" 
-        type="checkbox" value="<%= query.content %>" 
-        for="<%= query.for %>"
-        data-name="field_name<%= query.id %>"
-        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <input id="default-checkbox" type="checkbox" value="<%= query.content %>" for="<%= query.for %>"
+          data-name="field_name<%= query.id %>"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
         <%= query.content %>
-        </input>
+          </input>
       </div>
     </div>
   </div>
-    <% } else { %>
-<div class="input-block" draggable="true" id="<%= query.id %>">
-  <div class="block-container">
-    <div class="h-8 justify-start items-center gap-2.5 inline-flex">
-      <div class="ml-4 h-4 w-4 border border-gray-500"></div>
-      <div contenteditable="true" show-pl-click="true" placeholder="Checkbox" data-name="field_name<%= query.id %>"
-        data-type="checkbox" <% query.checked ? "checked" : "" %>
-        class="content-container text-neutral-600 text-md outline-none font-extralight min-w-28 max-w-80"
-        ><%= query.content %>
+  <% } else { %>
+    <div class="input-block" draggable="true" id="<%= query.id %>">
+      <div class="block-container">
+        <div class="h-8 justify-start items-center gap-2.5 inline-flex">
+          <div class="ml-4 h-4 w-4 border border-gray-500"></div>
+          <div contenteditable="true" show-pl-click="true" placeholder="Checkbox" data-name="field_name<%= query.id %>"
+            data-type="checkbox" <% query.checked ? "checked" : "" %>
+            class="content-container text-neutral-600 text-md outline-none font-extralight min-w-28 max-w-80">
+            <%= query.content %>
+          </div>
+          <button class="option" type="button" hx-post="/components/fields/checkbox" hx-trigger="click"
+            hx-target="closest .input-block" hx-vals='js:{"id": "<%= query.id %>"}' hx-swap="afterend"
+            onclick="handleClick(this)" tabindex="-1">
+            Add option
+          </button>
+          <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
+          <%- include("../tooltip") %>
+        </div>
       </div>
-      <button class="option" type="button" hx-get="/components/fields/checkbox" hx-trigger="click"
-        hx-target="closest .input-block" hx-vals='{"id": "<%= query.id %>"}' hx-swap="afterend"
-        onclick="handleClick(this)" tabindex="-1">
-        Add option
-      </button>
-      <% if (query.labelled==='true' ) { %>
-        <div hx-get="/components/fields/label" hx-trigger="load" hx-target="closest .input-block"
-          hx-vals='{"id": "<%= query.id %>", "content": "<%= query.text %>"}' hx-swap="beforebegin"></div>
-        <% } %>
-          <div hx-get="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
-    </div>
-  </div>
 
-  <div class="move-dropzone" data-position="left"></div>
-  <div class="move-dropzone" data-position="right"></div>
-  <div class="move-dropzone" data-position="below"></div>
-  <div class="move-dropzone" data-position="top"></div>
-</div>
-</div>
+      <div class="move-dropzone" data-position="left"></div>
+      <div class="move-dropzone" data-position="right"></div>
+      <div class="move-dropzone" data-position="below"></div>
+      <div class="move-dropzone" data-position="top"></div>
+    </div>
+    </div>
     <% } %>

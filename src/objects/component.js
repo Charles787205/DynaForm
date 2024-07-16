@@ -31,13 +31,14 @@ class FormComponent {
 			"dropdown",
 		];
 		const textTypes = ["heading", "label", "textfield"];
-		const button = ["button", "divider"];
+		const button = ["button"];
+		const divider = ["divider"];
 		if (inputTypes.includes(this.type)) {
 			return {
 				component_type: "input",
 				name: this.name,
 				className: "",
-				input_type: this.type,
+				type: this.type,
 				content: "",
 				focused_bool: false,
 				id: this.id,
@@ -48,7 +49,7 @@ class FormComponent {
 				component_type: "text",
 				name: this.name,
 				className: "",
-				input_type: this.type,
+				type: this.type,
 				content: this.content,
 				id: this.id,
 			};
@@ -60,6 +61,14 @@ class FormComponent {
 				id: this.id,
 				content: this.content,
 				className: this.className,
+			};
+		} else if (divider.includes(this.type)) {
+			return {
+				component_type: "divider",
+				type: "divider",
+				name: this.name,
+				id: this.id,
+				content: this.content,
 			};
 		} else {
 			console.log("Invalid type");

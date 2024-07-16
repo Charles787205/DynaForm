@@ -25,22 +25,22 @@
     </div>
     <div class="w-full flex justify-center">
       <form class="flex flex-col h-full w-full max-w-screen-md px-10" data-form-name="" data-form-description="">
-        <!-- <div hx-get="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div> -->
-        <div hx-get="components/fields/heading" hx-trigger="load target:#tool"
-          hx-vals='{"placeholder": "Add a heading", "content": "Heading 1", "type": "heading", "name": "field_name"}'
+        <!-- <div hx-post="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div> -->
+        <div hx-post="components/fields/heading" hx-trigger="load target:#tool"
+          hx-vals='js:{"placeholder": "Add a heading", "content": "Heading 1", "type": "heading", "name": "field_name"}'
           hx-swap="outerHTML" class="form-field"></div>
 
-        <div hx-get="components/fields/textfield" hx-trigger="load target:#tool"
-          hx-vals='{"focus": true, "name": "field_name"}' hx-swap="outerHTML" class="form-field">
+        <div hx-post="components/fields/textfield" hx-trigger="load target:#tool"
+          hx-vals='js:{"focus": true, "name": "field_name"}' hx-swap="outerHTML" class="form-field">
         </div>
-        <div hx-get="components/fields/textfield" hx-trigger="load target:#tool"
-          hx-vals='{"focus": true, "name": "field_name"}' hx-swap="outerHTML" class="form-field">
+        <div hx-post="components/fields/textfield" hx-trigger="load target:#tool"
+          hx-vals='js:{"focus": true, "name": "field_name"}' hx-swap="outerHTML" class="form-field">
         </div>
-        <div hx-get="components/fields/textfield" hx-trigger="load target:#tool"
-          hx-vals='{"focus": true, "name": "field_name"}' hx-swap="outerHTML" class="form-field">
+        <div hx-post="components/fields/textfield" hx-trigger="load target:#tool"
+          hx-vals='js:{"focus": true, "name": "field_name"}' hx-swap="outerHTML" class="form-field">
         </div>
 
-        <div hx-get="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
+        <div hx-post="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
       </form>
 
     </div>

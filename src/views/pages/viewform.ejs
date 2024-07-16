@@ -195,14 +195,14 @@
     </div>
     <div class="w-full flex justify-center">
       <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
-        <% get_form.components.forEach(item => { console.log('Full Item:', item); console.log('Input Type:', item['input_type']); console.log('ID:', item.id); %>
-        <!-- <div
+        <% test.components.forEach(item => { console.log(item) %>
+        <div
           hx-get="components/fields/<%=item.type%>"
           hx-trigger="load delay:1s"
           hx-swap="innerHTML"
           hx-vals='{"view": true, "content": "<%=item.content%>","label":"<%=item.label%>","for":"<%=item.for%>" }'
           class="form-field"
-        ></div> -->
+        ></div>
         <% }); %>
         
       </form>

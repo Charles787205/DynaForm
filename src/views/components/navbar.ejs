@@ -17,6 +17,16 @@
 		<div class="flex gap-6 items-center">
 			<button
 				class="p-2 hover:font-semibold text-sm"
+				hx-get="/response"
+				hx-trigger="click"
+				hx-target=".mainscreen"
+				hx-swap="outerHTML"
+				hx-vals='{"form_id": "6694c86e9846ca97e55c7fda"}'
+			>
+				Responses
+			</button>
+			<button
+				class="p-2 hover:font-semibold text-sm"
 				hx-get="/viewform"
 				hx-trigger="click"
 				hx-target=".mainscreen"

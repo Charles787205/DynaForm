@@ -54,6 +54,11 @@ const listForm = async (req, res) => {
   // res.render("pages/listform");
 };
 
+const viewResponse = async (req, res) => {
+ 
+  res.render("pages/response");
+};
+
 const viewForm = async (req, res) => {
 	const { form_id } = req.query;
 	try {
@@ -73,4 +78,5 @@ export default {
   listForm,
   editForm,
   viewForm,
+  viewResponse
 };

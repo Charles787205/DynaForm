@@ -7,9 +7,11 @@ class FormComponent {
     classes = [],
     className = "",
     placeHolder = "",
+    labelFor = "",
     focus = false,
     required = false,
   }) {
+    this.labelFor = lableFor;
     this.id = id;
     this.name = name;
     this.content = content;
@@ -45,7 +47,7 @@ class FormComponent {
         placeholder: this.content,
       };
     } else if (textTypes.includes(this.type)) {
-      return {
+      const component = {
         component_type: "text",
         name: this.name,
         className: "",
@@ -53,6 +55,10 @@ class FormComponent {
         content: this.content,
         id: this.id,
       };
+      if (this.type === "label") {
+        component.labelFor = this.labelFor;
+      }
+      return component;
     } else if (button.includes(this.type)) {
       return {
         component_type: "input",

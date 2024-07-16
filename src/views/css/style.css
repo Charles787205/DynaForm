@@ -43,6 +43,10 @@ input[type="radio"] {
 .label {
   font-weight: bold;
 }
+[data-type="dropdown"] {
+  padding-left: 30px;
+}
+
 .header-image {
   display: flex;
   align-items: center;
@@ -157,6 +161,10 @@ img[image-loaded="true"]:hover,
 .actions:hover .content-container:not(:focus) {
   transition: all 0.3s;
 } */
+
+.pl-10 {
+  padding-left: 2.5rem;
+}
 
 .actions {
   opacity: 0;

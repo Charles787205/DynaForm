@@ -9,7 +9,7 @@ const components = new Schema(
 			type: String,
 			required: [true, "Component type is required"],
 			enum: {
-				values: ["text", "input"],
+				values: ["text", "input", "divider"],
 				message: "{VALUE} is not supported",
 			},
 		},
@@ -41,7 +41,12 @@ Component.discriminator(
 		type: {
 			type: String,
 			required: false,
-			enum: ["heading"],
+			enum: ["heading", "label", "textfield"],
+		},
+		for: {
+			type: String,
+			required: false,
+			maxLength: 50,
 		},
 	})
 );
@@ -52,18 +57,8 @@ Component.discriminator(
 	new Schema({
 		type: {
 			type: String,
-			required: false,
-			enum: [
-				"checkbox",
-				"divider",
-				"heading",
-				"dropdown",
-				"inputfield",
-				"label",
-				"radiobox",
-				"textarea",
-				"textfield",
-			],
+			required: true,
+			enum: ["textarea", "checkbox", "radiobox", "inputfield", "dropdown"],
 		},
 		placeholder: {
 			type: String,
@@ -74,14 +69,18 @@ Component.discriminator(
 			type: Boolean,
 			required: false,
 		},
-		for: {
+	})
+);
+Component.discriminator(
+	"divider",
+	new Schema({
+		type: {
 			type: String,
-			required: false,
-			maxLength: 50,
+			required: true,
+			enum: ["divider"],
 		},
 	})
 );
-Component.discriminator("divider", new Schema({}));
 
 Component.discriminator(
 	"button",

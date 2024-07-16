@@ -18,14 +18,14 @@ app.set("view engine", "ejs"); // Set the view engine to ejs
 app.set("views", "src/views"); // Set the views directory1
 
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "dxfcv",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 100,
-    },
-  })
+	session({
+		secret: process.env.SESSION_SECRET || "dxfcv",
+		resave: false,
+		saveUninitialized: false,
+		cookie: {
+			maxAge: 1000 * 60 * 100,
+		},
+	})
 );
 
 app.use(passport.initialize());
@@ -35,31 +35,33 @@ app.use(passport.session());
 app.use(express.static("public"));
 app.use(express.json());
 app.use(function (req, res, next) {
-  res.locals.isLogin = req.isAuthenticated();
-  next();
+	res.locals.isLogin = req.isAuthenticated();
+	res.locals.user = req.user;
+	next();
 });
 app.get("*/*", router);
 app.post("*/*", router);
 app.get("*/*", authRouter);
 app.post("*/*", authRouter);
+app.delete("*/*", router);
 
 app.use(express.urlencoded({ extended: true | false }));
 
 // Database Connection with mongoDB
 
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    // Listen for request only after connecting to MongoDB
-    app.listen(process.env.PORT, (error) => {
-      if (!error) {
-        console.log(
-          "Server is connected to MongoDB & running on port",
-          process.env.PORT
-        );
-      } else {
-        console.log(`Error ${error}`);
-      }
-    });
-  })
-  .catch((error) => console.log(error));
+	.connect(process.env.MONGO_URI)
+	.then(() => {
+		// Listen for request only after connecting to MongoDB
+		app.listen(process.env.PORT, (error) => {
+			if (!error) {
+				console.log(
+					"Server is connected to MongoDB & running on port",
+					process.env.PORT
+				);
+			} else {
+				console.log(`Error ${error}`);
+			}
+		});
+	})
+	.catch((error) => console.log(error));

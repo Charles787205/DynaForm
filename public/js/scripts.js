@@ -1,6 +1,6 @@
 async function submitForm() {
 	const form = document.getElementById("form");
-	const formName = form.getAttribute("data-form-name") || "defaultFormName";
+	const formName = form.getAttribute("data-form-name") || "Untitled Form";
 	const formDescription =
 		form.getAttribute("data-form-description") || "defaultDescription";
 
@@ -8,13 +8,10 @@ async function submitForm() {
 		(block) => {
 			const contentContainer = block.querySelector(".content-container");
 
-			const label =
-				block.querySelector(".label") &&
-				(block.querySelector(".label").innerHTML ?? undefined);
 			const id = block.id;
 			const name = contentContainer.getAttribute("data-name");
 			const type = contentContainer.getAttribute("data-type");
-			const labelFor = contentContainer.getAttribute("data-for");
+			const forAttr = contentContainer.getAttribute("data-for");
 			const required = contentContainer.getAttribute("required");
 			var placeholder = contentContainer.getAttribute("placeholder");
 			const content = contentContainer.innerHTML;
@@ -25,42 +22,39 @@ async function submitForm() {
 
 			const component = { id };
 
-      if (content) {
-        if(type === "dropdown"){
-          const components = [];
-          component.content = content
-        }else component.content = content;
-      }
-      if (labelFor) {
-        component.for = labelFor;
-      }
-      if (name) {
-        component.name = name;
-      }
-      if (type) {
-        component.type = type;
-      }
-      if (label) {
-        component.label = label;
-      }
-      if (checked) {
-        component.checked = checked;
-      }
-      if (type == "input") {
-        placeholder = contentContainer.innerHTML;
-      }
-      if (focus) {
-        component.focus = focus;
-      }
-      if (required) {
-        component.required = required;
-      }
-      if (placeholder) {
-        component.placeholder = placeholder;
-      }
-      return component;
-    }
-  );
+			if (content) {
+				if (type === "dropdown") {
+					const components = [];
+					component.content = content;
+				} else component.content = content;
+			}
+			if (forAttr) {
+				component.forAttr = forAttr;
+			}
+			if (name) {
+				component.name = name;
+			}
+			if (type) {
+				component.type = type;
+			}
+			if (checked) {
+				component.checked = checked;
+			}
+			if (type == "input") {
+				placeholder = contentContainer.innerHTML;
+			}
+			if (focus) {
+				component.focus = focus;
+			}
+			if (required) {
+				component.required = required;
+			}
+			if (placeholder) {
+				component.placeholder = placeholder;
+			}
+			return component;
+		}
+	);
 
 	const formData = {
 		formName,
@@ -68,23 +62,9 @@ async function submitForm() {
 		formComponents,
 	};
 
-	console.log("Submitting form data:", formData);
+	console.log(JSON.stringify(formData, null, 2));
 
-	// fetch("/create", {
-	//   method: "POST",
-	//   headers: {
-	//     "Content-Type": "application/json",
-	//   },
-	//   body: JSON.stringify(formData),
-	// })
-	//   .then((response) => response.json())
-	//   .then((data) => {
-	//     console.log("Success:", data);
-	//   })
-	//   .catch((error) => {
-	//     console.error("Error:", error);
-	//   });
-
+	console.log("AFTER PARSE");
 	fetch("/create", {
 		method: "POST",
 		headers: {

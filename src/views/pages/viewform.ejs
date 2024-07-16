@@ -1,211 +1,131 @@
-<% const test = {
-  "name": "User-Registration-Form",
-  "description": "A form for user registration.",
-  "components": [
-    {
-      "id": "d9d502ac-003c-4be3-a602-2565454ed740",
-      "content": "CCE Seminar Satisfaction Survey",
-      "name": "heading_d9d502ac-003c-4be3-a602-2565454ed740",
-      "type": "heading",
-      "placeholder": "Add a heading"
-    },
-    {
-      "id": "a1b908fe-0f04-4a9b-9cf4-5c7ce0ec262b",
-      "content": "Thank you for attending the CCE Seminar! Your feedback is valuable to us and will help us improve future events. Please take a few minutes to complete this survey.",
-      "name": "textfield_a1b908fe-0f04-4a9b-9cf4-5c7ce0ec262b",
-      "type": "textfield",
-      "focus": "true",
-      "placeholder": "Start typing text or add a block."
-    },
-    {
-      "id": "c2b3d517-6d84-4198-b82d-d7cf4ec1c523",
-      "content": "",
-      "name": "divider_c2b3d517-6d84-4198-b82d-d7cf4ec1c523",
-      "type": "divider"
-    },
-    {
-      "id": "f0ad790f-1c34-4521-9e55-0a183d1bf38f",
-      "content": "Please fill up the required fields",
-      "name": "textfield_f0ad790f-1c34-4521-9e55-0a183d1bf38f",
-      "type": "textfield",
-      "focus": "true",
-      "placeholder": "Start typing text or add a block."
-    },
-    {
-      "id": "ad8c4c8b-4661-4ec6-8429-1fb8d0f48a27",
-      "name": "textfield_ad8c4c8b-4661-4ec6-8429-1fb8d0f48a27",
-      "type": "textfield",
-      "placeholder": "Start typing text or add a block."
-    },
-    {
-      "id": "402e3b9a-98c2-4e99-a7da-e6b25796c893",
-      "content": "First Name:",
-      "for": "inputfield-1",
-      "name": "label_402e3b9a-98c2-4e99-a7da-e6b25796c893",
-      "type": "label",
-      "label": "First Name:",
-      "placeholder": "Label"
-    },
-    {
-      "id": "inputfield-1",
-      "name": "inputfield_inputfield-1",
-      "type": "inputfield",
-      "placeholder": "Type a placeholder"
-    },
-    {
-      "id": "b732cbc5-4adf-4eae-9392-c2be3fc544d7",
-      "content": "Last Name:",
-      "for": "inputfield-2",
-      "name": "label_b732cbc5-4adf-4eae-9392-c2be3fc544d7",
-      "type": "label",
-      "label": "Last Name:",
-      "placeholder": "Label"
-    },
-    {
-      "id": "inputfield-2",
-      "name": "inputfield_inputfield-2",
-      "type": "inputfield",
-      "placeholder": "Type a placeholder"
-    },
-    {
-      "id": "eeb5de15-36a9-4c71-8ac2-43aca335b4cd",
-      "content": "Are you a male or fmale?",
-      "name": "label_eeb5de15-36a9-4c71-8ac2-43aca335b4cd",
-      "type": "label",
-      "label": "Are you a male or fmale?",
-      "placeholder": "Label"
-    },
-    {
-      "id": "751e9650-fba4-49ea-a72c-e01999b206ad",
-      "content": "Male",
-      "for": "radio-1",
-      "name": "radio_751e9650-fba4-49ea-a72c-e01999b206ad",
-      "type": "radiobox",
-      "placeholder": "Radio"
-    },
-    {
-      "id": "f07b3212-b936-4198-b9d7-731a4b83e236",
-      "content": "Female",
-      "for": "radio-1",
-      "name": "radio_f07b3212-b936-4198-b9d7-731a4b83e236",
-      "type": "radiobox",
-      "placeholder": "Radio"
-    },
-    {
-      "id": "8e658957-3981-4ad2-b3b6-9872f9fa5b6e",
-      "content": "What organizations re you in? (Check only which apply)",
-      "name": "label_8e658957-3981-4ad2-b3b6-9872f9fa5b6e",
-      "type": "label",
-      "label": "What organizations re you in? (Check only which apply)",
-      "placeholder": "Label"
-    },
-    {
-      "id": "9708c5b7-4ac8-4183-865a-e1edbd6c837e",
-      "content": "Enigma",
-      "name": "field_name9708c5b7-4ac8-4183-865a-e1edbd6c837e",
-      "type": "checkbox",
-      "placeholder": "Checkbox"
-    },
-    {
-      "id": "de96c298-8dff-4627-b0b1-cdbfa8e37f19",
-      "content": "PRIMUM",
-      "name": "field_namede96c298-8dff-4627-b0b1-cdbfa8e37f19",
-      "type": "checkbox",
-      "placeholder": "Checkbox"
-    },
-    {
-      "id": "611ef70c-23d4-4f2b-9fcc-f36e10e03f0c",
-      "content": "GSDCS",
-      "name": "field_name611ef70c-23d4-4f2b-9fcc-f36e10e03f0c",
-      "type": "checkbox",
-      "placeholder": "Checkbox"
-    },
-    {
-      "id": "fee5aa49-c4a6-4604-907d-eb1848df056a",
-      "content": "Preferred T-Shirt sze:",
-      "name": "label_fee5aa49-c4a6-4604-907d-eb1848df056a",
-      "type": "label",
-      "label": "Preferred T-Shirt sze:",
-      "placeholder": "Label"
-    },
-    {
-      "id": "option-1",
-      "content": "Small",
-      "name": "dropdown_option-1",
-      "type": "dropdown",
-      "placeholder": "Option"
-    },
-    {
-      "id": "15bd851e-d5ed-4cfe-87b0-023614c28fb2",
-      "content": "Medium",
-      "for": "option-1",
-      "name": "dropdown_15bd851e-d5ed-4cfe-87b0-023614c28fb2",
-      "type": "dropdown",
-      "placeholder": "Option"
-    },
-    {
-      "id": "47e613a9-5cd9-4a4b-b189-92ff269e67f4",
-      "content": "Large",
-      "for": "option-1",
-      "name": "dropdown_47e613a9-5cd9-4a4b-b189-92ff269e67f4",
-      "type": "dropdown",
-      "placeholder": "Option"
-    },
-    {
-      "id": "a3abb799-bfde-4e61-910f-731bf6511141",
-      "content": "What are your thougts on the event?",
-      "for": "textarea-1",
-      "name": "label_a3abb799-bfde-4e61-910f-731bf6511141",
-      "type": "label",
-      "label": "What are your thougts on the event?",
-      "placeholder": "Label"
-    },
-    {
-      "id": "textarea-1",
-      "name": "textarea_textarea-1",
-      "type": "textarea",
-      "placeholder": "Start typing a placeholder"
-    }
-  ]
-}; %>
-<div class="template">
-<div class="relative min-h-screen w-screen pt-16" action="" method="" onsubmit="onSubmit(event)" id="form">
-    <div class="inset-2 header-image" id="image-wrapper">
-      <div class="cover-wrapper relative h-full w-full flex justify-center items-center gap-4">
-        <img id="image-cover" src="#" class="w-full h-full object-cover" image-loaded="false" />
-        <button class="flex gap-1 justify-center items-center hover:shadow-md rounded-md" id="add-cover-btn"
-          onclick="document.getElementById('cover-input').click()">
-          <svg width="20" height="20" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M5.5 3C4.83696 3 4.20107 3.26339 3.73223 3.73223C3.26339 4.20107 3 4.83696 3 5.5V14.5C3 15.163 3.26339 15.7989 3.73223 16.2678C4.20107 16.7366 4.83696 17 5.5 17H14.5C15.163 17 15.7989 16.7366 16.2678 16.2678C16.7366 15.7989 17 15.163 17 14.5V5.5C17 4.83696 16.7366 4.20107 16.2678 3.73223C15.7989 3.26339 15.163 3 14.5 3H5.5ZM4 14.5V7H16V14.5C16 14.8978 15.842 15.2794 15.5607 15.5607C15.2794 15.842 14.8978 16 14.5 16H5.5C5.10218 16 4.72064 15.842 4.43934 15.5607C4.15804 15.2794 4 14.8978 4 14.5Z"
-              fill="#CCCCCC" />
-          </svg>
-          <span>Add Cover</span>
-        </button>
-        <input type="file" id="cover-input" class="hidden" accept="image/*" onchange="previewFile()" />
-        <button class="hidden gap-1 justify-center items-center hover:shadow-md rounded-md" id="remove-cover-btn">
-          <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M6.33333 15.0417C5.70344 15.0417 5.09935 14.7914 4.65395 14.346C4.20856 13.9006 3.95833 13.2966 3.95833 12.6667V6.33333C3.95833 5.70344 4.20856 5.09935 4.65395 4.65395C5.09935 4.20856 5.70344 3.95833 6.33333 3.95833C6.5433 3.95833 6.74466 3.87493 6.89313 3.72646C7.04159 3.57799 7.125 3.37663 7.125 3.16667C7.125 2.9567 7.04159 2.75534 6.89313 2.60687C6.74466 2.45841 6.5433 2.375 6.33333 2.375C5.28352 2.375 4.2767 2.79204 3.53437 3.53437C2.79204 4.2767 2.375 5.28352 2.375 6.33333V12.6667C2.375 13.7165 2.79204 14.7233 3.53437 15.4656C4.2767 16.208 5.28352 16.625 6.33333 16.625C6.5433 16.625 6.74466 16.5416 6.89313 16.3931C7.04159 16.2447 7.125 16.0433 7.125 15.8333C7.125 15.6234 7.04159 15.422 6.89313 15.2735C6.74466 15.1251 6.5433 15.0417 6.33333 15.0417ZM12.4371 12.4371C12.5113 12.3635 12.5702 12.2759 12.6104 12.1795C12.6506 12.083 12.6713 11.9795 12.6713 11.875C12.6713 11.7705 12.6506 11.667 12.6104 11.5705C12.5702 11.4741 12.5113 11.3865 12.4371 11.3129L10.6163 9.5L12.4371 7.68708C12.5862 7.53801 12.6699 7.33582 12.6699 7.125C12.6699 6.91418 12.5862 6.71199 12.4371 6.56292C12.288 6.41384 12.0858 6.33009 11.875 6.33009C11.6642 6.33009 11.462 6.41384 11.3129 6.56292L9.5 8.38375L7.68708 6.56292C7.53801 6.41384 7.33582 6.33009 7.125 6.33009C6.91418 6.33009 6.71199 6.41384 6.56292 6.56292C6.41384 6.71199 6.33009 6.91418 6.33009 7.125C6.33009 7.33582 6.41384 7.53801 6.56292 7.68708L8.38375 9.5L6.56292 11.3129C6.48872 11.3865 6.42982 11.4741 6.38963 11.5705C6.34944 11.667 6.32874 11.7705 6.32874 11.875C6.32874 11.9795 6.34944 12.083 6.38963 12.1795C6.42982 12.2759 6.48872 12.3635 6.56292 12.4371C6.63651 12.5113 6.72407 12.5702 6.82054 12.6104C6.91702 12.6506 7.02049 12.6713 7.125 12.6713C7.22951 12.6713 7.33298 12.6506 7.42946 12.6104C7.52593 12.5702 7.61349 12.5113 7.68708 12.4371L9.5 10.6163L11.3129 12.4371C11.3865 12.5113 11.4741 12.5702 11.5705 12.6104C11.667 12.6506 11.7705 12.6713 11.875 12.6713C11.9795 12.6713 12.083 12.6506 12.1795 12.6104C12.2759 12.5702 12.3635 12.5113 12.4371 12.4371ZM12.6667 2.375C12.4567 2.375 12.2553 2.45841 12.1069 2.60687C11.9584 2.75534 11.875 2.9567 11.875 3.16667C11.875 3.37663 11.9584 3.57799 12.1069 3.72646C12.2553 3.87493 12.4567 3.95833 12.6667 3.95833C13.2966 3.95833 13.9006 4.20856 14.346 4.65395C14.7914 5.09935 15.0417 5.70344 15.0417 6.33333V12.6667C15.0417 13.2966 14.7914 13.9006 14.346 14.346C13.9006 14.7914 13.2966 15.0417 12.6667 15.0417C12.4567 15.0417 12.2553 15.1251 12.1069 15.2735C11.9584 15.422 11.875 15.6234 11.875 15.8333C11.875 16.0433 11.9584 16.2447 12.1069 16.3931C12.2553 16.5416 12.4567 16.625 12.6667 16.625C13.7165 16.625 14.7233 16.208 15.4656 15.4656C16.208 14.7233 16.625 13.7165 16.625 12.6667V6.33333C16.625 5.28352 16.208 4.2767 15.4656 3.53437C14.7233 2.79204 13.7165 2.375 12.6667 2.375Z"
-              fill="#CCCCCC" />
-          </svg>
-          <span>Remove</span>
-        </button>
-      </div>
-    </div>
-    <div class="w-full flex justify-center">
-      <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
-        <% get_form.components.forEach(item => { console.log('Full Item:', item); console.log('Input Type:', item['input_type']); console.log('ID:', item.id); %>
-        <!-- <div
-          hx-get="components/fields/<%=item.type%>"
-          hx-trigger="load delay:1s"
-          hx-swap="innerHTML"
-          hx-vals='{"view": true, "content": "<%=item.content%>","label":"<%=item.label%>","for":"<%=item.for%>" }'
-          class="form-field"
-        ></div> -->
-        <% }); %>
-        
-      </form>
-    </div>
-  </div>
-</div>
+<% const test={ "name" : "User-Registration-Form" , "description" : "A form for
+user registration." , "components" : [ { "content" : "this is a survey" , "id" :
+"f978d930-81a2-4c2b-b309-f098b16089e0" , "label" : "" , "name" :
+"field_name_f978d930-81a2-4c2b-b309-f098b16089e0" , "placeholder" : "Type a
+placeholder" , "type" : "heading" }, { "content" : "What are you chuchu, and
+everything" , "id" : "f978d930-81a2-4c2b-b309-f098b16089e0" , "label" : "What is
+your name?" , "name" : "field_name_f978d930-81a2-4c2b-b309-f098b16089e0" ,
+"placeholder" : "Name..." , "type" : "textfield" }, { "content" : "Name.." ,
+"id" : "f978d930-81a2-4c2b-b309-f098b16089e0" , "label" : "What is your name?" ,
+"name" : "field_name_f978d930-81a2-4c2b-b309-f098b16089e0" , "placeholder" :
+"Name..." , "type" : "inputfield" }, ] }; %>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="/css/app.css" />
+
+		<script
+			src="https://unpkg.com/htmx.org@2.0.0"
+			integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
+			crossorigin="anonymous"
+		></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<script src="/js/scripts.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/uuid@8.3.2/dist/umd/uuidv4.min.js"></script>
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+			rel="stylesheet"
+		/>
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+
+	<body>
+		<div class="app">
+			<%- include('../components/navbar'); %>
+
+			<main class="mainscreen w-screen items-start inline-flex">
+				<div class="inset-2 header-image" id="image-wrapper">
+					<div
+						class="cover-wrapper relative h-full w-full flex justify-center items-center gap-4"
+					>
+						<img
+							id="image-cover"
+							src="#"
+							class="w-full h-full object-cover"
+							image-loaded="false"
+						/>
+						<button
+							class="flex gap-1 justify-center items-center hover:shadow-md rounded-md"
+							id="add-cover-btn"
+							onclick="document.getElementById('cover-input').click()"
+						>
+							<svg
+								width="20"
+								height="20"
+								viewBox="0 0 18 18"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M5.5 3C4.83696 3 4.20107 3.26339 3.73223 3.73223C3.26339 4.20107 3 4.83696 3 5.5V14.5C3 15.163 3.26339 15.7989 3.73223 16.2678C4.20107 16.7366 4.83696 17 5.5 17H14.5C15.163 17 15.7989 16.7366 16.2678 16.2678C16.7366 15.7989 17 15.163 17 14.5V5.5C17 4.83696 16.7366 4.20107 16.2678 3.73223C15.7989 3.26339 15.163 3 14.5 3H5.5ZM4 14.5V7H16V14.5C16 14.8978 15.842 15.2794 15.5607 15.5607C15.2794 15.842 14.8978 16 14.5 16H5.5C5.10218 16 4.72064 15.842 4.43934 15.5607C4.15804 15.2794 4 14.8978 4 14.5Z"
+									fill="#CCCCCC"
+								/>
+							</svg>
+							<span>Add Cover</span>
+						</button>
+						<input
+							type="file"
+							id="cover-input"
+							class="hidden"
+							accept="image/*"
+							onchange="previewFile()"
+						/>
+						<button
+							class="hidden gap-1 justify-center items-center hover:shadow-md rounded-md"
+							id="remove-cover-btn"
+						>
+							<svg
+								width="19"
+								height="19"
+								viewBox="0 0 19 19"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M6.33333 15.0417C5.70344 15.0417 5.09935 14.7914 4.65395 14.346C4.20856 13.9006 3.95833 13.2966 3.95833 12.6667V6.33333C3.95833 5.70344 4.20856 5.09935 4.65395 4.65395C5.09935 4.20856 5.70344 3.95833 6.33333 3.95833C6.5433 3.95833 6.74466 3.87493 6.89313 3.72646C7.04159 3.57799 7.125 3.37663 7.125 3.16667C7.125 2.9567 7.04159 2.75534 6.89313 2.60687C6.74466 2.45841 6.5433 2.375 6.33333 2.375C5.28352 2.375 4.2767 2.79204 3.53437 3.53437C2.79204 4.2767 2.375 5.28352 2.375 6.33333V12.6667C2.375 13.7165 2.79204 14.7233 3.53437 15.4656C4.2767 16.208 5.28352 16.625 6.33333 16.625C6.5433 16.625 6.74466 16.5416 6.89313 16.3931C7.04159 16.2447 7.125 16.0433 7.125 15.8333C7.125 15.6234 7.04159 15.422 6.89313 15.2735C6.74466 15.1251 6.5433 15.0417 6.33333 15.0417ZM12.4371 12.4371C12.5113 12.3635 12.5702 12.2759 12.6104 12.1795C12.6506 12.083 12.6713 11.9795 12.6713 11.875C12.6713 11.7705 12.6506 11.667 12.6104 11.5705C12.5702 11.4741 12.5113 11.3865 12.4371 11.3129L10.6163 9.5L12.4371 7.68708C12.5862 7.53801 12.6699 7.33582 12.6699 7.125C12.6699 6.91418 12.5862 6.71199 12.4371 6.56292C12.288 6.41384 12.0858 6.33009 11.875 6.33009C11.6642 6.33009 11.462 6.41384 11.3129 6.56292L9.5 8.38375L7.68708 6.56292C7.53801 6.41384 7.33582 6.33009 7.125 6.33009C6.91418 6.33009 6.71199 6.41384 6.56292 6.56292C6.41384 6.71199 6.33009 6.91418 6.33009 7.125C6.33009 7.33582 6.41384 7.53801 6.56292 7.68708L8.38375 9.5L6.56292 11.3129C6.48872 11.3865 6.42982 11.4741 6.38963 11.5705C6.34944 11.667 6.32874 11.7705 6.32874 11.875C6.32874 11.9795 6.34944 12.083 6.38963 12.1795C6.42982 12.2759 6.48872 12.3635 6.56292 12.4371C6.63651 12.5113 6.72407 12.5702 6.82054 12.6104C6.91702 12.6506 7.02049 12.6713 7.125 12.6713C7.22951 12.6713 7.33298 12.6506 7.42946 12.6104C7.52593 12.5702 7.61349 12.5113 7.68708 12.4371L9.5 10.6163L11.3129 12.4371C11.3865 12.5113 11.4741 12.5702 11.5705 12.6104C11.667 12.6506 11.7705 12.6713 11.875 12.6713C11.9795 12.6713 12.083 12.6506 12.1795 12.6104C12.2759 12.5702 12.3635 12.5113 12.4371 12.4371ZM12.6667 2.375C12.4567 2.375 12.2553 2.45841 12.1069 2.60687C11.9584 2.75534 11.875 2.9567 11.875 3.16667C11.875 3.37663 11.9584 3.57799 12.1069 3.72646C12.2553 3.87493 12.4567 3.95833 12.6667 3.95833C13.2966 3.95833 13.9006 4.20856 14.346 4.65395C14.7914 5.09935 15.0417 5.70344 15.0417 6.33333V12.6667C15.0417 13.2966 14.7914 13.9006 14.346 14.346C13.9006 14.7914 13.2966 15.0417 12.6667 15.0417C12.4567 15.0417 12.2553 15.1251 12.1069 15.2735C11.9584 15.422 11.875 15.6234 11.875 15.8333C11.875 16.0433 11.9584 16.2447 12.1069 16.3931C12.2553 16.5416 12.4567 16.625 12.6667 16.625C13.7165 16.625 14.7233 16.208 15.4656 15.4656C16.208 14.7233 16.625 13.7165 16.625 12.6667V6.33333C16.625 5.28352 16.208 4.2767 15.4656 3.53437C14.7233 2.79204 13.7165 2.375 12.6667 2.375Z"
+									fill="#CCCCCC"
+								/>
+							</svg>
+							<span>Remove</span>
+						</button>
+					</div>
+				</div>
+				<div
+					class="relative min-h-screen w-screen pt-16"
+					action=""
+					method=""
+					onsubmit="onSubmit(event)"
+					id="form"
+				>
+					<div class="w-full flex justify-center">
+						<form
+							class="flex flex-col h-full w-full max-w-screen-md px-10"
+							data-form-name=""
+							data-form-description=""
+						>
+							<% test.components.forEach(item=> { console.log(item); %>
+							<div
+								hx-post="components/fields/<%=item.type%>"
+								hx-trigger="load"
+								hx-swap="innerHTML"
+								hx-vals='js:{"view": true, "content": "<%=item.content%>","label":"<%=item.label%>" }'
+								class="form-field"
+							></div>
+							<% }); %>
+						</form>
+					</div>
+				</div>
+			</main>
+		</div>
+		<script type="module" src="/js/htmx.min.js"></script>
+	</body>
+</html>

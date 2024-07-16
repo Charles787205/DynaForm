@@ -15,9 +15,12 @@
 
 	<div class="w-full h-52 py-4 ">
 		<h1>Example</h1>
-		<div hx-post="/components/fields/<%= type %>" hx-trigger="load" hx-swap="innerHTML"
-			hx-vals='js:{ "view": true, "content": "<%= example_text %>" }'
-			class="w-full max-w-screen-md max-h-full overflow-y-auto">
+		<div class="relative">
+			<div class="load-indicator absolute w-full flex justify-start" id="loader"><img src="/assets/25.gif" width="35" class="object-contain" /></div>
+			<div hx-post="/components/fields/<%= type %>" hx-indicator="#loader" hx-trigger="load" hx-swap="innerHTML"
+				hx-vals='js:{ "view": true, "content": "<%= example_text %>", "placeholder": "<%= example_text %>" }'
+				class="w-full max-w-screen-md max-h-full overflow-y-auto">
+			</div>
 		</div>
 	</div>
 	<button hx-post="/components/fields/<%= type %>" hx-trigger="click" hx-swap="outerHTML" hx-target=".modal"

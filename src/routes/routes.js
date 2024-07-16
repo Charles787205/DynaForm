@@ -8,23 +8,28 @@ const router = Router();
 router.route("/").get(FormController.get);
 router.post("/components/:name", Components.getComponent);
 router.post("/components/fields/:name", Components.getField);
+router.post("/template/:template", Components.getTemplate);
 
 //FORMS
 router
 	.route("/create")
 	.get(FormController.getCreatePage)
 	.post(FormController.submit);
-router.get("/forms", FormController.list); // get all forms
-router.get("/view", FormController.view);
-router.post("/template/:template", Components.getTemplate);
-router.delete("/deleteAll", FormController.deleteAllForms); // delete all form
-router.delete("/delete/:form_id", FormController.deleteForm); // delete form
-// router.post("/submit", FormController.post);
+router.get("/forms", FormController.list);
+router.get("/form/:id", FormController.viewForm);
+router
+	.route("/form/:id/edit")
+	.get(FormController.editForm)
+	.post(FormController.updateForm);
+router.delete("/deleteAll", FormController.deleteAllForms);
+router.delete("/delete/:form_id", FormController.deleteForm);
+
+// RESPONSE
+router.get("/response", FormController.response);
+router.get("/response/:name", FormController.response);
 
 // MODAL
 router.post("/components/modal/show", Components.showModal);
 router.post("/components/modal/preview", Components.showComponentPreview);
 
 export default router;
-
-// router.post("/createForm", FormController.createForm); // save form to the database

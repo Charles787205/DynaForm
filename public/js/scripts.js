@@ -8,17 +8,18 @@ function submitForm() {
 		},
 		body: JSON.stringify(formData),
 	}).then((response) => {
-		if (response.ok) {
-			console.log("OKAYT");
+		if (!response.ok) {
+			throw new Error("Failed adding to database:");
 		} else if (response.status == 401) {
-			window.open("/auth/google", null);
+			window.open("/auth/google", "_self");
 		}
 	});
 }
 
 function getFormData() {
 	const form = document.getElementById("form");
-	const formName = form.getAttribute("data-form-name") || "Untitled Form";
+	const formName =
+		document.getElementById("form-title").value || "defaultFormName";
 	const formDescription =
 		form.getAttribute("data-form-description") || "defaultDescription";
 
@@ -198,7 +199,6 @@ function handleDrop(dropZone) {
 
 			if (targetIsEmpty) {
 				parentInputBlock.insertAdjacentElement("beforebegin", draggedElement);
-				console.log("empty: should swap");
 				return;
 			}
 
@@ -235,10 +235,7 @@ function handleClick(element) {
 		inputBlock.setAttribute("data-labelled", "true");
 
 		labelled.push(inputBlock.getAttribute("id"));
-
-		console.log(inputBlock);
 	}
-	console.log("labelled:", labelled);
 }
 
 function handleSwap(e) {
@@ -250,7 +247,6 @@ function handleSwap(e) {
 
 	if (element.classList.contains("actions")) {
 		element.querySelector(".delete").addEventListener("click", function () {
-			console.log(element.closest(".content-container"));
 			var inputblocks = document.querySelectorAll(".input-block");
 			inputblocks.forEach((block) => {
 				if (labelled.includes(block.id)) {

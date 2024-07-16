@@ -16,10 +16,11 @@ router
   .post(FormController.submit);
 
 router.get("/forms", FormController.list);
-router.get("/view/:id", FormController.view);
+router.get("/forms/:id", FormController.viewForm);
 router.post("/template/:template", Components.getTemplate);
 router.delete("/deleteAll", FormController.deleteAllForms); // delete all form
 router.delete("/delete/:form_id", FormController.deleteForm); // delete form
+
 // router.post("/submit", FormController.post);
 
 // RESPONSE

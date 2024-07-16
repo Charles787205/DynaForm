@@ -63,11 +63,14 @@
       <!-- <div hx-boost="true" hx-preload="mouseover">
         <a href="/forms"> My Forms</a>
       </div> -->
+    </button>
 
-
-      <button class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800">
-        Sign in
-      </button>
+      <a
+        href='<%= isLogin ? "/logout" : "/auth/google" %>'
+        class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
+      >
+        <%= isLogin ? 'Logout' : 'Login' %>
+      </a>
     </div>
   </div>
 </nav>

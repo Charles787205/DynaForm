@@ -1,5 +1,5 @@
 <% if (query.view){ %>
-  <label for="input_<%= query.id %>" data-type="label" class="text-[1rem] w-full label outline-none resize-none mt-4">
+  <label for="<%= query.for %>" data-type="label" class="text-[1rem] w-full label outline-none resize-none mt-4">
     <%= query.label ?? query.content%>
   </label>
   <% } else { %>
@@ -13,11 +13,12 @@
           placeholder="<%= query.placeholder ?? 'Label'%>">
           <%= query.content %>
         </div>
-        <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
-        <div class="move-dropzone" data-position="left"></div>
-        <div class="move-dropzone" data-position="right"></div>
-        <div class="move-dropzone" data-position="below"></div>
-        <div class="move-dropzone" data-position="top"></div>
+        <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
+        <%- include("../tooltip") %>
+          <div class="move-dropzone" data-position="left"></div>
+          <div class="move-dropzone" data-position="right"></div>
+          <div class="move-dropzone" data-position="below"></div>
+          <div class="move-dropzone" data-position="top"></div>
       </div>
     </div>
     <% } %>

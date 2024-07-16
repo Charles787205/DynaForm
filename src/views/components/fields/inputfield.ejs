@@ -2,44 +2,40 @@
 
   <div class="input-block">
     <div class="block-container">
-        <div hx-post="/components/fields/label" hx-trigger="load"
-          hx-vals='js:{"label": "<%= query.label %>", "for": "<%= query.id %>"}'
-          hx-swap="outerHTML"></div>
-        <input data-type="inputfield" class="content-container text-[1.1rem] w-full outline-none resize-none"
-        id="input_<%= query.id %>"
-        placeholder="<%= query.content %>"
-        ></input>
+      <div hx-post="/components/fields/label" hx-trigger="load"
+        hx-vals='js:{"label": "<%= query.label %>", "for": "<%= query.id %>"}' hx-swap="outerHTML"></div>
+      <input data-type="inputfield" class="content-container text-[1.1rem] w-full outline-none resize-none"
+        id="input_<%= query.id %>" placeholder="<%= query.content %>"></input>
     </div>
   </div>
 
-<% } else { %> 
-  <div class="input-block" draggable="true" id="<%= query.id %>">
-    <div class="block-container">
-      <div class="flex input-flex py-2 gap-3">
-        <div contenteditable="true" show-pl-click="true" spellcheck="false"
-          class="content-container text-[1.1rem] w-full outline-none resize-none" data-type="inputfield"
-          data-name="inputfield_<%= query.id %>" id="input_<%= query.id %>" <%=query.focus==="true" ? "autofocus"
-          : "" %>
-          placeholder="<%= query.placeholder || "Type a placeholder" %>"></div>
- 
-        <!-- <button class="option" type="button" onclick="handleClick(this)">Add
+  <% } else { %>
+    <div class="input-block" draggable="true" id="<%= query.id %>">
+      <div class="block-container">
+        <div class="flex input-flex py-2 gap-3">
+          <div contenteditable="true" show-pl-click="true" spellcheck="false"
+            class="content-container text-[1.1rem] w-full outline-none resize-none" data-type="inputfield"
+            data-name="inputfield_<%= query.id %>" id="input_<%= query.id %>" <%=query.focus==="true" ? "autofocus" : ""
+            %>
+            placeholder="<%= query.placeholder || "Type a placeholder" %>"></div>
+
+          <!-- <button class="option" type="button" onclick="handleClick(this)">Add
           label</button> -->
-        <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div>
-        <% if (query.labelled !== 'true') { %>
-          <button class="option" type="button" hx-post="/components/fields/label" hx-trigger="click"
-          tabindex="-1"
-          hx-target="closest .input-flex" hx-vals='js:{"placeholder": "Label", "for": "<%= query.id %>"}'
-          hx-swap="beforebegin" onclick="handleClick(this)">Add
-          label</button>
-        <% } %>
+          <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
+          <%- include("../tooltip") %>
+            <% if (query.labelled !=='true' ) { %>
+              <button class="option" type="button" hx-post="/components/fields/label" hx-trigger="click" tabindex="-1"
+                hx-target="closest .input-flex" hx-vals='js:{"placeholder": "Label", "for": "<%= query.id %>"}'
+                hx-swap="beforebegin" onclick="handleClick(this)">Add
+                label</button>
+              <% } %>
+        </div>
+        <div class="move-dropzone" data-position="left"></div>
+        <div class="move-dropzone" data-position="right"></div>
+        <div class="move-dropzone" data-position="below"></div>
+        <div class="move-dropzone" data-position="top"></div>
       </div>
-      <div class="move-dropzone" data-position="left"></div>
-      <div class="move-dropzone" data-position="right"></div>
-      <div class="move-dropzone" data-position="below"></div>
-      <div class="move-dropzone" data-position="top"></div>
+
     </div>
 
-  </div>
-
-<% } %>
-
+    <% } %>

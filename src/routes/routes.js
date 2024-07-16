@@ -22,6 +22,10 @@ router.delete("/deleteAll", FormController.deleteAllForms); // delete all form
 router.delete("/delete/:form_id", FormController.deleteForm); // delete form
 // router.post("/submit", FormController.post);
 
+// RESPONSE
+router.get("/response", FormController.response);
+router.get("/response/:name", FormController.response);
+
 // MODAL
 router.post("/components/modal/show", Components.showModal);
 router.post("/components/modal/preview", Components.showComponentPreview);

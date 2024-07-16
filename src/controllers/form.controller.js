@@ -80,6 +80,15 @@ const view = async (req, res) => {
   }
 };
 
+const response = async (req, res) => {
+  res.render("pages/response");
+};
+
+const getResponse = async (req, res) => {
+	const typeName = req.params.name;
+	res.render(`components/fields/${typeName}`);
+};
+
 const deleteForm = async (req, res) => {
   const { form_id } = req.params;
   try {
@@ -113,7 +122,7 @@ export default {
   list,
   edit,
   view,
-
+  response,
   deleteAllForms,
   deleteForm,
 };

@@ -1,10 +1,5 @@
 <div
 	class="formcard self-stretch h-24 p-2.5 bg-white rounded-2xl border border-black/opacity-30 justify-between items-center inline-flex"
-	hx-get="/view"
-	hx-trigger="click"
-	hx-target=".mainscreen"
-	hx-swap="outerHTML"
-	hx-vals='{"form_id":"<%= options.id %>"}'
 >
 	<div
 		class="self-stretch py-3 px-6 flex-col justify-start items-start gap-2.5 inline-flex"
@@ -62,6 +57,18 @@
 					>
 						<h1>Close submission</h1>
 					</div>
+					<span
+							hx-get="/view"
+							hx-trigger="click"
+							hx-target=".mainscreen"
+							hx-swap="outerHTML"
+							hx-vals='{"form_id":"<%= options.id %>"}'
+							class="flex flex-row w-full gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
+					>
+						<h1 class="text-red-700 bg-slate-50 font-bold text-md">
+							View Form
+						</h1>
+					</span>
 					<span
 						hx-delete="/delete/<%= options.id %>"
 						hx-swap="delete"

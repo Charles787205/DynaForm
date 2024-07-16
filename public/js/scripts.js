@@ -8,8 +8,8 @@ function submitForm() {
     },
     body: JSON.stringify(formData),
   }).then((response) => {
-    if (response.ok) {
-      console.log("OKAYT");
+    if (!response.ok) {
+      throw new Error("Failed adding to database:");
     } else if (response.status == 401) {
       window.open("/auth/google", "_self");
     }
@@ -18,8 +18,8 @@ function submitForm() {
 
 function getFormData() {
   const form = document.getElementById("form");
-  console.log("ASDADASDASDASD: ", document.getElementById("form-title").value);
-  const formName = document.getElementById("form-title").value || "defaultFormName";
+  const formName =
+    document.getElementById("form-title").value || "defaultFormName";
   const formDescription =
     form.getAttribute("data-form-description") || "defaultDescription";
 
@@ -199,7 +199,6 @@ function handleDrop(dropZone) {
 
       if (targetIsEmpty) {
         parentInputBlock.insertAdjacentElement("beforebegin", draggedElement);
-        console.log("empty: should swap");
         return;
       }
 
@@ -236,10 +235,7 @@ function handleClick(element) {
     inputBlock.setAttribute("data-labelled", "true");
 
     labelled.push(inputBlock.getAttribute("id"));
-
-    console.log(inputBlock);
   }
-  console.log("labelled:", labelled);
 }
 
 function handleSwap(e) {
@@ -251,7 +247,6 @@ function handleSwap(e) {
 
   if (element.classList.contains("actions")) {
     element.querySelector(".delete").addEventListener("click", function () {
-      console.log(element.closest(".content-container"));
       var inputblocks = document.querySelectorAll(".input-block");
       inputblocks.forEach((block) => {
         if (labelled.includes(block.id)) {
@@ -271,4 +266,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("htmx:afterSwap", function (e) {
   handleSwap(e);
+});
+
+let pendingRequests = 0;
+
+document.addEventListener("htmx:configRequest", (event) => {
+  pendingRequests++;
+});
+
+document.addEventListener("htmx:afterRequest", (event) => {
+  pendingRequests--;
+});
+
+document.addEventListener("htmx:load", (event) => {
+  if (pendingRequests <= 0) {
+    document.getElementById("spinner").style.display = "none";
+  }
 });

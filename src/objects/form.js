@@ -4,12 +4,14 @@ class Form {
 		name = "",
 		description = "",
 		components = [],
+		google_id = "",
 		user_id = "",
 	}) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.components = components;
+		this.google_id = google_id;
 		this.user_id = user_id;
 	}
 	toCreateFormModel() {

@@ -24,7 +24,7 @@
 <body>
 	<div class="app">
 		<header>
-			<div hx-post="/components/homeNavbar" hx-trigger="load once" hx-swap="outerHTML"></div>
+			<%- include('./components/homeNavbar') %>
 		</header>
 		<main class="mainscreen w-screen items-start inline-flex">
 			<%- include('./components/hero') %>

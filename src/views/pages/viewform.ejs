@@ -25,9 +25,7 @@
 <body>
   <div class="app">
     <%- include('../components/homeNavbar'); %>
-      <div class="w-screen h-screen fixed flex justify-center items-center z-50 bg-white"
-        hx-on:load="this.classList.add('hidden')" id="spinner"><img src="/assets/1490.gif" />
-      </div>
+      <div class="load-indicator w-screen h-screen fixed bg-white flex justify-center items-center" id="spinner"><img src="/assets/1490.gif" class="object-contain" /></div>
       <main class="mainscreen w-screen items-start inline-flex">
         <div class="relative min-h-screen w-screen pt-16" action="" method="" onsubmit="onSubmit(event)" id="form">
           <div class="inset-2 header-image" id="image-wrapper">
@@ -59,7 +57,7 @@
                 if(item.type === "divider"){
                 item.content = "";
                 }%>
-                <div hx-post="/components/fields/<%=item.type%>" hx-trigger="load" hx-swap="innerHTML"
+                <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="innerHTML"
                   hx-vals='js:{"view": true, "content": "<%=item.content.replace(/\n\s*/g, "")%>","placeholder":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>"}'
                   class="form-field"></div>
                 <% }); %>

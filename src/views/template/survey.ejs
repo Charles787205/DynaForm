@@ -1,4 +1,4 @@
-<div class="template">
+<div class="template" >
   <div class="relative min-h-screen w-screen pt-16 overflow-y-hidden" action="/" method="" onsubmit="onSubmit(event)"
     id="form">
     <div class="header-image " id="image-wrapper">
@@ -24,60 +24,61 @@
         </button>
       </div>
     </div>
-    <div class="w-full flex justify-center mb-28">
+
+      <div class="w-full flex justify-center mb-28">
+
       <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
-        <!-- <div hx-post="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div> -->
-        <div hx-post="components/fields/heading" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/heading" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"placeholder": "Add a heading", "type": "heading", "content": "CCE Seminar Satisfaction Survey "}'
           hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/textfield" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/textfield" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"focus": true, "content": "Thank you for attending the CCE Seminar! Your feedback is valuable to us and will help us improve future events. Please take a few minutes to complete this survey."}'
           hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/divider" hx-trigger="load target:#tool" hx-vals='js:{"focus": true}'
+        <div hx-post="components/fields/divider" hx-indicator="#spinner" hx-trigger="load target:#tool" hx-vals='js:{"focus": true}'
           hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="/components/fields/textfield" hx-trigger="load target:#tool" hx-swap="outerHTML"
+        <div hx-post="/components/fields/textfield" hx-indicator="#spinner" hx-trigger="load target:#tool" hx-swap="outerHTML"
           hx-vals='js:{"content": "Please fill up the required fields."}' class="form-field">
         </div>
-        <div hx-post="components/fields/textfield" hx-trigger="load target:#tool" hx-swap="outerHTML"
+        <div hx-post="components/fields/textfield" hx-indicator="#spinner" hx-trigger="load target:#tool" hx-swap="outerHTML"
           class="form-field">
         </div>
-        <div hx-post="components/fields/label" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/label" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"content": "First Name: ", "for": "inputfield-1"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/inputfield" hx-trigger="load target:#tool"
-          hx-vals='js:{"labelled": true, "id": "inputfield-1"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/label" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/inputfield" hx-indicator="#spinner" hx-trigger="load target:#tool"
+          hx-vals='js:{"labelled": true, "id": "inputfield-1"}' hx-indicator="#spinner" hx-swap="outerHTML" class="form-field"></div>
+        <div hx-post="components/fields/label" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"content": "Last Name:", "for": "inputfield-2"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/inputfield" hx-trigger="load target:#tool"
-          hx-vals='js:{"labelled": true, "id": "inputfield-2"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/label" hx-trigger="load target:#tool"
-          hx-vals='js:{"content": "Are you a male or female?"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/radiobox" hx-trigger="load target:#tool" hx-swap="outerHTML"
+        <div hx-post="components/fields/inputfield" hx-indicator="#spinner" hx-trigger="load target:#tool"
+          hx-vals='js:{"labelled": true, "id": "inputfield-2"}' hx-indicator="#spinner" hx-swap="outerHTML" class="form-field"></div>
+        <div hx-post="components/fields/label" hx-indicator="#spinner" hx-trigger="load target:#tool"
+          hx-vals='js:{"content": "Are you a male or female?"}' hx-indicator="#spinner" hx-swap="outerHTML" class="form-field"></div>
+        <div hx-post="components/fields/radiobox" hx-indicator="#spinner" hx-trigger="load target:#tool" hx-swap="outerHTML"
           hx-vals='js:{"content": "Male", "for": "radio-1"}' class="form-field"></div>
-        <div hx-post="components/fields/radiobox" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/radiobox" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"content": "Female", "for": "radio-1"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/label" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/label" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"content": "What organizations are you in? (Check only which apply)"}' hx-swap="outerHTML"
           class="form-field"></div>
-        <div hx-post="components/fields/checkbox" hx-trigger="load target:#tool" hx-vals='js:{"content": "Enigma"}'
+        <div hx-post="components/fields/checkbox" hx-indicator="#spinner" hx-trigger="load target:#tool" hx-vals='js:{"content": "Enigma"}'
           hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/checkbox" hx-trigger="load target:#tool" hx-vals='js:{"content": "PRIMUM"}'
+        <div hx-post="components/fields/checkbox" hx-indicator="#spinner" hx-trigger="load target:#tool" hx-vals='js:{"content": "PRIMUM"}'
           hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/checkbox" hx-trigger="load target:#tool" hx-vals='js:{"content": "GSDC"}'
+        <div hx-post="components/fields/checkbox" hx-indicator="#spinner" hx-trigger="load target:#tool" hx-vals='js:{"content": "GSDC"}'
           hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/label" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/label" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"content": "Preferred T-Shirt size: "}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/dropdown" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/dropdown" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"content": "Small", "id": "option-1"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/dropdown" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/dropdown" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"content": "Medium", "for": "option-1"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/dropdown" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/dropdown" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"content": "Large", "for": "option-1"}' hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/label" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/label" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"content": "What are your thoughts on the event?", "for": "textarea-1"}' hx-swap="outerHTML"
           class="form-field"></div>
-        <div hx-post="components/fields/textarea" hx-trigger="load target:#tool" hx-vals='js:{"id": "textarea-1"}'
+        <div hx-post="components/fields/textarea" hx-indicator="#spinner" hx-trigger="load target:#tool" hx-vals='js:{"id": "textarea-1"}'
           hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
+        <div hx-post="components/button" hx-indicator="#spinner" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
 
       </form>
     </div>

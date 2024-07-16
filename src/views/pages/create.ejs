@@ -24,7 +24,8 @@
     <%- include('../components/navbar'); %>
 
       <main class="mainscreen w-screen items-start inline-flex ">
-        <div hx-post="template/default" hx-swap="outerHTML" hx-trigger="load"></div>
+        <div hx-post="template/survey" hx-swap="outerHTML" hx-trigger="load" hx-indicator="#spinner"></div>
+        <div class="w-screen h-screen flex justify-center items-center"><img  id="spinner" class="htmx-indicator" src="/assets/1490.gif"/></div>
       </main>
 
   </div>

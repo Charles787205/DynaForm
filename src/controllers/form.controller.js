@@ -3,8 +3,9 @@ import FormComponent from "../objects/component.js";
 import FormObject from "../objects/form.js";
 import Form from "../models/form.models.js";
 const get = async (req, res) => {
-  res.redirect("/create");
+  res.render("index");
 };
+
 
 const create = async (req, res) => {
   res.render("pages/create", { layout: "./layouts/main" });
@@ -44,10 +45,11 @@ const edit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-  // const allForms = await Form.find();
-  // const forms_id = allForms.map((form) => form._id);
-  // res.status(200).json({ forms: forms_id });
+  if(!req.isAuthenticated()) {
+    res.redirect("/auth/google")
+  }
   res.render("pages/listform");
+
 };
 
 const view = async (req, res) => {

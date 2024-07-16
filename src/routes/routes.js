@@ -14,6 +14,7 @@ router
   .route("/create")
   .get(FormController.getCreatePage)
   .post(FormController.submit);
+
 router.get("/forms", FormController.list);
 router.get("/view", FormController.view);
 router.post("/template/:template", Components.getTemplate);

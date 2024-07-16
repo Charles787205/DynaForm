@@ -11,6 +11,7 @@ const getCreatePage = async (req, res) => {
 };
 
 const submit = async (req, res) => {
+  if (req.isUnauthenticated()) return res.redirect("/auth/google");
   try {
     const formData = req.body;
 
@@ -23,6 +24,7 @@ const submit = async (req, res) => {
     });
 
     const form = new FormObject({
+      user_id: req.user.google_id,
       name: formData.formName,
       description: formData.formDescription,
       components: components,
@@ -43,10 +45,8 @@ const edit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-  const allForms = await Form.find();
+  const allForms = await Form.find({ user_id: req.user._id });
   const forms = allForms.map((form) => {
-    console.log("id", form._id);
-
     return {
       id: form._id,
       name: form.name,

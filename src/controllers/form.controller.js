@@ -13,23 +13,22 @@ const getCreatePage = async (req, res) => {
 const submit = async (req, res) => {
 	if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
 	try {
-		const formData = req.body;
-
+		const { formName, formDescription, formComponents } = req.body;
 		const components = [];
-		formData.formComponents.forEach((component) => {
+
+		formComponents.forEach((component) => {
 			const formComponent = new FormComponent(component);
-			console.log("formComponent", formComponent);
 			const newComponent = new Component(formComponent.toCreateFormModel());
 			components.push(newComponent);
 		});
+
 		const form = new FormObject({
 			user_id: req.user._id,
-			name: formData.formName,
-			description: formData.formDescription,
+			name: formName,
+			description: formDescription,
 			components: components,
 		});
-		console.log("form", form);
-		console.log(req.user.accessToken);
+
 		await new Form(form.toCreateFormModel()).save();
 		return res.json({ form });
 	} catch (error) {
@@ -44,18 +43,15 @@ const edit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-	console.log("req.user", req.user._id);
-	// const allForms = await Form.find({ user_id: req.user._id });
-	// console.log(allForms);
-	// const forms = allForms.map((form) => {
-	// 	return {
-	// 		id: form._id,
-	// 		name: form.name,
-	// 		description: form.description,
-	// 		date: form.createdAt.toISOString().split("T")[0],
-	// 	};
-	// });
-
+	const allForms = await Form.find({ user_id: req.user._id });
+	const forms = allForms.map((form) => {
+		return {
+			id: form._id,
+			name: form.name,
+			description: form.description,
+			date: form.createdAt.toISOString().split("T")[0],
+		};
+	});
 	// res.status(200).json({ forms: forms });
 	res.render("pages/listform", { forms });
 };
@@ -63,7 +59,10 @@ const list = async (req, res) => {
 const view = async (req, res) => {
 	const { form_id } = req.query;
 	try {
-		const get_form = await Form.findById(form_id);
+		const get_form = await Form.findById(
+			{ form_id },
+			{ $where: { user_id: req.user._id } }
+		);
 		console.log(get_form.toJSON());
 
 		res.render("pages/viewform", { get_form: get_form.toJSON() });

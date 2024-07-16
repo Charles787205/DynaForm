@@ -20,6 +20,20 @@ const form_schema = new Schema(
 			required: false,
 			maxLength: 255,
 		},
+		is_active: {
+			type: Boolean,
+			required: true,
+		},
+		is_shared: {
+			type: Boolean,
+			required: true,
+		},
+		access_controle: {
+			type: String,
+			required: false,
+			enum: ["public", "private"],
+		},
+
 		components: [Component.schema],
 	},
 	{

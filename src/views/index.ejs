@@ -19,23 +19,21 @@
 	<script src="https://cdn.tailwindcss.com"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>
-		<%= title %>
+		DynaForm
 	</title>
 </head>
 
 <body>
 	<div class="app">
 		<header>
-			<div hx-post="/components/navbar" hx-trigger="load once" hx-swap="outerHTML"></div>
+			<div hx-post="/components/homeNavbar" hx-trigger="load once" hx-swap="outerHTML"></div>
 		</header>
 		<main class="mainscreen w-screen items-start inline-flex">
-			<%- body -%>
+			<%- include('./components/hero') %>
 		</main>
 	</div>
 
 	<script type="module" src="/js/htmx.min.js"></script>
-	<%- contentFor('scripts') %>
-		<!-- <script src="/js/Sortable.min.js"></script> -->
 </body>
 
 </html>

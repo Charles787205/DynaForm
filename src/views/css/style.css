@@ -13,6 +13,8 @@
 
 .content-container {
   position: relative;
+  background-color: transparent;
+  transition: background-color 1s ease-in;
   color: #333;
 }
 
@@ -192,6 +194,11 @@ img[image-loaded="true"]:hover,
   pointer-events: none;
   content: attr(placeholder);
 }
+/* .htmx-settling > .input-block {
+  background: black;
+} */
+
+
 /* 
 [contenteditable="true"]:empty:not(:focus):before {
   content: attr(placeholder);

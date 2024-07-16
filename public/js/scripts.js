@@ -62,7 +62,7 @@ async function submitForm() {
 		formComponents,
 	};
 
-	console.log({ "posted data": JSON.stringify(formData, null, 2) });
+	console.log(JSON.stringify(formData, null, 2));
 
 	console.log("AFTER PARSE");
 	fetch("/create", {

@@ -13,6 +13,9 @@ const getCreatePage = async (req, res) => {
 const submit = async (req, res) => {
 	try {
 		const formData = req.body;
+  if (req.isUnauthenticated()) return res.redirect("/auth/google");
+  try {
+    const formData = req.body;
 
 		const components = [];
 		formData.formComponents.forEach((component) => {
@@ -27,6 +30,12 @@ const submit = async (req, res) => {
 			description: formData.formDescription,
 			components: components,
 		});
+    const form = new FormObject({
+      user_id: req.user.google_id,
+      name: formData.formName,
+      description: formData.formDescription,
+      components: components,
+    });
 
 		console.log("form", form);
 		await new Form(form.toCreateFormModel()).save();
@@ -44,17 +53,15 @@ const edit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-	const allForms = await Form.find();
-	const forms = allForms.map((form) => {
-		console.log("id", form);
-
-		return {
-			id: form._id,
-			name: form.name,
-			description: form.description,
-			date: form.createdAt.toISOString().split("T")[0],
-		};
-	});
+  const allForms = await Form.find({ user_id: req.user._id });
+  const forms = allForms.map((form) => {
+    return {
+      id: form._id,
+      name: form.name,
+      description: form.description,
+      date: form.createdAt.toISOString().split("T")[0],
+    };
+  });
 
 	res.status(200).json({ forms: forms });
 	// res.render("pages/listform", { forms });

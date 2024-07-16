@@ -12,39 +12,30 @@ const getCreatePage = async (req, res) => {
 };
 
 const submit = async (req, res) => {
-	if (req.isUnauthenticated()) return res.redirect("/auth/google");
-	console.log("req.body", req.user.accessToken);
+	if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
 	try {
-		const user = await User.findOne({ accessToken: req.user.accessToken });
-		console.log("user", user);
-		res.status(200).json({ user });
-		// Remove the closing brace
+		const formData = req.body;
+		console.log("formData", formData);
+		const components = [];
+		formData.formComponents.forEach((component) => {
+			const formComponent = new FormComponent(component);
+			console.log("formComponent", formComponent);
+			const newComponent = new Component(formComponent.toCreateFormModel());
+			components.push(newComponent);
+		});
+
+		const form = new FormObject({
+			user_id: req.user._id,
+			name: formData.formName,
+			description: formData.formDescription,
+			components: components,
+		});
+
+		await new Form(form.toCreateFormModel()).save();
+		return res.json({ form });
 	} catch (error) {
 		console.error("Error processing form:", error);
-		return res.status;
-		// try {
-		// 	const formData = req.body;
-		// 	const components = [];
-		// 	formData.formComponents.forEach((component) => {
-		// 		const formComponent = new FormComponent(component);
-		// 		console.log("formComponent", formComponent);
-		// 		const newComponent = new Component(formComponent.toCreateFormModel());
-		// 		components.push(newComponent);
-		// 	});
-
-		// 	const form = new FormObject({
-		// 		google_id: req.user.google_id,
-		// 		name: formData.formName,
-		// 		description: formData.formDescription,
-		// 		components: components,
-		// 	});
-
-		// 	await new Form(form.toCreateFormModel()).save();
-		// 	return res.json({ form });
-		// } catch (error) {
-		// 	console.error("Error processing form:", error);
-		// 	return res.status(500).send(error);
-		// }
+		return res.status(500).send(error);
 	}
 };
 const edit = async (req, res) => {

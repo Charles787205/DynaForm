@@ -1,4 +1,22 @@
-async function submitForm() {
+function submitForm() {
+	const formData = getFormData();
+	console.log(formData);
+	fetch("/create", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(formData),
+	}).then((response) => {
+		if (response.ok) {
+			console.log("OKAYT");
+		} else if (response.status == 401) {
+			window.open("/auth/google", null);
+		}
+	});
+}
+
+function getFormData() {
 	const form = document.getElementById("form");
 	const formName = form.getAttribute("data-form-name") || "Untitled Form";
 	const formDescription =
@@ -56,29 +74,11 @@ async function submitForm() {
 		}
 	);
 
-	const formData = {
+	return (formData = {
 		formName,
 		formDescription,
 		formComponents,
-	};
-
-	console.log(JSON.stringify(formData, null, 2));
-
-	console.log("AFTER PARSE");
-	fetch("/create", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(formData),
-	})
-		.then((response) => response.json())
-		.then((data) => {
-			console.log(JSON.stringify(data, null, 2));
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
+	});
 }
 
 function auto_grow(element) {

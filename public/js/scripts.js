@@ -267,19 +267,3 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("htmx:afterSwap", function (e) {
   handleSwap(e);
 });
-
-let pendingRequests = 0;
-
-document.addEventListener("htmx:configRequest", (event) => {
-  pendingRequests++;
-});
-
-document.addEventListener("htmx:afterRequest", (event) => {
-  pendingRequests--;
-});
-
-document.addEventListener("htmx:load", (event) => {
-  if (pendingRequests <= 0) {
-    document.getElementById("spinner").style.display = "none";
-  }
-});

@@ -189,6 +189,20 @@ img[image-loaded="true"]:hover,
   opacity: 1;
 }
 
+.load-indicator{
+  z-index: 0;
+        opacity:0;
+    }
+
+.htmx-request .load-indicator{
+  z-index: 10;
+        opacity:1
+    }
+    .htmx-request.load-indicator{
+       z-index: 10;
+        opacity:1
+    }
+
 [show-pl-click="false"]:focus:empty:before {
   color: #888;
   pointer-events: none;

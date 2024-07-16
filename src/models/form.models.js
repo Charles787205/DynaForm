@@ -5,6 +5,11 @@ import { Component } from "./component.model.js";
 
 const form_schema = new Schema(
 	{
+		user_id: {
+			type: Schema.Types.ObjectId,
+			required: [true, "User ID is required"],
+			ref: "User",
+		},
 		name: {
 			type: String,
 			required: [true, "Name is required"],
@@ -22,15 +27,6 @@ const form_schema = new Schema(
 	}
 );
 
-const user_form = new Schema({
-	user_id: {
-		type: Schema.Types.ObjectId,
-		required: [true, "User ID is required"],
-		ref: "User",
-	},
-	forms: [form_schema],
-});
-
-const Form = mongoose.model("Form", user_form);
+const Form = mongoose.model("Form", form_schema);
 
 export default Form;

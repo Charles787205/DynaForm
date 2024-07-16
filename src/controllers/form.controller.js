@@ -2,7 +2,6 @@ import { Component } from "../models/component.model.js";
 import FormComponent from "../objects/component.js";
 import FormObject from "../objects/form.js";
 import Form from "../models/form.models.js";
-import User from "../models/user.model.js";
 const get = async (req, res) => {
 	res.redirect("/create");
 };
@@ -15,7 +14,7 @@ const submit = async (req, res) => {
 	if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
 	try {
 		const formData = req.body;
-		console.log("formData", formData);
+
 		const components = [];
 		formData.formComponents.forEach((component) => {
 			const formComponent = new FormComponent(component);
@@ -23,14 +22,14 @@ const submit = async (req, res) => {
 			const newComponent = new Component(formComponent.toCreateFormModel());
 			components.push(newComponent);
 		});
-
 		const form = new FormObject({
 			user_id: req.user._id,
 			name: formData.formName,
 			description: formData.formDescription,
 			components: components,
 		});
-
+		console.log("form", form);
+		console.log(req.user.accessToken);
 		await new Form(form.toCreateFormModel()).save();
 		return res.json({ form });
 	} catch (error) {
@@ -45,16 +44,17 @@ const edit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-	const allForms = await Form.find({ user_id: req.user.id });
-	console.log(allForms);
-	const forms = allForms.map((form) => {
-		return {
-			id: form._id,
-			name: form.name,
-			description: form.description,
-			date: form.createdAt.toISOString().split("T")[0],
-		};
-	});
+	console.log("req.user", req.user._id);
+	// const allForms = await Form.find({ user_id: req.user._id });
+	// console.log(allForms);
+	// const forms = allForms.map((form) => {
+	// 	return {
+	// 		id: form._id,
+	// 		name: form.name,
+	// 		description: form.description,
+	// 		date: form.createdAt.toISOString().split("T")[0],
+	// 	};
+	// });
 
 	// res.status(200).json({ forms: forms });
 	res.render("pages/listform", { forms });

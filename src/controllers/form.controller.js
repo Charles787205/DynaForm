@@ -46,6 +46,8 @@ const edit = async (req, res) => {
 
 const list = async (req, res) => {
   const allForms = await Form.find({ user_id: req.user._id });
+  console.log(req.session);
+  console.log(req.user);
   const forms = allForms.map((form) => {
     return {
       id: form._id,

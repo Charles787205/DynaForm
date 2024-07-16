@@ -56,7 +56,8 @@ app.all("*", function (req, res, next) {
 
   return next();
 });
-app.get("*/*", router);
+
+app.get("*/*", checkPath, router);
 app.post("*/*", router);
 app.get("*/*", authRouter);
 app.post("*/*", authRouter);

@@ -12,7 +12,7 @@
             </a>
             
             <button
-              href='"/logout"'
+              href='logout'
               class="text-md text-center text-black flex items-center relative group transition-all duration-200 focus:overflow-visible overflow-hidden justify-center "
             >
                 <span class="flex  px-4 gap-3 py-2 items-center">
@@ -21,22 +21,15 @@
                     </div>
                 </span>
                 
-                <div
-                    class="absolute shadow-lg -bottom-16 min-w-32 max-w-32 right-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2">
-                    <span hx-post="template/default" hx-swap="innerHTML" hx-target=".mainscreen"
-                    class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
-                    <p>Logout</p>
-                    </span>
-                    
+                <div class="absolute shadow-lg -bottom-12 w-full left-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2">
+                    <form ACTION="/logout" METHOD="POST">
+                        <button type="submit" class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
+                            Logout
+                        </button>
+                    </form>
                 </div>
-    
-            </a>
-            
         </div>
         <% } else { %>
-        <!-- <div hx-boost="true" hx-preload="mouseover">
-          <a href="/forms"> My Forms</a>
-        </div> -->
   
         <a
           href='/auth/google'

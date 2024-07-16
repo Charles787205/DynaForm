@@ -47,12 +47,10 @@
         </button>
     
       <% if(isLogin) { %>
-        <a
-        href='"/logout"'
-        class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
+        <button onclick="submitForm()" class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
       >
           Publish
-      </a>
+      </button>
 
       <% } else { %>
       <!-- <div hx-boost="true" hx-preload="mouseover">

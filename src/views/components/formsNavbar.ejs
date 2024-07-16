@@ -9,10 +9,7 @@
         <% if(isLogin) { %>
         <input placeholder="Search for form..." class="p-2 bg-gray-100 px-4 hover:font-semibold text-md w-full mx-5 max-w-xl rounded-full">
         </input>
-        <button
-          href='"/logout"'
-          class="text-md text-center text-black flex items-center relative group transition-all duration-200 focus:overflow-visible overflow-hidden justify-center "
-        >
+        <button class="text-md text-center text-black flex items-center relative group transition-all duration-200 focus:overflow-visible overflow-hidden justify-center ">
             <span class="flex  px-4 gap-3 py-2 items-center">
                 <%- user.name -%>
                 <div class="w-7 h-7">
@@ -22,15 +19,13 @@
             
             <div
                 class="absolute shadow-lg -bottom-12 w-full left-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2">
-                <span hx-post="template/default" hx-swap="innerHTML" hx-target=".mainscreen"
-                class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
-                <p>Logout</p>
-                </span>
-                
+                <form method="POST" action="/logout">
+                    <button class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
+                        Logout
+                    </button>
+                </form>
             </div>
-
-        </a>
-        
+        </button>
         <% } else { %>
         <!-- <div hx-boost="true" hx-preload="mouseover">
           <a href="/forms"> My Forms</a>

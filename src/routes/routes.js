@@ -8,6 +8,7 @@ const router = Router();
 router.route("/").get(FormController.get);
 router.post("/components/:name", Components.getComponent);
 router.post("/components/fields/:name", Components.getField);
+router.post("/template/:template", Components.getTemplate);
 
 //FORMS
 router
@@ -16,9 +17,11 @@ router
   .post(FormController.submit);
 router.get("/forms", FormController.list);
 router.get("/form/:id", FormController.viewForm);
-router.route("/form/:id/edit").get(FormController.editForm).post(FormController.updateForm);
-router.post("/template/:template", Components.getTemplate);
-router.delete("/deleteAll", FormController.deleteAllForms); 
+router
+  .route("/form/:id/edit")
+  .get(FormController.editForm)
+  .post(FormController.updateForm);
+router.delete("/deleteAll", FormController.deleteAllForms);
 router.delete("/delete/:form_id", FormController.deleteForm);
 
 // RESPONSE

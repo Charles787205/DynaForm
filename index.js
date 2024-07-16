@@ -11,6 +11,8 @@ dotenv.config();
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.set("view engine", "ejs"); // Set the view engine to ejs
 app.set("views", "src/views"); // Set the views directory1
 
@@ -30,7 +32,6 @@ app.use(passport.authenticate("session"));
 app.use(passport.session());
 
 app.use(express.static("public"));
-app.use(express.json());
 
 app.use(function (req, res, next) {
   res.locals.isLogin = req.isAuthenticated();
@@ -59,8 +60,6 @@ app.post("*/*", router);
 app.get("*/*", authRouter);
 app.post("*/*", authRouter);
 app.delete("*/*", router);
-
-app.use(express.urlencoded({ extended: true | false }));
 
 // Database Connection with mongoDB
 

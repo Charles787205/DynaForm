@@ -10,7 +10,7 @@ const get = async (req, res) => {
 
 //Form Create Page
 const getCreatePage = async (req, res) => {
-  res.render("pages/create", { layout: "./layouts/main" });
+  res.render("pages/create");
 };
 
 //Form Save to DB
@@ -44,14 +44,14 @@ const submit = async (req, res) => {
 
 //Form List
 const list = async (req, res) => {
-  if(!req.isAuthenticated()) {
-    res.redirect("/auth/google")
+  if (!req.isAuthenticated()) {
+    res.redirect("/auth/google");
   }
-  
+
   const allForms = await Form.find({ user_id: req.user._id });
   console.log(req.session);
   console.log(req.user);
-  
+
   const forms = allForms.map((form) => {
     return {
       id: form._id,
@@ -79,10 +79,8 @@ const viewForm = async (req, res) => {
   }
 };
 
-
 //Form Edit
 const editForm = async (req, res) => {
-  
   res.render("pages/editform");
 };
 
@@ -96,10 +94,10 @@ const response = async (req, res) => {
   res.render("pages/response");
 };
 
-//Input Reponse 
+//Input Reponse
 const getResponse = async (req, res) => {
-	const typeName = req.params.name;
-	res.render(`components/fields/${typeName}`);
+  const typeName = req.params.name;
+  res.render(`components/fields/${typeName}`);
 };
 
 //Delete Form

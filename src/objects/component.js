@@ -11,13 +11,12 @@ class FormComponent {
     focus = false,
     required = false,
   }) {
-    this.labelFor = lableFor;
+    this.labelFor = labelFor;
     this.id = id;
     this.name = name;
     this.content = content;
     this.type = type;
-    this.classes = classes;
-    this.className = className;
+
     this.placeHolder = placeHolder;
     this.focus = focus;
     this.required = required;
@@ -39,7 +38,7 @@ class FormComponent {
       return {
         component_type: "input",
         name: this.name,
-        className: "",
+
         type: this.type,
         content: "",
         focused_bool: false,
@@ -50,7 +49,7 @@ class FormComponent {
       const component = {
         component_type: "text",
         name: this.name,
-        className: "",
+
         type: this.type,
         content: this.content,
         id: this.id,
@@ -66,7 +65,6 @@ class FormComponent {
         name: this.name,
         id: this.id,
         content: this.content,
-        className: this.className,
       };
     } else if (divider.includes(this.type)) {
       return {

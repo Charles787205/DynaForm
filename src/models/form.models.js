@@ -7,7 +7,7 @@ const form_schema = new Schema(
 	{
 		name: {
 			type: String,
-			required: [false, "Name is required"],
+			required: [true, "Name is required"],
 			maxLength: 50,
 		},
 		description: {

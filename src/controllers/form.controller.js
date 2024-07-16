@@ -67,7 +67,8 @@ const list = async (req, res) => {
 };
 
 const view = async (req, res) => {
-  const { form_id } = req.query;
+  const form_id = req.params.id;
+  console.log("form ID: ", form_id);
   try {
     const get_form = await Form.findById(form_id);
     console.log(get_form.toJSON());

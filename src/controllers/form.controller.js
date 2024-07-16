@@ -68,7 +68,7 @@ const view = async (req, res) => {
 		res.render("pages/viewform", { get_form: get_form.toJSON() });
 	} catch (error) {
 		console.error("Error retrieving form:", error);
-		res.status(500).send("Error retrieving form");
+		res.status(500).send({ "Error retrieving form": error });
 	}
 };
 

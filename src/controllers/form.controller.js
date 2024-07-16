@@ -2,6 +2,7 @@ import { Component } from "../models/component.model.js";
 import FormComponent from "../objects/component.js";
 import FormObject from "../objects/form.js";
 import Form from "../models/form.models.js";
+import User from "../models/user.model.js";
 const get = async (req, res) => {
 	res.redirect("/create");
 };
@@ -11,41 +12,41 @@ const getCreatePage = async (req, res) => {
 };
 
 const submit = async (req, res) => {
+	if (req.isUnauthenticated()) return res.redirect("/auth/google");
+	console.log("req.body", req.user.accessToken);
 	try {
-		const formData = req.body;
-  if (req.isUnauthenticated()) return res.redirect("/auth/google");
-  try {
-    const formData = req.body;
-
-		const components = [];
-		formData.formComponents.forEach((component) => {
-			const formComponent = new FormComponent(component);
-			console.log("formComponent", formComponent);
-			const newComponent = new Component(formComponent.toCreateFormModel());
-			components.push(newComponent);
-		});
-
-		const form = new FormObject({
-			name: formData.formName,
-			description: formData.formDescription,
-			components: components,
-		});
-    const form = new FormObject({
-      user_id: req.user.google_id,
-      name: formData.formName,
-      description: formData.formDescription,
-      components: components,
-    });
-
-		console.log("form", form);
-		await new Form(form.toCreateFormModel()).save();
-		return res.json({ form });
+		const user = await User.findOne({ accessToken: req.user.accessToken });
+		console.log("user", user);
+		res.status(200).json({ user });
+		// Remove the closing brace
 	} catch (error) {
 		console.error("Error processing form:", error);
-		return res.status(500).send(error);
+		return res.status;
+		// try {
+		// 	const formData = req.body;
+		// 	const components = [];
+		// 	formData.formComponents.forEach((component) => {
+		// 		const formComponent = new FormComponent(component);
+		// 		console.log("formComponent", formComponent);
+		// 		const newComponent = new Component(formComponent.toCreateFormModel());
+		// 		components.push(newComponent);
+		// 	});
+
+		// 	const form = new FormObject({
+		// 		google_id: req.user.google_id,
+		// 		name: formData.formName,
+		// 		description: formData.formDescription,
+		// 		components: components,
+		// 	});
+
+		// 	await new Form(form.toCreateFormModel()).save();
+		// 	return res.json({ form });
+		// } catch (error) {
+		// 	console.error("Error processing form:", error);
+		// 	return res.status(500).send(error);
+		// }
 	}
 };
-
 const edit = async (req, res) => {
 	const data = {};
 
@@ -53,18 +54,19 @@ const edit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-  const allForms = await Form.find({ user_id: req.user._id });
-  const forms = allForms.map((form) => {
-    return {
-      id: form._id,
-      name: form.name,
-      description: form.description,
-      date: form.createdAt.toISOString().split("T")[0],
-    };
-  });
+	const allForms = await Form.find({ user_id: req.user.id });
+	console.log(allForms);
+	const forms = allForms.map((form) => {
+		return {
+			id: form._id,
+			name: form.name,
+			description: form.description,
+			date: form.createdAt.toISOString().split("T")[0],
+		};
+	});
 
-	res.status(200).json({ forms: forms });
-	// res.render("pages/listform", { forms });
+	// res.status(200).json({ forms: forms });
+	res.render("pages/listform", { forms });
 };
 
 const view = async (req, res) => {

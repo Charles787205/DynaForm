@@ -94,14 +94,14 @@ const editForm = async (req, res) => {
    */
   const form_id = req.params.id;
   const form = await Form.findById(form_id);
-  console.log("Checkpoint ",form);
+  //console.log("Checkpoint ",form);
 
   if (
     (form.authorized_emails || form.user_id == req.user._id) ||
     form.authorized_emails.includes(req.user.email) &&
     !form.is_active
   ) {
-    res.render("pages/editform", {form});
+    res.render("pages/editform", {form: form.toJSON()});
   } else {
     // res.redirect(`/form/${form_id}`);
     res.status(500).send("Error deleting form");

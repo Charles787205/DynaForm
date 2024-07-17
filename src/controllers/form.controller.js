@@ -155,7 +155,6 @@ export default {
   editForm,
   viewForm,
   updateForm,
-  response,
   preview,
   deleteAllForms,
   deleteForm,

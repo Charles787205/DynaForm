@@ -15,7 +15,7 @@ const getCreatePage = async (req, res) => {
 
 //Form Save to DB
 const submit = async (req, res) => {
-  //if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
+  if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
   try {
     const formData = req.body;
 
@@ -82,10 +82,9 @@ const editForm = async (req, res) => {
   const form = Form.findById(form_id);
 
   if (
-    form.authorized_email &&
+    (form.authorized_email || form.user_id == req.user._id) &&
     form.authorized_email.includes(req.user.email) &&
-    !form.is_active &&
-    form.user_id == req.user._id
+    !form.is_active
   ) {
     res.render("pages/editform");
   } else {

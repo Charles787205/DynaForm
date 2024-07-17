@@ -33,7 +33,7 @@ const submit = async (req, res) => {
       description: formData.formDescription,
       components: components,
     });
-
+    
     await new Form(form.toCreateFormModel()).save();
     return res.json({ form });
   } catch (error) {

@@ -10,9 +10,7 @@
         <div contenteditable="true" show-pl-click="true"
           class="content-container text-[1rem] label outline-none resize-none" data-type="label"
           data-for="<%= query.for %>" data-name="label_<%= query.id %>" id="input_<%= query.id %>"
-          placeholder="<%= query.placeholder ?? 'Label'%>">
-          <%= query.content %>
-        </div>
+          placeholder="<%= query.placeholder ?? 'Label'%>"><%= query.content %></div>
         <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
         <%- include("../tooltip") %>
           <div class="move-dropzone" data-position="below"></div>

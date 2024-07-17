@@ -44,7 +44,7 @@ const submit = async (req, res) => {
       description: formData.formDescription,
       components: components,
     });
-    
+
     await new Form(form.toCreateFormModel()).save();
     console.log("ADDED TO DB", JSON.stringify(form));
     return res.json({ form });
@@ -94,17 +94,16 @@ const editForm = async (req, res) => {
    */
   const form_id = req.params.id;
   const form = await Form.findById(form_id);
-  console.log("Checkpoint ",form);
+  console.log("Checkpoint ", form);
 
   if (
-    (form.authorized_emails || form.user_id == req.user._id) ||
-    form.authorized_emails.includes(req.user.email) &&
+    (form.authorized_emails.includes(req.user.email) ||
+      form.user_id == req.user._id) &&
     !form.is_active
   ) {
-    res.render("pages/editform", {form});
+    res.render("pages/editform", { form });
   } else {
-    // res.redirect(`/form/${form_id}`);
-    res.status(500).send("Error deleting form");
+    res.redirect(`/form/${form_id}`);
   }
 };
 
@@ -113,6 +112,21 @@ const updateForm = async (req, res) => {
    * Handles the edit made in the form
    * /forms/:id/edit post
    */
+  const components = [];
+  formData.formComponents.forEach((component) => {
+    const formComponent = new FormComponent(component);
+    const newComponent = new Component(formComponent.toCreateFormModel());
+    components.push(newComponent);
+  });
+
+  const newForm = {
+    name: formData.formName,
+    description: formData.formDescription,
+    components: components,
+  };
+  const form_id = req.params.id;
+  const form = await Form.findByIdAndUpdate(form_id, ...newForm);
+  console.log(form);
   res.send(200, "Form updated");
 };
 
@@ -146,7 +160,7 @@ const deleteAllForms = async (req, res) => {
 
 //preview
 const preview = async (req, res) => {
- res.render(`pages/preview`);
+  res.render(`pages/preview`);
 };
 
 export default {

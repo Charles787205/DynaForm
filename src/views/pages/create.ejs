@@ -1,85 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="/css/app.css" />
 
-    <script
-      src="https://unpkg.com/htmx.org@2.0.0"
-      integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <script src="/js/scripts.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/css/app.css" />
 
-  <body>
-    <div class="app">
-      <%- include('../components/navbar'); %>
+  <script src="https://unpkg.com/htmx.org@2.0.0"
+    integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
+    crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/js/scripts.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="app">
+    <%- include('../components/navbar'); %>
+      
+       <div class="load-indicator w-screen h-screen fixed bg-white flex justify-center items-center" id="spinner"><img src="/assets/1490.gif" class="object-contain" /></div>
 
       <main class="mainscreen w-screen items-start inline-flex ">
-        <div hx-post="template/survey" hx-swap="outerHTML" hx-trigger="load" hx-indicator="#spinner"></div>
-        <div class="w-screen h-screen flex justify-center items-center"><img  id="spinner" class="htmx-indicator" src="/assets/1490.gif"/></div>
+        <div hx-post="template/default" hx-swap="outerHTML" hx-trigger="load"></div>
       </main>
-    </div>
-    <!-- <script>
-    const removeImageBtn = document.getElementById("remove-cover-btn");
+  </div>
+</body>
 
-    removeImageBtn.addEventListener("click", function () {
-      removeCover(removeImageBtn);
-    });
-
-    function previewFile() {
-      var preview = document.querySelector("img");
-      var file = document.querySelector("input[type=file]").files[0];
-      var reader = new FileReader();
-
-      reader.onloadend = function () {
-        preview.src = reader.result;
-        preview.setAttribute("image-loaded", "true");
-        file.value = "";
-      };
-
-      if (file) {
-        showCover();
-        reader.readAsDataURL(file);
-      } else {
-        preview.src = "";
-      }
-    }
-
-    function showCover() {
-      removeImageBtn.style.display = "flex";
-      document.querySelector("#image-wrapper").classList.add("h-80");
-      document.querySelector("img").setAttribute("image-loaded", "true");
-      removeImageBtn.style.display = "flex";
-
-    }
-
-    function removeCover(button) {
-      var preview = document.querySelector("img");
-      var fileInput = document.querySelector("input[type=file]");
-
-      preview.src = "";
-      preview.setAttribute("image-loaded", "false");
-      document.querySelector("#image-wrapper").classList.remove("h-80");
-      button.style.display = "none";
-      fileInput.value = "";
-    }
-
-
-  </script> -->
-    <!-- <script src="/js/Sortable.min.js"></script> -->
-  </body>
 </html>

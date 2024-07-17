@@ -10,7 +10,7 @@
 
     </div>
     <div class="flex items-center">
-      <button class="relative group transition-all duration-200 p-2 focus:overflow-visible overflow-hidden text-md" hx-get="/view" hx-trigger="click" hx-target=".mainscreen" hx-swap="outerHTML">
+      <button class="relative group transition-all duration-200 p-2 focus:overflow-visible overflow-hidden text-md" >
         <span>
           <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M2.16663 13.778C2.16663 19.3528 6.35588 23.9473 11.7509 24.568C12.5471 24.6601 13.3185 24.321 13.885 23.7523C14.2251 23.4111 14.416 22.9491 14.416 22.4674C14.416 21.9858 14.2251 21.5237 13.885 21.1826C13.3185 20.6138 12.8559 19.7667 13.2838 19.0874C14.9911 16.3704 23.8333 22.6093 23.8333 13.7791C23.8333 7.7785 18.9832 2.9165 13 2.9165C7.01671 2.9165 2.16663 7.77959 2.16663 13.778Z" stroke="#555555" stroke-width="1.625"/>
@@ -47,12 +47,10 @@
         </button>
     
       <% if(isLogin) { %>
-        <a
-        href='"/logout"'
-        class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
+        <button onclick="submitForm()" class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
       >
           Publish
-      </a>
+      </button>
 
       <% } else { %>
       <!-- <div hx-boost="true" hx-preload="mouseover">
@@ -60,7 +58,7 @@
       </div> -->
 
       <a
-        href='/auth/google'
+        href='/auth/google?returnTo=/create'
         class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
       >
         Sign in

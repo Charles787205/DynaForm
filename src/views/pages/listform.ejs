@@ -1,64 +1,62 @@
 <!DOCTYPE html>
 
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="/css/app.css" />
 
-		<script
-			src="https://unpkg.com/htmx.org@2.0.0"
-			integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
-			crossorigin="anonymous"
-		></script>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<script src="/js/scripts.js"></script>
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-			rel="stylesheet"
-		/>
+<head>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="/css/app.css" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-	</head>
+	<script src="https://unpkg.com/htmx.org@2.0.0"
+		integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
+		crossorigin="anonymous"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<script src="/js/scripts.js"></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+		rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Document</title>
+</head>
 
-  <body>
-    <div class="app">
-      <%- include('../components/homeNavbar'); %>
-        <main class="mainscreen w-screen items-start inline-flex" id="main">
-          <div class="relative min-h-screen w-screen pt-16">
-            <div class="w-full flex justify-center">
-              <div class="flex flex-col h-full w-full max-w-screen-lg pt-6 gap-2.5">
-                <div class="justify-between items-center gap-2.5 inline-flex py-4">
-                  <div class="text-neutral-600 text-5xl font-extrabold">
-                    My Forms
-                  </div>
-                  <a class="inline-flex justify-center items-center rounded-full border-2 border-gray-600 py-2 px-3" href="/create">
-                      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18.3334 21.6668H8.33337V18.3335H18.3334V8.3335H21.6667V18.3335H31.6667V21.6668H21.6667V31.6668H18.3334V21.6668Z" fill="#555555"/>
-                        </svg>
-                      <h1 class="text-xl font-bold">New Form</h1>
-                  </a>  
-                </div>
-                <div class="self-stretch h-px border border-neutral-400"></div>
+<body>
+	<div class="app">
+		<%- include('../components/formsNavbar'); %>
+			<main class="mainscreen w-screen items-start inline-flex" id="main">
+				<div class="relative min-h-screen w-screen pt-16">
+					<div class="w-full flex justify-center">
+						<div class="flex flex-col h-full w-full max-w-screen-lg pt-6 gap-2.5">
+							<div class="justify-between items-center gap-2.5 inline-flex py-4">
+								<div class="text-neutral-600 text-5xl font-extrabold">
+									My Forms
+								</div>
+								<a class="inline-flex justify-center items-center rounded-full border-2 border-gray-600 py-2 px-3"
+									href="/create">
+									<svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+										xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M18.3334 21.6668H8.33337V18.3335H18.3334V8.3335H21.6667V18.3335H31.6667V21.6668H21.6667V31.6668H18.3334V21.6668Z"
+											fill="#555555" />
+									</svg>
+									<h1 class="text-xl font-bold">New Form</h1>
+								</a>
+							</div>
+							<div class="self-stretch h-px border border-neutral-400"></div>
 
 							<% forms.forEach(function(item) { %>
-							<div
-								hx-post="components/formCard"
-								hx-trigger="load"
-								hx-swap="outerHTML"
-								hx-vals='js:{"name": "<%=item.name %>","date": "<%=item.date %>","id": "<%=item.id %>"}'
-							></div>
-							<% }); %>
+								<div hx-post="components/formCard" hx-trigger="load" hx-swap="outerHTML"
+									hx-vals='js:{"name": "<%=item.name %>","date": "<%=item.date %>","id": "<%=item.id %>"}'>
+								</div>
+								<% }); %>
 						</div>
 					</div>
 				</div>
 			</main>
-		</div>
-		<!-- <script src="/js/Sortable.min.js"></script> -->
-	</body>
+	</div>
+	<!-- <script src="/js/Sortable.min.js"></script> -->
+</body>
+
 </html>

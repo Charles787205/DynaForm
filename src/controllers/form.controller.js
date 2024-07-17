@@ -44,7 +44,7 @@ const submit = async (req, res) => {
       description: formData.formDescription,
       components: components,
     });
-    
+
     await new Form(form.toCreateFormModel()).save();
     console.log("ADDED TO DB", JSON.stringify(form));
     return res.json({ form });
@@ -59,17 +59,25 @@ const list = async (req, res) => {
    * Retrieves a list of forms for a specific user.
    * route "/forms" get
    */
-  const allForms = await Form.find({ user_id: req.user.id });
+  try {
+    const allForms = await Form.find({ user_id: req.user.id });
 
-  const forms = allForms.map((form) => {
-    return {
-      id: form._id,
-      name: form.name,
-      description: form.description,
-      date: form.createdAt.toISOString().split("T")[0],
-    };
-  });
-  res.render("pages/listform", { forms });
+    if (allForms) {
+      const forms = allForms.map((form) => {
+        return {
+          id: form._id,
+          name: form.name,
+          description: form.description,
+          date: form.createdAt.toISOString().split("T")[0],
+        };
+      });
+      res.render("pages/listform", { forms });
+    } else {
+      res.redirect("/");
+    }
+  } catch (error) {
+    return res.redirect("/");
+  }
 };
 
 //route "/forms/:id" get
@@ -82,8 +90,7 @@ const viewForm = async (req, res) => {
 
     res.render("pages/viewform", { form: form.toJSON() });
   } catch (error) {
-    console.error("Error retrieving form:", error);
-    res.status(500).send("Error retrieving form");
+    res.render("pages/error", { error: "Failed to find form." });
   }
 };
 
@@ -100,7 +107,7 @@ const editForm = async (req, res) => {
     form.authorized_email.includes(req.user.email) &&
     !form.is_active
   ) {
-    res.render("pages/editform");
+    res.render("pages/editform", { form: form.toJSON() });
   } else {
     res.redirect(`/form/${form_id}`);
   }
@@ -144,7 +151,7 @@ const deleteAllForms = async (req, res) => {
 
 //preview
 const preview = async (req, res) => {
- res.render(`pages/preview`);
+  res.render(`pages/preview`);
 };
 
 export default {

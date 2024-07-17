@@ -27,17 +27,18 @@
     <div class="w-full flex justify-center mb-28">
       <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
         <!-- <div hx-post="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div> -->
-        <div hx-post="components/fields/heading" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/heading" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-swap="outerHTML" class="form-field"></div>
-        <div hx-post="components/fields/textfield" hx-trigger="load target:#tool"
+        <div hx-post="components/fields/textfield" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-vals='js:{"focus": true}'
           hx-swap="outerHTML" class="form-field"></div>
-          <div hx-post="components/fields/textfield" hx-trigger="load target:#tool"
+          <div hx-post="components/fields/textfield" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-swap="outerHTML" class="form-field"></div>
-          <div hx-post="components/fields/textfield" hx-trigger="load target:#tool"
+          <div hx-post="components/fields/textfield" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-swap="outerHTML" class="form-field"></div>
-          <div hx-post="components/button" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
+          <div hx-post="components/button" hx-indicator="#spinner" hx-trigger="load target:#tool" hx-swap="outerHTML"></div>
       </form>
     </div>
   </div>
 </div>
+

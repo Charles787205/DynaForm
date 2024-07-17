@@ -189,15 +189,46 @@ img[image-loaded="true"]:hover,
   opacity: 1;
 }
 
+.load-indicator{
+  z-index: 0;
+        opacity:0;
+    }
+
+.htmx-request .load-indicator{
+  z-index: 10;
+        opacity:1
+    }
+    .htmx-request.load-indicator{
+       z-index: 10;
+        opacity:1
+    }
+
 [show-pl-click="false"]:focus:empty:before {
   color: #888;
   pointer-events: none;
   content: attr(placeholder);
 }
+[show-pl-click="true"]:empty:not(:focus):before {
+  color: #888;
+  pointer-events: none;
+  content: attr(placeholder);
+}
+
+#dropdownMenu {
+  top: 100%;
+  opacity: 0;
+  visibility: hidden;
+}
+
+#profileButton:focus + #dropdownMenu,
+#dropdownMenu:hover {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* .htmx-settling > .input-block {
   background: black;
 } */
-
 
 /* 
 [contenteditable="true"]:empty:not(:focus):before {
@@ -209,9 +240,3 @@ img[image-loaded="true"]:hover,
 /* [contentEditable="true"]:empty:not(:focus):before {
   content: attr(placeholder);
 } */
-
-[show-pl-click="true"]:empty:not(:focus):before {
-  color: #888;
-  pointer-events: none;
-  content: attr(placeholder);
-}

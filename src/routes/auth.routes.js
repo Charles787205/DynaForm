@@ -68,7 +68,7 @@ authRouter.get(
 );
 
 // Logout route
-authRouter.get("/logout", (req, res) => {
+authRouter.post("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
       console.log(err);

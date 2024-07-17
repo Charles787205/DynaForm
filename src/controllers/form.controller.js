@@ -78,7 +78,19 @@ const viewForm = async (req, res) => {
 
 //Form Edit
 const editForm = async (req, res) => {
-  res.render("pages/editform");
+  const form_id = req.params.id;
+  const form = Form.findById(form_id);
+
+  if (
+    form.authorized_email &&
+    form.authorized_email.includes(req.user.email) &&
+    !form.is_active &&
+    form.user_id == req.user._id
+  ) {
+    res.render("pages/editform");
+  } else {
+    res.redirect(`/form/${form_id}`);
+  }
 };
 
 //Form Update

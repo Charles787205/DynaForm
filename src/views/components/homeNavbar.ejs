@@ -1,13 +1,13 @@
 <nav class="w-screen bg-white fixed h-fit z-20 py-3 mr-0 ml-0 px-10 content-center flex justify-center">
-  <div class="max-w-screen-xl 2xl:max-w-screen-xl justify-between items-center inline-flex w-full">
-    <a class="pr-4 outline-none flex gap-2 items-center text-black text-xl font-black cursor-pointer w-fit" href="/">
+  <div class="max-w-screen-xl 2xl:max-w-screen-xl justify-between items-center inline-flex w-full" hx-boost="true" hx-preload="mouseover">
+    <a class="pr-4 outline-none flex gap-2 items-center text-black text-xl font-black cursor-pointer w-fit" href="/" >
 
       Dynaform
     </a>
     <% if(isLogin) { %>
-      <div class="flex gap-4 items-center">
+      <div class="flex gap-4 items-center" >
 
-        <a href="/forms" class="hover:font-bold">
+        <a href="/forms" class="hover:text-gray-500" onclick="NProgress.start()" >
           My Forms
         </a>
 

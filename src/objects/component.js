@@ -46,14 +46,12 @@ class FormComponent {
       const component = {
         component_type: "text",
         name: this.name,
-
         type: this.type,
         content: this.content,
         id: this.id,
       };
-      if (this.type === "label") {
-        component.forAttr = this.forAttr;
-      }
+      if(this.type == "label") component.forAttr= this.forAttr;
+      
       return component;
     } else if (button.includes(this.type)) {
       return {

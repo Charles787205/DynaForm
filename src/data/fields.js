@@ -20,6 +20,12 @@ const texts = [
     example_text: "First Name",
     type: "label",
   },
+  {
+    title: "Divider",
+    description: "This is to divite the form to look more readable",
+    example_text: "TEST",
+    type: "divider",
+  },
 ];
 
 const inputs = [

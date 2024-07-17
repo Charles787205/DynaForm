@@ -43,7 +43,7 @@ Component.discriminator(
 			required: false,
 			enum: ["heading", "label", "textfield"],
 		},
-		for: {
+		forAttr: {
 			type: String,
 			required: false,
 			maxLength: 50,

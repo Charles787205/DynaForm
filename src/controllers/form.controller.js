@@ -35,6 +35,7 @@ const submit = async (req, res) => {
     });
 
     await new Form(form.toCreateFormModel()).save();
+    console.log(JSON.stringify(form));
     return res.json({ form });
   } catch (error) {
     console.error("Error processing form:", error);
@@ -124,6 +125,11 @@ const deleteAllForms = async (req, res) => {
   }
 };
 
+//preview
+const preview = async (req, res) => {
+ res.render(`pages/preview`);
+};
+
 export default {
   get,
   getCreatePage,
@@ -133,6 +139,7 @@ export default {
   viewForm,
   updateForm,
   response,
+  preview,
   deleteAllForms,
   deleteForm,
 };

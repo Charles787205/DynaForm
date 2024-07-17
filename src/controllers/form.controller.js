@@ -59,25 +59,17 @@ const list = async (req, res) => {
    * Retrieves a list of forms for a specific user.
    * route "/forms" get
    */
-  try {
-    const allForms = await Form.find({ user_id: req.user.id });
+  const allForms = await Form.find({ user_id: req.user.id });
 
-    if (allForms) {
-      const forms = allForms.map((form) => {
-        return {
-          id: form._id,
-          name: form.name,
-          description: form.description,
-          date: form.createdAt.toISOString().split("T")[0],
-        };
-      });
-      res.render("pages/listform", { forms });
-    } else {
-      res.redirect("/");
-    }
-  } catch (error) {
-    return res.redirect("/");
-  }
+  const forms = allForms.map((form) => {
+    return {
+      id: form._id,
+      name: form.name,
+      description: form.description,
+      date: form.createdAt.toISOString().split("T")[0],
+    };
+  });
+  res.render("pages/listform", { forms });
 };
 
 //route "/forms/:id" get
@@ -90,7 +82,8 @@ const viewForm = async (req, res) => {
 
     res.render("pages/viewform", { form: form.toJSON() });
   } catch (error) {
-    res.render("pages/error", { error: "Failed to find form." });
+    console.error("Error retrieving form:", error);
+    res.status(500).send("Error retrieving form");
   }
 };
 
@@ -101,18 +94,14 @@ const editForm = async (req, res) => {
    */
   const form_id = req.params.id;
   const form = await Form.findById(form_id);
-  console.log("Checkpoint ",form);
+  console.log("Checkpoint ", form);
 
   if (
-    (form.authorized_emails || form.user_id == req.user._id) ||
-    form.authorized_emails.includes(req.user.email) &&
-    !form.is_active
+    form.authorized_emails ||
+    form.user_id == req.user._id ||
+    (form.authorized_emails.includes(req.user.email) && !form.is_active)
   ) {
-<<<<<<< HEAD
-    res.render("pages/editform", { form: form.toJSON() });
-=======
-    res.render("pages/editform", {form});
->>>>>>> c4ee7a90e4998a80fad371886fc59cb52a4ab549
+    res.render("pages/editform", { form });
   } else {
     // res.redirect(`/form/${form_id}`);
     res.status(500).send("Error deleting form");

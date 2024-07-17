@@ -2,14 +2,18 @@ import { Component } from "../models/component.model.js";
 import FormComponent from "../objects/component.js";
 import FormObject from "../objects/form.js";
 import Form from "../models/form.models.js";
+
+//Return Index
 const get = async (req, res) => {
   res.render("index");
 };
 
+//Form Create Page
 const getCreatePage = async (req, res) => {
-  res.render("pages/create", { layout: "./layouts/main" });
+  res.render("pages/create");
 };
 
+//Form Save to DB
 const submit = async (req, res) => {
   if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
   try {
@@ -24,7 +28,7 @@ const submit = async (req, res) => {
     });
 
     const form = new FormObject({
-      user_id: req.user._id,
+      user_id: "66947ce453c1120196b54e8c",
       name: formData.formName,
       description: formData.formDescription,
       components: components,
@@ -38,20 +42,13 @@ const submit = async (req, res) => {
   }
 };
 
-const edit = async (req, res) => {
-  const data = {};
-
-  res.render("pages/create", { data });
-};
-
+//Form List
 const list = async (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect("/auth/google");
-  }
+  //if (!req.isAuthenticated()) {
+  //  res.redirect("/auth/google");
+  //}
 
-  const allForms = await Form.find({ user_id: req.user._id });
-  console.log(req.session);
-  console.log(req.user);
+  const allForms = await Form.find({ user_id: "66947ce453c1120196b54e8c" });
 
   const forms = allForms.map((form) => {
     return {
@@ -64,31 +61,43 @@ const list = async (req, res) => {
   res.render("pages/listform", { forms });
 };
 
+//Form View
 const viewForm = async (req, res) => {
+  const form_id = req.params.id;
   console.log("form ID: ", form_id);
   try {
-    const get_form = await Form.findById(form_id);
-    console.log(get_form.toJSON());
+    const form = await Form.findById(form_id);
+    console.log(form.toJSON());
 
-    res.render("pages/viewform", { get_form: get_form.toJSON() });
+    res.render("pages/viewform", { form: form.toJSON() });
   } catch (error) {
     console.error("Error retrieving form:", error);
     res.status(500).send("Error retrieving form");
   }
 };
+
+//Form Edit
 const editForm = async (req, res) => {
-  return res.status(200).send("HELLLOOO");
+  res.render("pages/editform");
 };
 
+//Form Update
+const updateForm = async (req, res) => {
+  res.send(200, "Form updated");
+};
+
+//Reponse Page
 const response = async (req, res) => {
   res.render("pages/response");
 };
 
+//Input Reponse
 const getResponse = async (req, res) => {
   const typeName = req.params.name;
   res.render(`components/fields/${typeName}`);
 };
 
+//Delete Form
 const deleteForm = async (req, res) => {
   const { form_id } = req.params;
   try {
@@ -120,8 +129,9 @@ export default {
   getCreatePage,
   submit,
   list,
-  edit,
-  view,
+  editForm,
+  viewForm,
+  updateForm,
   response,
   deleteAllForms,
   deleteForm,

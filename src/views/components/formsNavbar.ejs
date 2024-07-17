@@ -1,48 +1,37 @@
 <nav class="w-screen bg-white fixed h-fit z-20 py-3 mr-0 ml-0 px-10 content-center flex justify-center">
-    <div class="max-w-screen-xl 2xl:max-w-screen-xl justify-between items-center inline-flex w-full" hx-boosted="true" hx-preload="mouseover">
-      <a class="pr-4 outline-none flex gap-2 items-center text-black text-xl font-black cursor-pointer w-fit" href="/" >
-          <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M36.2708 5.6875H9.72917C7.64375 5.6875 5.9375 7.39375 5.9375 9.47917V36.0208C5.9375 38.1062 7.64375 39.8125 9.72917 39.8125H36.2708C38.3562 39.8125 40.0625 38.1062 40.0625 36.0208V9.47917C40.0625 7.39375 38.3562 5.6875 36.2708 5.6875ZM13.5208 13.2708H17.3125V17.0625H13.5208V13.2708ZM13.5208 20.8542H17.3125V24.6458H13.5208V20.8542ZM13.5208 28.4375H17.3125V32.2292H13.5208V28.4375ZM32.4792 32.2292H21.1042V28.4375H32.4792V32.2292ZM32.4792 24.6458H21.1042V20.8542H32.4792V24.6458ZM32.4792 17.0625H21.1042V13.2708H32.4792V17.0625Z" fill="#434138"/>
-            </svg>
-          Dynaform
-      </a>
-        <% if(isLogin) { %>
-        <input placeholder="Search for form..." class="p-2 bg-gray-100 px-4 hover:font-semibold text-md w-full mx-5 max-w-xl rounded-full">
-        </input>
-        <button
-          href='"/logout"'
-          class="text-md text-center text-black flex items-center relative group transition-all duration-200 focus:overflow-visible overflow-hidden justify-center "
-        >
-            <span class="flex  px-4 gap-3 py-2 items-center">
-                <%- user.name -%>
-                <div class="w-7 h-7">
-                    <img src="<%- user.img_url -%>" class="w-full h-full rounded-full object-cover">
-                </div>
-            </span>
-            
-            <div
-                class="absolute shadow-lg -bottom-12 w-full left-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2">
-                <span hx-post="template/default" hx-swap="innerHTML" hx-target=".mainscreen"
-                class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
-                <p>Logout</p>
-                </span>
-                
-            </div>
+  <div class="max-w-screen-xl 2xl:max-w-screen-xl justify-between items-center inline-flex w-full" hx-boosted="true"
+    hx-preload="mouseover">
+    <a class="pr-4 outline-none flex gap-2 items-center text-black text-xl font-black cursor-pointer w-fit" href="/">
 
-        </a>
-        
-        <% } else { %>
-        <!-- <div hx-boost="true" hx-preload="mouseover">
-          <a href="/forms"> My Forms</a>
-        </div> -->
-  
-        <a
-          href='/auth/google'
-          class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
-        >
+      Dynaform
+    </a>
+    <% if(isLogin) { %>
+      <input placeholder="Search for form..."
+        class="p-2 bg-gray-100 px-4 hover:font-semibold text-md w-full mx-5 max-w-xl rounded-full" />
+      <div class="relative">
+        <button id="profileButton"
+          class="text-md text-center text-black flex items-center relative group transition-all duration-200 focus:overflow-visible overflow-hidden justify-center ">
+          <span class="flex  px-4 gap-3 py-2 items-center">
+            <%- user.name -%>
+              <div class="w-7 h-7">
+                <img src="<%- user.img_url -%>" class="w-full h-full rounded-full object-cover">
+              </div>
+          </span>
+        </button>
+        <div id="dropdownMenu"
+          class="absolute top-full left-4 mt-2 w-48 shadow-lg bg-white border border-zinc-200 rounded-lg flex flex-col gap-2 opacity-0 invisible transition-opacity duration-200">
+          <form action="/logout" method="POST">
+            <button type="submit" class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg w-full">
+              Logout
+            </button>
+          </form>
+        </div>
+      </div>
+      <% } else { %>
+        <a href='/auth/google' class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800">
           Sign in
         </a>
-  
+
         <% } %>
-      </div>
-  </nav>
+  </div>
+</nav>

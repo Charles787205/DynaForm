@@ -1,3 +1,5 @@
+//Data for modal
+
 const texts = [
   {
     title: "Heading",

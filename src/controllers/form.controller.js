@@ -28,7 +28,7 @@ const submit = async (req, res) => {
     });
 
     const form = new FormObject({
-      user_id: req.user._id,
+      user_id: "66947ce453c1120196b54e8c",
       name: formData.formName,
       description: formData.formDescription,
       components: components,
@@ -44,13 +44,11 @@ const submit = async (req, res) => {
 
 //Form List
 const list = async (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect("/auth/google");
-  }
+  //if (!req.isAuthenticated()) {
+  //  res.redirect("/auth/google");
+  //}
 
-  const allForms = await Form.find({ user_id: req.user._id });
-  console.log(req.session);
-  console.log(req.user);
+  const allForms = await Form.find({ user_id: "66947ce453c1120196b54e8c" });
 
   const forms = allForms.map((form) => {
     return {
@@ -60,7 +58,6 @@ const list = async (req, res) => {
       date: form.createdAt.toISOString().split("T")[0],
     };
   });
-
   res.render("pages/listform", { forms });
 };
 

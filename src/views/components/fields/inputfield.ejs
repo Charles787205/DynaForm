@@ -25,7 +25,7 @@
           <%- include("../tooltip") %>
             <% if (query.labelled !=='true' ) { %>
               <button class="option" type="button" hx-post="/components/fields/label" hx-trigger="click" tabindex="-1"
-                hx-target="closest .input-flex" hx-vals='js:{"placeholder": "Label", "for": "<%= query.id %>"}'
+                hx-target="closest .input-block" hx-vals='js:{"placeholder": "Label", "for": "<%= query.id %>"}'
                 hx-swap="beforebegin" onclick="handleClick(this)">Add
                 label</button>
               <% } %>

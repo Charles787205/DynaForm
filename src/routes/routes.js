@@ -26,6 +26,9 @@ router.delete("/delete/:form_id", FormController.deleteForm);
 
 // RESPONSE
 
+//PREVIEW
+router.post("/preview", FormController.preview);
+
 // MODAL
 router.post("/components/modal/show", Components.showModal);
 router.post("/components/modal/preview", Components.showComponentPreview);

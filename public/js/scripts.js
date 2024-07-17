@@ -31,6 +31,7 @@ function getFormData() {
       const name = contentContainer.getAttribute("data-name");
       const type = contentContainer.getAttribute("data-type");
       const forAttr = contentContainer.getAttribute("data-for");
+      console.log("TYPE", type);
       const required = contentContainer.getAttribute("required");
       var placeholder = contentContainer.getAttribute("placeholder");
       const content = contentContainer.innerHTML;
@@ -59,7 +60,7 @@ function getFormData() {
       if (checked) {
         component.checked = checked;
       }
-      if (type == "input") {
+      if (type == "inputfield") {
         placeholder = contentContainer.innerHTML;
       }
       if (focus) {

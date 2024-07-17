@@ -3,19 +3,30 @@ import FormComponent from "../objects/component.js";
 import FormObject from "../objects/form.js";
 import Form from "../models/form.models.js";
 
-//Return Index
-const get = async (req, res) => {
+const index = async (req, res) => {
+  /**
+   *  index page
+   * route "/" get
+   */
   res.render("index");
 };
 
-//Form Create Page
 const getCreatePage = async (req, res) => {
+  /**
+   *
+   * Handles the creation of a form.
+   * route "/create" get
+   */
   res.render("pages/create");
 };
 
-//Form Save to DB
 const submit = async (req, res) => {
-  //if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
+  /**
+   * Handles the submission of a form.
+   * route "/create" post
+   *
+   */
+  if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
   try {
     const formData = req.body;
 
@@ -28,7 +39,7 @@ const submit = async (req, res) => {
     });
 
     const form = new FormObject({
-      user_id: "66947ce453c1120196b54e8c",
+      user_id: req.user._id,
       name: formData.formName,
       description: formData.formDescription,
       components: components,
@@ -43,12 +54,11 @@ const submit = async (req, res) => {
   }
 };
 
-//Form List
 const list = async (req, res) => {
-  //if (!req.isAuthenticated()) {
-  //  res.redirect("/auth/google");
-  //}
-
+  /**
+   * Retrieves a list of forms for a specific user.
+   * route "/forms" get
+   */
   const allForms = await Form.find({ user_id: "66947ce453c1120196b54e8c" });
 
   const forms = allForms.map((form) => {
@@ -62,7 +72,7 @@ const list = async (req, res) => {
   res.render("pages/listform", { forms });
 };
 
-//Form View
+//route "/forms/:id" get
 const viewForm = async (req, res) => {
   const form_id = req.params.id;
   console.log("form ID: ", form_id);
@@ -77,29 +87,35 @@ const viewForm = async (req, res) => {
   }
 };
 
-//Form Edit
 const editForm = async (req, res) => {
-  res.render("pages/editform");
+  /**
+   * Handles the submission of a form.
+   * route "/forms/:id/edit" post
+   */
+  const form_id = req.params.id;
+  const form = Form.findById(form_id);
+
+  if (
+    (form.authorized_email || form.user_id == req.user._id) &&
+    form.authorized_email.includes(req.user.email) &&
+    !form.is_active
+  ) {
+    res.render("pages/editform");
+  } else {
+    res.redirect(`/form/${form_id}`);
+  }
 };
 
-//Form Update
 const updateForm = async (req, res) => {
+  /**
+   * Handles the edit made in the form
+   * /forms/:id/edit post
+   */
   res.send(200, "Form updated");
 };
 
-//Reponse Page
-const response = async (req, res) => {
-  res.render("pages/response");
-};
-
-//Input Reponse
-const getResponse = async (req, res) => {
-  const typeName = req.params.name;
-  res.render(`components/fields/${typeName}`);
-};
-
-//Delete Form
 const deleteForm = async (req, res) => {
+  //route "/delete/:form_id" delete
   const { form_id } = req.params;
   try {
     const deleteForm = await Form.deleteOne({ _id: form_id });
@@ -116,6 +132,7 @@ const deleteForm = async (req, res) => {
 };
 
 const deleteAllForms = async (req, res) => {
+  // route "/deleteAll"
   try {
     await Form.deleteMany({});
     res.status(200).send("All forms deleted");
@@ -131,7 +148,7 @@ const preview = async (req, res) => {
 };
 
 export default {
-  get,
+  index,
   getCreatePage,
   submit,
   list,

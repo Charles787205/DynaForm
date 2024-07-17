@@ -15,7 +15,7 @@ const getCreatePage = async (req, res) => {
 
 //Form Save to DB
 const submit = async (req, res) => {
-  if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
+  //if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
   try {
     const formData = req.body;
 

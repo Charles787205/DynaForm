@@ -34,9 +34,13 @@ function getFormData() {
   const formDescription =
     form.getAttribute("data-form-description") || "defaultDescription";
 
+  let temp = null;
+  let arr = [];
   const formComponents = Array.from(form.querySelectorAll(".input-block")).map(
     (block) => {
       const contentContainer = block.querySelector(".content-container");
+
+   
 
       const id = block.id;
       const name = contentContainer.getAttribute("data-name");
@@ -53,12 +57,16 @@ function getFormData() {
 
       const component = { id };
 
-      if (content) {
-        if (type === "dropdown") {
-          const components = [];
-          component.content = content;
-        } else component.content = content;
-      }
+      if(type=='drowndown'){
+        if(temp === null) temp = name;
+
+        if(temp != name){
+          component.content = arr;
+          temp = null;
+          return;
+        }
+        arr.push(component.content);
+      } 
       if (forAttr) {
         component.forAttr = forAttr;
       }

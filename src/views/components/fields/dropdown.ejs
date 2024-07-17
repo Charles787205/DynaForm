@@ -4,10 +4,12 @@
       <div class="h-8 justify-start items-center gap-2.5 inline-flex">
         <select id="countries"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
-          <option selected>Choose a country</option>
-          <option>
-            <%= query.placeholder %>
-          </option>
+          <% query.content.array.forEach(element => {
+            <option>
+              <%= element.placeholder %>
+            </option>
+          });
+          %>
         </select>
       </div>
     </div>
@@ -27,7 +29,6 @@
               d="M25.996 10.6521L16 20.3961L6.00403 10.6521C5.82544 10.4776 5.58569 10.3799 5.33603 10.3799C5.08637 10.3799 4.84662 10.4776 4.66803 10.6521C4.58155 10.7368 4.51285 10.8379 4.46595 10.9495C4.41905 11.0611 4.3949 11.181 4.3949 11.3021C4.3949 11.4231 4.41905 11.543 4.46595 11.6546C4.51285 11.7662 4.58155 11.8673 4.66803 11.9521L15.302 22.3201C15.4888 22.5021 15.7392 22.604 16 22.604C16.2608 22.604 16.5113 22.5021 16.698 22.3201L27.332 11.9541C27.4191 11.8693 27.4883 11.7679 27.5356 11.6559C27.5829 11.5439 27.6072 11.4236 27.6072 11.3021C27.6072 11.1805 27.5829 11.0602 27.5356 10.9482C27.4883 10.8362 27.4191 10.7349 27.332 10.6501C27.1534 10.4756 26.9137 10.3779 26.664 10.3779C26.4144 10.3779 26.1746 10.4756 25.996 10.6501V10.6521Z"
               fill="#555555" />
           </svg>
-
         </div>
         <button class="option" type="button" hx-post="/components/fields/dropdown" hx-trigger="click"
           hx-target="closest .input-block" hx-vals='js:{"id": "<%= query.id %>"}' tabindex="-1" hx-swap="afterend"

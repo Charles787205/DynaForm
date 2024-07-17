@@ -20,7 +20,12 @@ const getCreatePage = async (req, res) => {
   res.render("pages/create");
 };
 
-const submit = async (req, res) => {
+const submitResponse = async (req, res) => {
+  console.log("SUBMITTED TO Db", req.body);
+  res.send(req.body)
+}
+
+const publish = async (req, res) => {
   /**
    * Handles the submission of a form.
    * route "/create" post
@@ -152,10 +157,11 @@ const preview = async (req, res) => {
 export default {
   index,
   getCreatePage,
-  submit,
+  publish,
   list,
   editForm,
   viewForm,
+  submitResponse,
   updateForm,
   preview,
   deleteAllForms,

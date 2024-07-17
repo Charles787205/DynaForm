@@ -6,7 +6,6 @@ const get = async (req, res) => {
   res.render("index");
 };
 
-
 const getCreatePage = async (req, res) => {
   res.render("pages/create", { layout: "./layouts/main" });
 };
@@ -46,14 +45,14 @@ const edit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-  if(!req.isAuthenticated()) {
-    res.redirect("/auth/google")
+  if (!req.isAuthenticated()) {
+    res.redirect("/auth/google");
   }
-  
+
   const allForms = await Form.find({ user_id: req.user._id });
   console.log(req.session);
   console.log(req.user);
-  
+
   const forms = allForms.map((form) => {
     return {
       id: form._id,
@@ -62,12 +61,10 @@ const list = async (req, res) => {
       date: form.createdAt.toISOString().split("T")[0],
     };
   });
-
   res.render("pages/listform", { forms });
 };
 
-const view = async (req, res) => {
-  const form_id = req.params.id;
+const viewForm = async (req, res) => {
   console.log("form ID: ", form_id);
   try {
     const get_form = await Form.findById(form_id);
@@ -79,14 +76,17 @@ const view = async (req, res) => {
     res.status(500).send("Error retrieving form");
   }
 };
+const editForm = async (req, res) => {
+  return res.status(200).send("HELLLOOO");
+};
 
 const response = async (req, res) => {
   res.render("pages/response");
 };
 
 const getResponse = async (req, res) => {
-	const typeName = req.params.name;
-	res.render(`components/fields/${typeName}`);
+  const typeName = req.params.name;
+  res.render(`components/fields/${typeName}`);
 };
 
 const deleteForm = async (req, res) => {

@@ -2,11 +2,11 @@
   <div class="max-w-screen-xl 2xl:max-w-screen-xl justify-between items-center inline-flex w-full">
     <div class="flex gap-2 items-center">
       <a class="outline-none text-black text-xl font-black cursor-pointer w-fit" href="/forms" >
-          <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="35" height="35" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M36.2708 5.6875H9.72917C7.64375 5.6875 5.9375 7.39375 5.9375 9.47917V36.0208C5.9375 38.1062 7.64375 39.8125 9.72917 39.8125H36.2708C38.3562 39.8125 40.0625 38.1062 40.0625 36.0208V9.47917C40.0625 7.39375 38.3562 5.6875 36.2708 5.6875ZM13.5208 13.2708H17.3125V17.0625H13.5208V13.2708ZM13.5208 20.8542H17.3125V24.6458H13.5208V20.8542ZM13.5208 28.4375H17.3125V32.2292H13.5208V28.4375ZM32.4792 32.2292H21.1042V28.4375H32.4792V32.2292ZM32.4792 24.6458H21.1042V20.8542H32.4792V24.6458ZM32.4792 17.0625H21.1042V13.2708H32.4792V17.0625Z" fill="#434138"/>
             </svg>
       </a>
-      <input type="text" id="form-title" class="text-xl w-40 max-w-44 max-h-10 overflow-ellipsis resize-none" spellcheck="false" value="Untitled Form" onblur="if (this.value.trim() === '') { this.value = 'Untitled Form'; }">
+      <input type="text" id="form-title" class="font-sans tracking-tight text-lg w-40 max-w-44 max-h-10 overflow-ellipsis resize-none" spellcheck="false" value="Untitled Form" onblur="if (this.value.trim() === '') { this.value = 'Untitled Form'; }">
 
     </div>
     <div class="flex items-center">
@@ -20,10 +20,9 @@
           </svg>
         </span>
         <div
-          class="absolute shadow-lg -bottom-40 w-fit right-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2">
+          class="absolute shadow-lg -bottom-32 w-fit right-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2">
           <span hx-post="template/default" hx-swap="outerHTML" hx-target=".template"
             class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg">
-
             <p>Default</p>
           </span>
           <span hx-post="template/survey" hx-swap="innerHTML" hx-target=".mainscreen"
@@ -47,7 +46,7 @@
         </button>
     
       <% if(isLogin) { %>
-        <button onclick="submitForm()" class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
+        <button onclick="submitForm()" class="rounded-full text-sm font-bold text-white text-center px-3 py-2 bg-neutral-800"
       >
           Publish
       </button>

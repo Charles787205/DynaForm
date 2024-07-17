@@ -1,6 +1,5 @@
 <div class="template">
-  <div class="relative min-h-screen w-screen pt-16 overflow-y-hidden" action="" method="" onsubmit="onSubmit(event)"
-    id="form">
+  <div class="relative min-h-screen w-screen pt-16 overflow-y-hidden">
     <div class="header-image " id="image-wrapper">
       <div class="cover-wrapper relative h-full w-full flex justify-center items-center gap-4 pt-4">
         <img id="image-cover" src="#" class="w-full h-full object-cover" image-loaded="false" />
@@ -25,7 +24,7 @@
       </div>
     </div>
     <div class="w-full flex justify-center mb-28">
-      <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
+      <form class="flex flex-col h-full w-full max-w-screen-md" data-form-name="" data-form-description="" onsubmit="onSubmit(event)" id="form">
         <!-- <div hx-post="/components/tooltip" hx-trigger="load" hx-swap="outerHTML" id="tool"></div> -->
         <div hx-post="components/fields/heading" hx-indicator="#spinner" hx-trigger="load target:#tool"
           hx-swap="outerHTML" class="form-field"></div>

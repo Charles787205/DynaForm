@@ -46,7 +46,7 @@ const submit = async (req, res) => {
     });
     
     await new Form(form.toCreateFormModel()).save();
-    console.log(JSON.stringify(form));
+    console.log("ADDED TO DB", JSON.stringify(form));
     return res.json({ form });
   } catch (error) {
     console.error("Error processing form:", error);
@@ -59,7 +59,7 @@ const list = async (req, res) => {
    * Retrieves a list of forms for a specific user.
    * route "/forms" get
    */
-  const allForms = await Form.find({ user_id: "66947ce453c1120196b54e8c" });
+  const allForms = await Form.find({ user_id: req.user.id });
 
   const forms = allForms.map((form) => {
     return {

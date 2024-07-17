@@ -27,6 +27,24 @@ function submitForm() {
   });
 }
 
+function updateForm(id) {
+  const formData = getFormData();
+  console.log(formData);
+  fetch(`/form/${id}/edit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed adding to database:");
+    } else if (response.status == 401) {
+      window.open("/auth/google", "_self");
+    }
+  });
+}
+
 function getFormData() {
   const form = document.getElementById("form");
   const formName =
@@ -185,6 +203,7 @@ function initalizeDropzones() {
         handleDrop(currentDropZone);
         currentDropZone = null;
         console.log("dropped at: ", event.target);
+        console.log("location:", window.location.pathnamey);
       }
     });
   });

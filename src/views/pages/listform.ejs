@@ -27,7 +27,7 @@
 <body>
 	<div class="app">
 		<%- include('../components/formsNavbar'); %>
-			<main class="mainscreen w-screen items-start inline-flex" id="main"  hx-on::before-request="NProgress.start()"  hx-on::load="NProgress.done()">
+			<main class="mainscreen w-screen items-start inline-flex" id="main"  hx-on::load="NProgress.done()">
 				<div class="relative min-h-screen w-screen pt-16">
 					<div class="w-full flex justify-center">
 						<div class="flex flex-col h-full w-full max-w-screen-lg pt-6 gap-2.5  mb-20" hx-boost="true">

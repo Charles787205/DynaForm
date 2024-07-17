@@ -7,7 +7,7 @@
     <% if(isLogin) { %>
       <div class="flex gap-4 items-center" hx-boost="true" hx-preload="mouseover">
 
-        <a href="/forms" class="hover:text-gray-500" hx-on::config-request="NProgress.start()" >
+        <a href="/forms" class="hover:text-gray-500" onclick="NProgress.start()">
           My Forms
         </a>
 

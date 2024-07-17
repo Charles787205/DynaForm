@@ -20,6 +20,14 @@ const form_schema = new Schema(
       required: false,
       maxLength: 255,
     },
+    authorized_emails:[
+      {
+        email:{
+          type: String,
+          required:false
+        }
+      }
+    ],
     components: [Component.schema],
   },
   {

@@ -1,3 +1,14 @@
+function check(){
+  if (typeof(Storage) !== "undefined") {
+    console.log("Naa storage:",getFormData());
+    localStorage.setItem("saveform", getFormData());
+    console.log("Local saved:",localStorage.getItem("saveform"));
+  } else {
+    console.log("ALA");
+  }
+}
+
+
 function submitForm() {
   const formData = getFormData();
   console.log(formData);

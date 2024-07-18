@@ -84,9 +84,19 @@ function getFormData() {
       }
 
       dropDownOptions.push(content);
+      if (i == inputBlock.length - 1) {
+        const dropdown = {
+          name: tempName,
+          type: "dropdown",
+          options: dropDownOptions,
+        };
+        formComponents.push(dropdown);
+        dropDownOptions = [];
+        tempName = null;
+      }
     } else {
-      //check if its different dropdown or if it's the last element
-      if ((tempName && tempName != name) || i == inputBlock.length - 1) {
+      //check if its different dropdown
+      if (tempName && tempName != name) {
         const dropdown = {
           name: tempName,
           type: "dropdown",
@@ -130,19 +140,6 @@ function getFormData() {
     formComponents,
   });
   //component is new not dropdown
-}
-
-function checkIfDropdown(type, tempName, name, arr, component) {
-  if (type == "dropdown") {
-    if (!tempName) {
-      tempName = name;
-    } else {
-      if (tempName != name) {
-        component.content = arr;
-        tempName = "";
-      }
-    }
-  }
 }
 
 function auto_grow(element) {

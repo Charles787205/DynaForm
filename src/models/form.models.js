@@ -25,7 +25,6 @@ const form_schema = new Schema(
 			required: false,
 			enum: ["unpublished", "published", "isClosed"],
 		},
-
 		authorized_emails: {
 			type: [String],
 			required: false,

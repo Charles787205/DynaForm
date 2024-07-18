@@ -1,7 +1,7 @@
 import { Router } from "express";
 import FormController from "../controllers/form.controller.js";
 import Components from "../controllers/components.controller.js";
-
+import ResponseController from "../controllers/response.controller.js";
 const router = Router();
 
 // COMPONENTS
@@ -12,15 +12,15 @@ router.post("/template/:template", Components.getTemplate);
 
 //FORMS
 router
-  .route("/create")
-  .get(FormController.getCreatePage)
-  .post(FormController.submit);
+	.route("/create")
+	.get(FormController.getCreatePage)
+	.post(FormController.submit);
 router.get("/forms", FormController.list);
 router.get("/form/:id", FormController.viewForm);
 router
-  .route("/form/:id/edit")
-  .get(FormController.editForm)
-  .post(FormController.updateForm);
+	.route("/form/:id/edit")
+	.get(FormController.editForm)
+	.post(FormController.updateForm);
 router.delete("/deleteAll", FormController.deleteAllForms);
 router.delete("/delete/:form_id", FormController.deleteForm);
 router.route("/accessForm/:form_id").post(FormController.giveAccess);

@@ -40,9 +40,9 @@ const submit = async (req, res) => {
 		});
 
 		const form = new FormObject({
-			user_id: new ObjectId("6695ddb53109d5d09d912955"),
-			name: formName,
-			description: formDescription,
+			user_id: req.user._id,
+			name: formData.formName,
+			description: formData.formDescription,
 			components: components,
 		});
 
@@ -56,12 +56,12 @@ const submit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-	// if (!req.isAuthenticated()) {
-	// 	res.redirect("/auth/google");
-	// }
+	if (!req.isAuthenticated()) {
+		res.redirect("/auth/google");
+	}
 	try {
 		const allForms = await Form.find({
-			user_id: new ObjectId("66960301ed29140e5c586913"),
+			user_id: req.user._id,
 		}).sort({ createdAt: -1 });
 
 		const forms = allForms.map((form) => {
@@ -73,8 +73,8 @@ const list = async (req, res) => {
 			};
 		});
 
-		res.status(200).send({ forms });
-		// res.render("pages/listform", { forms });
+		// res.status(200).send({ forms });
+		res.render("pages/listform", { forms });
 	} catch (error) {
 		console.log("Error retrieving forms:", error);
 	}
@@ -87,7 +87,7 @@ const viewForm = async (req, res) => {
 		const form = await Form.findById(form_id);
 		res.status(200).send({ form });
 
-		// res.render("pages/viewform", { form: form.toJSON() });
+		res.render("pages/viewform", { form: form.toJSON() });
 	} catch (error) {
 		console.error("Error retrieving form:", error);
 		res.status(500).send("Error retrieving form");
@@ -101,7 +101,8 @@ const editForm = async (req, res) => {
 	 */
 	const { email } = req.body;
 	const form_id = req.params.id;
-	const user_id = new ObjectId("66960301ed29140e5c586913"); // franco id ...  this should be id of the user that is currently login
+	const user_id = req.user._id; // franco id ...  this should be id of the user that is currently login
+
 	try {
 		const form = await Form.findOne({
 			$and: [
@@ -111,10 +112,11 @@ const editForm = async (req, res) => {
 			],
 		});
 		if (!form) {
-			return res.status(200).send("false");
+			// res.status(200).send("false");
+			res.redirect(`/form/${form_id}`);
 		}
-		console.log("Form", form);
-		return res.status(200).send("true");
+		// return res.status(200).send("true");
+		res.render("pages/editform", { form: form.toJSON() });
 	} catch (error) {
 		console.error(error);
 	}

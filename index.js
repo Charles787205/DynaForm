@@ -35,7 +35,7 @@ app.use(express.static("public"));
 
 app.use(function (req, res, next) {
 	res.locals.isLogin = true;
-	res.locals.user = new ObjectId("6695ddb53109d5d09d912955");
+	res.locals.user = req.user;
 	next();
 });
 app.all("*", function (req, res, next) {
@@ -55,7 +55,7 @@ app.all("*", function (req, res, next) {
 	return next();
 });
 
-app.get("*/*", router);
+app.get("*/*", checkPath, router);
 app.post("*/*", router);
 app.get("*/*", authRouter);
 app.post("*/*", authRouter);

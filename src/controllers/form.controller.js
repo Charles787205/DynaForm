@@ -138,7 +138,7 @@ const updateForm = async (req, res) => {
 		components: components,
 	};
 	const form_id = req.params.id;
-	const form = await Form.findByIdAndUpdate(form_id, ...newForm);
+	const form = await Form.findByIdAndUpdate(form_id, newForm);
 	console.log(form);
 	res.send(200, "Form updated");
 };

@@ -45,8 +45,14 @@ Component.discriminator(
 		},
 		forAttr: {
 			type: String,
-			required: false,
 			maxLength: 50,
+			validate: {
+				// only field 'for' is allowed for type 'label'
+				validator: function (value) {
+					return this.type === "label" ? !!value : !value;
+				},
+				message: (props) => `Field 'for' is only allowed for type 'label'.`,
+			},
 		},
 	})
 );

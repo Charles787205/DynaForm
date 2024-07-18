@@ -67,7 +67,7 @@ function getFormData() {
     const forAttr = contentContainer.getAttribute("data-for");
     const required = contentContainer.getAttribute("required");
     var placeholder = contentContainer.getAttribute("placeholder");
-    const content = contentContainer.innerHTML;
+    const content = contentContainer.textContent;
     const checked = contentContainer.getAttribute("checked");
     const focus = contentContainer.hasAttribute("autofocus");
 

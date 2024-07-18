@@ -34,12 +34,11 @@ const publish = async (req, res) => {
   if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
   try {
     const formData = req.body; 
-    console.log("FORMDATA: ", formData);
+    console.log("FORM FROM SCRIPT: ", formData);
 
     const components = [];
     formData.formComponents.forEach((component) => {
       const formComponent = new FormComponent(component);
-      console.log("formComponent", formComponent);
       const newComponent = new Component(formComponent.toCreateFormModel());
       components.push(newComponent);
     });
@@ -82,10 +81,9 @@ const list = async (req, res) => {
 //route "/forms/:id" get
 const viewForm = async (req, res) => {
   const form_id = req.params.id;
-  console.log("form ID: ", form_id);
   try {
     const form = await Form.findById(form_id);
-    console.log(form.toJSON());
+    console.log("FORM RETRIEVED FROM DB: ", form.toJSON());
 
     res.render("pages/viewform", { form: form.toJSON() });
   } catch (error) {

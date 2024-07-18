@@ -75,6 +75,7 @@ class FormComponent {
       return {
         component_type: "option",
         name: this.name,
+        type: this.type,
         id: this.id,
         options: this.options,
       };

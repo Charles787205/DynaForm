@@ -46,9 +46,9 @@ const submit = async (req, res) => {
 			components: components,
 		});
 
-		await new Form(form.toCreateFormModel()).save();
-		console.log("ADDED TO DB", JSON.stringify(form));
-		return res.json({ form });
+		const getForm = await new Form(form.toCreateFormModel()).save();
+		console.log("ADDED TO DB", JSON.stringify(form_id._id));
+		res.redirect(`/form/${getForm._id}/edit`);
 	} catch (error) {
 		console.error("Error processing form:", error);
 		return res.status(500).send(error);
@@ -74,7 +74,6 @@ const list = async (req, res) => {
 		});
 
 		// res.status(200).send({ forms });
-		res.render("pages/listform", { forms });
 	} catch (error) {
 		console.log("Error retrieving forms:", error);
 	}
@@ -108,10 +107,10 @@ const editForm = async (req, res) => {
 			$and: [
 				{ _id: form_id },
 				{ $or: [{ authorized_emails: email }, { user_id: user_id }] },
-				{ status: "unpublished" },
 			],
 		});
 		if (!form) {
+			console.log("Form not found");
 			// res.status(200).send("false");
 			res.redirect(`/form/${form_id}`);
 		}
@@ -147,9 +146,9 @@ const updateForm = async (req, res) => {
 
 //Delete Form
 const deleteForm = async (req, res) => {
-	// if (!req.isAuthenticated()) {
-	// 	res.redirect("/auth/google");
-	// }
+	if (!req.isAuthenticated()) {
+		res.redirect("/auth/google");
+	}
 	const { form_id } = req.params;
 	try {
 		const deleteForm = await Form.deleteOne({ _id: form_id });

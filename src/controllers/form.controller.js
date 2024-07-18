@@ -46,9 +46,17 @@ const submit = async (req, res) => {
 			components: components,
 		});
 
+<<<<<<< HEAD
 		const getForm = await new Form(form.toCreateFormModel()).save();
 		console.log("ADDED TO DB", JSON.stringify(form_id._id));
 		res.redirect(`/form/${getForm._id}/edit`);
+=======
+		const formId = await new Form(form.toCreateFormModel()).save();
+		console.log("ADDED TO DB", JSON.stringify(form));
+
+		res.redirect(`/form/${formId._id}/edit`);
+    
+>>>>>>> 5672f5af28addb43cca50c32234215ea1be7f13b
 	} catch (error) {
 		console.error("Error processing form:", error);
 		return res.status(500).send(error);
@@ -80,11 +88,10 @@ const list = async (req, res) => {
 };
 //route "/forms/:id" get
 const viewForm = async (req, res) => {
-	const form_id = req.params.id;
-
-	try {
-		const form = await Form.findById(form_id);
-		res.status(200).send({ form });
+  const form_id = req.params.id;
+  try {
+    const form = await Form.findById(form_id);
+    console.log("FORM RETRIEVED FROM DB: ", form.toJSON());
 
 		res.render("pages/viewform", { form: form.toJSON() });
 	} catch (error) {
@@ -100,8 +107,7 @@ const editForm = async (req, res) => {
 	 */
 	const { email } = req.body;
 	const form_id = req.params.id;
-	const user_id = req.user._id; // franco id ...  this should be id of the user that is currently login
-
+	const user_id = req.user._id; 
 	try {
 		const form = await Form.findOne({
 			$and: [
@@ -109,6 +115,8 @@ const editForm = async (req, res) => {
 				{ $or: [{ authorized_emails: email }, { user_id: user_id }] },
 			],
 		});
+
+    console.log("FORM: ", form);
 		if (!form) {
 			console.log("Form not found");
 			// res.status(200).send("false");

@@ -30,11 +30,11 @@
 					<div class="w-full flex justify-center">
 						<div class="flex flex-col h-full w-full max-w-screen-lg pt-6 gap-2.5  mb-20" hx-boost="true">
 							<div class="justify-between items-center gap-2.5 inline-flex py-4">
-								<div class="text-neutral-600 text-5xl font-extrabold">
+								<div class="text-neutral-600 bg-red-400 text-5xl font-extrabold">
 									My Forms
 								</div>
-								<a class="inline-flex hover:shadow-lg transition-shadow justify-center items-center rounded-full border border-gray-300 py-2 px-3"
-									href="/create">
+								<button class="inline-flex hover:shadow-lg transition-shadow justify-center items-center rounded-full border border-gray-300 py-2 px-3"
+									onclick="submitForm()">
 									<svg width="40" height="40" viewBox="0 0 40 40" fill="none"
 										xmlns="http://www.w3.org/2000/svg">
 										<path
@@ -42,7 +42,7 @@
 											fill="#979797" />
 									</svg>
 									<h1 class="text-xl font-bold text-gray-500 ">New Form</h1>
-								</a>
+								</button>
 							</div>
 							<div class="self-stretch h-px border border-neutral-400"></div>
 

@@ -24,6 +24,7 @@
 </head>
 
 <body>
+  <div id="formID" style="display: none;"><%= form._id %></div>
   <div class="app">
     <%- include('../components/navbar',{name : form.name}); %>
       <div class="load-indicator w-screen h-screen fixed bg-white flex justify-center items-center" id="spinner"><img src="/assets/1490.gif" class="object-contain" /></div>
@@ -52,9 +53,8 @@
               </button>
             </div>
           </div>
-          <button onclick="updateForm();">Test</button>
           <div class="w-full flex justify-center">
-            <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
+            <form class="flex flex-col h-full w-full max-w-screen-lg px-10 mb-20" data-form-name="" data-form-description="">
               <%console.log(form);
                 form.components.forEach(item=> {
                 if(item.type === "divider"){
@@ -70,7 +70,11 @@
                   class="form-field"></div>
                 <% }
                 }); %>
+                <div hx-post="/components/button" hx-swap="outerHTML" hx-trigger="load" hx-vals='js:{"type": "submit"}'></div>
+                <button onclick="updateForm();" class="bg-slate-100 my-10 px-4">Save</button>
+
             </form>
+
           </div>
         </div>
   </div>

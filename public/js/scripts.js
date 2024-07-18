@@ -70,6 +70,7 @@ function updateForm() {
  * Retrieves form data from the DOM and returns it as an object.
  * @returns {Object} The form data object.
  */
+
 function getFormData() {
   const form = document.getElementById("form");
   const formName =

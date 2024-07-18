@@ -4,13 +4,10 @@
       <div class="h-8 justify-start items-center gap-2.5 inline-flex">
         <select id="countries"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
-          <% query.content.forEach(element => { %>
-            <option>
-              <%= element.placeholder %>
-            </option>
-            <%
-          });
-          %>
+          <option selected>Choose a country</option>
+          <option>
+            <%= query.placeholder %>
+          </option>
         </select>
       </div>
     </div>
@@ -36,7 +33,6 @@
           onclick="handleClick(this)">
           Add option
         </button>
-        <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
         <%- include("../tooltip") %>
           <div class="move-dropzone" data-position="below"></div>
           <div class="move-dropzone" data-position="top"></div>

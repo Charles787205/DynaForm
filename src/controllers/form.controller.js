@@ -33,7 +33,8 @@ const publish = async (req, res) => {
    */
   if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
   try {
-    const formData = req.body;
+    const formData = req.body; 
+    console.log("FORMDATA: ", formData);
 
     const components = [];
     formData.formComponents.forEach((component) => {
@@ -74,6 +75,7 @@ const list = async (req, res) => {
       date: form.createdAt.toISOString().split("T")[0],
     };
   });
+  
   res.render("pages/listform", { forms });
 };
 

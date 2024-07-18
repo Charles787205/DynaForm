@@ -95,10 +95,14 @@ img[image-loaded="true"]:hover,
   visibility: visible;
 }
 
+.template{
+  padding: 0px 2em 0px 2rem;
+}
+
 .option {
   opacity: 0;
   padding: 2px 4px 2px 4px;
-  color: #ff0000;
+  color: #c2c2c2;
   font-weight: 500;
   z-index: 10;
 }

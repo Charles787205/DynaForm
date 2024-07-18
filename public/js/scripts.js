@@ -40,8 +40,6 @@ function getFormData() {
     (block) => {
       const contentContainer = block.querySelector(".content-container");
 
-   
-
       const id = block.id;
       const name = contentContainer.getAttribute("data-name");
       const type = contentContainer.getAttribute("data-type");
@@ -67,6 +65,9 @@ function getFormData() {
         }
         arr.push(component.content);
       } 
+      if(content){
+        component.content= content;
+      }
       if (forAttr) {
         component.forAttr = forAttr;
       }

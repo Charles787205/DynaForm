@@ -8,6 +8,7 @@ class FormComponent {
     forAttr = "",
     focus = false,
     required = false,
+    options = [],
   }) {
     this.forAttr = forAttr;
     this.id = id;
@@ -17,6 +18,7 @@ class FormComponent {
     this.placeHolder = placeHolder;
     this.focus = focus;
     this.required = required;
+    this.options = options;
   }
 
   toCreateFormModel = function () {
@@ -26,8 +28,8 @@ class FormComponent {
       "radiobox",
       "inputfield",
       "checkbox",
-      "dropdown",
     ];
+    const optionTypes = ["dropdown"];
     const textTypes = ["heading", "label", "textfield"];
     const button = ["button"];
     const divider = ["divider"];
@@ -50,8 +52,8 @@ class FormComponent {
         content: this.content,
         id: this.id,
       };
-      if(this.type == "label") component.forAttr= this.forAttr;
-      
+      if (this.type == "label") component.forAttr = this.forAttr;
+
       return component;
     } else if (button.includes(this.type)) {
       return {
@@ -68,6 +70,13 @@ class FormComponent {
         name: this.name,
         id: this.id,
         content: this.content,
+      };
+    } else if (optionTypes.includes(this.type)) {
+      return {
+        component_type: "option",
+        name: this.name,
+        id: this.id,
+        options: this.options,
       };
     } else {
       console.log("Invalid type");

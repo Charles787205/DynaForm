@@ -35,15 +35,14 @@ const submit = async (req, res) => {
 		const components = [];
 		formData.formComponents.forEach((component) => {
 			const formComponent = new FormComponent(component);
-			console.log("formComponent", formComponent);
 			const newComponent = new Component(formComponent.toCreateFormModel());
 			components.push(newComponent);
 		});
 
 		const form = new FormObject({
-			user_id: new ObjectId("6695ddb53109d5d09d912955"),
-			name: formName,
-			description: formDescription,
+			user_id: req.user._id,
+			name: formData.formName,
+			description: formData.formDescription,
 			components: components,
 		});
 
@@ -57,19 +56,28 @@ const submit = async (req, res) => {
 };
 
 const list = async (req, res) => {
+	if (!req.isAuthenticated()) {
+		res.redirect("/auth/google");
+	}
+	try {
+		const allForms = await Form.find({
+			user_id: req.user._id,
+		}).sort({ createdAt: -1 });
 
-  const allForms = await Form.find({ user_id: req.user.id }).sort({createdAt: -1});
+		const forms = allForms.map((form) => {
+			return {
+				id: form._id,
+				name: form.name,
+				description: form.description,
+				date: form.createdAt.toISOString().split("T")[0],
+			};
+		});
 
-  const forms = allForms.map((form) => {
-    return {
-      id: form._id,
-      name: form.name,
-      description: form.description,
-      date: form.createdAt.toISOString().split("T")[0],
-    };
-  });
-  res.render("pages/listform", { forms });
-
+		// res.status(200).send({ forms });
+		res.render("pages/listform", { forms });
+	} catch (error) {
+		console.log("Error retrieving forms:", error);
+	}
 };
 //route "/forms/:id" get
 const viewForm = async (req, res) => {
@@ -79,7 +87,7 @@ const viewForm = async (req, res) => {
 		const form = await Form.findById(form_id);
 		res.status(200).send({ form });
 
-		// res.render("pages/viewform", { form: form.toJSON() });
+		res.render("pages/viewform", { form: form.toJSON() });
 	} catch (error) {
 		console.error("Error retrieving form:", error);
 		res.status(500).send("Error retrieving form");
@@ -87,73 +95,69 @@ const viewForm = async (req, res) => {
 };
 
 const editForm = async (req, res) => {
+	/**
+	 * Handles the submission of a form.
+	 * route "/forms/:id/edit" post
+	 */
+	const { email } = req.body;
+	const form_id = req.params.id;
+	const user_id = req.user._id; // franco id ...  this should be id of the user that is currently login
 
-  /**
-   * Handles the submission of a form.
-   * route "/forms/:id/edit" post
-   */
-  const form_id = req.params.id;
-  const form = await Form.findById(form_id);
-
-  if (
-    (form.authorized_emails || form.user_id == req.user._id) ||
-    form.authorized_emails.includes(req.user.email) &&
-    !form.is_active
-  ) {
-    res.render("pages/editform", {form: form.toJSON()});
-  } else {
-    res.redirect(`/form/${form_id}`);
-  }
+	try {
+		const form = await Form.findOne({
+			$and: [
+				{ _id: form_id },
+				{ $or: [{ authorized_emails: email }, { user_id: user_id }] },
+				{ status: "unpublished" },
+			],
+		});
+		if (!form) {
+			// res.status(200).send("false");
+			res.redirect(`/form/${form_id}`);
+		}
+		// return res.status(200).send("true");
+		res.render("pages/editform", { form: form.toJSON() });
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 const updateForm = async (req, res) => {
-  /**
-   * Handles the edit made in the form
-   * /forms/:id/edit post
-   */
-  const components = [];
-  console.log("The request:", req.body);
-  const formData = req.body;
-  formData.formComponents.forEach((component) => {
-    const formComponent = new FormComponent(component);
-    const newComponent = new Component(formComponent.toCreateFormModel());
-    components.push(newComponent);
-  });
+	/**
+	 * Handles the edit made in the form
+	 * /forms/:id/edit postunValidators: true
+	 */
+	const components = [];
+	formData.formComponents.forEach((component) => {
+		const formComponent = new FormComponent(component);
+		const newComponent = new Component(formComponent.toCreateFormModel());
+		components.push(newComponent);
+	});
 
-  const newForm = {
-    name: formData.formName,
-    description: formData.formDescription,
-    components: components,
-  };
-  const form_id = req.params.id;
-  const form = await Form.findByIdAndUpdate(form_id, newForm);
-  console.log(form);
-  res.send(200, "Form updated");
-
-};
-
-//Reponse Page
-const response = async (req, res) => {
-	res.render("pages/response");
-};
-
-//Input Reponse
-const getResponse = async (req, res) => {
-	const typeName = req.params.name;
-	res.render(`components/fields/${typeName}`);
+	const newForm = {
+		name: formData.formName,
+		description: formData.formDescription,
+		components: components,
+	};
+	const form_id = req.params.id;
+	const form = await Form.findByIdAndUpdate(form_id, newForm);
+	console.log(form);
+	res.send(200, "Form updated");
 };
 
 //Delete Form
 const deleteForm = async (req, res) => {
+	// if (!req.isAuthenticated()) {
+	// 	res.redirect("/auth/google");
+	// }
 	const { form_id } = req.params;
 	try {
 		const deleteForm = await Form.deleteOne({ _id: form_id });
 		if (deleteForm) {
 			console.log("Form deleted:", deleteForm);
-			res.status(200).send(deleteForm);
-		} else {
-			res.status(404).send("Form not found");
+			return res.status(200).send(deleteForm);
 		}
+		return res.status(404).send("Form not found");
 	} catch (error) {
 		console.error("Error deleting form:", error);
 		res.status(500).send("Error deleting form");
@@ -171,37 +175,19 @@ const giveAccess = async (req, res) => {
 		return res.status(400).send("No valid emails");
 	}
 	try {
+		// $addToSet used to avoid duplicates, $each is used to add multiple emails
 		const updatedForm = await Form.updateOne(
 			{ _id: form_id },
 			{ $addToSet: { authorized_emails: { $each: validEmails } } },
-			{ new: true, runValidators: true }
+			{ new: true }
 		);
+		console.log("Access given:", updatedForm);
 		res.status(200).send({ "Access given": updatedForm });
 	} catch (error) {
 		console.error("Error giving access:", error);
 		return res
 			.status(500)
 			.send({ error: "An error occurred while giving access." });
-	}
-};
-
-// Check If the user has an access
-const checkAccess = async (req, res) => {
-	const { email } = req.body;
-	const form_id = req.params.form_id;
-	try {
-		const form = await Form.findOne({
-			$and: [
-				{ _id: form_id },
-				{ authorize_email: { $elemMatch: { email: email } } },
-			],
-		});
-		if (!form) {
-			return res.status(200).send("false");
-		}
-		return res.status(200).send("true");
-	} catch (error) {
-		console.error(error);
 	}
 };
 
@@ -233,5 +219,8 @@ export default {
 	deleteAllForms,
 	deleteForm,
 	giveAccess,
-	checkAccess,
 };
+// user_id: new ObjectId("6695ddb53109d5d09d912955"), my id
+// const user_id = new ObjectId("66960301ed29140e5c586913"); // franco id ...
+
+// req.user._id

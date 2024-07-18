@@ -34,7 +34,7 @@ app.use(passport.session());
 app.use(express.static("public"));
 
 app.use(function (req, res, next) {
-  res.locals.isLogin = true;
+  res.locals.isLogin = req.isAuthenticated();
   res.locals.user = req.user;
   next();
 });

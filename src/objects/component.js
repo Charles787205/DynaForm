@@ -8,7 +8,7 @@ class FormComponent {
     forAttr = "",
     focus = false,
     required = false,
-    option,
+    options = [],
   }) {
     this.forAttr = forAttr;
     this.id = id;
@@ -18,6 +18,7 @@ class FormComponent {
     this.placeHolder = placeHolder;
     this.focus = focus;
     this.required = required;
+    this.options = options;
   }
 
   toCreateFormModel = function () {

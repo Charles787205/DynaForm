@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-
+import validators from "validator";
 import { Component } from "./component.model.js";
 
 const form_schema = new Schema(
@@ -22,16 +22,15 @@ const form_schema = new Schema(
 		},
 		is_active: {
 			type: Boolean,
-			required: true,
+			required: false,
 		},
 		is_shared: {
 			type: Boolean,
-			required: true,
-		},
-		access_controle: {
-			type: String,
 			required: false,
-			enum: ["public", "private"],
+		},
+		authorized_emails: {
+			type: [String],
+			required: false,
 		},
 
 		components: [Component.schema],

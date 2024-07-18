@@ -23,6 +23,10 @@ router
 	.post(FormController.updateForm);
 router.delete("/deleteAll", FormController.deleteAllForms);
 router.delete("/delete/:form_id", FormController.deleteForm);
+router
+	.route("/accessForm/:form_id")
+	.post(FormController.giveAccess)
+	.get(FormController.checkAccess);
 
 // RESPONSE
 router.get("/response", FormController.response);

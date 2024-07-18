@@ -23,6 +23,7 @@ passport.use(
 			query.exec().then((user) => {
 				if (user) {
 					user.accessToken = accessToken;
+					console.log(user);
 					user.save().then((user) => {});
 				} else {
 					const newUser = new User({

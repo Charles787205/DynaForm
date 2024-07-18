@@ -3,35 +3,35 @@ import { texts, inputs } from "../data/fields.js";
 
 //COMPONENTS
 const getComponent = async (req, res) => {
-  const componentName = req.params.name;
-  const options = {
-    id: uuidv4(),
-    ...req.body,
-  };
-  res.render(`components/${componentName}`, { options });
+	const componentName = req.params.name;
+	const options = {
+		id: uuidv4(),
+		...req.body,
+	};
+	res.render(`components/${componentName}`, { options });
 };
 
 const getField = async (req, res) => {
-  const componentName = req.params.name;
-  const query = {
-    id: uuidv4(),
-    ...req.body,
-  };
-  res.render(`components/fields/${componentName}`, { query });
+	const componentName = req.params.name;
+	const query = {
+		id: uuidv4(),
+		...req.body,
+	};
+	res.render(`components/fields/${componentName}`, { query });
 };
 
 //TEMPLATES
 const getTemplate = async (req, res) => {
-  const template = req.params.template;
-  res.render(`template/${template}`);
+	const template = req.params.template;
+	res.render(`template/${template}`);
 };
 
 // MODALS
 const showModal = async (req, res) => {
-  res.render("components/modal/index", {
-    texts: texts,
-    inputs: inputs,
-  });
+	res.render("components/modal/index", {
+		texts: texts,
+		inputs: inputs,
+	});
 };
 
 //Component Preview In Modal
@@ -40,9 +40,9 @@ const showComponentPreview = async (req, res) => {
 };
 
 export default {
-  getComponent,
-  getField,
-  showModal,
-  getTemplate,
-  showComponentPreview,
+	getComponent,
+	getField,
+	showModal,
+	getTemplate,
+	showComponentPreview,
 };

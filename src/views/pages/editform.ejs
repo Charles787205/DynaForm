@@ -24,6 +24,7 @@
 </head>
 
 <body>
+  <div id="formID" style="display: none;"><%= form._id %></div>
   <div class="app">
     <%- include('../components/navbar',{name : form.name}); %>
       <div class="load-indicator w-screen h-screen fixed bg-white flex justify-center items-center" id="spinner"><img src="/assets/1490.gif" class="object-contain" /></div>

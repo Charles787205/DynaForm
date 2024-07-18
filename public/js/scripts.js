@@ -11,19 +11,19 @@ function check() {
 function submitForm() {
   const formData = getFormData();
   console.log(formData);
-  //fetch("/create", {
-  //  method: "POST",
-  //  headers: {
-  //    "Content-Type": "application/json",
-  //  },
-  //  body: JSON.stringify(formData),
-  //}).then((response) => {
-  //  if (!response.ok) {
-  //    throw new Error("Failed adding to database:");
-  //  } else if (response.status == 401) {
-  //    window.open("/auth/google", "_self");
-  //  }
-  //});
+  fetch("/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed adding to database:");
+    } else if (response.status == 401) {
+      window.open("/auth/google", "_self");
+    }
+  });
 }
 
 /**

@@ -4,13 +4,23 @@
       <div class="h-8 justify-start items-center gap-2.5 inline-flex">
         <select id="countries"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
-          <% query.options.forEach(element => { %>
+          <% if(query.options) { query.options.forEach(element => { %>
             <option value="<%= element %>">
               <%= element %>
             </option>
             <%
-          });
+          }); } else {
           %>
+          <option >
+            Choose an option
+          </option>
+          <option >
+            Option 1
+          </option>
+          <option >
+            Option 2
+          </option>
+          <% } %>
         </select>
       </div>
     </div>

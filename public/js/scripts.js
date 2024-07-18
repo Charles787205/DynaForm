@@ -105,6 +105,10 @@ function getFormData() {
         formComponents.push(dropdown);
         dropDownOptions = [];
         tempName = null;
+      } 
+
+      if(content){
+        component.content = content;
       }
 
       if (forAttr) {

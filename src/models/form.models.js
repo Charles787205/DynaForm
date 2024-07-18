@@ -20,14 +20,12 @@ const form_schema = new Schema(
 			required: false,
 			maxLength: 255,
 		},
-		is_active: {
-			type: Boolean,
+		status: {
+			type: String,
 			required: false,
+			enum: ["unpublished", "published", "isClosed"],
 		},
-		is_shared: {
-			type: Boolean,
-			required: false,
-		},
+
 		authorized_emails: {
 			type: [String],
 			required: false,

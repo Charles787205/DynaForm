@@ -35,7 +35,6 @@ const submit = async (req, res) => {
 		const components = [];
 		formData.formComponents.forEach((component) => {
 			const formComponent = new FormComponent(component);
-			console.log("formComponent", formComponent);
 			const newComponent = new Component(formComponent.toCreateFormModel());
 			components.push(newComponent);
 		});
@@ -63,7 +62,7 @@ const list = async (req, res) => {
 	try {
 		const allForms = await Form.find({
 			user_id: new ObjectId("66960301ed29140e5c586913"),
-		});
+		}).sort({ createdAt: -1 });
 
 		const forms = allForms.map((form) => {
 			return {
@@ -74,7 +73,8 @@ const list = async (req, res) => {
 			};
 		});
 
-		res.render("pages/listform", { forms });
+		res.status(200).send({ forms });
+		// res.render("pages/listform", { forms });
 	} catch (error) {
 		console.log("Error retrieving forms:", error);
 	}
@@ -99,25 +99,31 @@ const editForm = async (req, res) => {
 	 * Handles the submission of a form.
 	 * route "/forms/:id/edit" post
 	 */
+	const { email } = req.body;
 	const form_id = req.params.id;
-	const form = await Form.findById(form_id);
-	//console.log("Checkpoint ",form);
-
-	if (
-		(form.authorized_emails.includes(req.user.email) ||
-			form.user_id == req.user._id) &&
-		!form.is_active
-	) {
-		res.render("pages/editform", { form: form.toJSON() });
-	} else {
-		res.redirect(`/form/${form_id}`);
+	const user_id = new ObjectId("66960301ed29140e5c586913"); // franco id ...  this should be id of the user that is currently login
+	try {
+		const form = await Form.findOne({
+			$and: [
+				{ _id: form_id },
+				{ $or: [{ authorized_emails: email }, { user_id: user_id }] },
+				{ status: "unpublished" },
+			],
+		});
+		if (!form) {
+			return res.status(200).send("false");
+		}
+		console.log("Form", form);
+		return res.status(200).send("true");
+	} catch (error) {
+		console.error(error);
 	}
 };
 
 const updateForm = async (req, res) => {
 	/**
 	 * Handles the edit made in the form
-	 * /forms/:id/edit post
+	 * /forms/:id/edit postunValidators: true
 	 */
 	const components = [];
 	formData.formComponents.forEach((component) => {
@@ -137,28 +143,19 @@ const updateForm = async (req, res) => {
 	res.send(200, "Form updated");
 };
 
-//Reponse Page
-const response = async (req, res) => {
-	res.render("pages/response");
-};
-
-//Input Reponse
-const getResponse = async (req, res) => {
-	const typeName = req.params.name;
-	res.render(`components/fields/${typeName}`);
-};
-
 //Delete Form
 const deleteForm = async (req, res) => {
+	// if (!req.isAuthenticated()) {
+	// 	res.redirect("/auth/google");
+	// }
 	const { form_id } = req.params;
 	try {
 		const deleteForm = await Form.deleteOne({ _id: form_id });
 		if (deleteForm) {
 			console.log("Form deleted:", deleteForm);
-			res.status(200).send(deleteForm);
-		} else {
-			res.status(404).send("Form not found");
+			return res.status(200).send(deleteForm);
 		}
+		return res.status(404).send("Form not found");
 	} catch (error) {
 		console.error("Error deleting form:", error);
 		res.status(500).send("Error deleting form");
@@ -176,37 +173,19 @@ const giveAccess = async (req, res) => {
 		return res.status(400).send("No valid emails");
 	}
 	try {
+		// $addToSet used to avoid duplicates, $each is used to add multiple emails
 		const updatedForm = await Form.updateOne(
 			{ _id: form_id },
 			{ $addToSet: { authorized_emails: { $each: validEmails } } },
-			{ new: true, runValidators: true }
+			{ new: true }
 		);
+		console.log("Access given:", updatedForm);
 		res.status(200).send({ "Access given": updatedForm });
 	} catch (error) {
 		console.error("Error giving access:", error);
 		return res
 			.status(500)
 			.send({ error: "An error occurred while giving access." });
-	}
-};
-
-// Check If the user has an access
-const checkAccess = async (req, res) => {
-	const { email } = req.body;
-	const form_id = req.params.form_id;
-	try {
-		const form = await Form.findOne({
-			$and: [
-				{ _id: form_id },
-				{ authorize_email: { $elemMatch: { email: email } } },
-			],
-		});
-		if (!form) {
-			return res.status(200).send("false");
-		}
-		return res.status(200).send("true");
-	} catch (error) {
-		console.error(error);
 	}
 };
 
@@ -238,5 +217,8 @@ export default {
 	deleteAllForms,
 	deleteForm,
 	giveAccess,
-	checkAccess,
 };
+// user_id: new ObjectId("6695ddb53109d5d09d912955"), my id
+// const user_id = new ObjectId("66960301ed29140e5c586913"); // franco id ...
+
+// req.user._id

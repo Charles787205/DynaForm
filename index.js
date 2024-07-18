@@ -17,14 +17,14 @@ app.set("view engine", "ejs"); // Set the view engine to ejs
 app.set("views", "src/views"); // Set the views directory1
 
 app.use(
-	session({
-		secret: process.env.SESSION_SECRET || "dxfcv",
-		resave: false,
-		saveUninitialized: false,
-		cookie: {
-			maxAge: 1000 * 60 * 100,
-		},
-	})
+  session({
+    secret: process.env.SESSION_SECRET || "dxfcv",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 100,
+    },
+  })
 );
 
 app.use(passport.initialize());
@@ -34,28 +34,29 @@ app.use(passport.session());
 app.use(express.static("public"));
 
 app.use(function (req, res, next) {
-	res.locals.isLogin = true;
-	res.locals.user = new ObjectId("6695ddb53109d5d09d912955");
-	next();
+
+  res.locals.isLogin = true;
+  res.locals.user = req.user;
+  next();
 });
 app.all("*", function (req, res, next) {
-	// CORS headers
-	res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
-	res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  // CORS headers
+  res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
 
-	res.header(
-		"Access-Control-Allow-Headers",
-		"Content-type,Accept,X-Custom-Header"
-	);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-type,Accept,X-Custom-Header"
+  );
 
-	if (req.method === "OPTIONS") {
-		return res.status(200).end();
-	}
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
 
-	return next();
+  return next();
 });
 
-app.get("*/*", router);
+app.get("*/*", checkPath, router);
 app.post("*/*", router);
 app.get("*/*", authRouter);
 app.post("*/*", authRouter);
@@ -64,18 +65,18 @@ app.delete("*/*", router);
 // Database Connection with mongoDB
 
 mongoose
-	.connect(process.env.MONGO_URI)
-	.then(() => {
-		// Listen for request only after connecting to MongoDB
-		app.listen(process.env.PORT, (error) => {
-			if (!error) {
-				console.log(
-					"Server is connected to MongoDB & running on port",
-					process.env.PORT
-				);
-			} else {
-				console.log(`Error ${error}`);
-			}
-		});
-	})
-	.catch((error) => console.log(error));
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    // Listen for request only after connecting to MongoDB
+    app.listen(process.env.PORT, (error) => {
+      if (!error) {
+        console.log(
+          "Server is connected to MongoDB & running on port",
+          process.env.PORT
+        );
+      } else {
+        console.log(`Error ${error}`);
+      }
+    });
+  })
+  .catch((error) => console.log(error));

@@ -1,30 +1,31 @@
 function check() {
-  if (typeof Storage !== "undefined") {
-    console.log("Naa storage:", getFormData());
-    localStorage.setItem("saveform", getFormData());
-    console.log("Local saved:", localStorage.getItem("saveform"));
-  } else {
-    console.log("ALA");
-  }
+	if (typeof Storage !== "undefined") {
+		console.log("Naa storage:", getFormData());
+		localStorage.setItem("saveform", getFormData());
+		console.log("Local saved:", localStorage.getItem("saveform"));
+	} else {
+		console.log("ALA");
+	}
 }
 
 function submitForm() {
-  const formData = getFormData();
-  console.log(formData);
-  fetch("/create", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Failed adding to database:");
-    } else if (response.status == 401) {
-      window.open("/auth/google", "_self");
-    }
-  });
+	const formData = getFormData();
+	console.log(formData);
+	fetch("/create", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(formData),
+	}).then((response) => {
+		if (!response.ok) {
+			throw new Error("Failed adding to database:");
+		} else if (response.status == 401) {
+			window.open("/auth/google", "_self");
+		}
+	});
 }
+
 
 function updateForm() {
   const formData = getFormData();
@@ -44,6 +45,7 @@ function updateForm() {
       window.open("/auth/google", "_self");
     }
   });
+
 }
 
 function updateForm() {
@@ -72,11 +74,11 @@ function updateForm() {
  */
 
 function getFormData() {
-  const form = document.getElementById("form");
-  const formName =
-    document.getElementById("form-title").value || "defaultFormName";
-  const formDescription =
-    form.getAttribute("data-form-description") || "defaultDescription";
+	const form = document.getElementById("form");
+	const formName =
+		document.getElementById("form-title").value || "defaultFormName";
+	const formDescription =
+		form.getAttribute("data-form-description") || "defaultDescription";
 
   console.log("sadifhbasdifbhasdkljfbadsklfbasdlfkj");
 
@@ -188,9 +190,9 @@ function getFormData() {
 }
 
 function auto_grow(element) {
-  element.style.height = "5px";
-  element.style.height = element.scrollHeight + "px";
-  showTooltip(element);
+	element.style.height = "5px";
+	element.style.height = element.scrollHeight + "px";
+	showTooltip(element);
 }
 
 let draggedElement = null;
@@ -198,45 +200,46 @@ let currentDropZone = null;
 let targetBlock = null;
 
 function initializeDragAndDrop() {
-  document.addEventListener("dragstart", (event) => {
-    draggedElement = event.target;
-    event.dataTransfer.setData("text/plain", null);
-    event.target.style.opacity = 0.5;
-    console.log("dragged", draggedElement);
-  });
+	document.addEventListener("dragstart", (event) => {
+		draggedElement = event.target;
+		event.dataTransfer.setData("text/plain", null);
+		event.target.style.opacity = 0.5;
+		console.log("dragged", draggedElement);
+	});
 
-  document.addEventListener("dragend", (event) => {
-    if (event.target.classList.contains("input-block")) {
-      event.target.style.opacity = "";
-      if (currentDropZone) {
-        currentDropZone.classList.remove("drag-over");
-        currentDropZone = null;
-      }
-    }
-  });
+	document.addEventListener("dragend", (event) => {
+		if (event.target.classList.contains("input-block")) {
+			event.target.style.opacity = "";
+			if (currentDropZone) {
+				currentDropZone.classList.remove("drag-over");
+				currentDropZone = null;
+			}
+		}
+	});
 }
 
 function findNearestDropZone(inputBlock, x, y) {
-  const dropZones = inputBlock.querySelectorAll(".move-dropzone");
-  let nearestDropZone = null;
-  let minDistance = Infinity;
+	const dropZones = inputBlock.querySelectorAll(".move-dropzone");
+	let nearestDropZone = null;
+	let minDistance = Infinity;
 
-  dropZones.forEach((dropZone) => {
-    const rect = dropZone.getBoundingClientRect();
-    const dx = x - (rect.left + rect.width / 2);
-    const dy = y - (rect.top + rect.height / 2);
-    const distance = Math.sqrt(dx * dx + dy * dy);
+	dropZones.forEach((dropZone) => {
+		const rect = dropZone.getBoundingClientRect();
+		const dx = x - (rect.left + rect.width / 2);
+		const dy = y - (rect.top + rect.height / 2);
+		const distance = Math.sqrt(dx * dx + dy * dy);
 
-    if (distance < minDistance) {
-      minDistance = distance;
-      nearestDropZone = dropZone;
-    }
-  });
+		if (distance < minDistance) {
+			minDistance = distance;
+			nearestDropZone = dropZone;
+		}
+	});
 
-  return nearestDropZone;
+	return nearestDropZone;
 }
 
 function initalizeDropzones() {
+
   document.querySelectorAll(".move-dropzone").forEach((dropzone) => {
     dropzone.addEventListener("dragover", (event) => {
       event.preventDefault();
@@ -281,94 +284,96 @@ function initalizeDropzones() {
       }
     });
   });
+
+  
 }
 function handleDrop(dropZone) {
-  if (draggedElement) {
-    const position = dropZone.getAttribute("data-position");
-    let parentInputBlock = dropZone.closest(".input-block");
-    const targetIsEmpty = targetBlock.textContent.trim() == "";
-    let inputFlexContainer = null;
-    if (draggedElement.getAttribute("data-type") == "label") {
-      inputFlexContainer = draggedElement
-        .closest(".input-block")
-        .querySelector(".input-flex");
+	if (draggedElement) {
+		const position = dropZone.getAttribute("data-position");
+		let parentInputBlock = dropZone.closest(".input-block");
+		const targetIsEmpty = targetBlock.textContent.trim() == "";
+		let inputFlexContainer = null;
+		if (draggedElement.getAttribute("data-type") == "label") {
+			inputFlexContainer = draggedElement
+				.closest(".input-block")
+				.querySelector(".input-flex");
 
-      parentInputBlock = inputFlexContainer;
-      console.log("dropped to parent: ", inputFlexContainer);
-    }
+			parentInputBlock = inputFlexContainer;
+			console.log("dropped to parent: ", inputFlexContainer);
+		}
 
-    if (position === "left" || position === "right") {
-      const wrapper = document.createElement("div");
-      wrapper.classList.add("input-block-flex");
-      wrapper.classList.add("grid-cols-2");
+		if (position === "left" || position === "right") {
+			const wrapper = document.createElement("div");
+			wrapper.classList.add("input-block-flex");
+			wrapper.classList.add("grid-cols-2");
 
-      if (targetIsEmpty) {
-        parentInputBlock.insertAdjacentElement("beforebegin", draggedElement);
-        return;
-      }
+			if (targetIsEmpty) {
+				parentInputBlock.insertAdjacentElement("beforebegin", draggedElement);
+				return;
+			}
 
-      if (position === "left") {
-        parentInputBlock.parentNode.insertBefore(wrapper, parentInputBlock);
-        wrapper.appendChild(draggedElement);
-        wrapper.appendChild(inputFlexContainer ?? parentInputBlock);
-      } else if (position === "right") {
-        parentInputBlock.parentNode.insertBefore(wrapper, parentInputBlock);
-        wrapper.appendChild(inputFlexContainer ?? parentInputBlock);
-        wrapper.appendChild(draggedElement);
-      }
-    } else {
-      switch (position) {
-        case "below":
-          parentInputBlock.insertAdjacentElement("afterend", draggedElement);
-          break;
-        case "top":
-          parentInputBlock.insertAdjacentElement("beforebegin", draggedElement);
-          break;
-        default:
-          break;
-      }
-    }
-  }
+			if (position === "left") {
+				parentInputBlock.parentNode.insertBefore(wrapper, parentInputBlock);
+				wrapper.appendChild(draggedElement);
+				wrapper.appendChild(inputFlexContainer ?? parentInputBlock);
+			} else if (position === "right") {
+				parentInputBlock.parentNode.insertBefore(wrapper, parentInputBlock);
+				wrapper.appendChild(inputFlexContainer ?? parentInputBlock);
+				wrapper.appendChild(draggedElement);
+			}
+		} else {
+			switch (position) {
+				case "below":
+					parentInputBlock.insertAdjacentElement("afterend", draggedElement);
+					break;
+				case "top":
+					parentInputBlock.insertAdjacentElement("beforebegin", draggedElement);
+					break;
+				default:
+					break;
+			}
+		}
+	}
 }
 
 let labelled = [];
 function handleClick(element) {
-  element.classList.add("hidden");
+	element.classList.add("hidden");
 
-  const inputBlock = element.closest(".input-block");
-  if (inputBlock) {
-    inputBlock.setAttribute("data-labelled", "true");
+	const inputBlock = element.closest(".input-block");
+	if (inputBlock) {
+		inputBlock.setAttribute("data-labelled", "true");
 
-    labelled.push(inputBlock.getAttribute("id"));
-  }
+		labelled.push(inputBlock.getAttribute("id"));
+	}
 }
 
 function handleSwap(e) {
-  const element = e.target;
+	const element = e.target;
 
-  if (element.closest("#form")) {
-    initalizeDropzones();
-  }
+	if (element.closest("#form")) {
+		initalizeDropzones();
+	}
 
-  if (element.classList.contains("actions")) {
-    element.querySelector(".delete").addEventListener("click", function () {
-      var inputblocks = document.querySelectorAll(".input-block");
-      inputblocks.forEach((block) => {
-        if (labelled.includes(block.id)) {
-          block.querySelector(".option").classList.remove("hidden");
-        }
-      });
+	if (element.classList.contains("actions")) {
+		element.querySelector(".delete").addEventListener("click", function () {
+			var inputblocks = document.querySelectorAll(".input-block");
+			inputblocks.forEach((block) => {
+				if (labelled.includes(block.id)) {
+					block.querySelector(".option").classList.remove("hidden");
+				}
+			});
 
-      element.closest(".input-block").remove();
-    });
-  }
+			element.closest(".input-block").remove();
+		});
+	}
 }
 //Listeners
 
 document.addEventListener("DOMContentLoaded", function () {
-  initializeDragAndDrop();
+	initializeDragAndDrop();
 });
 
 document.addEventListener("htmx:afterSwap", function (e) {
-  handleSwap(e);
+	handleSwap(e);
 });

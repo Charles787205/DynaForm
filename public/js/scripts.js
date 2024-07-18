@@ -1,13 +1,12 @@
-function check(){
-  if (typeof(Storage) !== "undefined") {
-    console.log("Naa storage:",getFormData());
+function check() {
+  if (typeof Storage !== "undefined") {
+    console.log("Naa storage:", getFormData());
     localStorage.setItem("saveform", getFormData());
-    console.log("Local saved:",localStorage.getItem("saveform"));
+    console.log("Local saved:", localStorage.getItem("saveform"));
   } else {
     console.log("ALA");
   }
 }
-
 
 function submitForm() {
   const formData = getFormData();
@@ -27,6 +26,10 @@ function submitForm() {
   });
 }
 
+/**
+ * Retrieves form data from the DOM and returns it as an object.
+ * @returns {Object} The form data object.
+ */
 function getFormData() {
   const form = document.getElementById("form");
   const formName =
@@ -34,40 +37,66 @@ function getFormData() {
   const formDescription =
     form.getAttribute("data-form-description") || "defaultDescription";
 
-  let temp = null;
-  let arr = [];
-  const formComponents = Array.from(form.querySelectorAll(".input-block")).map(
-    (block) => {
-      const contentContainer = block.querySelector(".content-container");
+  console.log("sadifhbasdifbhasdkljfbadsklfbasdlfkj");
 
-      const id = block.id;
-      const name = contentContainer.getAttribute("data-name");
-      const type = contentContainer.getAttribute("data-type");
-      const forAttr = contentContainer.getAttribute("data-for");
-      console.log("TYPE", type);
-      const required = contentContainer.getAttribute("required");
-      var placeholder = contentContainer.getAttribute("placeholder");
-      const content = contentContainer.innerHTML;
-      const checked = contentContainer.getAttribute("checked");
-      const focus = contentContainer.hasAttribute("autofocus")
-        ? "true"
-        : undefined;
+  /**
+   *
+   * dropdown = {
+   * id: "dropdown1",
+   * name: "dropdown",
+   * type: "dropdown",
+   *
+   *  options = []
+   *
+   * }
+   */
+  const inputBlock = form.querySelectorAll(".input-block");
+  console.log(inputBlock);
+  const arr = [];
+  let tempName = "";
+  let dropDownOptions = [];
+  const formComponents = [];
 
-      const component = { id };
+  for (let i = 0; i < inputBlock.length; i++) {
+    const block = inputBlock[i];
 
-      if(type=='drowndown'){
-        if(temp === null) temp = name;
+    const contentContainer = block.querySelector(".content-container");
+    const id = block.id;
+    const name = contentContainer.getAttribute("data-name");
+    const type = contentContainer.getAttribute("data-type");
+    const forAttr = contentContainer.getAttribute("data-for");
+    const required = contentContainer.getAttribute("required");
+    var placeholder = contentContainer.getAttribute("placeholder");
+    const content = contentContainer.innerHTML;
+    const checked = contentContainer.getAttribute("checked");
+    const focus = contentContainer.hasAttribute("autofocus");
 
-        if(temp != name){
+    //initialize the component with the id
+    const component = { id };
+    if (type == "dropdown") {
+      if (!tempName) {
+        tempName = name;
+      } else {
+        if (tempName != name) {
           component.content = arr;
-          temp = null;
-          return;
+          tempName = "";
         }
-        arr.push(component.content);
-      } 
-      if(content){
-        component.content= content;
       }
+
+      dropDownOptions.push(content);
+    } else {
+      //check if its different dropdown or if it's the last element
+      if ((tempName && tempName != name) || i == inputBlock.length - 1) {
+        const dropdown = {
+          name: tempName,
+          type: "dropdown",
+          options: dropDownOptions,
+        };
+        formComponents.push(dropdown);
+        dropDownOptions = [];
+        tempName = null;
+      }
+
       if (forAttr) {
         component.forAttr = forAttr;
       }
@@ -92,15 +121,28 @@ function getFormData() {
       if (placeholder) {
         component.placeholder = placeholder;
       }
-      return component;
+      formComponents.push(component);
     }
-  );
-
+  }
   return (formData = {
     formName,
     formDescription,
     formComponents,
   });
+  //component is new not dropdown
+}
+
+function checkIfDropdown(type, tempName, name, arr, component) {
+  if (type == "dropdown") {
+    if (!tempName) {
+      tempName = name;
+    } else {
+      if (tempName != name) {
+        component.content = arr;
+        tempName = "";
+      }
+    }
+  }
 }
 
 function auto_grow(element) {

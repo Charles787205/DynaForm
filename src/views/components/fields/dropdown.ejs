@@ -4,10 +4,13 @@
       <div class="h-8 justify-start items-center gap-2.5 inline-flex">
         <select id="countries"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5">
-          <option selected>Choose a country</option>
-          <option>
-            <%= query.placeholder %>
-          </option>
+          <% query.options.forEach(element => { %>
+            <option value="<%= element %>">
+              <%= element %>
+            </option>
+            <%
+          });
+          %>
         </select>
       </div>
     </div>
@@ -17,8 +20,7 @@
       <div class="block-container flex gap-3">
         <div contenteditable="true" show-pl-click="true" spellcheck="false" data-for="<%= query.for %>"
           class="content-container mt-2 mb-1 relative text-[1.1rem] outline-none resize-none w-10 text-black pl-10"
-          data-type="dropdown" data-name="dropdown_<%= query.id %>" id="input_<%= query.id %>" <%=query.focus==="true"
-          ? "autofocus" : "" %>
+          data-type="dropdown" data-name="dropdown_<%= query.id %>" id="input_<%= query.id %>" <%=query.focus==="true"? "autofocus" : "" %>
           placeholder="<%= query.placeholder || `Option` %>"><%= query.content %>
         </div>
         <div class="absolute top-0 bottom-0 left-1 flex justify-center items-center">
@@ -33,7 +35,8 @@
           onclick="handleClick(this)">
           Add option
         </button>
-        <%- include("../tooltip") %>
+        <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
+          <%- include("../tooltip") %>
           <div class="move-dropzone" data-position="below"></div>
           <div class="move-dropzone" data-position="top"></div>
       </div>

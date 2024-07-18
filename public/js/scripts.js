@@ -27,10 +27,12 @@ function submitForm() {
   });
 }
 
-function updateForm(id) {
+function updateForm() {
   const formData = getFormData();
+  const form = document.getElementById("formID");
   console.log(formData);
-  fetch(`/form/${id}/edit`, {
+
+  fetch(`/form/${form.textContent}/edit`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -203,7 +205,6 @@ function initalizeDropzones() {
         handleDrop(currentDropZone);
         currentDropZone = null;
         console.log("dropped at: ", event.target);
-        console.log("location:", window.location.pathnamey);
       }
     });
   });

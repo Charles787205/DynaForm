@@ -52,9 +52,11 @@
               </button>
             </div>
           </div>
+          <button onclick="updateForm();">Test</button>
           <div class="w-full flex justify-center">
             <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
-              <% form.components.forEach(item=> {
+              <%console.log(form);
+                form.components.forEach(item=> {
                 if(item.type === "divider"){
                 item.content = "";
                 }
@@ -75,5 +77,5 @@
   </main>
   </div>
 </body>
-
+<script src="/js/editSave.js"></script>
 </html>

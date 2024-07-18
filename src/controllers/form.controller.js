@@ -57,27 +57,19 @@ const submit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-	// if (!req.isAuthenticated()) {
-	// 	res.redirect("/auth/google");
-	// }
-	try {
-		const allForms = await Form.find({
-			user_id: new ObjectId("66960301ed29140e5c586913"),
-		});
 
-		const forms = allForms.map((form) => {
-			return {
-				id: form._id,
-				name: form.name,
-				description: form.description,
-				date: form.createdAt.toISOString().split("T")[0],
-			};
-		});
+  const allForms = await Form.find({ user_id: req.user.id }).sort({createdAt: -1});
 
-		res.render("pages/listform", { forms });
-	} catch (error) {
-		console.log("Error retrieving forms:", error);
-	}
+  const forms = allForms.map((form) => {
+    return {
+      id: form._id,
+      name: form.name,
+      description: form.description,
+      date: form.createdAt.toISOString().split("T")[0],
+    };
+  });
+  res.render("pages/listform", { forms });
+
 };
 //route "/forms/:id" get
 const viewForm = async (req, res) => {
@@ -95,46 +87,49 @@ const viewForm = async (req, res) => {
 };
 
 const editForm = async (req, res) => {
-	/**
-	 * Handles the submission of a form.
-	 * route "/forms/:id/edit" post
-	 */
-	const form_id = req.params.id;
-	const form = await Form.findById(form_id);
-	//console.log("Checkpoint ",form);
 
-	if (
-		(form.authorized_emails.includes(req.user.email) ||
-			form.user_id == req.user._id) &&
-		!form.is_active
-	) {
-		res.render("pages/editform", { form: form.toJSON() });
-	} else {
-		res.redirect(`/form/${form_id}`);
-	}
+  /**
+   * Handles the submission of a form.
+   * route "/forms/:id/edit" post
+   */
+  const form_id = req.params.id;
+  const form = await Form.findById(form_id);
+
+  if (
+    (form.authorized_emails || form.user_id == req.user._id) ||
+    form.authorized_emails.includes(req.user.email) &&
+    !form.is_active
+  ) {
+    res.render("pages/editform", {form: form.toJSON()});
+  } else {
+    res.redirect(`/form/${form_id}`);
+  }
 };
 
 const updateForm = async (req, res) => {
-	/**
-	 * Handles the edit made in the form
-	 * /forms/:id/edit post
-	 */
-	const components = [];
-	formData.formComponents.forEach((component) => {
-		const formComponent = new FormComponent(component);
-		const newComponent = new Component(formComponent.toCreateFormModel());
-		components.push(newComponent);
-	});
+  /**
+   * Handles the edit made in the form
+   * /forms/:id/edit post
+   */
+  const components = [];
+  console.log("The request:", req.body);
+  const formData = req.body;
+  formData.formComponents.forEach((component) => {
+    const formComponent = new FormComponent(component);
+    const newComponent = new Component(formComponent.toCreateFormModel());
+    components.push(newComponent);
+  });
 
-	const newForm = {
-		name: formData.formName,
-		description: formData.formDescription,
-		components: components,
-	};
-	const form_id = req.params.id;
-	const form = await Form.findByIdAndUpdate(form_id, ...newForm);
-	console.log(form);
-	res.send(200, "Form updated");
+  const newForm = {
+    name: formData.formName,
+    description: formData.formDescription,
+    components: components,
+  };
+  const form_id = req.params.id;
+  const form = await Form.findByIdAndUpdate(form_id, newForm);
+  console.log(form);
+  res.send(200, "Form updated");
+
 };
 
 //Reponse Page

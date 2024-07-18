@@ -26,22 +26,26 @@ function submitForm() {
 	});
 }
 
-function updateForm(id) {
-	const formData = getFormData();
-	console.log(formData);
-	fetch(`/form/${id}/edit`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(formData),
-	}).then((response) => {
-		if (!response.ok) {
-			throw new Error("Failed adding to database:");
-		} else if (response.status == 401) {
-			window.open("/auth/google", "_self");
-		}
-	});
+
+function updateForm() {
+  const formData = getFormData();
+  const form = document.getElementById("formID");
+  console.log(formData);
+
+  fetch(`/form/${form.textContent}/edit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed adding to database:");
+    } else if (response.status == 401) {
+      window.open("/auth/google", "_self");
+    }
+  });
+
 }
 
 function getFormData() {
@@ -161,51 +165,53 @@ function findNearestDropZone(inputBlock, x, y) {
 }
 
 function initalizeDropzones() {
-	document.querySelectorAll(".move-dropzone").forEach((dropzone) => {
-		dropzone.addEventListener("dragover", (event) => {
-			event.preventDefault();
 
-			const target = event.target.closest(".input-block");
+  document.querySelectorAll(".move-dropzone").forEach((dropzone) => {
+    dropzone.addEventListener("dragover", (event) => {
+      event.preventDefault();
 
-			targetBlock = target;
-			if (target && target !== draggedElement) {
-				const nearestDropZone = findNearestDropZone(
-					target,
-					event.clientX,
-					event.clientY
-				);
-				if (nearestDropZone !== currentDropZone) {
-					if (currentDropZone) {
-						currentDropZone.classList.remove("drag-over");
-					}
-					nearestDropZone.classList.add("drag-over");
-					currentDropZone = nearestDropZone;
-				}
-			}
-		});
+      const target = event.target.closest(".input-block");
 
-		document.addEventListener("dragleave", (event) => {
-			if (
-				currentDropZone &&
-				event.relatedTarget &&
-				!event.relatedTarget.closest(".input-block")
-			) {
-				currentDropZone.classList.remove("drag-over");
-				currentDropZone = null;
-			}
-		});
+      targetBlock = target;
+      if (target && target !== draggedElement) {
+        const nearestDropZone = findNearestDropZone(
+          target,
+          event.clientX,
+          event.clientY
+        );
+        if (nearestDropZone !== currentDropZone) {
+          if (currentDropZone) {
+            currentDropZone.classList.remove("drag-over");
+          }
+          nearestDropZone.classList.add("drag-over");
+          currentDropZone = nearestDropZone;
+        }
+      }
+    });
 
-		document.addEventListener("drop", (event) => {
-			event.preventDefault();
-			if (currentDropZone) {
-				currentDropZone.classList.remove("drag-over");
-				handleDrop(currentDropZone);
-				currentDropZone = null;
-				console.log("dropped at: ", event.target);
-				console.log("location:", window.location.pathnamey);
-			}
-		});
-	});
+    document.addEventListener("dragleave", (event) => {
+      if (
+        currentDropZone &&
+        event.relatedTarget &&
+        !event.relatedTarget.closest(".input-block")
+      ) {
+        currentDropZone.classList.remove("drag-over");
+        currentDropZone = null;
+      }
+    });
+
+    document.addEventListener("drop", (event) => {
+      event.preventDefault();
+      if (currentDropZone) {
+        currentDropZone.classList.remove("drag-over");
+        handleDrop(currentDropZone);
+        currentDropZone = null;
+        console.log("dropped at: ", event.target);
+      }
+    });
+  });
+
+  
 }
 function handleDrop(dropZone) {
 	if (draggedElement) {

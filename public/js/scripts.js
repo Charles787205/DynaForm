@@ -11,24 +11,34 @@ function check() {
   }
 }
 
-function submitForm() {
+function submitForm(from = "create") {
   const formData = getFormData() ?? [];
-  console.log("THIS IS DATA", formData);
+
   fetch("/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(formData),
+    body: JSON.stringify({
+      fromPage: from,
+      formData: formData,
+    }),
   }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Failed adding to database:");
-    } else if (response.status == 401) {
-      window.open("/auth/google", "_self");
+    if (response.ok) {
+      response.json().then((data) => {
+        if (from == "list") {
+          window.open(`/form/${data.formId}/edit`, "_self");
+        }
+      });
+    } else {
+      if (!response.ok) {
+        throw new Error("Failed adding to database:");
+      } else if (response.status == 401) {
+        window.open("/auth/google", "_self");
+      }
     }
   });
 }
-
 
 function updateForm() {
   const formData = getFormData();
@@ -76,40 +86,38 @@ function updateForm() {
  */
 
 function getFormData() {
-  if(!document.getElementById("form")){
-    return FormData = {
-      
-        "formName": "Default form",
-        "formDescription": "defaultDescription",
-        "formComponents": [
-            {
-                "id": "7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
-                "name": "heading_7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
-                "type": "heading",
-                "placeholder": "Add a heading"
-            },
-            {
-                "id": "67a46c3c-d4e7-4032-ac0a-2277b9d90741",
-                "name": "textfield_67a46c3c-d4e7-4032-ac0a-2277b9d90741",
-                "type": "textfield",
-                "focus": "true",
-                "placeholder": "Start typing text or add a block."
-            },
-            {
-                "id": "b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
-                "name": "textfield_b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
-                "type": "textfield",
-                "placeholder": "Start typing text or add a block."
-            },
-            {
-                "id": "c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
-                "name": "textfield_c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
-                "type": "textfield",
-                "placeholder": "Start typing text or add a block."
-            }
-        ]
-    }
-  
+  if (!document.getElementById("form")) {
+    return (FormData = {
+      formName: "Default form",
+      formDescription: "defaultDescription",
+      formComponents: [
+        {
+          id: "7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
+          name: "heading_7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
+          type: "heading",
+          placeholder: "Add a heading",
+        },
+        {
+          id: "67a46c3c-d4e7-4032-ac0a-2277b9d90741",
+          name: "textfield_67a46c3c-d4e7-4032-ac0a-2277b9d90741",
+          type: "textfield",
+          focus: "true",
+          placeholder: "Start typing text or add a block.",
+        },
+        {
+          id: "b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
+          name: "textfield_b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
+          type: "textfield",
+          placeholder: "Start typing text or add a block.",
+        },
+        {
+          id: "c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
+          name: "textfield_c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
+          type: "textfield",
+          placeholder: "Start typing text or add a block.",
+        },
+      ],
+    });
   }
   const form = document.getElementById("form");
   const formName =
@@ -117,7 +125,7 @@ function getFormData() {
   const formDescription =
     form.getAttribute("data-form-description") || "defaultDescription";
 
-    const inputBlock = form.querySelectorAll(".input-block");
+  const inputBlock = form.querySelectorAll(".input-block");
   console.log(inputBlock);
   const arr = [];
   let tempName = "";
@@ -172,9 +180,9 @@ function getFormData() {
         formComponents.push(dropdown);
         dropDownOptions = [];
         tempName = null;
-      } 
+      }
 
-      if(content){
+      if (content) {
         component.content = content;
       }
 

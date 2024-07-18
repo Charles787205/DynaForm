@@ -68,10 +68,9 @@
                   <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="innerHTML"
                   hx-vals='js:{"content":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>"}'
                   class="form-field"></div>
-                <% }
-                }); %>
+                <% }}); %>
                 <div hx-post="/components/button" hx-swap="outerHTML" hx-trigger="load" hx-vals='js:{"type": "submit"}'></div>
-                <button onclick="updateForm();" class="bg-slate-100 my-10 px-4">Save</button>
+                
 
             </form>
 

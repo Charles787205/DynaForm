@@ -16,7 +16,7 @@ router
 	.get(FormController.getCreatePage)
 	.post(FormController.submit);
 router.get("/forms", FormController.list);
-router.route("/form/:id").get(FormController.viewForm).post(FormController.submitResponse);
+router.route("/form/:id").get(FormController.viewForm).post(ResponseController.submitResponse);
 router
 	.route("/form/:id/edit")
 	.get(FormController.editForm)

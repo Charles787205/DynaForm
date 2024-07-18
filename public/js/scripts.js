@@ -1,4 +1,6 @@
-import { submitResponse } from "./responseScript";
+// import { submitResponse } from "./responseScript";
+// import FormData from "../src/models/form";
+
 function check() {
   if (typeof Storage !== "undefined") {
     console.log("Naa storage:", getFormData());
@@ -10,8 +12,8 @@ function check() {
 }
 
 function submitForm() {
-  const formData = getFormData();
-  console.log(formData);
+  const formData = getFormData() ?? [];
+  console.log("THIS IS DATA", formData);
   fetch("/create", {
     method: "POST",
     headers: {
@@ -48,25 +50,25 @@ function updateForm() {
   });
 }
 
-function updateForm() {
-  const formData = getFormData();
-  const form = document.getElementById("formID");
-  console.log(formData);
+// function updateForm() {
+//   const formData = getFormData();
+//   const form = document.getElementById("formID");
+//   console.log(formData);
 
-  fetch(`/form/${form.textContent}/edit`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Failed adding to database:");
-    } else if (response.status == 401) {
-      window.open("/auth/google", "_self");
-    }
-  });
-}
+//   fetch(`/form/${form.textContent}/edit`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(formData),
+//   }).then((response) => {
+//     if (!response.ok) {
+//       throw new Error("Failed adding to database:");
+//     } else if (response.status == 401) {
+//       window.open("/auth/google", "_self");
+//     }
+//   });
+// }
 
 /**
  * Retrieves form data from the DOM and returns it as an object.
@@ -74,26 +76,48 @@ function updateForm() {
  */
 
 function getFormData() {
+  if(!document.getElementById("form")){
+    return FormData = {
+      
+        "formName": "Default form",
+        "formDescription": "defaultDescription",
+        "formComponents": [
+            {
+                "id": "7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
+                "name": "heading_7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
+                "type": "heading",
+                "placeholder": "Add a heading"
+            },
+            {
+                "id": "67a46c3c-d4e7-4032-ac0a-2277b9d90741",
+                "name": "textfield_67a46c3c-d4e7-4032-ac0a-2277b9d90741",
+                "type": "textfield",
+                "focus": "true",
+                "placeholder": "Start typing text or add a block."
+            },
+            {
+                "id": "b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
+                "name": "textfield_b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
+                "type": "textfield",
+                "placeholder": "Start typing text or add a block."
+            },
+            {
+                "id": "c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
+                "name": "textfield_c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
+                "type": "textfield",
+                "placeholder": "Start typing text or add a block."
+            }
+        ]
+    }
+  
+  }
   const form = document.getElementById("form");
   const formName =
     document.getElementById("form-title").value || "defaultFormName";
   const formDescription =
     form.getAttribute("data-form-description") || "defaultDescription";
 
-  console.log("sadifhbasdifbhasdkljfbadsklfbasdlfkj");
-
-  /**
-   *
-   * dropdown = {
-   * id: "dropdown1",
-   * name: "dropdown",
-   * type: "dropdown",
-   *
-   *  options = []
-   *
-   * }
-   */
-  const inputBlock = form.querySelectorAll(".input-block");
+    const inputBlock = form.querySelectorAll(".input-block");
   console.log(inputBlock);
   const arr = [];
   let tempName = "";

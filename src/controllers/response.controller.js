@@ -1,5 +1,5 @@
 
-import Response from "../models/response.model.js";
+import Response from "../models/response.models.js";
 
 
 const submitResponse = async (req, res) => {

@@ -46,9 +46,11 @@ const submit = async (req, res) => {
 			components: components,
 		});
 
-		await new Form(form.toCreateFormModel()).save();
+		const formId = await new Form(form.toCreateFormModel()).save();
 		console.log("ADDED TO DB", JSON.stringify(form));
-		return res.json({ form });
+
+		res.redirect(`/form/${formId._id}/edit`);
+    
 	} catch (error) {
 		console.error("Error processing form:", error);
 		return res.status(500).send(error);
@@ -100,16 +102,16 @@ const editForm = async (req, res) => {
 	 */
 	const { email } = req.body;
 	const form_id = req.params.id;
-	const user_id = req.user._id; // franco id ...  this should be id of the user that is currently login
-
+	const user_id = req.user._id; 
 	try {
 		const form = await Form.findOne({
 			$and: [
 				{ _id: form_id },
 				{ $or: [{ authorized_emails: email }, { user_id: user_id }] },
-				{ status: "unpublished" },
 			],
 		});
+
+    console.log("FORM: ", form);
 		if (!form) {
 			// res.status(200).send("false");
 			res.redirect(`/form/${form_id}`);

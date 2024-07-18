@@ -59,7 +59,7 @@ const list = async (req, res) => {
    * Retrieves a list of forms for a specific user.
    * route "/forms" get
    */
-  const allForms = await Form.find({ user_id: req.user.id });
+  const allForms = await Form.find({ user_id: req.user.id }).sort({createdAt: -1});
 
   const forms = allForms.map((form) => {
     return {
@@ -94,11 +94,10 @@ const editForm = async (req, res) => {
    */
   const form_id = req.params.id;
   const form = await Form.findById(form_id);
-  //console.log("Checkpoint ",form);
 
   if (
-    (form.authorized_emails.includes(req.user.email) ||
-      form.user_id == req.user._id) &&
+    (form.authorized_emails || form.user_id == req.user._id) ||
+    form.authorized_emails.includes(req.user.email) &&
     !form.is_active
   ) {
     res.render("pages/editform", {form: form.toJSON()});
@@ -113,6 +112,8 @@ const updateForm = async (req, res) => {
    * /forms/:id/edit post
    */
   const components = [];
+  console.log("The request:", req.body);
+  const formData = req.body;
   formData.formComponents.forEach((component) => {
     const formComponent = new FormComponent(component);
     const newComponent = new Component(formComponent.toCreateFormModel());
@@ -125,7 +126,7 @@ const updateForm = async (req, res) => {
     components: components,
   };
   const form_id = req.params.id;
-  const form = await Form.findByIdAndUpdate(form_id, ...newForm);
+  const form = await Form.findByIdAndUpdate(form_id, newForm);
   console.log(form);
   res.send(200, "Form updated");
 };

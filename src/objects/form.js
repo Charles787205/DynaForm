@@ -7,6 +7,7 @@ class Form {
 		google_id = "",
 		user_id = "",
 		is_active = false,
+		authorized_emails = [],
 	}) {
 		this.id = id;
 		this.name = name;
@@ -15,6 +16,7 @@ class Form {
 		this.google_id = google_id;
 		this.user_id = user_id;
 		this.is_active = is_active;
+		this.authorized_emails = this.authorized_emails;
 	}
 	toCreateFormModel() {
 		return {
@@ -23,6 +25,7 @@ class Form {
 			components: this.components,
 			user_id: this.user_id,
 			is_active: this.is_active,
+			authorized_emails: [], //temporary
 		};
 	}
 }

@@ -12,6 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <script src="/js/scripts.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet" />
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -23,10 +25,8 @@
 
 <body>
   <div class="app">
-    <%- include('../components/homeNavbar'); %>
-      <div class="w-screen h-screen fixed flex justify-center items-center z-50 bg-white"
-        hx-on:load="this.classList.add('hidden')" id="spinner"><img src="/assets/1490.gif" />
-      </div>
+    <%- include('../components/navbar',{name : form.name}); %>
+      <div class="load-indicator w-screen h-screen fixed bg-white flex justify-center items-center" id="spinner"><img src="/assets/1490.gif" class="object-contain" /></div>
       <main class="mainscreen w-screen items-start inline-flex">
         <div class="relative min-h-screen w-screen pt-16" action="" method="" onsubmit="onSubmit(event)" id="form">
           <div class="inset-2 header-image" id="image-wrapper">
@@ -54,7 +54,20 @@
           </div>
           <div class="w-full flex justify-center">
             <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
-              EDIT FORM
+              <% form.components.forEach(item=> {
+                if(item.type === "divider"){
+                item.content = "";
+                }
+                if(item.component_type==="text"){ %>
+                  <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="innerHTML"
+                  hx-vals='js:{"content": "<%=item.content.replace(/\n\s*/g, "")%>","placeholder":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>"}'
+                  class="form-field"></div>
+                <% }else{ %>
+                  <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="innerHTML"
+                  hx-vals='js:{"content":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>"}'
+                  class="form-field"></div>
+                <% }
+                }); %>
             </form>
           </div>
         </div>

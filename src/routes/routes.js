@@ -5,7 +5,7 @@ import Components from "../controllers/components.controller.js";
 const router = Router();
 
 // COMPONENTS
-router.route("/").get(FormController.get);
+router.route("/").get(FormController.index);
 router.post("/components/:name", Components.getComponent);
 router.post("/components/fields/:name", Components.getField);
 router.post("/template/:template", Components.getTemplate);
@@ -29,8 +29,9 @@ router
 	.get(FormController.checkAccess);
 
 // RESPONSE
-router.get("/response", FormController.response);
-router.get("/response/:name", FormController.response);
+
+//PREVIEW
+router.post("/preview", FormController.preview);
 
 // MODAL
 router.post("/components/modal/show", Components.showModal);

@@ -5,25 +5,37 @@ import Form from "../models/form.models.js";
 import { ObjectId } from "mongodb";
 import validators from "validator";
 
-//Return Index
-const get = async (req, res) => {
+const index = async (req, res) => {
+	/**
+	 *  index page
+	 * route "/" get
+	 */
 	res.render("index");
 };
 
-//Form Create Page
 const getCreatePage = async (req, res) => {
+	/**
+	 *
+	 * Handles the creation of a form.
+	 * route "/create" get
+	 */
 	res.render("pages/create");
 };
 
-//Form Save to DB
 const submit = async (req, res) => {
-	// if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
+	/**
+	 * Handles the submission of a form.
+	 * route "/create" post
+	 *
+	 */
+	if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
 	try {
-		const { formName, formDescription, formComponents } = req.body;
-		const components = [];
+		const formData = req.body;
 
-		formComponents.forEach((component) => {
+		const components = [];
+		formData.formComponents.forEach((component) => {
 			const formComponent = new FormComponent(component);
+			console.log("formComponent", formComponent);
 			const newComponent = new Component(formComponent.toCreateFormModel());
 			components.push(newComponent);
 		});
@@ -36,6 +48,7 @@ const submit = async (req, res) => {
 		});
 
 		await new Form(form.toCreateFormModel()).save();
+		console.log("ADDED TO DB", JSON.stringify(form));
 		return res.json({ form });
 	} catch (error) {
 		console.error("Error processing form:", error);
@@ -43,7 +56,6 @@ const submit = async (req, res) => {
 	}
 };
 
-//Form List
 const list = async (req, res) => {
 	// if (!req.isAuthenticated()) {
 	// 	res.redirect("/auth/google");
@@ -62,14 +74,12 @@ const list = async (req, res) => {
 			};
 		});
 
-		res.status(200).send({ forms });
+		res.render("pages/listform", { forms });
 	} catch (error) {
-		console.log(error);
+		console.log("Error retrieving forms:", error);
 	}
-	return res.render("pages/listform", { forms });
 };
-
-//Form View
+//route "/forms/:id" get
 const viewForm = async (req, res) => {
 	const form_id = req.params.id;
 
@@ -84,13 +94,46 @@ const viewForm = async (req, res) => {
 	}
 };
 
-//Form Edit
 const editForm = async (req, res) => {
-	res.render("pages/editform");
+	/**
+	 * Handles the submission of a form.
+	 * route "/forms/:id/edit" post
+	 */
+	const form_id = req.params.id;
+	const form = await Form.findById(form_id);
+	//console.log("Checkpoint ",form);
+
+	if (
+		(form.authorized_emails.includes(req.user.email) ||
+			form.user_id == req.user._id) &&
+		!form.is_active
+	) {
+		res.render("pages/editform", { form: form.toJSON() });
+	} else {
+		res.redirect(`/form/${form_id}`);
+	}
 };
 
-//Form Update
 const updateForm = async (req, res) => {
+	/**
+	 * Handles the edit made in the form
+	 * /forms/:id/edit post
+	 */
+	const components = [];
+	formData.formComponents.forEach((component) => {
+		const formComponent = new FormComponent(component);
+		const newComponent = new Component(formComponent.toCreateFormModel());
+		components.push(newComponent);
+	});
+
+	const newForm = {
+		name: formData.formName,
+		description: formData.formDescription,
+		components: components,
+	};
+	const form_id = req.params.id;
+	const form = await Form.findByIdAndUpdate(form_id, ...newForm);
+	console.log(form);
 	res.send(200, "Form updated");
 };
 
@@ -117,13 +160,13 @@ const deleteForm = async (req, res) => {
 			res.status(404).send("Form not found");
 		}
 	} catch (error) {
-		console.error("Earror deleting form:", error);
+		console.error("Error deleting form:", error);
 		res.status(500).send("Error deleting form");
 	}
 };
 
 // Give Access
-const giveAccess = async (req, res, next) => {
+const giveAccess = async (req, res) => {
 	const emails = req.body;
 	const form_id = req.params.form_id;
 
@@ -168,6 +211,7 @@ const checkAccess = async (req, res) => {
 };
 
 const deleteAllForms = async (req, res) => {
+	// route "/deleteAll"
 	try {
 		await Form.deleteMany({});
 		res.status(200).send("All forms deleted");
@@ -177,15 +221,20 @@ const deleteAllForms = async (req, res) => {
 	}
 };
 
+//preview
+const preview = async (req, res) => {
+	res.render(`pages/preview`);
+};
+
 export default {
-	get,
+	index,
 	getCreatePage,
 	submit,
 	list,
 	editForm,
 	viewForm,
 	updateForm,
-	response,
+	preview,
 	deleteAllForms,
 	deleteForm,
 	giveAccess,

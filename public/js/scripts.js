@@ -1,7 +1,35 @@
+function check() {
+	if (typeof Storage !== "undefined") {
+		console.log("Naa storage:", getFormData());
+		localStorage.setItem("saveform", getFormData());
+		console.log("Local saved:", localStorage.getItem("saveform"));
+	} else {
+		console.log("ALA");
+	}
+}
+
 function submitForm() {
 	const formData = getFormData();
 	console.log(formData);
 	fetch("/create", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(formData),
+	}).then((response) => {
+		if (!response.ok) {
+			throw new Error("Failed adding to database:");
+		} else if (response.status == 401) {
+			window.open("/auth/google", "_self");
+		}
+	});
+}
+
+function updateForm(id) {
+	const formData = getFormData();
+	console.log(formData);
+	fetch(`/form/${id}/edit`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -31,6 +59,7 @@ function getFormData() {
 			const name = contentContainer.getAttribute("data-name");
 			const type = contentContainer.getAttribute("data-type");
 			const forAttr = contentContainer.getAttribute("data-for");
+			console.log("TYPE", type);
 			const required = contentContainer.getAttribute("required");
 			var placeholder = contentContainer.getAttribute("placeholder");
 			const content = contentContainer.innerHTML;
@@ -59,7 +88,7 @@ function getFormData() {
 			if (checked) {
 				component.checked = checked;
 			}
-			if (type == "input") {
+			if (type == "inputfield") {
 				placeholder = contentContainer.innerHTML;
 			}
 			if (focus) {
@@ -173,6 +202,7 @@ function initalizeDropzones() {
 				handleDrop(currentDropZone);
 				currentDropZone = null;
 				console.log("dropped at: ", event.target);
+				console.log("location:", window.location.pathnamey);
 			}
 		});
 	});

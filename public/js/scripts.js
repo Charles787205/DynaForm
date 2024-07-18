@@ -26,6 +26,46 @@ function submitForm() {
   });
 }
 
+function updateForm() {
+  const formData = getFormData();
+  const form = document.getElementById("formID");
+  console.log(formData);
+
+  fetch(`/form/${form.textContent}/edit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed adding to database:");
+    } else if (response.status == 401) {
+      window.open("/auth/google", "_self");
+    }
+  });
+}
+
+function updateForm() {
+  const formData = getFormData();
+  const form = document.getElementById("formID");
+  console.log(formData);
+
+  fetch(`/form/${form.textContent}/edit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed adding to database:");
+    } else if (response.status == 401) {
+      window.open("/auth/google", "_self");
+    }
+  });
+}
+
 /**
  * Retrieves form data from the DOM and returns it as an object.
  * @returns {Object} The form data object.

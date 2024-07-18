@@ -49,7 +49,7 @@ const publish = async (req, res) => {
       description: formData.formDescription,
       components: components,
     });
-    
+
     await new Form(form.toCreateFormModel()).save();
     console.log("ADDED TO DB", JSON.stringify(form));
     return res.json({ form });
@@ -64,7 +64,7 @@ const list = async (req, res) => {
    * Retrieves a list of forms for a specific user.
    * route "/forms" get
    */
-  const allForms = await Form.find({ user_id: req.user.id });
+  const allForms = await Form.find({ user_id: req.user.id }).sort({createdAt: -1});
 
   const forms = allForms.map((form) => {
     return {
@@ -99,17 +99,15 @@ const editForm = async (req, res) => {
    */
   const form_id = req.params.id;
   const form = await Form.findById(form_id);
-  console.log("Checkpoint ",form);
 
   if (
     (form.authorized_emails || form.user_id == req.user._id) ||
     form.authorized_emails.includes(req.user.email) &&
     !form.is_active
   ) {
-    res.render("pages/editform", {form});
+    res.render("pages/editform", {form: form.toJSON()});
   } else {
-    // res.redirect(`/form/${form_id}`);
-    res.status(500).send("Error deleting form");
+    res.redirect(`/form/${form_id}`);
   }
 };
 
@@ -118,6 +116,23 @@ const updateForm = async (req, res) => {
    * Handles the edit made in the form
    * /forms/:id/edit post
    */
+  const components = [];
+  console.log("The request:", req.body);
+  const formData = req.body;
+  formData.formComponents.forEach((component) => {
+    const formComponent = new FormComponent(component);
+    const newComponent = new Component(formComponent.toCreateFormModel());
+    components.push(newComponent);
+  });
+
+  const newForm = {
+    name: formData.formName,
+    description: formData.formDescription,
+    components: components,
+  };
+  const form_id = req.params.id;
+  const form = await Form.findByIdAndUpdate(form_id, newForm);
+  console.log(form);
   res.send(200, "Form updated");
 };
 
@@ -151,7 +166,7 @@ const deleteAllForms = async (req, res) => {
 
 //preview
 const preview = async (req, res) => {
- res.render(`pages/preview`);
+  res.render(`pages/preview`);
 };
 
 export default {

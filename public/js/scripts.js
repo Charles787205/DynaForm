@@ -44,7 +44,8 @@ function submitForm(from = "create") {
 function updateForm() {
   const formData = getFormData();
   const form = document.getElementById("formID");
-  console.log(formData);
+
+  localStorage.setItem("savedForm: ", formData);
 
   fetch(`/form/${form.textContent}/edit`, {
     method: "POST",

@@ -47,7 +47,7 @@ const submit = async (req, res) => {
     });
 
     const newForm = await new Form(form.toCreateFormModel()).save();
-    console.log("ADDED TO DB", JSON.stringify(form));
+    // console.log("ADDED TO DB", JSON.stringify(form));
     if (fromPage === "create") {
       res.redirect(`/forms`);
     } else {
@@ -88,11 +88,9 @@ const viewForm = async (req, res) => {
   const form_id = req.params.id;
   try {
     const form = await Form.findById(form_id);
-    console.log("FORM RETRIEVED FROM DB: ", form.toJSON());
 
     res.render("pages/viewform", { form: form.toJSON() });
   } catch (error) {
-    console.error("Error retrieving form:", error);
     res.status(500).send("Error retrieving form");
   }
 };
@@ -113,7 +111,7 @@ const editForm = async (req, res) => {
       ],
     });
 
-    console.log("FORM: ", form);
+    // console.log("RETRIEVED FORM : ", form);
     if (!form) {
       // res.status(200).send("false");
       res.redirect(`/form/${form_id}`);
@@ -136,6 +134,7 @@ const updateForm = async (req, res) => {
     const formComponent = new FormComponent(component);
     const newComponent = new Component(formComponent.toCreateFormModel());
     components.push(newComponent);
+    655;
   });
 
   const newForm = {
@@ -145,7 +144,7 @@ const updateForm = async (req, res) => {
   };
   const form_id = req.params.id;
   const form = await Form.findByIdAndUpdate(form_id, newForm);
-  console.log(form);
+
   res.send(200, "Form updated");
 };
 
@@ -158,7 +157,6 @@ const deleteForm = async (req, res) => {
   try {
     const deleteForm = await Form.deleteOne({ _id: form_id });
     if (deleteForm) {
-      console.log("Form deleted:", deleteForm);
       return res.status(200).send(deleteForm);
     }
     return res.status(404).send("Form not found");

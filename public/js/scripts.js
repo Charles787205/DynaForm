@@ -10,20 +10,32 @@ function check() {
 		console.log("ALA");
 	}
 }
-function submitForm() {
+
+function submitForm(from = "create") {
 	const formData = getFormData() ?? [];
-	console.log("THIS IS DATA", formData);
+
 	fetch("/create", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(formData),
+		body: JSON.stringify({
+			fromPage: from,
+			formData: formData,
+		}),
 	}).then((response) => {
-		if (!response.ok) {
-			throw new Error("Failed adding to database:");
-		} else if (response.status == 401) {
-			window.open("/auth/google", "_self");
+		if (response.ok) {
+			response.json().then((data) => {
+				if (from == "list") {
+					window.open(`/form/${data.formId}/edit`, "_self");
+				}
+			});
+		} else {
+			if (!response.ok) {
+				throw new Error("Failed adding to database:");
+			} else if (response.status == 401) {
+				window.open("/auth/google", "_self");
+			}
 		}
 	});
 }

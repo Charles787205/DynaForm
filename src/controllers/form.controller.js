@@ -30,8 +30,8 @@ const submit = async (req, res) => {
 	 */
 	if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
 	try {
-		const formData = req.body;
-
+		const formData = req.body.formData;
+		const fromPage = req.body.fromPage;
 		const components = [];
 		formData.formComponents.forEach((component) => {
 			const formComponent = new FormComponent(component);
@@ -46,9 +46,13 @@ const submit = async (req, res) => {
 			components: components,
 		});
 
-		const formId = await new Form(form.toCreateFormModel()).save();
-		const form_id = formId._id;
-		res.status(200).send({ form_id });
+		const newForm = await new Form(form.toCreateFormModel()).save();
+		console.log("ADDED TO DB", JSON.stringify(form));
+		if (fromPage === "create") {
+			res.redirect(`/forms`);
+		} else {
+			res.status(200).send({ formId: newForm._id });
+		}
 	} catch (error) {
 		console.error("Error processing form:", error);
 		return res.status(500).send(error);
@@ -56,10 +60,9 @@ const submit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-	// if (!req.isAuthenticated()) {
-	// 	res.redirect("/auth/google");
-	// }
-	console.log("USER: ", req.user);
+	if (!req.isAuthenticated()) {
+		res.redirect("/auth/google");
+	}
 	try {
 		const allForms = await Form.find({
 			user_id: req.user._id,
@@ -73,8 +76,9 @@ const list = async (req, res) => {
 				date: form.createdAt.toISOString().split("T")[0],
 			};
 		});
-		res.render("pages/listform", { forms });
+
 		// res.status(200).send({ forms });
+		res.render("pages/listform", { forms });
 	} catch (error) {
 		console.log("Error retrieving forms:", error);
 	}
@@ -98,6 +102,7 @@ const editForm = async (req, res) => {
 	 * Handles the submission of a form.
 	 * route "/forms/:id/edit" post
 	 */
+
 	const { email } = req.body;
 	const form_id = req.params.id;
 	const user_id = req.user._id;
@@ -111,7 +116,6 @@ const editForm = async (req, res) => {
 
 		console.log("FORM: ", form);
 		if (!form) {
-			console.log("Form not found");
 			// res.status(200).send("false");
 			res.redirect(`/form/${form_id}`);
 		}
@@ -127,6 +131,7 @@ const updateForm = async (req, res) => {
 	 * Handles the edit made in the form
 	 * /forms/:id/edit postunValidators: true
 	 */
+	const formData = req.body;
 	const components = [];
 	formData.formComponents.forEach((component) => {
 		const formComponent = new FormComponent(component);
@@ -147,9 +152,9 @@ const updateForm = async (req, res) => {
 
 //Delete Form
 const deleteForm = async (req, res) => {
-	if (!req.isAuthenticated()) {
-		res.redirect("/auth/google");
-	}
+	// if (!req.isAuthenticated()) {
+	// 	res.redirect("/auth/google");
+	// }
 	const { form_id } = req.params;
 	try {
 		const deleteForm = await Form.deleteOne({ _id: form_id });

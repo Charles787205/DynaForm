@@ -8,6 +8,7 @@ class FormComponent {
     forAttr = "",
     focus = false,
     required = false,
+    options = [],
   }) {
     this.forAttr = forAttr;
     this.id = id;
@@ -17,6 +18,7 @@ class FormComponent {
     this.placeHolder = placeHolder;
     this.focus = focus;
     this.required = required;
+    this.options = options;
   }
 
   toCreateFormModel = function () {
@@ -50,8 +52,8 @@ class FormComponent {
         content: this.content,
         id: this.id,
       };
-      if(this.type == "label") component.forAttr= this.forAttr;
-      
+      if (this.type == "label") component.forAttr = this.forAttr;
+
       return component;
     } else if (button.includes(this.type)) {
       return {

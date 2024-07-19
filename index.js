@@ -6,7 +6,7 @@ import checkPath from "./src/middleware/middleware.js";
 import express from "express";
 import router from "./src/routes/routes.js";
 import mongoose from "mongoose";
-
+import { ObjectId } from "mongodb";
 dotenv.config();
 const app = express();
 
@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 });
 app.all("*", function (req, res, next) {
   // CORS headers
-  res.header("Access-Control-Allow-Origin", req.path); // restrict it to the required domain
+  res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
 
   res.header(

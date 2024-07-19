@@ -2,10 +2,9 @@
 
   <div class="input-block">
     <div class="block-container">
-      <div hx-post="/components/fields/label" hx-trigger="load"
-        hx-vals='js:{"label": "<%= query.label %>", "for": "<%= query.id %>"}' hx-swap="outerHTML"></div>
-      <input data-type="inputfield" class="content-container text-[1.1rem] w-full outline-none resize-none"
-        id="input_<%= query.id %>" placeholder="<%= query.placeholder %>"></input>
+      
+      <input data-type="inputfield" name="<%= query.name %>" class="content-container text-[1.1rem] w-full outline-none resize-none"
+        id="<%= query.id %>" placeholder="<%= query.placeholder %>"></input>
     </div>
   </div>
 

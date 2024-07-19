@@ -1,28 +1,41 @@
-function check(){
-  if (typeof(Storage) !== "undefined") {
-    console.log("Naa storage:",getFormData());
+// import { submitResponse } from "./responseScript";
+// import FormData from "../src/models/form";
+
+function check() {
+  if (typeof Storage !== "undefined") {
+    console.log("Naa storage:", getFormData());
     localStorage.setItem("saveform", getFormData());
-    console.log("Local saved:",localStorage.getItem("saveform"));
+    console.log("Local saved:", localStorage.getItem("saveform"));
   } else {
     console.log("ALA");
   }
 }
 
+function submitForm(from = "create") {
+  const formData = getFormData() ?? [];
 
-function submitForm() {
-  const formData = getFormData();
-  console.log(formData);
   fetch("/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(formData),
+    body: JSON.stringify({
+      fromPage: from,
+      formData: formData,
+    }),
   }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Failed adding to database:");
-    } else if (response.status == 401) {
-      window.open("/auth/google", "_self");
+    if (response.ok) {
+      response.json().then((data) => {
+        if (from == "list") {
+          window.open(`/form/${data.formId}/edit`, "_self");
+        }
+      });
+    } else {
+      if (!response.ok) {
+        throw new Error("Failed adding to database:");
+      } else if (response.status == 401) {
+        window.open("/auth/google", "_self");
+      }
     }
   });
 }
@@ -47,38 +60,132 @@ function updateForm() {
   });
 }
 
+// function updateForm() {
+//   const formData = getFormData();
+//   const form = document.getElementById("formID");
+//   console.log(formData);
+
+//   fetch(`/form/${form.textContent}/edit`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(formData),
+//   }).then((response) => {
+//     if (!response.ok) {
+//       throw new Error("Failed adding to database:");
+//     } else if (response.status == 401) {
+//       window.open("/auth/google", "_self");
+//     }
+//   });
+// }
+
+/**
+ * Retrieves form data from the DOM and returns it as an object.
+ * @returns {Object} The form data object.
+ */
+
 function getFormData() {
+  if (!document.getElementById("form")) {
+    return (FormData = {
+      formName: "Default form",
+      formDescription: "defaultDescription",
+      formComponents: [
+        {
+          id: "7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
+          name: "heading_7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
+          type: "heading",
+          placeholder: "Add a heading",
+        },
+        {
+          id: "67a46c3c-d4e7-4032-ac0a-2277b9d90741",
+          name: "textfield_67a46c3c-d4e7-4032-ac0a-2277b9d90741",
+          type: "textfield",
+          focus: "true",
+          placeholder: "Start typing text or add a block.",
+        },
+        {
+          id: "b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
+          name: "textfield_b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
+          type: "textfield",
+          placeholder: "Start typing text or add a block.",
+        },
+        {
+          id: "c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
+          name: "textfield_c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
+          type: "textfield",
+          placeholder: "Start typing text or add a block.",
+        },
+      ],
+    });
+  }
   const form = document.getElementById("form");
   const formName =
     document.getElementById("form-title").value || "defaultFormName";
   const formDescription =
     form.getAttribute("data-form-description") || "defaultDescription";
 
-  const formComponents = Array.from(form.querySelectorAll(".input-block")).map(
-    (block) => {
-      const contentContainer = block.querySelector(".content-container");
+  const inputBlock = form.querySelectorAll(".input-block");
+  console.log(inputBlock);
+  const arr = [];
+  let tempName = "";
+  let dropDownOptions = [];
+  const formComponents = [];
 
-      const id = block.id;
-      const name = contentContainer.getAttribute("data-name");
-      const type = contentContainer.getAttribute("data-type");
-      const forAttr = contentContainer.getAttribute("data-for");
-      console.log("TYPE", type);
-      const required = contentContainer.getAttribute("required");
-      var placeholder = contentContainer.getAttribute("placeholder");
-      const content = contentContainer.innerHTML;
-      const checked = contentContainer.getAttribute("checked");
-      const focus = contentContainer.hasAttribute("autofocus")
-        ? "true"
-        : undefined;
+  for (let i = 0; i < inputBlock.length; i++) {
+    const block = inputBlock[i];
 
-      const component = { id };
+    const contentContainer = block.querySelector(".content-container");
+    const id = block.id;
+    const name = contentContainer.getAttribute("data-name");
+    const type = contentContainer.getAttribute("data-type");
+    const forAttr = contentContainer.getAttribute("data-for");
+    const required = contentContainer.getAttribute("required");
+    var placeholder = contentContainer.getAttribute("placeholder");
+    const content = contentContainer.textContent;
+    const checked = contentContainer.getAttribute("checked");
+    const focus = contentContainer.hasAttribute("autofocus");
+
+    //initialize the component with the id
+    const component = { id };
+    if (type == "dropdown") {
+      if (!tempName) {
+        tempName = name;
+      } else {
+        if (tempName != name) {
+          component.content = arr;
+          tempName = "";
+        }
+      }
+
+      dropDownOptions.push(content);
+      if (i == inputBlock.length - 1) {
+        const dropdown = {
+          name: tempName,
+          type: "dropdown",
+          options: dropDownOptions,
+        };
+        formComponents.push(dropdown);
+        dropDownOptions = [];
+        tempName = null;
+      }
+    } else {
+      //check if its different dropdown
+      if (tempName && tempName != name) {
+        const dropdown = {
+          name: tempName,
+          type: "dropdown",
+          options: dropDownOptions,
+        };
+        formComponents.push(dropdown);
+        dropDownOptions = [];
+        tempName = null;
+      }
 
       if (content) {
-        if (type === "dropdown") {
-          const components = [];
-          component.content = content;
-        } else component.content = content;
+        component.content = content;
       }
+
       if (forAttr) {
         component.forAttr = forAttr;
       }
@@ -103,15 +210,15 @@ function getFormData() {
       if (placeholder) {
         component.placeholder = placeholder;
       }
-      return component;
+      formComponents.push(component);
     }
-  );
-
+  }
   return (formData = {
     formName,
     formDescription,
     formComponents,
   });
+  //component is new not dropdown
 }
 
 function auto_grow(element) {
@@ -290,6 +397,7 @@ function handleSwap(e) {
     });
   }
 }
+
 //Listeners
 
 document.addEventListener("DOMContentLoaded", function () {

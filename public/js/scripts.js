@@ -3,17 +3,16 @@
 
 function check() {
   if (typeof Storage !== "undefined") {
-    console.log("Naa storage:", getFormData());
-    localStorage.setItem("saveform", JSON.stringify(getFormData()));
+    localStorage.setItem("saveform", getFormData());
     console.log("Local saved:", localStorage.getItem("saveform"));
   } else {
-    console.log("ALA");
+    console.log("Not saved.");
   }
 }
 
 function submitForm(from = "create") {
   const formData = getFormData() ?? [];
-
+  console.log("FORM FROM SCRIPT", formData);
   fetch("/create", {
     method: "POST",
     headers: {
@@ -41,56 +40,10 @@ function submitForm(from = "create") {
   });
 }
 
-function updateForm() {
-  const formData = getFormData();
-  const form = document.getElementById("formID");
-
-  localStorage.setItem("saveform", JSON.stringify(getFormData()));
-
-  fetch(`/form/${form.textContent}/edit`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Failed adding to database:");
-    } else if (response.status == 401) {
-      window.open("/auth/google", "_self");
-    }
-  });
-}
-
-// function updateForm() {
-//   const formData = getFormData();
-//   const form = document.getElementById("formID");
-//   console.log(formData);
-
-//   fetch(`/form/${form.textContent}/edit`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(formData),
-//   }).then((response) => {
-//     if (!response.ok) {
-//       throw new Error("Failed adding to database:");
-//     } else if (response.status == 401) {
-//       window.open("/auth/google", "_self");
-//     }
-//   });
-// }
-
-/**
- * Retrieves form data from the DOM and returns it as an object.
- * @returns {Object} The form data object.
- */
-
 function getFormData() {
   if (!document.getElementById("form")) {
     return (FormData = {
-      formName: "Default form",
+      formName: "Untitled Form",
       formDescription: "defaultDescription",
       formComponents: [
         {
@@ -128,7 +81,6 @@ function getFormData() {
     form.getAttribute("data-form-description") || "defaultDescription";
 
   const inputBlock = form.querySelectorAll(".input-block");
-  console.log(inputBlock);
   const arr = [];
   let tempName = "";
   let dropDownOptions = [];
@@ -223,6 +175,50 @@ function getFormData() {
   //component is new not dropdown
 }
 
+function updateForm() {
+  const formData = getFormData();
+  const form = document.getElementById("formID");
+
+  fetch(`/form/${form.textContent}/edit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed adding to database:");
+    } else if (response.status == 401) {
+      window.open("/auth/google", "_self");
+    }
+  });
+}
+
+// function updateForm() {
+//   const formData = getFormData();
+//   const form = document.getElementById("formID");
+//   console.log(formData);
+
+//   fetch(`/form/${form.textContent}/edit`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(formData),
+//   }).then((response) => {
+//     if (!response.ok) {
+//       throw new Error("Failed adding to database:");
+//     } else if (response.status == 401) {
+//       window.open("/auth/google", "_self");
+//     }
+//   });
+// }
+
+/**
+ * Retrieves form data from the DOM and returns it as an object.
+ * @returns {Object} The form data object.
+ */
+
 function auto_grow(element) {
   element.style.height = "5px";
   element.style.height = element.scrollHeight + "px";
@@ -238,7 +234,6 @@ function initializeDragAndDrop() {
     draggedElement = event.target;
     event.dataTransfer.setData("text/plain", null);
     event.target.style.opacity = 0.5;
-    console.log("dragged", draggedElement);
   });
 
   document.addEventListener("dragend", (event) => {
@@ -313,7 +308,6 @@ function initalizeDropzones() {
         currentDropZone.classList.remove("drag-over");
         handleDrop(currentDropZone);
         currentDropZone = null;
-        console.log("dropped at: ", event.target);
       }
     });
   });
@@ -330,7 +324,6 @@ function handleDrop(dropZone) {
         .querySelector(".input-flex");
 
       parentInputBlock = inputFlexContainer;
-      console.log("dropped to parent: ", inputFlexContainer);
     }
 
     if (position === "left" || position === "right") {

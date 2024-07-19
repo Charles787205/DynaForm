@@ -28,8 +28,8 @@ class FormComponent {
       "radiobox",
       "inputfield",
       "checkbox",
-      "dropdown",
     ];
+    const optionTypes = ["dropdown"];
     const textTypes = ["heading", "label", "textfield"];
     const button = ["button"];
     const divider = ["divider"];
@@ -70,6 +70,14 @@ class FormComponent {
         name: this.name,
         id: this.id,
         content: this.content,
+      };
+    } else if (optionTypes.includes(this.type)) {
+      return {
+        component_type: "option",
+        name: this.name,
+        type: this.type,
+        id: this.id,
+        options: this.options,
       };
     } else {
       console.log("Invalid type");

@@ -25,11 +25,11 @@ function submitForm(from = "create") {
     }),
   }).then((response) => {
     if (response.ok) {
-      response.json().then((data) => {
-        if (from == "list") {
+      if (from == "list") {
+        response.json().then((data) => {
           window.open(`/form/${data.formId}/edit`, "_self");
-        }
-      });
+        });
+      }
     } else {
       if (!response.ok) {
         throw new Error("Failed adding to database:");

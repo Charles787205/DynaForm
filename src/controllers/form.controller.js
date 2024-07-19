@@ -88,11 +88,9 @@ const viewForm = async (req, res) => {
   const form_id = req.params.id;
   try {
     const form = await Form.findById(form_id);
-    console.log("FORM RETRIEVED FROM DB: ", form.toJSON());
 
     res.render("pages/viewform", { form: form.toJSON() });
   } catch (error) {
-    console.error("Error retrieving form:", error);
     res.status(500).send("Error retrieving form");
   }
 };
@@ -136,6 +134,7 @@ const updateForm = async (req, res) => {
     const formComponent = new FormComponent(component);
     const newComponent = new Component(formComponent.toCreateFormModel());
     components.push(newComponent);
+    655;
   });
 
   const newForm = {
@@ -145,7 +144,7 @@ const updateForm = async (req, res) => {
   };
   const form_id = req.params.id;
   const form = await Form.findByIdAndUpdate(form_id, newForm);
-  console.log(form);
+
   res.send(200, "Form updated");
 };
 

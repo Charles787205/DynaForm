@@ -2,7 +2,7 @@ var delay;
 const handler = (event) => {
    clearTimeout(delay);
     delay =  setTimeout(() => {
-      console.log("Savable");
+      console.log("Saved");
       updateForm();      
     }, 500);
 };

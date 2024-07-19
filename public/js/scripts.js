@@ -34,6 +34,7 @@ function submitForm(from = "create") {
       if (!response.ok) {
         throw new Error("Failed adding to database:");
       } else if (response.status == 401) {
+        localStorage.setItem("savedForm: ", formData);
         window.open("/auth/google", "_self");
       }
     }

@@ -56,7 +56,7 @@
           <div class="w-full flex justify-center">
             <form class="flex flex-col h-full w-full max-w-screen-lg px-10 mb-20" data-form-name="" data-form-description="">
               <%
-                form.components.forEach(item=> {
+                form.components.forEach(item=> { console.log(item);
                 if(item.type === "divider"){
                 item.content = "";
                 }
@@ -64,7 +64,13 @@
                   <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="outerHTML"
                   hx-vals='js:{"content": "<%=item.content.replace(/\n\s*/g, "").trim()%>","placeholder":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>"}'
                   class="form-field"></div>
-                <% }else{ %>
+                <% }else if(item.component_type==="option"){
+                  item.options.forEach(element => {%>
+                    <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="outerHTML"
+                    hx-vals='js:{"content":"<%=element?element.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>"}'
+                    class="form-field"></div>
+                 <%});   
+                }else{ %>
                   <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="outerHTML"
                   hx-vals='js:{"content":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>"}'
                   class="form-field"></div>

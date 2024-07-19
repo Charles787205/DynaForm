@@ -4,7 +4,7 @@
 function check() {
   if (typeof Storage !== "undefined") {
     console.log("Naa storage:", getFormData());
-    localStorage.setItem("saveform", getFormData());
+    localStorage.setItem("saveform", JSON.stringify(getFormData()));
     console.log("Local saved:", localStorage.getItem("saveform"));
   } else {
     console.log("ALA");
@@ -34,7 +34,7 @@ function submitForm(from = "create") {
       if (!response.ok) {
         throw new Error("Failed adding to database:");
       } else if (response.status == 401) {
-        localStorage.setItem("savedForm: ", formData);
+        localStorage.setItem("saveform", JSON.stringify(getFormData()));
         window.open("/auth/google", "_self");
       }
     }
@@ -45,7 +45,7 @@ function updateForm() {
   const formData = getFormData();
   const form = document.getElementById("formID");
 
-  localStorage.setItem("savedForm: ", formData);
+  localStorage.setItem("saveform", JSON.stringify(getFormData()));
 
   fetch(`/form/${form.textContent}/edit`, {
     method: "POST",

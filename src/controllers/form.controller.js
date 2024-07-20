@@ -4,7 +4,6 @@ import FormObject from "../objects/form.js";
 import Form from "../models/form.models.js";
 import { ObjectId } from "mongodb";
 import validators from "validator";
-
 const index = async (req, res) => {
 	/**
 	 *  index page
@@ -63,25 +62,8 @@ const list = async (req, res) => {
 	if (!req.isAuthenticated()) {
 		res.redirect("/auth/google");
 	}
-	try {
-		const allForms = await Form.find({
-			user_id: req.user._id,
-		}).sort({ createdAt: -1 });
 
-		const forms = allForms.map((form) => {
-			return {
-				id: form._id,
-				name: form.name,
-				description: form.description,
-				date: form.createdAt.toISOString().split("T")[0],
-			};
-		});
-
-		// res.status(200).send({ forms });
-		res.render("pages/listform", { forms });
-	} catch (error) {
-		console.log("Error retrieving forms:", error);
-	}
+	res.render("pages/listform");
 };
 //route "/forms/:id" get
 const viewForm = async (req, res) => {
@@ -152,9 +134,9 @@ const updateForm = async (req, res) => {
 
 //Delete Form
 const deleteForm = async (req, res) => {
-	// if (!req.isAuthenticated()) {
-	// 	res.redirect("/auth/google");
-	// }
+	if (!req.isAuthenticated()) {
+		res.redirect("/auth/google");
+	}
 	const { form_id } = req.params;
 	try {
 		const deleteForm = await Form.deleteOne({ _id: form_id });
@@ -197,13 +179,43 @@ const giveAccess = async (req, res) => {
 };
 
 const deleteAllForms = async (req, res) => {
-	// route "/deleteAll"
 	try {
 		await Form.deleteMany({});
 		res.status(200).send("All forms deleted");
 	} catch (error) {
 		console.error("Error deleting forms:", error);
 		res.status(500).send("Error deleting forms");
+	}
+};
+
+const search = async (req, res) => {
+	const search_input = req.body.search;
+	let search_forms = [];
+	try {
+		if (search_input) {
+			search_forms = await Form.find({
+				$and: [
+					{ name: { $regex: search_input, $options: "i" } },
+					{ user_id: req.user._id },
+				],
+			});
+		} else {
+			search_forms = await Form.find({
+				user_id: req.user._id,
+			}).sort({ createdAt: -1 });
+		}
+
+		const forms = search_forms.map((form) => {
+			return {
+				id: form._id,
+				name: form.name,
+				description: form.description,
+				date: form.createdAt.toISOString().split("T")[0],
+			};
+		});
+		return res.render("components/listcontainer", { forms });
+	} catch (error) {
+		console.log("Error retrieving forms:", error);
 	}
 };
 
@@ -224,8 +236,5 @@ export default {
 	deleteAllForms,
 	deleteForm,
 	giveAccess,
+	search,
 };
-// user_id: new ObjectId("6695ddb53109d5d09d912955"), my id
-// const user_id = new ObjectId("66960301ed29140e5c586913"); // franco id ...
-
-// req.user._id

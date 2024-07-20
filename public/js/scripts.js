@@ -1,6 +1,13 @@
 // import { submitResponse } from "./responseScript";
 // import FormData from "../src/models/form";
 
+function triggerHxLoad() {
+	document.querySelectorAll('[hx-trigger="load"]').forEach((element) => {
+		// Manually trigger the load event for HTMX
+		htmx.trigger(element, "load");
+	});
+}
+
 function check() {
 	if (typeof Storage !== "undefined") {
 		console.log("Naa storage:", getFormData());

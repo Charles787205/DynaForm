@@ -30,7 +30,7 @@
         <div class="flex flex-col gap-2">
           <p class="text-md font-bold text-gray-400 text-start px-4">Text blocks</p>
           <div>
-            <% texts.forEach(function(item) { console.log(item); %>
+            <% texts.forEach(function(item) { %>
               <button hx-post="/components/modal/preview" hx-trigger="click" hx-swap="innerHTML"
                 hx-vals='js:{"title": "<%= item.title %>", "description": "<%= item.description %>", "type": "<%= item.type %>", "example_text": "<%= item.example_text %>" }'
                 hx-target=".preview" class="w-full focus:outline-none px-4 bg-white hover:bg-gray-200 focus:ring-4 focus:ring-gray-100  text-sm py-1
@@ -43,7 +43,7 @@
         <div class="flex flex-col gap-2">
           <p class="text-md font-bold text-gray-400 text-start px-4">Input blocks</p>
           <div>
-            <% inputs.forEach(function(item) { console.log(item); %>
+            <% inputs.forEach(function(item) { %>
               <button hx-post="/components/modal/preview" hx-trigger="click" hx-swap="innerHTML"
                 hx-vals='js:{"title": "<%= item.title %>", "description": "<%= item.description %>", "type": "<%= item.type %>", "example_text": "<%= item.example_text %>" }'
                 hx-target=".preview" class="w-full focus:outline-none px-4 bg-white hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 text-sm py-1

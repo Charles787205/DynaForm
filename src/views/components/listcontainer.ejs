@@ -1,0 +1,12 @@
+<div class="flex flex-col gap-3">
+	<% if (forms && forms.length > 0) { %> <% forms.forEach(function(item) { %>
+	<div
+		hx-post="components/formCard"
+		hx-trigger="load, changed delay:500ms"
+		hx-swap="outerHTML"
+		hx-vals='js:{"name": "<%= item.name %>","date": "<%= item.date %>","id": "<%= item.id %>"}'
+	></div>
+	<% }); %> <% } else { %>
+	<p class="text-lg">No forms available.</p>
+	<% } %>
+</div>

@@ -10,7 +10,7 @@ function triggerHxLoad() {
 
 function check() {
 	if (typeof Storage !== "undefined") {
-		localStorage.setItem("saveform", getFormData());
+		localStorage.setItem("saveform", JSON.stringify(getFormData()));
 		console.log("Local saved:", localStorage.getItem("saveform"));
 	} else {
 		console.log("Not saved.");
@@ -18,55 +18,56 @@ function check() {
 }
 
 function submitForm(from = "create") {
+	/**
+	 * Published Button on navbar
+	 */
 	const formData = getFormData() ?? [];
-	// Swal.fire({
-	// 	title: "Are you sure?",
-	// 	text: "This form will be publish!",
-	// 	icon: "warning",
-	// 	showCancelButton: true,
-	// 	confirmButtonColor: "#008000",
-	// 	cancelButtonColor: "#d33",
-	// 	confirmButtonText: "Yes, publish it!",
-	// }).then((result) => {
-	// 	if (result.isConfirmed) {
-	// 		fetch("/create", {
-	// 			method: "POST",
-	// 			headers: {
-	// 				"Content-Type": "application/json",
-	// 			},
-	// 			body: JSON.stringify({
-	// 				fromPage: from,
-	// 				formData: formData,
-	// 			}),
-	// 		}).then((response) => {
-	// 			if (response.ok) {
-	// 				Swal.fire({
-	// 					title: "Published!",
-	// 					text: "Your form has been publish successfully.",
-	// 					icon: "success",
-	// 				});
-	// 				if (from == "list") {
-	// 					response.json().then((data) => {
-	// 						console.log("list");
-	// 						window.open(`/form/${data.formId}/edit`, "_self");
-	// 					});
-	// 				}
-	// 			} else {
-	// 				Swal.fire({
-	// 					title: "Error",
-	// 					text: "Failed adding to database:",
-	// 					icon: "success",
-	// 				});
-	// 				if (!response.ok) {
-	// 					throw new Error("Failed adding to database:");
-	// 				} else if (response.status == 401) {
-	// 					localStorage.setItem("saveform", JSON.stringify(getFormData()));
-	// 					window.open("/auth/google", "_self");
-	// 				}
-	// 			}
-	// 		});
-	// 	}
-	// });
+
+	const userInput = Swal.fire({
+		title: "Are you sure?",
+		text: "This form will be publish!",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#008000",
+		cancelButtonColor: "#d33",
+		confirmButtonText: "Yes, publish it!",
+	});
+	if (userInput.isConfirmed) {
+		createForm((from = from));
+	}
+}
+
+async function createForm(from = "list") {
+	//** when creating a new form */
+	const formData = getFormData();
+	const response = await fetch("/create", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			fromPage: from,
+			formData: formData,
+		}),
+	});
+	if (response.ok) {
+		const res = await response.json();
+		if (from == "list") {
+			return window.open(`/form/${res.formId}/edit`, "_self");
+		} else {
+			console.log("Form created");
+			Swal.fire({
+				title: "Publish Success!",
+				text: "Your forms has been published.",
+				icon: "success",
+			});
+		}
+	} else {
+		if (response.status == 401) {
+			localStorage.setItem("saveform", JSON.stringify(getFormData()));
+			window.open("/auth/google", "_self");
+		}
+	}
 }
 
 function getFormData() {
@@ -300,7 +301,7 @@ function initalizeDropzones() {
 	document.querySelectorAll(".move-dropzone").forEach((dropzone) => {
 		dropzone.addEventListener("dragover", (event) => {
 			event.preventDefault();
-
+			const target = event.target.closest(".input-block");
 			targetBlock = target;
 			if (target && target !== draggedElement) {
 				const nearestDropZone = findNearestDropZone(
@@ -429,6 +430,54 @@ function handleSwap(e) {
 			element.closest(".input-block").remove();
 		});
 	}
+}
+
+function submitResponse(event) {
+	event.preventDefault();
+	console.log(event.target.id);
+	const { form_id, responses } = getFormResponse();
+	fetch(`/response/${event.target.id}`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(responses),
+	}).then((response) => {
+		if (!response.ok) {
+			throw new Error("Failed adding to database:");
+		} else if (response.status == 401) {
+			window.open("/auth/google", "_self");
+		}
+	});
+}
+
+function getFormResponse() {
+	const form = document.getElementById("form");
+
+	const responses = [];
+	const inputBlocks = form.querySelectorAll(".input-block");
+	inputBlocks.forEach((block) => {
+		const input = block.querySelector("input");
+		const select = block.querySelector("select");
+		const textarea = block.querySelector("textarea");
+		const response = { component_id: block.id };
+		if (input || select || textarea) {
+			if (input) {
+				if (input.type == "checkbox" || input.type == "radio") {
+					response.value = input.checked;
+				} else {
+					(response.component_id = input.id), (response.value = input.value);
+				}
+			} else if (select) {
+				response.value = select.value;
+			} else if (textarea) {
+				response.value = textarea.value;
+			}
+			responses.push(response);
+		}
+	});
+
+	return { responses };
 }
 
 //Listeners

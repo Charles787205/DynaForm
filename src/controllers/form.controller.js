@@ -28,35 +28,34 @@ const submit = async (req, res) => {
 	 *
 	 */
 	if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
-	console.log("FORM DATA", req.body);
-	// try {
-	// 	const formData = req.body.formData;
-	// 	const fromPage = req.body.fromPage;
-	// 	const components = [];
-	// 	formData.formComponents.forEach((component) => {
-	// 		const formComponent = new FormComponent(component);
-	// 		const newComponent = new Component(formComponent.toCreateFormModel());
-	// 		components.push(newComponent);
-	// 	});
+	try {
+		const formData = req.body.formData;
+		const fromPage = req.body.fromPage;
+		const components = [];
+		formData.formComponents.forEach((component) => {
+			const formComponent = new FormComponent(component);
+			const newComponent = new Component(formComponent.toCreateFormModel());
+			components.push(newComponent);
+		});
 
-	// 	const form = new FormObject({
-	// 		user_id: req.user._id,
-	// 		name: formData.formName,
-	// 		description: formData.formDescription,
-	// 		components: components,
-	// 	});
+		const form = new FormObject({
+			user_id: req.user._id,
+			name: formData.formName,
+			description: formData.formDescription,
+			components: components,
+		});
 
-	// 	const newForm = await new Form(form.toCreateFormModel()).save();
-	// 	// console.log("ADDED TO DB", JSON.stringify(form));
-	// 	if (fromPage === "create") {
-	// 		res.redirect(`/forms`);
-	// 	} else {
-	// 		res.status(200).json({ formId: newForm._id });
-	// 	}
-	// } catch (error) {
-	// 	console.error("Error processing form:", error);
-	// 	return res.status(500).send(error);
-	// }
+		const newForm = await new Form(form.toCreateFormModel()).save();
+		// console.log("ADDED TO DB", JSON.stringify(form));
+		if (fromPage === "create") {
+			res.redirect(`/forms`);
+		} else {
+			res.status(200).json({ formId: newForm._id });
+		}
+	} catch (error) {
+		console.error("Error processing form:", error);
+		return res.status(500).send(error);
+	}
 };
 
 const list = async (req, res) => {

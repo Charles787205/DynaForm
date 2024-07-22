@@ -40,31 +40,32 @@
 			rel="stylesheet"
 		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- sweet alert -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 		<title>Document</title>
 	</head>
 
 	<body>
 		<div class="app">
 			<%- include('../components/formsNavbar'); %>
+
 			<main class="mainscreen w-screen items-start inline-flex" id="main">
 				<div class="relative min-h-screen w-screen pt-16">
-					<div class="w-full flex justify-center">
+					<div class="w-full flex justify-center z-20 px-10">
 						<div
-							class="flex flex-col h-full w-full max-w-screen-lg pt-6 gap-2.5 mb-20"
+							class="flex flex-col h-full w-full items-center max-w-screen-lg pt-6 gap-2.5 mb-20"
 							hx-boost="true"
 						>
 							<div
-								class="justify-between items-center gap-2.5 inline-flex py-4"
+								class="justify-between w-full items-center gap-2.5 inline-flex py-4"
 							>
-								<a
-									class="text-neutral-600 text-5xl font-extrabold"
-									href="/forms"
-								>
+								<h1 class="text-neutral-600 text-5xl font-extrabold">
 									My Forms
-								</a>
+								</h1>
 								<button
 									class="inline-flex hover:shadow-lg transition-shadow justify-center items-center rounded-full border border-gray-300 py-2 px-3"
-									onclick="submitForm()"
+									onclick="createForm()"
 								>
 									<svg
 										width="40"
@@ -81,14 +82,21 @@
 									<h1 class="text-xl font-bold text-gray-500">New Form</h1>
 								</button>
 							</div>
-							<div class="self-stretch h-px border border-neutral-400"></div>
-
-							<div id="list-container"></div>
+							<div class="w-full flex justify-center">
+								<div id="list-container" class="w-full max-w-screen-lg"></div>
+							</div>
+						</div>
+						<div
+							class="load-indicator h-screen fixed w-screen bg-white flex justify-center items-center"
+							id="spinner"
+						>
+							<img src="/assets/1490.gif" class="object-contain" />
 						</div>
 					</div>
 				</div>
 			</main>
 		</div>
+
 		<!-- <script src="/js/Sortable.min.js"></script> -->
 	</body>
 </html>

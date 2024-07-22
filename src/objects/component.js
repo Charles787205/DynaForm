@@ -42,7 +42,7 @@ class FormComponent {
         content: "",
         focused_bool: false,
         id: this.id,
-        placeholder: this.content,
+        placeholder: this.content.replace("\n", ""),
       };
     } else if (textTypes.includes(this.type)) {
       const component = {
@@ -77,7 +77,7 @@ class FormComponent {
         name: this.name,
         type: this.type,
         id: this.id,
-        options: this.options,
+        options: this.options.map((option) => option.replace("\n", "")),
       };
     } else {
       console.log("Invalid type");

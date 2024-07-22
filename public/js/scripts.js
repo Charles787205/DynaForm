@@ -20,16 +20,16 @@ function check() {
 function submitForm(from = "create") {
 	const formData = getFormData() ?? [];
 
-	Swal.fire({
-		title: "Are you sure?",
-		text: "This form will be publish!",
-		icon: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#008000",
-		cancelButtonColor: "#d33",
-		confirmButtonText: "Yes, publish it!",
-	}).then((result) => {
-		if (result.isConfirmed) {
+	// Swal.fire({
+	// 	title: "Are you sure?",
+	// 	text: "This form will be publish!",
+	// 	icon: "warning",
+	// 	showCancelButton: true,
+	// 	confirmButtonColor: "#008000",
+	// 	cancelButtonColor: "#d33",
+	// 	confirmButtonText: "Yes, publish it!",
+	// }).then((result) => {
+	// 	if (result.isConfirmed) {
 			fetch("/create", {
 				method: "POST",
 				headers: {
@@ -66,8 +66,8 @@ function submitForm(from = "create") {
 					}
 				}
 			});
-		}
-	});
+	// 	}
+	// });
 }
 
 function getFormData() {

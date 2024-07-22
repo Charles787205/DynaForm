@@ -26,7 +26,7 @@
 <body>
   <div id="formID" style="display: none;"><%= form._id %></div>
   <div class="app">
-    <%- include('../components/navbar',{name : form.name}); %>
+    <%- include('../components/navbar',{name : form.name, id : form._id.toString()}); %>
       <div class="load-indicator w-screen h-screen fixed bg-white flex justify-center items-center" id="spinner"><img src="/assets/1490.gif" class="object-contain" /></div>
       <main class="mainscreen template w-screen items-start inline-flex">
         <div class="relative min-h-screen w-screen pt-16" action="" method="" onsubmit="onSubmit(event)" id="form">
@@ -56,8 +56,7 @@
           <div class="w-full flex justify-center">
             <form class="flex flex-col h-full w-full max-w-screen-lg px-10 mb-20" data-form-name="" data-form-description="">
               <%
-              console.log("THE FORM",form);
-                form.components.forEach(item=> {
+                form.components.forEach(item=> { console.log(item);
                 if(item.type === "divider"){
                 item.content = "";
                 }
@@ -65,14 +64,18 @@
                   <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="outerHTML"
                   hx-vals='js:{"content": "<%=item.content.replace(/\n\s*/g, "").trim()%>","placeholder":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>"}'
                   class="form-field"></div>
-                <% }else{ %>
+                <% }else if(item.component_type==="option"){
+                  item.options.forEach(element => {%>
+                    <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="outerHTML"
+                    hx-vals='js:{"content":"<%=element?element.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>"}'
+                    class="form-field"></div>
+                 <%});   
+                }else{ %>
                   <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="outerHTML"
                   hx-vals='js:{"content":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>", "options": "<%= item.options %>"}'
                   class="form-field"></div>
                 <% }}); %>
                 <div hx-post="/components/button" hx-swap="outerHTML" hx-trigger="load" hx-vals='js:{"type": "submit"}'></div>
-                
-
             </form>
 
           </div>

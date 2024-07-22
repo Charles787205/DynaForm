@@ -487,12 +487,5 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("htmx:afterSwap", function (e) {
-  console.log("something happend outside", e.detail.target);
   handleSwap(e);
-});
-
-const someChanges = new CustomEvent('someChange', {
-    detail: {
-        message: 'An element was added to the DOM'
-    }
 });

@@ -31,9 +31,9 @@
           value="<%= typeof name !== 'undefined'?name:"Untitled form" %>"
           onblur="if (this.value.trim() === '') { this.value = 'Untitled Form'; }"
         />
-        <div class="flex">
-          <div class="load-indicator absolute w-full flex justify-start" id="change-indicator"><img src="/assets/25.gif" width="35" class="object-contain" /></div>
-          <!-- <div class="pt-2" hx-indicator="#change-indicator">All changes saved</div> -->
+        <div class="flex items-center gap-2" style="display: none;" id="change">
+          <div class="load-incidator w-4 h-4 mt-2 flex justify-start" id="change-indicator"><img src="/assets/1487.gif" width="35" class="object-contain" /></div>
+          <div class="pt-2 text-gray-400" id="change-text" >All changes saved</div>
         </div>
       </div>
 

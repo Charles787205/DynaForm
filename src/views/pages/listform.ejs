@@ -44,8 +44,11 @@
 	</head>
 
 	<body>
+		
 		<div class="app">
+
 			<%- include('../components/formsNavbar'); %>
+
 			<main class="mainscreen w-screen items-start inline-flex" id="main">
 				<div class="relative min-h-screen w-screen pt-16">
 					<div class="w-full flex justify-center">
@@ -54,7 +57,7 @@
 							hx-boost="true"
 						>
 							<div
-								class="justify-between items-center gap-2.5 inline-flex py-4"
+								class="justify-between items-center gap-2.5 inline-flex px-10 py-4"
 							>
 								<a
 									class="text-neutral-600 text-5xl font-extrabold"
@@ -81,14 +84,14 @@
 									<h1 class="text-xl font-bold text-gray-500">New Form</h1>
 								</button>
 							</div>
-							<div class="self-stretch h-px border border-neutral-400"></div>
-
-							<div id="list-container"></div>
+							<div id="list-container">
+							</div>
 						</div>
 					</div>
 				</div>
 			</main>
 		</div>
+
 		<!-- <script src="/js/Sortable.min.js"></script> -->
 	</body>
 </html>

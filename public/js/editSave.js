@@ -1,9 +1,9 @@
 var delay;
-const handler = (event) => {
+function handler (event) {
   const loader = document.getElementById("change-indicator");
   const loader_text = document.getElementById("change-text");
   const indicator = document.getElementById("change"); 
-  loader.style.display = "flex";
+  loader.style.display = "fleYYZZZx";
   loader_text.innerHTML = "Saving";
   indicator.style.display = "flex";
 
@@ -17,7 +17,9 @@ const handler = (event) => {
       loader_text.innerHTML = "All changes saved.";
       loader.style.display = "none";
     }, 500);
- 
+    
 };
-document.addEventListener("drop", handler);
-document.addEventListener("input", handler);
+document.getElementById("form").addEventListener("drop", handler);
+document.getElementById("form").addEventListener("click", handler);
+document.getElementById("form").addEventListener("change", handler);
+document.getElementById("form").addEventListener("input", handler);

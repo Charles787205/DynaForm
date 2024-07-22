@@ -278,7 +278,7 @@ function initalizeDropzones() {
 	document.querySelectorAll(".move-dropzone").forEach((dropzone) => {
 		dropzone.addEventListener("dragover", (event) => {
 			event.preventDefault();
-
+			const target = event.target.closest(".input-block"); 
 			targetBlock = target;
 			if (target && target !== draggedElement) {
 				const nearestDropZone = findNearestDropZone(

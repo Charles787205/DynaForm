@@ -40,7 +40,7 @@
     </div>
     <div class="flex items-center z-20">
       <button
-        class="relative group transition-all duration-200 p-2 focus:overflow-visible overflow-hidden text-md"
+        class="relative group transition-all duration-200 p-2 overflow-hidden text-md"
       >
         <span>
           <svg
@@ -75,31 +75,7 @@
         <div
           class="absolute shadow-lg -bottom-32 w-fit right-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2"
         >
-          <span
-            hx-post="/template/default"
-            hx-swap="inner"
-            hx-target=".template"
-            class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
-          >
-            <p>Default</p>
-          </span>
-          <span
-            hx-post="/template/survey"
-            hx-swap="innerHTML"
-            hx-target=".mainscreen"
-            class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
-          >
-            <p>Survey</p>
-          </span>
-
-          <span
-            hx-post="/template/feedback"
-            hx-swap="innerHTML"
-            hx-target=".template"
-            class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
-          >
-            <p>Feedback</p>
-          </span>
+          
         </div>
       </button>
       

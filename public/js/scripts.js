@@ -3,7 +3,7 @@
 
 function check() {
   if (typeof Storage !== "undefined") {
-    localStorage.setItem("saveform", getFormData());
+    localStorage.setItem("saveform", JSON.stringify(getFormData()));
     console.log("Local saved:", localStorage.getItem("saveform"));
   } else {
     console.log("Not saved.");

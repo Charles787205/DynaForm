@@ -59,7 +59,7 @@
           </div>
           <div class="w-full flex justify-center">
             <form class="flex flex-col h-full w-full max-w-screen-lg px-10" action="/form/<%= form._id %>" method="POST">
-              <% form.components.forEach(item=> { console.log("FFA",item.option);
+              <% form.components.forEach(item=> {
                 if(item.type === "divider"){
                 item.content = "";
                 } %>

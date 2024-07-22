@@ -57,11 +57,11 @@
             <div class="w-full flex justify-center">
               <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
                 <script>
-                  const saved = localStorage.getItem("saveform");
+                  const saved = JSON.parse(localStorage.getItem("saveform"));
+                  saved.formComponents.forEach(element => {
+                    console.log(element.type);
+                  });
                 </script>
-               <% 
-                
-                %>
               </form>
             </div>
           </div>

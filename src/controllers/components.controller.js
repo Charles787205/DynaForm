@@ -39,10 +39,17 @@ const showComponentPreview = async (req, res) => {
 	res.render("components/modal/preview", { ...req.body, view: true });
 };
 
+// Form List Component
+const getFormList = async (req, res) => {
+	const forms = req.body;
+	res.render("components/formlist", { forms });
+};
+
 export default {
 	getComponent,
 	getField,
 	showModal,
 	getTemplate,
 	showComponentPreview,
+	getFormList,
 };

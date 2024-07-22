@@ -1,0 +1,10 @@
+<div class="flex flex-col gap-3" id="listview">
+	<% forms.forEach(function(item) { %>
+	<div
+		hx-post="components/formCard"
+		hx-trigger="load"
+		hx-swap="outerHTML"
+		hx-vals='js:{"name": "<%=item.name %>","date": "<%=item.date %>","id": "<%=item.id %>"}'
+	></div>
+	<% }); %>
+</div>

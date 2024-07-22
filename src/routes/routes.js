@@ -9,14 +9,16 @@ router.route("/").get(FormController.index);
 router.post("/components/:name", Components.getComponent);
 router.post("/components/fields/:name", Components.getField);
 router.post("/template/:template", Components.getTemplate);
-
 //FORMS
 router
 	.route("/create")
 	.get(FormController.getCreatePage)
 	.post(FormController.submit);
-router.get("/forms", FormController.list);
-router.route("/form/:id").get(FormController.viewForm).post(ResponseController.submitResponse);
+
+router
+	.route("/form/:id")
+	.get(FormController.viewForm)
+	.post(ResponseController.submitResponse);
 router
 	.route("/form/:id/edit")
 	.get(FormController.editForm)
@@ -24,6 +26,10 @@ router
 router.delete("/deleteAll", FormController.deleteAllForms);
 router.delete("/delete/:form_id", FormController.deleteForm);
 router.route("/accessForm/:form_id").post(FormController.giveAccess);
+
+router.get("/forms", FormController.list); // list of forms page
+
+router.post("/search", FormController.search); // search
 
 // RESPONSE
 router.route("/response/:id").post(ResponseController.submitResponse);

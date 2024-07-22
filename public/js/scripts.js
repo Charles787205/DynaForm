@@ -393,6 +393,54 @@ function handleSwap(e) {
   }
 }
 
+function submitResponse(event) {
+  event.preventDefault();
+  console.log(event.target.id);
+  const { form_id, responses } = getFormResponse();
+  fetch(`/response/${event.target.id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(responses),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed adding to database:");
+    } else if (response.status == 401) {
+      window.open("/auth/google", "_self");
+    }
+  });
+}
+
+function getFormResponse() {
+  const form = document.getElementById("form");
+
+  const responses = [];
+  const inputBlocks = form.querySelectorAll(".input-block");
+  inputBlocks.forEach((block) => {
+    const input = block.querySelector("input");
+    const select = block.querySelector("select");
+    const textarea = block.querySelector("textarea");
+    const response = { component_id: block.id };
+    if (input || select || textarea) {
+      if (input) {
+        if (input.type == "checkbox" || input.type == "radio") {
+          response.value = input.checked;
+        } else {
+          (response.component_id = input.id), (response.value = input.value);
+        }
+      } else if (select) {
+        response.value = select.value;
+      } else if (textarea) {
+        response.value = textarea.value;
+      }
+      responses.push(response);
+    }
+  });
+
+  return { responses };
+}
+
 //Listeners
 
 document.addEventListener("DOMContentLoaded", function () {

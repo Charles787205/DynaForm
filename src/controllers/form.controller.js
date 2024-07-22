@@ -50,7 +50,7 @@ const submit = async (req, res) => {
 		if (fromPage === "create") {
 			res.redirect(`/forms`);
 		} else {
-			res.status(200).send({ formId: newForm._id });
+			res.status(200).json({ formId: newForm._id });
 		}
 	} catch (error) {
 		console.error("Error processing form:", error);
@@ -72,9 +72,7 @@ const viewForm = async (req, res) => {
 		const form = await Form.findById(form_id);
 
 		res.render("pages/viewform", { form: form.toJSON() });
-	} catch (error) {
-		res.status(500).send("Error retrieving form");
-	}
+	} catch (error) {}
 };
 
 const editForm = async (req, res) => {
@@ -133,14 +131,14 @@ const updateForm = async (req, res) => {
 
 //Delete Form
 const deleteForm = async (req, res) => {
-	// if (!req.isAuthenticated()) {
-	// 	res.redirect("/auth/google");
-	// }
+	if (!req.isAuthenticated()) {
+		res.redirect("/auth/google");
+	}
 	const { form_id } = req.params;
 	try {
 		const deleteForm = await Form.deleteOne({ _id: form_id });
 		if (deleteForm) {
-			return res.status(200).send(deleteForm);
+			return res.status(200).send({ message: "Form deleted" });
 		}
 		return res.status(404).send("Form not found");
 	} catch (error) {
@@ -178,7 +176,7 @@ const giveAccess = async (req, res) => {
 
 const deleteAllForms = async (req, res) => {
 	try {
-		await Form.deleteMany({});
+		await Form.deleteMany({ user_id: req.user._id });
 		res.status(200).send("All forms deleted");
 	} catch (error) {
 		console.error("Error deleting forms:", error);

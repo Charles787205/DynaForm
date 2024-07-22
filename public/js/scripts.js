@@ -19,30 +19,53 @@ function check() {
 
 function submitForm(from = "create") {
 	const formData = getFormData() ?? [];
-	console.log("FORM FROM SCRIPT", formData);
-	fetch("/create", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			fromPage: from,
-			formData: formData,
-		}),
-	}).then((response) => {
-		if (response.ok) {
-			if (from == "list") {
-				response.json().then((data) => {
-					window.open(`/form/${data.formId}/edit`, "_self");
-				});
-			}
-		} else {
-			if (!response.ok) {
-				throw new Error("Failed adding to database:");
-			} else if (response.status == 401) {
-				localStorage.setItem("saveform", JSON.stringify(getFormData()));
-				window.open("/auth/google", "_self");
-			}
+
+	Swal.fire({
+		title: "Are you sure?",
+		text: "This form will be publish!",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#008000",
+		cancelButtonColor: "#d33",
+		confirmButtonText: "Yes, publish it!",
+	}).then((result) => {
+		if (result.isConfirmed) {
+			fetch("/create", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					fromPage: from,
+					formData: formData,
+				}),
+			}).then((response) => {
+				if (response.ok) {
+					Swal.fire({
+						title: "Published!",
+						text: "Your form has been publish successfully.",
+						icon: "success",
+					});
+					if (from == "list") {
+						response.json().then((data) => {
+							console.log("list");
+							window.open(`/form/${data.formId}/edit`, "_self");
+						});
+					}
+				} else {
+					Swal.fire({
+						title: "Error",
+						text: "Failed adding to database:",
+						icon: "success",
+					});
+					if (!response.ok) {
+						throw new Error("Failed adding to database:");
+					} else if (response.status == 401) {
+						localStorage.setItem("saveform", JSON.stringify(getFormData()));
+						window.open("/auth/google", "_self");
+					}
+				}
+			});
 		}
 	});
 }

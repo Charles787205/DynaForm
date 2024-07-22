@@ -58,13 +58,14 @@
             </div>
           </div>
           <div class="w-full flex justify-center">
-            <form class="flex flex-col h-full w-full max-w-screen-lg px-10" action="/form/<%= form._id %>" method="POST">
-              <% form.components.forEach(item=> {
+            <form class="flex flex-col h-full w-full max-w-screen-lg px-10" onsubmit="submitResponse(event)" id="<%= form._id %>" data-form-id=>
+             
+              <% form.components.forEach(item=> { 
                 if(item.type === "divider"){
                 item.content = "";
                 } %>
                 <div hx-post="/components/fields/<%=item.type%>" hx-indicator="#spinner" hx-trigger="load" hx-swap="outerHTML"
-                  hx-vals='js:{"view": true, "options": "<%= item.options %>" ,"name": "<%= item.name %>", "content": "<%=item.content%>","placeholder":"<%= item.placeholder && item.placeholder.replace(/\n\s*/g, '') %>"}'
+                  hx-vals='js:{"view": true, "options": "<%= item.options %>","name": "<%= item.name %>", "content": "<%=item.content%>","placeholder":"<%= item.placeholder && item.placeholder.replace(/\n\s*/g, '') %>", "id": "<%= item._id %>"}'
                   class="form-field"></div>
                 <% }); %>
               <div hx-post="/components/button" hx-swap="outerHTML" hx-trigger="load" hx-vals='js:{"type": "submit"}'></div>

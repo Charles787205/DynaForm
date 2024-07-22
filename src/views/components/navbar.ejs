@@ -31,16 +31,16 @@
           value="<%= typeof name !== 'undefined'?name:"Untitled form" %>"
           onblur="if (this.value.trim() === '') { this.value = 'Untitled Form'; }"
         />
-        <div class="flex">
-          <div class="load-indicator absolute w-full flex justify-start" id="change-indicator"><img src="/assets/25.gif" width="35" class="object-contain" /></div>
-          <!-- <div class="pt-2" hx-indicator="#change-indicator">All changes saved</div> -->
+        <div class="flex items-center gap-2" style="display: none;" id="change">
+          <div class="load-incidator w-4 h-4 mt-2 flex justify-start" id="change-indicator"><img src="/assets/1487.gif" width="35" class="object-contain" /></div>
+          <div class="pt-2 text-gray-400" id="change-text" >All changes saved</div>
         </div>
       </div>
 
     </div>
     <div class="flex items-center z-20">
       <button
-        class="relative group transition-all duration-200 p-2 focus:overflow-visible overflow-hidden text-md"
+        class="relative group transition-all duration-200 p-2 overflow-hidden text-md"
       >
         <span>
           <svg
@@ -75,31 +75,7 @@
         <div
           class="absolute shadow-lg -bottom-32 w-fit right-0 h-max p-2 bg-white border border-zinc-200 rounded-lg flex flex-col gap-2"
         >
-          <span
-            hx-post="/template/default"
-            hx-swap="inner"
-            hx-target=".template"
-            class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
-          >
-            <p>Default</p>
-          </span>
-          <span
-            hx-post="/template/survey"
-            hx-swap="innerHTML"
-            hx-target=".mainscreen"
-            class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
-          >
-            <p>Survey</p>
-          </span>
-
-          <span
-            hx-post="/template/feedback"
-            hx-swap="innerHTML"
-            hx-target=".template"
-            class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg"
-          >
-            <p>Feedback</p>
-          </span>
+          
         </div>
       </button>
       

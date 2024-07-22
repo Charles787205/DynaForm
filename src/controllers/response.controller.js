@@ -1,26 +1,28 @@
 import Response from "../models/response.models.js";
-
+import { Component } from "../models/component.model.js";
+import { ObjectId } from "mongodb";
+import Form from "../models/form.models.js";
 const submitResponse = async (req, res) => {
-	// const formId = req.params.id;
-	// const userId = req.user._id;
-	// try {
-	// 	const form = await Response.findOne({ form_id: formId, user_id: userId });
-	// 	if (form) {
-	// 		return res.status(400).send("Response already submitted");
-	// 	}
-	// 	const response = await new Response({
-	// 		form_id: formId,
-	// 		user_id: userId,
-	// 		responses: responses,
-	// 	}).save();
-	// 	if (!response) {
-	// 		return res.status(400).send("Error submitting response");
-	// 	}
-	// 	res.status(200).send({ "Response submitted successfully": response });
-	// } catch (error) {
-	// 	console.error("Error submitting response:", error);
-	// }
-	console.log("hi");
+  try {
+    const formId = req.params.form_id;
+    const userId = req.user._id;
+    const responses = req.body;
+
+    const components = [];
+
+    const response = Response.create({
+      form_id: formId,
+      user_id: userId,
+      responses: responses,
+    });
+  } catch (error) {
+    console.error("Error processing form:", error);
+    return res.status(500).send(error);
+  }
 };
 
+const getResponse = async (req, res) => {
+  const formId = req.params.id;
+  const userId = new ObjectId("66960301ed29140e5c586913"); // franco id
+};
 export default { submitResponse };

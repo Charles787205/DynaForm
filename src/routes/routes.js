@@ -33,6 +33,8 @@ router.get("/forms", FormController.list); // list of forms page
 
 router.post("/search", FormController.search); // search
 
+router.get("/error", FormController.errorPage); // error
+
 // RESPONSE
 router.route("/response/:form_id").post(ResponseController.submitResponse);
 //PREVIEW

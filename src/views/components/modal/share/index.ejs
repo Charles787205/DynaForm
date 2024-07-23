@@ -1,11 +1,10 @@
 
-    <div class="modal fixed inset-0 bg-gray-800 bg-opacity-75 p-2 flex items-center justify-center z-30">
+    <div class="modal fixed inset-0 bg-gray-800 bg-opacity-75 p-2 flex items-center justify-center z-30" id="modal">
         <div
           class="content bg-[#f6f6f6] p-6 z-50 rounded-lg shadow-lg w-full max-w-[35rem] flex  flex-col items-center h-fit  max-h-full border overflow-hidden pb-5">
             <div class='flex gap-2 w-full 400 mb-5 justify-between'>
                 <h1 class='text-xl font-bold'>Share</h1>
-                <button class="text-gray-600 hover:text-gray-900 cursor-pointer" hx-get="/" hx-trigger="click" hx-swap="delete"
-                hx-target=".modal">
+                <button class="text-gray-600 hover:text-gray-900 cursor-pointer" hx-on:click="this.closest('.modal').remove()">
                 &times;
               </button>
             </div>
@@ -13,8 +12,8 @@
                 <div class='flex flex-col gap-3' >
                         <h1 class="text-gray-500">Share your form to start receiving responses!.</h1>
                         <div type="email" name="userEmail" class="rounded-full flex justify-between items-center bg-slate-200 w-full py-2 px-4 h-12" placeholder="Enter email">
-                            dynaform/form/r/2382637263827327836286
-                            <button class="flex items-center gap-2 -mr-[.8rem] rounded-full bg-slate-50 text-blue-600 p-2">
+                            <span id="form-link">dynaform/form/r/<%= formId %></span>
+                            <button class="flex items-center gap-2 -mr-[.8rem] rounded-full bg-slate-50 text-neutral-600 p-2" onclick="navigator.clipboard.writeText(document.getElementById('form-link').innerHTML); this.querySelector('.text').innerHTML = 'Copied' ">
                                 <svg
                                 width="24"
                                 height="24"
@@ -24,67 +23,65 @@
                             >
                                 <path
                                     d="M3.9 12C3.9 10.29 5.29 8.9 7 8.9H11V7H7C5.67392 7 4.40215 7.52678 3.46447 8.46447C2.52678 9.40215 2 10.6739 2 12C2 13.3261 2.52678 14.5979 3.46447 15.5355C4.40215 16.4732 5.67392 17 7 17H11V15.1H7C5.29 15.1 3.9 13.71 3.9 12ZM8 13H16V11H8V13ZM17 7H13V8.9H17C18.71 8.9 20.1 10.29 20.1 12C20.1 13.71 18.71 15.1 17 15.1H13V17H17C18.3261 17 19.5979 16.4732 20.5355 15.5355C21.4732 14.5979 22 13.3261 22 12C22 10.6739 21.4732 9.40215 20.5355 8.46447C19.5979 7.52678 18.3261 7 17 7Z"
-                                    fill="#2563eb"
+                                    fill="#000000"
                                 />
                                 </svg>
-                                Copy Link
+                                <span class="text">Copy Link</span>
                             </button>
                     </div>
                 </div>
                 <div class="flex w-full gap-2 justify-between mt-10">
-                        <button id="editor-btn" class="tab active flex items-center gap-2  rounded-full bg-slate-50 text-blue-600 p-2" onclick="SetActiveDiv(editor);">
+                        <button id="editor-btn" class="tab active flex items-center gap-2  rounded-full bg-slate-50 text-gray-600 font-bold p-2">
                             Add editor
                         </button>
-                    <button class="rounded-md bg-blue-600 text-white px-3 py-2">Done</button>
+                    <button class="rounded-md bg-neutral-700 text-white px-3 py-2" hx-on:click="this.closest('.modal').remove()">Done</button>
                 </div>
             </div>
             <div id='editor-wrapper' class="hidden h-full flex-col justify-between w-full">
                 <div class='h-full w-full' >
                     <div class="flex flex-col gap-3">
-                        <input type="email" name="userEmail" class="rounded-full bg-slate-200 w-full py-2 px-4 h-12" placeholder="Enter email">  
-                        <div class="flex justify-end"><button class="bg-neutral-100 text-blue-500 font-bold px-2 py-3 rounded-md">Add Email</button></div>
-                        <div id="emails " class="overflow-y-auto">
-                            <p class="text-md px-2">
-                                    test@gmail.com
-                            </p>
+                        <input type="email" name="email" class="rounded-full bg-slate-200 w-full py-2 px-4 h-12" hx-indicator="#add-spinner" hx-post="/accessForm/<%= formId %>" hx-on:keyup="document.getElementById('error').innerHTML = ''" hx-trigger="click from:#addEmail" hx-swap="innerHTML" hx-target="#error" placeholder="Enter email" id="emailinput">  
+                        <div class="flex justify-between items-center">
+                            <div id="error" class="px-2 text-red-500"></div>
+                            <div class="flex gap-2 items-center">
+                                <div class="load-indicator w-5 h-7 flex items-center justify-center" id="add-spinner"><img src="/assets/785.gif" class="h-4 w-4 object-cover"  alt=""></div>
+                                <button class="bg-neutral-200 text-neutral-500 font-bold px-2 py-3 rounded-md"  id="addEmail">Add Email</button>
+                            </div>
+                        </div>
+                        <div id="emails" class="overflow-y-auto h-full max-h-40" hx-post="/accessForm/<%= formId %>/authorizedemails" hx-trigger="load, click from:#addEmail, click from:.remove-em-btn, click from:#editor-btn" hx-sync="#emailinput:queue first" hx-target="#emails" hx-swap="innerHTML" >
                         </div>
                     </div>
                 </div>
                 <div class="flex w-full gap-2 justify-between mt-10">
                     <div class="flex gap-2">
-                    <button id="response-btn" class="tab flex items-center gap-2 active rounded-full bg-slate-50 text-blue-600 p-2" onclick="SetActiveDiv(response);">
-
-                            Go back
-                        </button>
-                        <button id="response-btn" class="tab flex items-center gap-2 active rounded-full bg-slate-50 text-blue-600 p-2">
-                            <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M3.9 12C3.9 10.29 5.29 8.9 7 8.9H11V7H7C5.67392 7 4.40215 7.52678 3.46447 8.46447C2.52678 9.40215 2 10.6739 2 12C2 13.3261 2.52678 14.5979 3.46447 15.5355C4.40215 16.4732 5.67392 17 7 17H11V15.1H7C5.29 15.1 3.9 13.71 3.9 12ZM8 13H16V11H8V13ZM17 7H13V8.9H17C18.71 8.9 20.1 10.29 20.1 12C20.1 13.71 18.71 15.1 17 15.1H13V17H17C18.3261 17 19.5979 16.4732 20.5355 15.5355C21.4732 14.5979 22 13.3261 22 12C22 10.6739 21.4732 9.40215 20.5355 8.46447C19.5979 7.52678 18.3261 7 17 7Z"
-                                fill="#2563eb"
-                            />
+                        <button id="response-btn" class="tab flex items-center gap-2 active rounded-full bg-slate-50 text-neutral-600 p-2">
+                            <svg width="12" height="25" viewBox="0 0 12 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.34299 12.2501L10.414 19.3211L8.99999 20.7351L1.22199 12.9571C1.03451 12.7696 0.929199 12.5153 0.929199 12.2501C0.929199 11.985 1.03451 11.7307 1.22199 11.5431L8.99999 3.76514L10.414 5.17914L3.34299 12.2501Z" fill="black"/>
                             </svg>
-                            Copy Link
+                            Back
                         </button>
+
                     </div>
-                    <button class="rounded-md bg-blue-600 text-white px-3 py-2">Done</button>
+                    <div class="flex gap-2 ">
+                        <button class="tab flex items-center gap-2 active rounded-full bg-slate-50 text-neutral-600 p-2" onclick="navigator.clipboard.writeText('dynaforms/form/<%= formId %>/edit'); this.querySelector('.text').innerHTML = 'Copied' ">
+                                <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M3.9 12C3.9 10.29 5.29 8.9 7 8.9H11V7H7C5.67392 7 4.40215 7.52678 3.46447 8.46447C2.52678 9.40215 2 10.6739 2 12C2 13.3261 2.52678 14.5979 3.46447 15.5355C4.40215 16.4732 5.67392 17 7 17H11V15.1H7C5.29 15.1 3.9 13.71 3.9 12ZM8 13H16V11H8V13ZM17 7H13V8.9H17C18.71 8.9 20.1 10.29 20.1 12C20.1 13.71 18.71 15.1 17 15.1H13V17H17C18.3261 17 19.5979 16.4732 20.5355 15.5355C21.4732 14.5979 22 13.3261 22 12C22 10.6739 21.4732 9.40215 20.5355 8.46447C19.5979 7.52678 18.3261 7 17 7Z"
+                                    fill="#000000"
+                                />
+                                </svg>
+                                <span class="text">Copy Link</span>
+                        </button>
+                        <button class="rounded-md bg-neutral-700 text-white px-3 py-2" hx-on:click="this.closest('.modal').remove()">Done</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        const response = document.getElementById('response-wrapper');
-        const editor = document.getElementById('editor-wrapper');
-        let prev = response;
-        function SetActiveDiv(el) {
-            if(prev) prev.classList.toggle("active");
-            el.classList.toggle("active");
-            prev = el;
-            
-        }
-    </script>
+

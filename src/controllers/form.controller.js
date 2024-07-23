@@ -82,9 +82,11 @@ const editForm = async (req, res) => {
 	 * route "/forms/:id/edit" post
 	 */
 
-	const { email } = req.body;
+	const email = req.user.email;
 	const form_id = req.params.id;
 	const user_id = req.user._id;
+	console.log("email: ", email);
+	console.log("user id: ", req.user);
 	try {
 		const form = await Form.findOne({
 			$and: [
@@ -92,15 +94,14 @@ const editForm = async (req, res) => {
 				{ $or: [{ authorized_emails: email }, { user_id: user_id }] },
 			],
 		});
-
-		// console.log("RETRIEVED FORM : ", form);
+		
 		if (!form) {
 			res.redirect(`/form/${form_id}`);
 		}
 
 		res.render("pages/editform", { form: form.toJSON() });
-	} catch {
-		throw new Error("Error editing form");
+	} catch(e) {
+		console.error("Error editing form:", e.message);
 	}
 };
 
@@ -148,29 +149,93 @@ const deleteForm = async (req, res) => {
 
 // Give Access
 const giveAccess = async (req, res) => {
-	const emails = req.body;
-	const form_id = req.params.form_id;
+    const email = req.body.email;
+    const form_id = req.params.form_id;
 
-	const validEmails = emails.filter((email) => validators.isEmail(email));
+    const isValidEmail = validators.isEmail(email);
 
-	if (validEmails.length === 0) {
-		return res.status(400).send("No valid emails");
+	if (!isValidEmail) {
+        return res.send("Invalid email");
 	}
-	try {
-		const updatedForm = await Form.updateOne(
-			{ _id: form_id },
-			{ $addToSet: { authorized_emails: { $each: validEmails } } },
-			{ new: true }
-		);
-		console.log("Access given:", updatedForm);
-		res.status(200).send({ "Access given": updatedForm });
-	} catch (error) {
-		console.error("Error giving access:", error);
-		return res
-			.status(500)
-			.send({ error: "An error occurred while giving access." });
+	
+	if (email == req.user.email) {
+        return res.send("Cannot add your own email.");
 	}
+
+    try {
+        await Form.updateOne(
+            { _id: form_id },
+            { $addToSet: { authorized_emails: email } },
+            { new: true }
+        );
+        res.status(200).send();
+    } catch (error) {
+        console.error("Error giving access:", error);
+        return res.status(500).send({ error: "An error occurred while giving access." });
+    }
 };
+
+
+//removeAuthEmail
+const removeAuthorizedEmail = async (req, res) => {
+    /**
+     * Handles the removal of an email from authorized_emails.
+     * Route: POST /accessForm/:form_id/removeEmail
+     */
+
+    const email = req.body.email;
+    const form_id = req.params.form_id;
+    const user_id = req.user._id;
+
+    console.log("email to remove: ", email);
+    console.log("form id: ", form_id);
+    console.log("user id: ", user_id);
+
+	try {
+		const isValidEmail = validators.isEmail(email);
+		
+        // Check if email is provided and valid
+        if (!isValidEmail) {
+            return res.send("Invalid email");
+        }
+        // Find the form and update it
+        const updatedForm = await Form.updateOne(
+            {
+                _id: form_id,
+                user_id: user_id 
+            },
+            {
+                $pull: { authorized_emails: email } 
+            }
+        );
+
+        if (updatedForm.matchedCount === 0) {
+            return res.status(404).send("Form not found or user not authorized");
+        }
+
+    } catch (error) {
+        console.error("Error removing email:", error);
+        res.status(500).send({ error: "An error occurred while removing the email." });
+    }
+};
+
+//getAuthEmails
+const getAuthorizedEmails = async (req, res) => {
+    const form_id = req.params.form_id;
+	console.log("triggered")
+    try {
+        const form = await Form.findById(form_id);
+        if (!form) {
+            return res.status(404).send("Form not found");
+        }
+
+        res.status(200).send(form.authorized_emails.map(email => `<div class="email-item flex justify-between text-md px-2 mt-6" ><p class="font-bold text-md">${email}</p><button hx-post="/accessForm/${form_id}/removeAuthorizedEmail" hx-vals='js:{"email": "${email}"}' hx-trigger="click" hx-on:click="this.closest('.email-item').remove()" class="remove-em-btn text-gray-400">Remove</button></div>`).join(''));
+    } catch (error) {
+        console.error("Error fetching authorized emails:", error);
+        return res.status(500).send({ error: "An error occurred while fetching emails." });
+    }
+};
+
 
 const deleteAllForms = async (req, res) => {
 	try {
@@ -229,6 +294,8 @@ export default {
 	preview,
 	deleteAllForms,
 	deleteForm,
+	removeAuthorizedEmail,
+	getAuthorizedEmails,
 	giveAccess,
 	search,
 };

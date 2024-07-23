@@ -33,7 +33,7 @@
 					</svg>
 			    </button>
 					<div id="dropdownMenu"
-						class="absolute flex shadow-lg left-8 top-0 w-[10.5rem] h-max p-2 bg-white border border-zinc-200 rounded-lg flex-col items-center gap-2"
+						class="absolute flex shadow-lg left-8 top-0 w-[10.5rem] h-max p-2 bg-white z-50 border border-zinc-200 rounded-lg flex-col items-center gap-2"
 					>
 						<a
 							href="/form/<%= options.id %>"
@@ -113,7 +113,7 @@
 		</div>
 	</div>
 	<div class="h-11 p-2.5 justify-start items-center gap-2.5 flex">
-		<button hx-post="/components/modal/share" hx-trigger="click" hx-target="#sharemodal" hx-swap="innerHTML"
+		<button hx-post="/components/modal/share" hx-trigger="click" hx-target="#sharemodal" hx-swap="innerHTML" hx-vals='js:{"formId": "<%= options.id %>"}'
 			class="w-fit px-3 h-10 text-white rounded-full hover:bg-neutral-700 bg-neutral-800 justify-center gap-2 items-center flex cursor-pointer"
 		>
 			<svg

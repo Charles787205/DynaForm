@@ -228,7 +228,7 @@ img[image-loaded="true"]:hover,
   visibility: hidden;
 }
 
-#profileButton:focus + #dropdownMenu,
+#dropdown:focus + #dropdownMenu,
 #dropdownMenu:hover {
   opacity: 1;
   visibility: visible;

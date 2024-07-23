@@ -218,6 +218,10 @@ const preview = async (req, res) => {
 	res.render(`pages/preview`);
 };
 
+const errorPage = async (req, res) => {
+	res.render(`pages/error`);
+};
+
 export default {
 	index,
 	getCreatePage,
@@ -231,4 +235,5 @@ export default {
 	deleteForm,
 	giveAccess,
 	search,
+	errorPage
 };

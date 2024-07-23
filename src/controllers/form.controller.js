@@ -4,6 +4,8 @@ import FormObject from "../objects/form.js";
 import Form from "../models/form.models.js";
 import { ObjectId } from "mongodb";
 import validators from "validator";
+import componentsController from "./components.controller.js";
+import { json } from "express";
 const index = async (req, res) => {
 	/**
 	 *  index page
@@ -29,7 +31,7 @@ const submit = async (req, res) => {
 	 */
 	if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
 	try {
-		const formData = req.body.formData;
+		const formData = JSON.parse(req.body.formData);
 		const fromPage = req.body.fromPage;
 		const components = [];
 		formData.formComponents.forEach((component) => {

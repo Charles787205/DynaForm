@@ -28,8 +28,8 @@
           id="form-title"
           class="font-sans tracking-tight text-lg w-40 max-w-44 max-h-10 overflow-ellipsis resize-none"
           spellcheck="false"
-          value="<%= typeof name !== 'undefined'?name:"Untitled form" %>"
-          onblur="if (this.value.trim() === '') { this.value = 'Untitled Form'; }"
+          value="<%= typeof name !== 'undefined'? name:"Untitled form" %>"
+          onblur="if (this.value.trim() === '') { this.value = 'Untitled Form' }"
         />
         <div class="flex items-center gap-2" style="display: none;" id="change">
           <div class="load-incidator w-4 h-4 mt-2 flex justify-start" id="change-indicator"><img src="/assets/1487.gif" width="35" class="object-contain" /></div>
@@ -80,42 +80,45 @@
       </button>
       
       <% if(isLogin) { %>
-      <button class="p-2 mr-3 hover:font-semibold text-md" hx-get="/form/<%= typeof id !== 'undefined'?id:""%>" hx-push-url="true" hx-trigger="click" hx-target=".mainscreen" hx-swap="outerHTML">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3.91172 17.686C2.92891 16.4095 2.4375 15.7701 2.4375 13.875C2.4375 11.9788 2.92891 11.3417 3.91172 10.064C5.87388 7.51563 9.16456 4.625 14 4.625C18.8354 4.625 22.1261 7.51563 24.0883 10.064C25.0711 11.3428 25.5625 11.9799 25.5625 13.875C25.5625 15.7712 25.0711 16.4083 24.0883 17.686C22.1261 20.2344 18.8354 23.125 14 23.125C9.16456 23.125 5.87388 20.2344 3.91172 17.686Z" stroke="#555555" stroke-width="1.73438"/>
-        <path d="M17.4688 13.875C17.4688 14.795 17.1033 15.6773 16.4528 16.3278C15.8023 16.9783 14.92 17.3438 14 17.3438C13.08 17.3438 12.1977 16.9783 11.5472 16.3278C10.8967 15.6773 10.5312 14.795 10.5312 13.875C10.5312 12.955 10.8967 12.0727 11.5472 11.4222C12.1977 10.7717 13.08 10.4063 14 10.4062C14.92 10.4062 15.8023 10.7717 16.4528 11.4222C17.1033 12.0727 17.4688 12.955 17.4688 13.875Z" stroke="#555555" stroke-width="1.73438"/>
-        </svg>
-      </button>
+              <button class="p-2 mr-3 hover:font-semibold text-md" hx-get="/form/<%= typeof id !== 'undefined'?id:""%>" hx-push-url="true" hx-trigger="click" hx-target=".mainscreen" hx-swap="outerHTML">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.91172 17.686C2.92891 16.4095 2.4375 15.7701 2.4375 13.875C2.4375 11.9788 2.92891 11.3417 3.91172 10.064C5.87388 7.51563 9.16456 4.625 14 4.625C18.8354 4.625 22.1261 7.51563 24.0883 10.064C25.0711 11.3428 25.5625 11.9799 25.5625 13.875C25.5625 15.7712 25.0711 16.4083 24.0883 17.686C22.1261 20.2344 18.8354 23.125 14 23.125C9.16456 23.125 5.87388 20.2344 3.91172 17.686Z" stroke="#555555" stroke-width="1.73438"/>
+                <path d="M17.4688 13.875C17.4688 14.795 17.1033 15.6773 16.4528 16.3278C15.8023 16.9783 14.92 17.3438 14 17.3438C13.08 17.3438 12.1977 16.9783 11.5472 16.3278C10.8967 15.6773 10.5312 14.795 10.5312 13.875C10.5312 12.955 10.8967 12.0727 11.5472 11.4222C12.1977 10.7717 13.08 10.4063 14 10.4062C14.92 10.4062 15.8023 10.7717 16.4528 11.4222C17.1033 12.0727 17.4688 12.955 17.4688 13.875Z" stroke="#555555" stroke-width="1.73438"/>
+                </svg>
+              </button>
       <% } else { %>
-      <button class="p-2 mr-3 hover:font-semibold text-md" hx-post="/preview" onclick="check()" hx-trigger="click" hx-target=".mainscreen" hx-swap="outerHTML">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3.91172 17.686C2.92891 16.4095 2.4375 15.7701 2.4375 13.875C2.4375 11.9788 2.92891 11.3417 3.91172 10.064C5.87388 7.51563 9.16456 4.625 14 4.625C18.8354 4.625 22.1261 7.51563 24.0883 10.064C25.0711 11.3428 25.5625 11.9799 25.5625 13.875C25.5625 15.7712 25.0711 16.4083 24.0883 17.686C22.1261 20.2344 18.8354 23.125 14 23.125C9.16456 23.125 5.87388 20.2344 3.91172 17.686Z" stroke="#555555" stroke-width="1.73438"/>
-        <path d="M17.4688 13.875C17.4688 14.795 17.1033 15.6773 16.4528 16.3278C15.8023 16.9783 14.92 17.3438 14 17.3438C13.08 17.3438 12.1977 16.9783 11.5472 16.3278C10.8967 15.6773 10.5312 14.795 10.5312 13.875C10.5312 12.955 10.8967 12.0727 11.5472 11.4222C12.1977 10.7717 13.08 10.4063 14 10.4062C14.92 10.4062 15.8023 10.7717 16.4528 11.4222C17.1033 12.0727 17.4688 12.955 17.4688 13.875Z" stroke="#555555" stroke-width="1.73438"/>
-        </svg>
-      </button>
-      <% } %>
+              <button class="p-2 mr-3 hover:font-semibold text-md" hx-post="/preview" onclick="check()" hx-trigger="click" hx-target=".mainscreen" hx-swap="outerHTML">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.91172 17.686C2.92891 16.4095 2.4375 15.7701 2.4375 13.875C2.4375 11.9788 2.92891 11.3417 3.91172 10.064C5.87388 7.51563 9.16456 4.625 14 4.625C18.8354 4.625 22.1261 7.51563 24.0883 10.064C25.0711 11.3428 25.5625 11.9799 25.5625 13.875C25.5625 15.7712 25.0711 16.4083 24.0883 17.686C22.1261 20.2344 18.8354 23.125 14 23.125C9.16456 23.125 5.87388 20.2344 3.91172 17.686Z" stroke="#555555" stroke-width="1.73438"/>
+                <path d="M17.4688 13.875C17.4688 14.795 17.1033 15.6773 16.4528 16.3278C15.8023 16.9783 14.92 17.3438 14 17.3438C13.08 17.3438 12.1977 16.9783 11.5472 16.3278C10.8967 15.6773 10.5312 14.795 10.5312 13.875C10.5312 12.955 10.8967 12.0727 11.5472 11.4222C12.1977 10.7717 13.08 10.4063 14 10.4062C14.92 10.4062 15.8023 10.7717 16.4528 11.4222C17.1033 12.0727 17.4688 12.955 17.4688 13.875Z" stroke="#555555" stroke-width="1.73438"/>
+                </svg>
+              </button>
+      <% }; %>
 
 			<% if(isLogin) { %>
-			<button
-				onclick="submitForm()"
-				class="rounded-full text-sm font-bold text-white text-center px-3 py-2 bg-neutral-800"
-			>
-				Publish
-			</button>
+              <button
+                hx-post="/create"
+                hx-vals="js: {formData: getFormData()}"
+                hx-trigger='confirmed'
+                onClick="Swal.fire({title: 'Confirm',text: 'Do you want to continue?',showCancelButton: true,confirmButtonText: 'Yes, continue!'}).then((result) => {    if (result.isConfirmed) {        htmx.trigger(this, 'confirmed');    }})"
+                class="rounded-full text-sm font-bold text-white text-center px-3 py-2 bg-neutral-800"
+              >
+                Publish
+              </button>
 
 			<% } else { %>
-			<!-- <div hx-boost="true" hx-preload="mouseover">
-        <a href="/forms"> My Forms</a>
-      </div> -->
+              <!-- <div hx-boost="true" hx-preload="mouseover">
+                <a href="/forms"> My Forms</a>
+              </div> -->
 
-			<a
-				href="/auth/google?returnTo=/create"
-				class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
-			>
-				Sign in
-			</a>
+              <a
+                href="/auth/google?returnTo=/create"
+                class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
+              >
+                Sign in
+              </a>
 
-			<% } %>
+			<% }; %>
 		</div>
 	</div>
 </nav>

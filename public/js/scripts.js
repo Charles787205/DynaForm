@@ -17,62 +17,9 @@ function check() {
 	}
 }
 
-function submitForm(from = "create") {
-	/**
-	 * Published Button on navbar
-	 */
-	const formData = getFormData() ?? [];
-
-	const userInput = Swal.fire({
-		title: "Are you sure?",
-		text: "This form will be publish!",
-		icon: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#008000",
-		cancelButtonColor: "#d33",
-		confirmButtonText: "Yes, publish it!",
-	});
-	if (userInput.isConfirmed) {
-		createForm((from = from));
-	}
-}
-
-async function createForm(from = "list") {
-	//** when creating a new form */
-	const formData = getFormData();
-	const response = await fetch("/create", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			fromPage: from,
-			formData: formData,
-		}),
-	});
-	if (response.ok) {
-		const res = await response.json();
-		if (from == "list") {
-			return window.open(`/form/${res.formId}/edit`, "_self");
-		} else {
-			console.log("Form created");
-			Swal.fire({
-				title: "Publish Success!",
-				text: "Your forms has been published.",
-				icon: "success",
-			});
-		}
-	} else {
-		if (response.status == 401) {
-			localStorage.setItem("saveform", JSON.stringify(getFormData()));
-			window.open("/auth/google", "_self");
-		}
-	}
-}
-
 function getFormData() {
 	if (!document.getElementById("form")) {
-		return (FormData = {
+		return (formData = {
 			formName: "Untitled Form",
 			formDescription: "defaultDescription",
 			formComponents: [
@@ -197,6 +144,7 @@ function getFormData() {
 			formComponents.push(component);
 		}
 	}
+
 	return (formData = {
 		formName,
 		formDescription,
@@ -223,26 +171,6 @@ function updateForm() {
 		}
 	});
 }
-
-// function updateForm() {
-//   const formData = getFormData();
-//   const form = document.getElementById("formID");
-//   console.log(formData);
-
-//   fetch(`/form/${form.textContent}/edit`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(formData),
-//   }).then((response) => {
-//     if (!response.ok) {
-//       throw new Error("Failed adding to database:");
-//     } else if (response.status == 401) {
-//       window.open("/auth/google", "_self");
-//     }
-//   });
-// }
 
 /**
  * Retrieves form data from the DOM and returns it as an object.

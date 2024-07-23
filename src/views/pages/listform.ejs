@@ -65,7 +65,9 @@
 								</h1>
 								<button
 									class="inline-flex hover:shadow-lg transition-shadow justify-center items-center rounded-full border border-gray-300 py-2 px-3"
-									onclick="createForm()"
+									hx-post="/create"
+									hx-trigger="click"
+									hx-vals="js:{formData: getFormData(), fromPage : 'create'}"
 								>
 									<svg
 										width="40"

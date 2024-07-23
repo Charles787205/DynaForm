@@ -64,9 +64,7 @@
 								</h1>
 								<button
 									class="inline-flex hover:shadow-lg transition-shadow justify-center items-center rounded-full border border-gray-300 py-2 px-3"
-									hx-post="/create"
-									hx-trigger="click"
-									hx-vals="js:{formData: getFormData(), fromPage : 'create'}"
+									onclick="createForm()"
 								>
 									<svg
 										width="40"
@@ -84,9 +82,7 @@
 								</button>
 							</div>
 							<div class="w-full flex justify-center">
-								<div id="list-container" class="w-full max-w-screen-lg">
-	
-								</div>
+								<div id="list-container" class="w-full max-w-screen-lg"></div>
 							</div>
 						</div>
 						<div
@@ -101,6 +97,6 @@
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script src="/js/sweetAlert.js"></script>
-		<!-- <script src="/js/Sortable.min.js"></script> -->	
+		<!-- <script src="/js/Sortable.min.js"></script> -->
 	</body>
 </html>

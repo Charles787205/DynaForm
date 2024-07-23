@@ -46,7 +46,7 @@
                   hx-vals='js:{"view": true, "options": "<%= item.options %>","name": "<%= item.name %>", "content": "<%=item.content%>","placeholder":"<%= item.placeholder && item.placeholder.replace(/\n\s*/g, '') %>", "id": "<%= item._id %>"}'
                   class="form-field"></div>
                 <% }); %>
-              <div hx-post="/components/button" hx-swap="outerHTML" hx-trigger="load" hx-vals='js:{"type": "submit"}'></div>
+              <div hx-post="/components/button" hx-swap="outerHTML" hx-trigger="load" hx-vals='js:{"type": "button"}'></div>
             </form>
           </div>
         </div>

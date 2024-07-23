@@ -23,18 +23,18 @@ function submitForm(from = "create") {
 	 */
 	const formData = getFormData() ?? [];
 
-	const userInput = Swal.fire({
-		title: "Are you sure?",
-		text: "This form will be publish!",
-		icon: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#008000",
-		cancelButtonColor: "#d33",
-		confirmButtonText: "Yes, publish it!",
-	});
-	if (userInput.isConfirmed) {
-		createForm((from = from));
-	}
+  const userInput = await Swal.fire({
+    title: "Are you sure?",
+    text: "This form will be publish!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#008000",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, publish it!",
+  });
+  if (userInput.isConfirmed) {
+    createForm((from = from));
+  }
 }
 
 async function createForm(from = "list") {

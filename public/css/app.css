@@ -784,6 +784,10 @@ video {
   height: 10rem;
 }
 
+.h-5 {
+  height: 1.25rem;
+}
+
 .h-52 {
   height: 13rem;
 }
@@ -852,6 +856,10 @@ video {
 
 .w-48 {
   width: 12rem;
+}
+
+.w-5 {
+  width: 1.25rem;
 }
 
 .w-56 {
@@ -1842,7 +1850,7 @@ img[image-loaded="true"]:hover,
   visibility: hidden;
 }
 
-#profileButton:focus + #dropdownMenu,
+#dropdown:focus + #dropdownMenu,
 #dropdownMenu:hover {
   opacity: 1;
   visibility: visible;

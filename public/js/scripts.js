@@ -1,5 +1,3 @@
-// import { submitResponse } from "./responseScript";
-// import FormData from "../src/models/form";
 
 function triggerHxLoad() {
   document.querySelectorAll('[hx-trigger="load"]').forEach((element) => {
@@ -18,10 +16,17 @@ function check() {
 }
 
 async function submitForm(from = "create") {
+<<<<<<< HEAD
   /**
    * Published Button on navbar
    */
   const formData = getFormData() ?? [];
+=======
+	/**
+	 * Published Button on navbar
+	 */
+	const formData = getFormData() ?? [];
+>>>>>>> 8b118b3d63d951b05defd3c97f7df2c0493d7103
 
   const userInput = await Swal.fire({
     title: "Are you sure?",
@@ -225,37 +230,13 @@ function updateForm() {
   });
 }
 
-// function updateForm() {
-//   const formData = getFormData();
-//   const form = document.getElementById("formID");
-//   console.log(formData);
-
-//   fetch(`/form/${form.textContent}/edit`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(formData),
-//   }).then((response) => {
-//     if (!response.ok) {
-//       throw new Error("Failed adding to database:");
-//     } else if (response.status == 401) {
-//       window.open("/auth/google", "_self");
-//     }
-//   });
-// }
-
-/**
- * Retrieves form data from the DOM and returns it as an object.
- * @returns {Object} The form data object.
- */
-
 function auto_grow(element) {
   element.style.height = "5px";
   element.style.height = element.scrollHeight + "px";
   showTooltip(element);
 }
 
+<<<<<<< HEAD
 let draggedElement = null;
 let currentDropZone = null;
 let targetBlock = null;
@@ -433,6 +414,8 @@ function handleSwap(e) {
   }
 }
 
+=======
+>>>>>>> 8b118b3d63d951b05defd3c97f7df2c0493d7103
 function submitResponse(event) {
   event.preventDefault();
   console.log(event.target.id);
@@ -480,6 +463,7 @@ function getFormResponse() {
 
   return { responses };
 }
+<<<<<<< HEAD
 
 //Listeners
 
@@ -490,3 +474,5 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("htmx:afterSwap", function (e) {
   handleSwap(e);
 });
+=======
+>>>>>>> 8b118b3d63d951b05defd3c97f7df2c0493d7103

@@ -70,9 +70,10 @@ const viewForm = async (req, res) => {
 	const form_id = req.params.id;
 	try {
 		const form = await Form.findById(form_id);
-
 		res.render("pages/viewform", { form: form.toJSON() });
-	} catch (error) {}
+	} catch (error) {
+		return res.status(500).send("Error viewing form");
+	}
 };
 
 const editForm = async (req, res) => {
@@ -94,13 +95,12 @@ const editForm = async (req, res) => {
 
 		// console.log("RETRIEVED FORM : ", form);
 		if (!form) {
-			// res.status(200).send("false");
 			res.redirect(`/form/${form_id}`);
 		}
-		// return res.status(200).send("true");
+
 		res.render("pages/editform", { form: form.toJSON() });
-	} catch (error) {
-		console.error(error);
+	} catch {
+		throw new Error("Error editing form");
 	}
 };
 
@@ -142,7 +142,6 @@ const deleteForm = async (req, res) => {
 		}
 		return res.status(404).send("Form not found");
 	} catch (error) {
-		console.error("Error deleting form:", error);
 		res.status(500).send("Error deleting form");
 	}
 };

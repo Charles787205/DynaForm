@@ -17,7 +17,7 @@ function check() {
 	}
 }
 
-function submitForm(from = "create") {
+async function submitForm(from = "create") {
 	/**
 	 * Published Button on navbar
 	 */
@@ -302,6 +302,7 @@ function initalizeDropzones() {
 		dropzone.addEventListener("dragover", (event) => {
 			event.preventDefault();
 			const target = event.target.closest(".input-block");
+			console.log("Dragged",target);
 			targetBlock = target;
 			if (target && target !== draggedElement) {
 				const nearestDropZone = findNearestDropZone(
@@ -487,5 +488,5 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("htmx:afterSwap", function (e) {
-	handleSwap(e);
+  handleSwap(e);
 });

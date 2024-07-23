@@ -23,7 +23,7 @@ async function submitForm(from = "create") {
    */
   const formData = getFormData() ?? [];
 
-  const userInput = Swal.fire({
+  const userInput = await Swal.fire({
     title: "Are you sure?",
     text: "This form will be publish!",
     icon: "warning",

@@ -34,6 +34,12 @@ const showModal = async (req, res) => {
 	});
 };
 
+const showShareModal = async (req, res) => {
+	res.render("components/modal/share/index", {
+
+	});
+};
+
 //Component Preview In Modal
 const showComponentPreview = async (req, res) => {
 	res.render("components/modal/preview", { ...req.body, view: true });
@@ -52,4 +58,5 @@ export default {
 	getTemplate,
 	showComponentPreview,
 	getFormList,
+	showShareModal
 };

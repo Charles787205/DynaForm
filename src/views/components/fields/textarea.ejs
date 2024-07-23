@@ -1,12 +1,21 @@
-<div class="input-block" draggable="true" id="<%= query.id %>">
-  <div class="block-container">
-    <div
-      class="content-container w-full max-w-80 h-28 overflow-y-scroll px-2 py-2.5 rounded-lg shadow border border-zinc-400 self-stretch grow shrink basis-0 text-neutral-600 text-[1rem] font-extralight outline-none"
-      contentEditable="true" data-type="textarea" data-name="textarea_<%= query.id %>" show-pl-click="true"
-      placeholder="Start typing a placeholder"></div>
-    <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
-    <%- include("../tooltip") %>
-      <div class="move-dropzone" data-position="below"></div>
-      <div class="move-dropzone" data-position="top"></div>
-  </div>
-</div>
+<% if(query.view){ %>
+  <div class="input-block">
+      <div class="block-container">
+        <textarea data-type="textarea" name="<%= query.name %>" class="content-container w-full max-w-80 h-28 overflow-y-scroll px-2 py-2.5 rounded-lg shadow border border-zinc-400 self-stretch grow shrink basis-0 text-neutral-600 text-[1rem] font-extralight outline-none"
+          id="<%= query.id %>" placeholder="<%= query.placeholder %>" style=" resize: none;"></textarea>
+      </div>
+    </div>
+<% } else { %>
+  <div class="input-block" draggable="true" id="<%= query.id %>">
+    <div class="block-container">
+      <div
+        class="content-container w-full max-w-80 h-28 overflow-y-scroll px-2 py-2.5 rounded-lg shadow border border-zinc-400 self-stretch grow shrink basis-0 text-neutral-600 text-[1rem] font-extralight outline-none"
+        contentEditable="true" data-type="textarea" data-name="textarea_<%= query.id %>" show-pl-click="true"
+        placeholder="Start typing a placeholder"></div>
+      <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
+      <%- include("../tooltip") %>
+        <div class="move-dropzone" data-position="below"></div>
+        <div class="move-dropzone" data-position="top"></div>
+    </div>
+  </div> 
+<% } %>

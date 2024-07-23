@@ -159,7 +159,6 @@ const giveAccess = async (req, res) => {
 		return res.status(400).send("No valid emails");
 	}
 	try {
-		// $addToSet used to avoid duplicates, $each is used to add multiple emails
 		const updatedForm = await Form.updateOne(
 			{ _id: form_id },
 			{ $addToSet: { authorized_emails: { $each: validEmails } } },

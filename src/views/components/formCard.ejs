@@ -33,7 +33,7 @@
 					</svg>
 			    </button>
 					<div id="dropdownMenu"
-						class="absolute  z-30 flex shadow-lg left-8 top-0 w-[10.5rem] h-max p-2 bg-white border border-zinc-200 rounded-lg flex-col items-center gap-2"
+						class="absolute flex shadow-lg left-8 top-0 w-[10.5rem] h-max p-2 bg-white border border-zinc-200 rounded-lg flex-col items-center gap-2"
 					>
 						<a
 							href="/form/<%= options.id %>"
@@ -100,50 +100,54 @@
 							Edit Form
 						</a>
 	
-						<span
-							class="flex flex-row w-full bg-slate-50 gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
-							hx-delete="/delete/<%= options.id %>"
-							hx-swap="delete"
-							hx-trigger="confirmed"
-							hx-target="closest .formcard"
-							onclick="Swal.fire({
-											title: 'Are you sure?',
-											text: 'You won\'t be able to undo this!',
-											icon: 'warning',
-											allowEscapeKey:true,
-											showCancelButton: true,
-											confirmButtonColor: '#3085d6',
-											cancelButtonColor: '#d33',
-											confirmButtonText: 'Yes, delete it!'
-										}).then((result) => {
-											if (result.isConfirmed) {
-												htmx.trigger(this, 'confirmed'); 
-												Swal.fire({
-												title: 'Deleted!',
-												text: 'Form is deleted!',
-												icon: 'success'
-												});
-											}
-										});"
+						<button
+						class="flex  flex-row w-full bg-slate-50 gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
+						hx-delete="/delete/<%= options.id %>"
+						hx-swap="delete"
+						hx-trigger="confirmed"
+						hx-target="closest .formcard"
+						onclick="Swal.fire({
+										title: 'Are you sure?',
+										text: 'You won\'t be able to undo this!',
+										icon: 'warning',
+										allowEscapeKey:true,
+										customClass: {
+											confirmButton: 'text-red-500 bg-neutral-50 shadow-md  border border-gray-100'
+										},
+										showCancelButton: true,
+										cancelButtonColor: '#3085d6',
+										confirmButtonText: 'Yes, delete it!'
+									}).then((result) => {
+										if (result.isConfirmed) {
+											htmx.trigger(this, 'confirmed'); 
+											Swal.fire({
+											title: 'Deleted!',
+											text: 'Form is deleted!',
+											icon: 'success',
+											showConfirmButton: false,
+											timer: 1000
+											});
+										}
+									});"
+					>
+						<svg
+							width="22"
+							height="21"
+							viewBox="0 0 22 21"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
 						>
-							<svg
-								width="22"
-								height="21"
-								viewBox="0 0 22 21"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M4.16675 5.97917H17.8334M9.29175 9.39583V14.5208M12.7084 9.39583V14.5208M5.02091 5.97917L5.87508 16.2292C5.87508 16.6822 6.05507 17.1168 6.37544 17.4371C6.69582 17.7575 7.13034 17.9375 7.58341 17.9375H14.4167C14.8698 17.9375 15.3043 17.7575 15.6247 17.4371C15.9451 17.1168 16.1251 16.6822 16.1251 16.2292L16.9792 5.97917M8.43758 5.97917V3.41667C8.43758 3.19013 8.52757 2.97287 8.68776 2.81268C8.84795 2.65249 9.06521 2.5625 9.29175 2.5625H12.7084C12.935 2.5625 13.1522 2.65249 13.3124 2.81268C13.4726 2.97287 13.5626 3.19013 13.5626 3.41667V5.97917"
-									stroke="#B91C1C"
-									stroke-width="1.70833"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-	
-							<h1 class="text-red-700 font-bold text-md">Delete Form</h1>
-						</span>
+							<path
+								d="M4.16675 5.97917H17.8334M9.29175 9.39583V14.5208M12.7084 9.39583V14.5208M5.02091 5.97917L5.87508 16.2292C5.87508 16.6822 6.05507 17.1168 6.37544 17.4371C6.69582 17.7575 7.13034 17.9375 7.58341 17.9375H14.4167C14.8698 17.9375 15.3043 17.7575 15.6247 17.4371C15.9451 17.1168 16.1251 16.6822 16.1251 16.2292L16.9792 5.97917M8.43758 5.97917V3.41667C8.43758 3.19013 8.52757 2.97287 8.68776 2.81268C8.84795 2.65249 9.06521 2.5625 9.29175 2.5625H12.7084C12.935 2.5625 13.1522 2.65249 13.3124 2.81268C13.4726 2.97287 13.5626 3.19013 13.5626 3.41667V5.97917"
+								stroke="#B91C1C"
+								stroke-width="1.70833"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+
+						<h1 class="text-red-700 font-bold text-md">Delete Form</h1>
+					</button>
 					</div>
 			</div>
 		</div>

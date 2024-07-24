@@ -23,7 +23,7 @@ router
   .route("/form/r/:id")
   .get(FormController.resForm)
   .post(ResponseController.submitResponse);
-  
+
 router
   .route("/form/:id/edit")
   .get(FormController.editForm)
@@ -31,9 +31,13 @@ router
 router.delete("/deleteAll", FormController.deleteAllForms);
 router.delete("/delete/:form_id", FormController.deleteForm);
 router.route("/accessForm/:form_id").post(FormController.giveAccess);
-router.route("/accessForm/:form_id/authorizedemails").post(FormController.getAuthorizedEmails);
-router.route("/accessForm/:form_id/removeAuthorizedEmail").post(FormController.removeAuthorizedEmail);
-router.post('/components/modal/share', Components.showShareModal);
+router
+  .route("/accessForm/:form_id/authorizedemails")
+  .post(FormController.getAuthorizedEmails);
+router
+  .route("/accessForm/:form_id/removeAuthorizedEmail")
+  .post(FormController.removeAuthorizedEmail);
+router.post("/components/modal/share", Components.showShareModal);
 router.get("/forms", FormController.list); // list of forms page
 
 router.post("/search", FormController.search); // search
@@ -42,6 +46,9 @@ router.get("/error", FormController.errorPage); // error
 
 // RESPONSE
 router.route("/response/:form_id").post(ResponseController.submitResponse);
+router.get("/response/feedback", (req, res) => {
+  res.render("pages/thankyou");
+});
 //PREVIEW
 router.post("/preview", FormController.preview);
 

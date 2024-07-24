@@ -239,11 +239,23 @@ function submitResponse(event) {
     },
     body: JSON.stringify(responses),
   }).then((response) => {
+    
     if (!response.ok) {
+      Swal.fire({
+        title: "Oops! Something has occured.",
+        text: "Your response has not been submitted. Please try again later.",
+        icon: 'Warning',
+        showConfirmButton: true,
+        
+      });
+
       throw new Error("Failed adding to database:");
     } else if (response.status == 401) {
       window.open("/auth/google", "_self");
     }
+
+
+
   });
 }
 

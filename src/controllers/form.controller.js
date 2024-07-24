@@ -75,6 +75,16 @@ const viewForm = async (req, res) => {
     return res.status(500).send("Error viewing form");
   }
 };
+//view responseView
+const resForm = async (req, res) => {
+	const form_id = req.params.id;
+	try {
+		const form = await Form.findById(form_id);
+		res.render("pages/responseView", { form: form.toJSON() });
+	} catch (error) {
+		return res.status(500).send("Error viewing form");
+	}
+};
 
 const editForm = async (req, res) => {
   /**
@@ -301,19 +311,20 @@ const errorPage = async (req, res) => {
 };
 
 export default {
-  index,
-  getCreatePage,
-  submit,
-  list,
-  editForm,
-  viewForm,
-  updateForm,
-  preview,
-  deleteAllForms,
-  deleteForm,
-  removeAuthorizedEmail,
-  getAuthorizedEmails,
-  giveAccess,
-  search,
-  errorPage,
+	index,
+	getCreatePage,
+	submit,
+	list,
+	editForm,
+	viewForm,
+	resForm,
+	updateForm,
+	preview,
+	deleteAllForms,
+	deleteForm,
+	removeAuthorizedEmail,
+	getAuthorizedEmails,
+	giveAccess,
+	search,
+	errorPage
 };

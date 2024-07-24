@@ -11,8 +11,6 @@ function handler (event) {
     delay =  setTimeout(() => {
 
       console.log("Saved");
-
-
       updateForm();      
       loader_text.innerHTML = "All changes saved.";
       loader.style.display = "none";

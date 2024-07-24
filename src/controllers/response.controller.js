@@ -15,6 +15,7 @@ const submitResponse = async (req, res) => {
       user_id: userId,
       responses: responses,
     });
+    res.render("");
   } catch (error) {
     console.error("Error processing form:", error);
     return res.status(500).send(error);
@@ -23,7 +24,7 @@ const submitResponse = async (req, res) => {
 
 const getResponse = async (req, res) => {
   const formId = req.params.id;
-  const userId = new ObjectId("66960301ed29140e5c586913"); // franco id
-};
 
-export default { submitResponse };
+  res.render("pages/response", { formId });
+};
+export default { submitResponse, getResponse };

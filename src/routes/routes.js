@@ -26,7 +26,9 @@ router
 router.delete("/deleteAll", FormController.deleteAllForms);
 router.delete("/delete/:form_id", FormController.deleteForm);
 router.route("/accessForm/:form_id").post(FormController.giveAccess);
-
+router.route("/accessForm/:form_id/authorizedemails").post(FormController.getAuthorizedEmails);
+router.route("/accessForm/:form_id/removeAuthorizedEmail").post(FormController.removeAuthorizedEmail);
+router.post('/components/modal/share', Components.showShareModal);
 router.get("/forms", FormController.list); // list of forms page
 
 router.post("/search", FormController.search); // search

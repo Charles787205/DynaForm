@@ -5,14 +5,14 @@ import Form from "../objects/form.js";
 const submitResponse = async (req, res) => {
   try {
     const formId = req.params.form_id;
-    const userId = req.user._id;
+    // const userId = req.user._id; << - ERROR WHEN USER NOT LOGGED IN AND SUBMITTED RESPONSE. REMOVED
     const responses = req.body;
 
     const components = [];
 
     const response = await new Response({
       form_id: formId,
-      user_id: userId,
+      //user_id: userId,  << - ERROR WHEN USER NOT LOGGED IN AND SUBMITTED RESPONSE. REMOVED
       responses: responses,
     }).save();
 
@@ -57,4 +57,16 @@ const getFeedback = (req, res) => {
   const url = "/response/r/" + req.params.response_id;
   res.render("pages/thankyou", { response_url: url });
 };
-export default { submitResponse, getResponseDetails, getFeedback };
+
+const getResponse = (req, res) => {
+  const url = "/response/r/" + req.params.response_id;
+  res.render("pages/thankyou", { response_url: url });
+};
+const getSummary = (req, res) => {
+  const formId = req.params.form_id;
+  console.log("FORM ID:", formId);
+  res.render("pages/response/summary.ejs", { formId } );
+};
+
+
+export default { submitResponse, getResponseDetails, getFeedback, getSummary };

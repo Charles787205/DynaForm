@@ -1817,7 +1817,7 @@ img[image-loaded="true"]:hover,
   visibility: visible;
 }
 
-.template{
+.template {
   padding: 0px 2em 0px 2rem;
 }
 
@@ -1928,19 +1928,19 @@ img[image-loaded="true"]:hover,
   opacity: 1;
 }
 
-.load-indicator{
+.load-indicator {
   z-index: -20;
-  opacity:0;
+  opacity: 0;
 }
 
-.htmx-request .load-indicator{
+.htmx-request .load-indicator {
   z-index: 10;
-  opacity:1
+  opacity: 1;
 }
 
-.htmx-request.load-indicator{
+.htmx-request.load-indicator {
   z-index: 10;
-  opacity:1
+  opacity: 1;
 }
 
 [show-pl-click="false"]:focus:empty:before {
@@ -1979,7 +1979,7 @@ img[image-loaded="true"]:hover,
   display: none;
 }
 
-.active{
+.active {
   display: flex;
 }
 

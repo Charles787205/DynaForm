@@ -36,17 +36,20 @@
 						<div
 							class="flex flex-col h-full w-full max-w-screen-lg pt-6 gap-2.5"
 						>
-							<h1>Form ID: <%= formId %></h1>
-
-							<div class="flex flex-col gap-3 h-full">
-								<% if (response && response.length > 0) { %> <%
-								response.forEach(function(item) { %>
-								<h1><%= item.form_id %></h1>
-								<p>eyy</p>
-								<% }); %> <% } else { %>
-								<p class="text-lg">No responses yet.</p>
-								<% } %>
+							<h1>Form ID: <%= responses%></h1>
+							<% for(let i = 0; i < responses.length; i++) { %>
+							<div class="input-block">
+								<div class="block-container">
+									<div
+										class="content-container flex text-[1.1rem] w-full outline-none resize-none break-all overflow-hidden border-2 border-black"
+										spellcheck="false"
+										data-type="textfield"
+									>
+										<%= responses[i] %>
+									</div>
+								</div>
 							</div>
+							<% } %>
 						</div>
 					</div>
 				</div>
@@ -55,3 +58,14 @@
 		<!-- <script src="/js/Sortable.min.js"></script> -->
 	</body>
 </html>
+<div class="input-block">
+	<div class="block-container">
+		<div
+			class="content-container flex text-[1.1rem] w-full outline-none resize-none break-all overflow-hidden"
+			spellcheck="false"
+			data-type="textfield"
+		>
+			<%= %>
+		</div>
+	</div>
+</div>

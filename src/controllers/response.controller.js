@@ -1,8 +1,8 @@
 import Response from "../models/response.models.js";
 import { Component } from "../models/component.model.js";
 import { ObjectId } from "mongodb";
-import FormModel from "../models/form.models.js";
-import Form from "../objects/form.js";
+import Form from "../models/form.models.js";
+import { response } from "express";
 const submitResponse = async (req, res) => {
 	try {
 		const formId = req.params.form_id;
@@ -23,21 +23,25 @@ const submitResponse = async (req, res) => {
 	}
 };
 
-const getResponseDetails = async (req, res) => {
+const getSummary = async (req, res) => {
+	const formId = req.params.form_id;
 	try {
-		const response = await Response.findById(req.params.response_id);
-		const form = await FormModel.findById(response.form_id);
-		console.log(response.toObject().responses);
-		const formObject = new Form({
-			...form.toObject(),
-			responses: response.toObject().responses,
+		const response = await Response.find({ form_id: formId }, { responses: 1 });
+		const form = await Form.findById(formId);
+
+		console.log(form.components);
+		const responses = response.map((r) => r.responses);
+		const values = responses.map((r) => r.map((v) => v.value));
+		const final_values = values.flat();
+		console.log("responses: ", final_values);
+
+		return res.render("pages/response", {
+			responses: final_values,
+			form: form,
 		});
-		return res.status(200).json(formObject.toResponseFormDetail());
 	} catch (error) {
-		console.log(error);
-		return res.status(404).send("Response not found");
-	}
-	if (response) {
+		console.error("Error processing form:", error);
+		return res.status(500).send();
 	}
 };
-export default { submitResponse, getResponseDetails };
+export default { submitResponse, getSummary };

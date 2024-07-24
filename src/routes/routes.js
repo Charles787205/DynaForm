@@ -48,14 +48,11 @@ router.get("/error", FormController.errorPage); // error
 router.post("/publish/:id", FormController.publish);
 
 // RESPONSE
-router.route("/response/f/:form_id").post(ResponseController.submitResponse);
-router.get("/response/:form_id", ResponseController.getResponse);
+router.route("/response/:form_id").post(ResponseController.submitResponse);
+router.get("/response/:form_id", ResponseController.getSummary);
 router.get("/response/feedback", (req, res) => {
 	res.render("pages/thankyou");
 });
-router
-	.route("/response/r/:response_id")
-	.get(ResponseController.getResponseDetails);
 //PREVIEW
 router.post("/preview", FormController.preview);
 

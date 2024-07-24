@@ -92,7 +92,7 @@ const editForm = async (req, res) => {
 	 * route "/forms/:id/edit" post
 	 */
 
-	const { email } = req.body;
+	const email = req.user.email;
 	const form_id = req.params.id;
 	const user_id = req.user._id;
 	try {
@@ -103,13 +103,13 @@ const editForm = async (req, res) => {
 			],
 		});
 
-		// console.log("RETRIEVED FORM : ", form);
+		console.log("RETRIEVED FORM : ", form);
 		if (!form) {
-			res.redirect(`/form/${form_id}`);
+			return res.redirect(`/form/${form_id}`);
 		}
 
 		res.render("pages/editform", { form: form.toJSON() });
-	} catch {
+	} catch (e) {
 		res.render("pages/error", { message: "No Form Found" });
 	}
 };

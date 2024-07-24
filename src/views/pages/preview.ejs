@@ -44,7 +44,7 @@
 
   <body>
     <div class="app">
-      <%- include('../components/homeNavbar'); %>
+      <%- include('../components/viewNavbar'); %>
       <main class="mainscreen w-screen items-start inline-flex">  
         <div class="relative min-h-screen w-screen pt-16" action="" method="" onsubmit="onSubmit(event)" id="form">
             <div class="inset-2 header-image" id="image-wrapper">
@@ -71,19 +71,38 @@
               </div>
             </div>
             <div class="w-full flex justify-center">
-              <form class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
-                <script>
-                  const saved = JSON.parse(localStorage.getItem("saveform"));
-                  saved.formComponents.forEach(element => {
-                    console.log(element.type);
-                  });
-                </script>
+              <form id="preview" class="flex flex-col h-full w-full max-w-screen-lg px-10" data-form-name="" data-form-description="">
+                
               </form>
             </div>
           </div>
         </div>
       </main>
 		</div>
+		<script>
+                  const saved = JSON.parse(localStorage.getItem("saveform"));
+                  function sendRequest(index) {
+					if (index >= saved.formComponents.length) return;
+
+					const element = saved.formComponents[index];
+					console.log(element);
+					element.view = true;
+
+					var xhttp = new XMLHttpRequest();
+					xhttp.open("POST", `/components/fields/${element.type}`);
+					xhttp.setRequestHeader('Content-type', 'application/json','HX-Request');
+					xhttp.send(JSON.stringify(element));
+
+					xhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+						console.log(xhttp.responseType);
+						document.getElementById("preview").innerHTML += xhttp.response;
+						sendRequest(index + 1); // Send the next request after the current one completes
+						}
+					};
+					}
+					sendRequest(0);
+                </script>
 		<!-- <script src="/js/Sortable.min.js"></script> -->
 	</body>
 </html>

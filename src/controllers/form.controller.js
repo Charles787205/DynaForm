@@ -77,13 +77,13 @@ const viewForm = async (req, res) => {
 };
 //view responseView
 const resForm = async (req, res) => {
-	const form_id = req.params.id;
-	try {
-		const form = await Form.findById(form_id);
-		res.render("pages/responseView", { form: form.toJSON() });
-	} catch (error) {
-		return res.status(500).send("Error viewing form");
-	}
+  const form_id = req.params.id;
+  try {
+    const form = await Form.findById(form_id);
+    res.render("pages/responseView", { form: form.toJSON() });
+  } catch (error) {
+    return res.status(500).send("Error viewing form");
+  }
 };
 
 const editForm = async (req, res) => {
@@ -92,7 +92,7 @@ const editForm = async (req, res) => {
    * route "/forms/:id/edit" post
    */
 
-  const { email } = req.body;
+  const email = req.user.email;
   const form_id = req.params.id;
   const user_id = req.user._id;
   try {
@@ -103,13 +103,13 @@ const editForm = async (req, res) => {
       ],
     });
 
-    // console.log("RETRIEVED FORM : ", form);
+    console.log("RETRIEVED FORM : ", form);
     if (!form) {
-      res.redirect(`/form/${form_id}`);
+      return res.redirect(`/form/${form_id}`);
     }
 
     res.render("pages/editform", { form: form.toJSON() });
-  } catch {
+  } catch (e) {
     res.render("pages/error", { message: "No Form Found" });
   }
 };
@@ -293,6 +293,7 @@ const search = async (req, res) => {
         name: form.name,
         description: form.description,
         date: form.createdAt.toISOString().split("T")[0],
+        status: form.status,
       };
     });
     return res.render("components/listcontainer", { forms });
@@ -306,25 +307,38 @@ const preview = async (req, res) => {
   res.render(`pages/preview`);
 };
 
+const publish = async (req, res) => {
+  const form_id = req.params.id;
+  // console.log("Form id:", form_id);
+  try {
+    const a = await Form.findByIdAndUpdate(form_id, { status: "Publish" });
+
+    return;
+  } catch (error) {
+    console.log("Error opening form:", error);
+  }
+};
+
 const errorPage = async (req, res) => {
   res.render(`pages/error`);
 };
 
 export default {
-	index,
-	getCreatePage,
-	submit,
-	list,
-	editForm,
-	viewForm,
-	resForm,
-	updateForm,
-	preview,
-	deleteAllForms,
-	deleteForm,
-	removeAuthorizedEmail,
-	getAuthorizedEmails,
-	giveAccess,
-	search,
-	errorPage
+  index,
+  getCreatePage,
+  submit,
+  list,
+  editForm,
+  viewForm,
+  resForm,
+  updateForm,
+  preview,
+  deleteAllForms,
+  deleteForm,
+  removeAuthorizedEmail,
+  getAuthorizedEmails,
+  giveAccess,
+  search,
+  publish,
+  errorPage,
 };

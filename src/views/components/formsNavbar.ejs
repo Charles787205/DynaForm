@@ -1,65 +1,32 @@
-<nav
-	class="w-screen bg-white fixed h-fit z-20 py-3 mr-0 ml-0 px-10 content-center flex justify-center"
->
-	<div
-		class="max-w-screen-xl 2xl:max-w-screen-xl justify-between items-center inline-flex w-full"
-		hx-boost="true"
-		hx-preload="mouseover"
-	>
-		<a
-			class="pr-4 outline-none flex gap-2 items-center text-black text-xl font-black cursor-pointer w-fit"
-			href="/"
-		>
-			Dynaform
-		</a>
-		<% if(isLogin) { %>
-		<input
-			type="search"
-			hx-post="/search"
-			placeholder="Search for form..."
-			name="search"
-			hx-trigger="load, input changed delay:500ms, search"
-			class="p-2 bg-gray-100 px-4 w-full mx-5 max-w-xl rounded-full"
-			hx-swap="innerHTML"
-			hx-target="#list-container"
-		/>
-		<div class="relative">
-			<button
-				id="dropdown"
-				class="text-center text-black flex items-center relative group transition-all duration-200 focus:overflow-visible overflow-hidden justify-center"
-			>
-				<span class="flex gap-3 py-2 items-center text-sm">
-					<%- user.name -%>
-					<div class="w-7 h-7">
-						<img
-							src="<%- user.img_url -%>"
-							class="w-full h-full rounded-full object-cover"
-						/>
-					</div>
-				</span>
-			</button>
-			<div
-				id="dropdownMenu"
-				class="absolute top-full left-0 mt-2 w-40 shadow-lg bg-white border border-zinc-200 rounded-lg flex flex-col gap-2 opacity-0 invisible transition-opacity duration-200"
-			>
-				<form action="/logout" method="POST">
-					<button
-						type="submit"
-						class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg w-full"
-					>
-						Logout
-					</button>
-				</form>
-			</div>
-		</div>
-		<% } else { %>
-		<a
-			href="/auth/google"
-			class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800"
-		>
-			Sign in
-		</a>
+<nav class="w-screen bg-white fixed h-fit z-20 py-3 mr-0 ml-0 px-10 content-center flex justify-center">
+  <div class="max-w-screen-xl 2xl:max-w-screen-xl justify-between items-center inline-flex w-full" hx-boost="true" hx-preload="mouseover">
+    <a class="pr-4 outline-none flex gap-2 items-center text-black text-xl font-black cursor-pointer w-fit" href="/">
+      Dynaform
+    </a>
+    <% if(isLogin) { %>
+    <input type="search" hx-post="/search" placeholder="Search for form..." name="search" hx-trigger="load, input changed delay:500ms, search" class="p-2 bg-gray-100 px-4 w-full mx-5 max-w-xl rounded-full" hx-swap="innerHTML" hx-target="#list-container" />
+    <div class="relative">
+      <button id="dropdown" class="text-center text-black flex items-center relative group transition-all duration-200 focus:overflow-visible overflow-hidden justify-center">
+        <span class="flex gap-3 py-2 items-center text-sm">
+          <%- user.name -%>
+          <div class="w-7 h-7">
+            <img src="<%- user.img_url -%>" class="w-full h-full rounded-full object-cover" />
+          </div>
+        </span>
+      </button>
+      <div id="dropdownMenu" class="absolute top-full left-0 mt-2 w-40 shadow-lg bg-white border border-zinc-200 rounded-lg flex flex-col gap-2 opacity-0 invisible transition-opacity duration-200">
+        <form action="/logout" method="POST">
+          <button type="submit" class="flex flex-row gap-2 items-center hover:bg-zinc-100 p-2 rounded-lg w-full">
+            Logout
+          </button>
+        </form>
+      </div>
+    </div>
+    <% } else { %>
+    <a href="/auth/google" class="rounded-full text-md text-white text-center px-4 py-2 bg-neutral-800">
+      Sign in
+    </a>
 
-		<% } %>
-	</div>
+    <% } %>
+  </div>
 </nav>

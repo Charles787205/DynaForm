@@ -16,6 +16,7 @@ const submitResponse = async (req, res) => {
       user_id: userId,
       responses: responses,
     });
+    res.render("");
   } catch (error) {
     console.error("Error processing form:", error);
     return res.status(500).send(error);

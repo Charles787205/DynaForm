@@ -15,7 +15,10 @@ router
   .get(FormController.getCreatePage)
   .post(FormController.submit);
 router.get("/forms", FormController.list);
-router.route("/form/:id").get(FormController.viewForm);
+router
+  .route("/form/:id")
+  .get(FormController.viewForm)
+  .post(ResponseController.submitResponse);
 router
   .route("/form/r/:id")
   .get(FormController.resForm)
@@ -41,8 +44,14 @@ router.post("/search", FormController.search); // search
 
 router.get("/error", FormController.errorPage); // error
 
+// publish button
+router.post("/publish/:id", FormController.publish);
+
 // RESPONSE
 router.route("/response/f/:form_id").post(ResponseController.submitResponse);
+router.get("/response/feedback", (req, res) => {
+  res.render("pages/thankyou");
+});
 router
   .route("/response/r/:response_id")
   .get(ResponseController.getResponseDetails);

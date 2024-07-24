@@ -126,7 +126,9 @@ const updateForm = async (req, res) => {
   const form_id = req.params.id;
   const form = await Form.findByIdAndUpdate(form_id, newForm);
 
-  res.send(200, "Form updated");
+  if (form) {
+    return res.status(200).send("Form updated");
+  }
 };
 
 //Delete Form

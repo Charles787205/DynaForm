@@ -33,7 +33,7 @@
 					</svg>
 			    </button>
 					<div id="dropdownMenu"
-						class="absolute flex shadow-lg left-8 top-0 w-[10.5rem] h-max p-2 bg-white border border-zinc-200 rounded-lg flex-col items-center gap-2"
+						class="absolute flex shadow-lg left-8 top-0 w-[10.5rem] h-max p-2 bg-white z-50 border border-zinc-200 rounded-lg flex-col items-center gap-2"
 					>
 						<a
 							href="/form/<%= options.id %>"
@@ -84,29 +84,7 @@
 						hx-swap="delete"
 						hx-trigger="confirmed"
 						hx-target="closest .formcard"
-						onclick="Swal.fire({
-										title: 'Are you sure?',
-										text: 'You won\'t be able to undo this!',
-										icon: 'warning',
-										allowEscapeKey:true,
-										customClass: {
-											confirmButton: 'text-red-500 bg-neutral-50 shadow-md  border border-gray-100'
-										},
-										showCancelButton: true,
-										cancelButtonColor: '#3085d6',
-										confirmButtonText: 'Yes, delete it!'
-									}).then((result) => {
-										if (result.isConfirmed) {
-											htmx.trigger(this, 'confirmed'); 
-											Swal.fire({
-											title: 'Deleted!',
-											text: 'Form is deleted!',
-											icon: 'success',
-											showConfirmButton: false,
-											timer: 1000
-											});
-										}
-									});"
+						hx-on:click="confirmDelete(this)"
 					>
 						<svg
 							width="22"
@@ -135,7 +113,7 @@
 		</div>
 	</div>
 	<div class="h-11 p-2.5 justify-start items-center gap-2.5 flex">
-		<div
+		<button hx-post="/components/modal/share" hx-trigger="click" hx-target="#sharemodal" hx-swap="innerHTML" hx-vals='js:{"formId": "<%= options.id %>"}'
 			class="w-fit px-3 h-10 text-white rounded-full hover:bg-neutral-700 bg-neutral-800 justify-center gap-2 items-center flex cursor-pointer"
 		>
 			<svg
@@ -152,7 +130,7 @@
 			</svg>
 
 			<div class="text-sm font-light pr-1">Share</div>
-		</div>
+		</button>
 	</div>
 </div>
 

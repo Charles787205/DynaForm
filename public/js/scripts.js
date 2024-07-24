@@ -1,4 +1,3 @@
-
 function triggerHxLoad() {
   document.querySelectorAll('[hx-trigger="load"]').forEach((element) => {
     // Manually trigger the load event for HTMX
@@ -16,10 +15,10 @@ function check() {
 }
 
 async function submitForm(from = "create") {
-	/**
-	 * Published Button on navbar
-	 */
-	const formData = getFormData() ?? [];
+  /**
+   * Published Button on navbar
+   */
+  const formData = getFormData() ?? [];
 
   const userInput = await Swal.fire({
     title: "Are you sure?",
@@ -117,16 +116,16 @@ function getFormData() {
   for (let i = 0; i < inputBlock.length; i++) {
     const block = inputBlock[i];
 
-    const contentContainer = block.querySelector(".content-container");
-    const id = block.id;
-    const name = contentContainer.getAttribute("data-name");
-    const type = contentContainer.getAttribute("data-type");
-    const forAttr = contentContainer.getAttribute("data-for");
-    const required = contentContainer.getAttribute("required");
-    var placeholder = contentContainer.getAttribute("placeholder");
-    const content = contentContainer.textContent;
-    const checked = contentContainer.getAttribute("checked");
-    const focus = contentContainer.hasAttribute("autofocus");
+		const contentContainer = block.querySelector(".content-container");
+		const id = block.id;
+		const name = contentContainer.getAttribute("data-name");
+		const type = contentContainer.getAttribute("data-type");
+		const forAttr = contentContainer.getAttribute("data-for");
+		const required = contentContainer.getAttribute("required");
+		var placeholder = contentContainer.getAttribute("placeholder");
+		const content = contentContainer.textContent.replaceAll("/n","");
+		const checked = contentContainer.getAttribute("checked");
+		const focus = contentContainer.hasAttribute("autofocus");
 
     //initialize the component with the id
     const component = { id };

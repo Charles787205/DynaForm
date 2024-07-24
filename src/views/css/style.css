@@ -205,14 +205,17 @@ img[image-loaded="true"]:hover,
 
 .load-indicator {
   z-index: -20;
+  display: none;
   opacity: 0;
 }
 
 .htmx-request .load-indicator {
   z-index: 10;
+  display: flex;
   opacity: 1;
 }
 .htmx-request.load-indicator {
+  display: flex;
   z-index: 10;
   opacity: 1;
 }

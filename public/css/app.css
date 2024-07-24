@@ -1221,6 +1221,11 @@ video {
   border-color: rgb(161 161 170 / var(--tw-border-opacity));
 }
 
+.bg-\[\#dddddd\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(221 221 221 / var(--tw-bg-opacity));
+}
+
 .bg-\[\#eee\] {
   --tw-bg-opacity: 1;
   background-color: rgb(238 238 238 / var(--tw-bg-opacity));
@@ -2061,6 +2066,10 @@ img[image-loaded="true"]:hover,
   100% {
     box-shadow: inset 0px 0px 0px 30px #7ac142;
   }
+}
+
+.cancel-btn {
+  color: black;
 }
 
 /* .htmx-settling > .input-block {

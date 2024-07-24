@@ -205,6 +205,7 @@ const search = async (req, res) => {
 				name: form.name,
 				description: form.description,
 				date: form.createdAt.toISOString().split("T")[0],
+				status: form.status,
 			};
 		});
 		return res.render("components/listcontainer", { forms });
@@ -216,6 +217,18 @@ const search = async (req, res) => {
 //preview
 const preview = async (req, res) => {
 	res.render(`pages/preview`);
+};
+
+const publish = async (req, res) => {
+	const form_id = req.params.id;
+	// console.log("Form id:", form_id);
+	try {
+		const a = await Form.findByIdAndUpdate(form_id, { status: "Publish" });
+
+		return;
+	} catch (error) {
+		console.log("Error opening form:", error);
+	}
 };
 
 export default {
@@ -231,4 +244,5 @@ export default {
 	deleteForm,
 	giveAccess,
 	search,
+	publish,
 };

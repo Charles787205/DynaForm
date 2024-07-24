@@ -7,13 +7,13 @@
 		<div class="self-stretch justify-between items-center inline-flex gap-2">
 			<a
 				class="text-neutral-700 text-xl font-bold"
-				href="/form/<%= options.id %>"
+				href="/response/<%= options.id %>"
 			>
 				<%= options.name %>
 			</a>
 			<div class="relative">
-				
-				<button id="dropdown"
+				<button
+					id="dropdown"
 					class="relative group transition-all duration-200 py-2 ml-2 focus:overflow-visible overflow-hidden flex flex-row items-center justify-center gap-1 rounded-lg"
 				>
 					<svg
@@ -31,26 +31,38 @@
 							stroke-linejoin="round"
 						/>
 					</svg>
-			    </button>
-					<div id="dropdownMenu"
-						class="absolute flex shadow-lg left-8 top-0 w-[10.5rem] h-max p-2 bg-white border border-zinc-200 rounded-lg flex-col items-center gap-2"
+				</button>
+				<div
+					id="dropdownMenu"
+					class="absolute flex shadow-lg left-8 top-0 w-[10.5rem] h-max p-2 bg-white border border-zinc-200 rounded-lg flex-col items-center gap-2"
+				>
+					<a
+						href="/form/<%= options.id %>"
+						class="flex flex-row gap-2 justify-start w-full items-center text-center font-bold text-md hover:bg-zinc-100 p-2 rounded-lg"
 					>
-						<a
-							href="/form/<%= options.id %>"
-							class="flex flex-row gap-2 justify-start w-full items-center text-center font-bold text-md hover:bg-zinc-100 p-2 rounded-lg" 
-						>
 						<div class="h-5 w-5">
-							<svg width="26" height="27" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path fill-rule="evenodd" clip-rule="evenodd" d="M0 8C0 8 3 2 8 2C13 2 16 8 16 8C16 8 13 14 8 14C3 14 0 8 0 8ZM1.81 8.13L1.73 8L1.812 7.87C2.138 7.36 2.618 6.683 3.232 6.014C4.494 4.635 6.12 3.5 8 3.5C9.878 3.5 11.506 4.635 12.77 6.014C13.3292 6.62912 13.8313 7.29386 14.27 8C13.8293 8.7053 13.3267 9.36993 12.768 9.986C11.506 11.365 9.88 12.5 8 12.5C6.122 12.5 4.494 11.365 3.23 9.986C2.70467 9.40891 2.22961 8.78798 1.81 8.13ZM11 8C10.9998 8.63153 10.8003 9.24689 10.43 9.75842C10.0596 10.27 9.5373 10.6516 8.9374 10.8489C8.33749 11.0462 7.69061 11.0492 7.08891 10.8574C6.48721 10.6656 5.96138 10.2888 5.58634 9.78074C5.21129 9.27265 5.00614 8.65915 5.00014 8.02765C4.99413 7.39615 5.18756 6.77886 5.55287 6.26372C5.91819 5.74858 6.43675 5.36186 7.03469 5.15866C7.63263 4.95545 8.27945 4.94612 8.883 5.132C8.66199 5.23201 8.46853 5.38413 8.31922 5.57532C8.16991 5.76651 8.06919 5.99106 8.0257 6.22971C7.98222 6.46837 7.99727 6.71401 8.06956 6.94558C8.14184 7.17714 8.26922 7.38772 8.44075 7.55925C8.61228 7.73078 8.82286 7.85816 9.05442 7.93044C9.28599 8.00273 9.53163 8.01778 9.77029 7.9743C10.0089 7.93081 10.2335 7.83009 10.4247 7.68078C10.6159 7.53147 10.768 7.33801 10.868 7.117C10.9558 7.4031 11.0003 7.70073 11 8Z" fill="black"/>
+							<svg
+								width="26"
+								height="27"
+								viewBox="0 0 22 21"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M0 8C0 8 3 2 8 2C13 2 16 8 16 8C16 8 13 14 8 14C3 14 0 8 0 8ZM1.81 8.13L1.73 8L1.812 7.87C2.138 7.36 2.618 6.683 3.232 6.014C4.494 4.635 6.12 3.5 8 3.5C9.878 3.5 11.506 4.635 12.77 6.014C13.3292 6.62912 13.8313 7.29386 14.27 8C13.8293 8.7053 13.3267 9.36993 12.768 9.986C11.506 11.365 9.88 12.5 8 12.5C6.122 12.5 4.494 11.365 3.23 9.986C2.70467 9.40891 2.22961 8.78798 1.81 8.13ZM11 8C10.9998 8.63153 10.8003 9.24689 10.43 9.75842C10.0596 10.27 9.5373 10.6516 8.9374 10.8489C8.33749 11.0462 7.69061 11.0492 7.08891 10.8574C6.48721 10.6656 5.96138 10.2888 5.58634 9.78074C5.21129 9.27265 5.00614 8.65915 5.00014 8.02765C4.99413 7.39615 5.18756 6.77886 5.55287 6.26372C5.91819 5.74858 6.43675 5.36186 7.03469 5.15866C7.63263 4.95545 8.27945 4.94612 8.883 5.132C8.66199 5.23201 8.46853 5.38413 8.31922 5.57532C8.16991 5.76651 8.06919 5.99106 8.0257 6.22971C7.98222 6.46837 7.99727 6.71401 8.06956 6.94558C8.14184 7.17714 8.26922 7.38772 8.44075 7.55925C8.61228 7.73078 8.82286 7.85816 9.05442 7.93044C9.28599 8.00273 9.53163 8.01778 9.77029 7.9743C10.0089 7.93081 10.2335 7.83009 10.4247 7.68078C10.6159 7.53147 10.768 7.33801 10.868 7.117C10.9558 7.4031 11.0003 7.70073 11 8Z"
+									fill="black"
+								/>
 							</svg>
 						</div>
-	
-							View Form
-						</a>
-						<a
-							href="/form/<%= options.id %>/edit"
-							class="flex flex-row z-20 gap-2 justify-start w-full items-center text-center font-bold text-md hover:bg-zinc-100 p-2 rounded-lg"
-						>
+
+						View Form
+					</a>
+					<a
+						href="/form/<%= options.id %>/edit"
+						class="flex flex-row z-20 gap-2 justify-start w-full items-center text-center font-bold text-md hover:bg-zinc-100 p-2 rounded-lg"
+					>
 						<div class="h-5 w-5">
 							<svg
 								width="20"
@@ -75,11 +87,11 @@
 								/>
 							</svg>
 						</div>
-							Edit Form
-						</a>
-	
-						<button
-						class="flex  flex-row w-full bg-slate-50 gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
+						Edit Form
+					</a>
+
+					<button
+						class="flex flex-row w-full bg-slate-50 gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
 						hx-delete="/delete/<%= options.id %>"
 						hx-swap="delete"
 						hx-trigger="confirmed"
@@ -126,12 +138,16 @@
 
 						<h1 class="text-red-700 font-bold text-md">Delete Form</h1>
 					</button>
-					</div>
+				</div>
 			</div>
 		</div>
 		<div class="text-zinc-600 text-xs font-light flex gap-4">
 			<div><%= options.date %></div>
-			<div class="text-green-500 font-bold">Open</div>
+			<div
+				class="<%= options.status === 'Publish' ? 'text-green-500' : 'text-red-500' %> font-bold"
+			>
+				<%= options.status %>
+			</div>
 		</div>
 	</div>
 	<div class="h-11 p-2.5 justify-start items-center gap-2.5 flex">
@@ -155,4 +171,3 @@
 		</div>
 	</div>
 </div>
-

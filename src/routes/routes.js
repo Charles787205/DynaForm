@@ -31,8 +31,15 @@ router.get("/forms", FormController.list); // list of forms page
 
 router.post("/search", FormController.search); // search
 
+// publish button
+router.post("/publish/:id", FormController.publish);
+
 // RESPONSE
-router.route("/response/:form_id").post(ResponseController.submitResponse);
+router
+	.route("/response/:form_id")
+	.post(ResponseController.submitResponse)
+	.get(ResponseController.getResponse);
+
 //PREVIEW
 router.post("/preview", FormController.preview);
 

@@ -1,12 +1,11 @@
 <div class="flex flex-col gap-3 h-full">
-
 	<% if (forms && forms.length > 0) { %> <% forms.forEach(function(item) { %>
 	<div
 		hx-post="components/formCard"
 		hx-trigger="load"
 		hx-indicator="#spinner"
 		hx-swap="outerHTML"
-		hx-vals='js:{"name": "<%= item.name %>","date": "<%= item.date %>","id": "<%= item.id %>"}'
+		hx-vals='js:{"name": "<%= item.name %>","date": "<%= item.date %>","id": "<%= item.id %>", "status": "<%= item.status %>"}'
 	></div>
 	<% }); %> <% } else { %>
 	<p class="text-lg">No forms available.</p>

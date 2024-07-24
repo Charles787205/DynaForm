@@ -800,6 +800,10 @@ video {
   height: 13rem;
 }
 
+.h-6 {
+  height: 1.5rem;
+}
+
 .h-7 {
   height: 1.75rem;
 }
@@ -1060,6 +1064,10 @@ video {
   gap: 1.25rem;
 }
 
+.gap-8 {
+  gap: 2rem;
+}
+
 .gap-\[16px\] {
   gap: 16px;
 }
@@ -1071,12 +1079,6 @@ video {
 .gap-x-6 {
   -moz-column-gap: 1.5rem;
        column-gap: 1.5rem;
-}
-
-.space-y-5 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
 }
 
 .self-stretch {
@@ -1175,6 +1177,11 @@ video {
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
+.border-gray-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
 .border-gray-500 {
   --tw-border-opacity: 1;
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
@@ -1208,6 +1215,11 @@ video {
 .border-zinc-400 {
   --tw-border-opacity: 1;
   border-color: rgb(161 161 170 / var(--tw-border-opacity));
+}
+
+.bg-\[\#eee\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(238 238 238 / var(--tw-bg-opacity));
 }
 
 .bg-\[\#efefef\] {
@@ -1468,6 +1480,10 @@ video {
   font-size: 1.563rem;
 }
 
+.text-3xl {
+  font-size: 1.953rem;
+}
+
 .text-4xl {
   font-size: 2.441rem;
 }
@@ -1706,6 +1722,12 @@ video {
 
 .app {
   overflow-x: hidden;
+}
+
+.figtree {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .content-container {
@@ -1965,7 +1987,6 @@ img[image-loaded="true"]:hover,
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #eee;
 }
 
 .checkmark__circle {
@@ -2041,6 +2062,11 @@ img[image-loaded="true"]:hover,
   cursor: default;
 }
 
+.hover\:bg-\[\#7ac142\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(122 193 66 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
@@ -2083,6 +2109,11 @@ img[image-loaded="true"]:hover,
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:shadow-lg:hover {

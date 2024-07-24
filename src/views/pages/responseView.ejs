@@ -30,7 +30,6 @@
 
 <body>
   <div class="app">
-    <%- include('../components/viewNavbar'); %>
       <div class="load-indicator w-screen h-screen fixed bg-white flex justify-center items-center" id="spinner"><img src="/assets/1490.gif" class="object-contain" /></div>
       <main class="mainscreen w-screen items-start inline-flex">
         <div class="relative min-h-screen w-screen pt-16" id="form">
@@ -48,7 +47,7 @@
                   hx-vals='js:{"view": true, "options": "<%= item.options %>","name": "<%= item.name %>", "content": "<%=item.content%>","placeholder":"<%= item.placeholder && item.placeholder.replace(/\n\s*/g, '') %>", "id": "<%= item._id %>"}'
                   class="form-field"></div>
                 <% }); %>
-              <div hx-post="/components/button" hx-swap="outerHTML" hx-trigger="load" hx-vals='js:{"type": "button"}'></div>
+              <div hx-post="/components/button" hx-swap="outerHTML" hx-trigger="load" hx-vals='js:{"type": "submit"}'></div>
             </form>
           </div>
         </div>

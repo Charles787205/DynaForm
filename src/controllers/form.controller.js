@@ -75,6 +75,16 @@ const viewForm = async (req, res) => {
 		return res.status(500).send("Error viewing form");
 	}
 };
+//view responseView
+const resForm = async (req, res) => {
+	const form_id = req.params.id;
+	try {
+		const form = await Form.findById(form_id);
+		res.render("pages/responseView", { form: form.toJSON() });
+	} catch (error) {
+		return res.status(500).send("Error viewing form");
+	}
+};
 
 const editForm = async (req, res) => {
 	/**
@@ -100,7 +110,7 @@ const editForm = async (req, res) => {
 
 		res.render("pages/editform", { form: form.toJSON() });
 	} catch {
-		throw new Error("Error editing form");
+		res.render("pages/error", { message: "No Form Found" });
 	}
 };
 
@@ -148,27 +158,103 @@ const deleteForm = async (req, res) => {
 
 // Give Access
 const giveAccess = async (req, res) => {
-	const emails = req.body;
+	const email = req.body.email;
 	const form_id = req.params.form_id;
 
-	const validEmails = emails.filter((email) => validators.isEmail(email));
+	const isValidEmail = validators.isEmail(email);
 
-	if (validEmails.length === 0) {
-		return res.status(400).send("No valid emails");
+	if (!isValidEmail) {
+		return res.send("Invalid email");
 	}
+
+	if (email == req.user.email) {
+		return res.send("Cannot add your own email.");
+	}
+
 	try {
-		const updatedForm = await Form.updateOne(
+		await Form.updateOne(
 			{ _id: form_id },
-			{ $addToSet: { authorized_emails: { $each: validEmails } } },
+			{ $addToSet: { authorized_emails: email } },
 			{ new: true }
 		);
-		console.log("Access given:", updatedForm);
-		res.status(200).send({ "Access given": updatedForm });
+		res.status(200).send();
 	} catch (error) {
 		console.error("Error giving access:", error);
 		return res
 			.status(500)
 			.send({ error: "An error occurred while giving access." });
+	}
+};
+
+//removeAuthEmail
+const removeAuthorizedEmail = async (req, res) => {
+	/**
+	 * Handles the removal of an email from authorized_emails.
+	 * Route: POST /accessForm/:form_id/removeEmail
+	 */
+
+	const email = req.body.email;
+	const form_id = req.params.form_id;
+	const user_id = req.user._id;
+
+	console.log("email to remove: ", email);
+	console.log("form id: ", form_id);
+	console.log("user id: ", user_id);
+
+	try {
+		const isValidEmail = validators.isEmail(email);
+
+		// Check if email is provided and valid
+		if (!isValidEmail) {
+			return res.send("Invalid email");
+		}
+		// Find the form and update it
+		const updatedForm = await Form.updateOne(
+			{
+				_id: form_id,
+				user_id: user_id,
+			},
+			{
+				$pull: { authorized_emails: email },
+			}
+		);
+
+		if (updatedForm.matchedCount === 0) {
+			return res.status(404).send("Form not found or user not authorized");
+		}
+	} catch (error) {
+		console.error("Error removing email:", error);
+		res
+			.status(500)
+			.send({ error: "An error occurred while removing the email." });
+	}
+};
+
+//getAuthEmails
+const getAuthorizedEmails = async (req, res) => {
+	const form_id = req.params.form_id;
+	console.log("triggered");
+	try {
+		const form = await Form.findById(form_id);
+		if (!form) {
+			return res.status(404).send("Form not found");
+		}
+
+		res
+			.status(200)
+			.send(
+				form.authorized_emails
+					.map(
+						(email) =>
+							`<div class="email-item flex justify-between text-md px-2 mt-6" ><p class="font-bold text-md">${email}</p><button hx-post="/accessForm/${form_id}/removeAuthorizedEmail" hx-vals='js:{"email": "${email}"}' hx-trigger="click" hx-on:click="this.closest('.email-item').remove()" class="remove-em-btn text-gray-400">Remove</button></div>`
+					)
+					.join("")
+			);
+	} catch (error) {
+		console.error("Error fetching authorized emails:", error);
+		return res
+			.status(500)
+			.send({ error: "An error occurred while fetching emails." });
 	}
 };
 
@@ -231,6 +317,10 @@ const publish = async (req, res) => {
 	}
 };
 
+const errorPage = async (req, res) => {
+	res.render(`pages/error`);
+};
+
 export default {
 	index,
 	getCreatePage,
@@ -238,11 +328,15 @@ export default {
 	list,
 	editForm,
 	viewForm,
+	resForm,
 	updateForm,
 	preview,
 	deleteAllForms,
 	deleteForm,
+	removeAuthorizedEmail,
+	getAuthorizedEmails,
 	giveAccess,
 	search,
 	publish,
+	errorPage,
 };

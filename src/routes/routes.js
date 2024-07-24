@@ -20,16 +20,29 @@ router
 	.get(FormController.viewForm)
 	.post(ResponseController.submitResponse);
 router
+	.route("/form/r/:id")
+	.get(FormController.resForm)
+	.post(ResponseController.submitResponse);
+
+router
 	.route("/form/:id/edit")
 	.get(FormController.editForm)
 	.post(FormController.updateForm);
 router.delete("/deleteAll", FormController.deleteAllForms);
 router.delete("/delete/:form_id", FormController.deleteForm);
 router.route("/accessForm/:form_id").post(FormController.giveAccess);
-
+router
+	.route("/accessForm/:form_id/authorizedemails")
+	.post(FormController.getAuthorizedEmails);
+router
+	.route("/accessForm/:form_id/removeAuthorizedEmail")
+	.post(FormController.removeAuthorizedEmail);
+router.post("/components/modal/share", Components.showShareModal);
 router.get("/forms", FormController.list); // list of forms page
 
 router.post("/search", FormController.search); // search
+
+router.get("/error", FormController.errorPage); // error
 
 // publish button
 router.post("/publish/:id", FormController.publish);

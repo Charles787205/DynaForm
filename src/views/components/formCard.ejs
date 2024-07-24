@@ -7,6 +7,8 @@
 		<div class="self-stretch justify-between items-center inline-flex gap-2">
 			<a
 				class="text-neutral-700 text-xl font-bold"
+				hx-get="/response/<%= options.id %>"
+				hx-trigger="click"
 				href="/response/<%= options.id %>"
 			>
 				<%= options.name %>
@@ -96,29 +98,7 @@
 						hx-swap="delete"
 						hx-trigger="confirmed"
 						hx-target="closest .formcard"
-						onclick="Swal.fire({
-										title: 'Are you sure?',
-										text: 'You won\'t be able to undo this!',
-										icon: 'warning',
-										allowEscapeKey:true,
-										customClass: {
-											confirmButton: 'text-red-500 bg-neutral-50 shadow-md  border border-gray-100'
-										},
-										showCancelButton: true,
-										cancelButtonColor: '#3085d6',
-										confirmButtonText: 'Yes, delete it!'
-									}).then((result) => {
-										if (result.isConfirmed) {
-											htmx.trigger(this, 'confirmed'); 
-											Swal.fire({
-											title: 'Deleted!',
-											text: 'Form is deleted!',
-											icon: 'success',
-											showConfirmButton: false,
-											timer: 1000
-											});
-										}
-									});"
+						hx-on:click="confirmDelete(this)"
 					>
 						<svg
 							width="22"
@@ -144,14 +124,19 @@
 		<div class="text-zinc-600 text-xs font-light flex gap-4">
 			<div><%= options.date %></div>
 			<div
-				class="<%= options.status === 'Publish' ? 'text-green-500' : 'text-red-500' %> font-bold"
+				class="<%= options.status === 'Publish' ? 'text-green-500' : 'text-yellow-500' %> font-bold"
 			>
 				<%= options.status %>
 			</div>
 		</div>
 	</div>
 	<div class="h-11 p-2.5 justify-start items-center gap-2.5 flex">
-		<div
+		<button
+			hx-post="/components/modal/share"
+			hx-trigger="click"
+			hx-target="#sharemodal"
+			hx-swap="innerHTML"
+			hx-vals='js:{"formId": "<%= options.id %>"}'
 			class="w-fit px-3 h-10 text-white rounded-full hover:bg-neutral-700 bg-neutral-800 justify-center gap-2 items-center flex cursor-pointer"
 		>
 			<svg
@@ -168,6 +153,6 @@
 			</svg>
 
 			<div class="text-sm font-light pr-1">Share</div>
-		</div>
+		</button>
 	</div>
 </div>

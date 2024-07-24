@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { texts, inputs } from "../data/fields.js";
+import Form from "../models/form.models.js";
 
 //COMPONENTS
 const getComponent = async (req, res) => {
@@ -34,6 +35,19 @@ const showModal = async (req, res) => {
 	});
 };
 
+const showShareModal = async (req, res) => {
+	const form_id = req.body.formId;
+		const form = await Form.findById(form_id);
+		console.log("formId: ", form._id, "authEmails: ", form.authorized_emails);
+		res.render("components/modal/share/index", {
+			formId: form._id,
+			authorized_emails: form.authorized_emails
+	});
+	
+
+
+};
+
 //Component Preview In Modal
 const showComponentPreview = async (req, res) => {
 	res.render("components/modal/preview", { ...req.body, view: true });
@@ -52,4 +66,5 @@ export default {
 	getTemplate,
 	showComponentPreview,
 	getFormList,
+	showShareModal
 };

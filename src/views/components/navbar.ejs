@@ -23,14 +23,11 @@
 				</svg>
 			</a>
 			<div class="flex justify-center items-center">
-				<input
-					type="text"
-					id="form-title"
-					class="font-sans tracking-tight text-lg w-40 max-w-44 max-h-10 overflow-ellipsis resize-none"
-					spellcheck="false"
-					value="<%= typeof name !== 'undefined' ? name : 'Untitled form' %>"
-					onblur="if (this.value.trim() === '') { this.value = 'Untitled Form' }"
-				/>
+				<input type="text" id="form-title" maxlength="30" class="font-sans
+				tracking-tight text-lg w-28 max-w-44 max-h-10 overflow-ellipsis
+				resize-none" spellcheck="false" value="<%= typeof name !==
+				'undefined'?name:"Untitled form" %>" onblur="if (this.value.trim() ===
+				'') { this.value = 'Untitled Form'; }" />
 				<div class="flex items-center gap-2" style="display: none" id="change">
 					<div
 						class="load-incidator w-4 h-4 mt-2 flex justify-start"
@@ -86,7 +83,7 @@
 			<% if(isLogin) { %>
 			<a
 				class="p-2 mr-3 hover:font-semibold text-md"
-				href="/form/<%= typeof id !== 'undefined' ? id:''%>"
+				href="/form/<%= typeof id !== 'undefined'?id:''%>"
 			>
 				<svg
 					width="28"
@@ -135,9 +132,7 @@
 					/>
 				</svg>
 			</button>
-			<% } %>
-			<!-- Status -->
-			<% if(isLogin) { %>
+			<% } %> <% if(isLogin) { %>
 			<button
 				id="publishButton"
 				hx-post="/publish/<%= id%>"

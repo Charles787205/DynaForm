@@ -26,7 +26,8 @@
         <input
           type="text"
           id="form-title"
-          class="font-sans tracking-tight text-lg w-40 max-w-44 max-h-10 overflow-ellipsis resize-none"
+          maxlength="30"
+          class="font-sans tracking-tight text-lg w-28 max-w-44 max-h-10 overflow-ellipsis resize-none"
           spellcheck="false"
           value="<%= typeof name !== 'undefined'?name:"Untitled form" %>"
           onblur="if (this.value.trim() === '') { this.value = 'Untitled Form'; }"

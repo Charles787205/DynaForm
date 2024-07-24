@@ -20,23 +20,52 @@
 // 	});
 // });
 
+function shareModal(component, message = "This action is irreversible.", title = "Are you sure?"){
+	const wrapper = document.createElement('div');
+	wrapper.innerHTML = "";
 
-function confirmDelete(message = "This action is irreversible and will completely remove the item.", title = "Are you sure?"){
 	Swal.fire({
-		title: this.title,
-		text: this.message,
-		icon: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#3085d6",
-		cancelButtonColor: "#d33",
-		confirmButtonText: "Yes, delete it!",
+		title: title,
+		text: message,
+		content: content,
 	}).then((result) => {
 		if (result.isConfirmed) {
+			htmx.trigger(component, 'confirmed'); 
+			
 			Swal.fire({
 				title: "Deleted!",
 				text: "Your file has been deleted.",
 				icon: "success",
 			});
+			return result;
+		}
+	});
+}
+
+
+function confirmDelete(component, message = "This action is irreversible.", title = "Are you sure?"){
+	 Swal.fire({
+		title: title,
+		text: message,
+		icon: "warning",
+		allowEscapeKey:true,
+		showConfirmButton: true,
+		customClass: {
+			confirmButton: 'delete-modal-btn'
+		},
+		showCancelButton: true,
+		cancelButtonColor: '#3085d6',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			htmx.trigger(component, 'confirmed'); 
+			Swal.fire({
+				title: 'Deleted!',
+				text: 'Form is deleted!',
+				icon: 'success',
+				showConfirmButton: false,
+				timer: 1000
+				});
 			return result;
 		}
 	});

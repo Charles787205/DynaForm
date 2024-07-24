@@ -234,6 +234,21 @@ img[image-loaded="true"]:hover,
   visibility: visible;
 }
 
+.delete-modal-btn {
+  background-color: rgb(250, 250, 250);
+  border: 1px;
+  border-color: #b4b4b4;
+  color: rgb(173, 0, 0);
+  font-weight: bold;
+}
+
+.tab {
+  display: none;
+}
+
+.active{
+  display: flex;
+}
 /* .htmx-settling > .input-block {
   background: black;
 } */

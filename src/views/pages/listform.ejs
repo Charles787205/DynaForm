@@ -49,7 +49,7 @@
 		<div class="app">
 			<%- include('../components/formsNavbar'); %>
 
-			<main class="mainscreen w-screen items-start inline-flex" id="main" >
+			<main class="mainscreen w-screen items-start inline-flex" id="main">
 				<div class="relative min-h-screen w-screen pt-16">
 					<div class="w-full flex justify-center z-20 px-10">
 						<div
@@ -81,18 +81,23 @@
 								</button>
 							</div>
 							<div class="w-full flex justify-center">
-
-								<div id="list-container" class="w-full max-w-screen-lg pb-32" id="list">
-	
-								</div>
-					
+								<div
+									id="list-container"
+									class="w-full max-w-screen-lg pb-32"
+									id="list"
+								></div>
 							</div>
 						</div>
-	
 					</div>
 				</div>
-				<div class="h-screen fixed w-screen bg-white flex justify-center items-center"
-					id="spinner" hx-trigger="load delay:500ms" hx-get="/" hx-swap="delete" hx-target="this">
+				<div
+					class="h-screen fixed w-screen bg-white flex justify-center items-center"
+					id="spinner"
+					hx-trigger="load delay:500ms"
+					hx-get="/"
+					hx-swap="delete"
+					hx-target="this"
+				>
 					<img src="/assets/1490.gif" class="object-contain" />
 				</div>
 

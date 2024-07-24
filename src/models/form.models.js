@@ -15,16 +15,20 @@ const form_schema = new Schema(
 			required: [true, "Name is required"],
 			maxLength: 50,
 		},
+
 		description: {
 			type: String,
 			required: false,
 			maxLength: 255,
 		},
+
 		status: {
 			type: String,
-			required: false,
-			enum: ["unpublished", "published", "isClosed"],
+			required: true,
+			default: "Unpublish",
+			enum: ["Unpublish", "Publish", "Closed"],
 		},
+
 		authorized_emails: {
 			type: [String],
 			required: false,

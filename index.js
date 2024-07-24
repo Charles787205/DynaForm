@@ -45,10 +45,7 @@ app.use(function (req, res, next) {
   res.locals.user = req.user;
   next();
 });
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.render("pages/error");
-});
+
 app.all("*", function (req, res, next) {
   // CORS headers
   res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
@@ -66,7 +63,15 @@ app.all("*", function (req, res, next) {
   return next();
 });
 
-app.get("*/*", checkPath, router);
+app.get(
+  "*/*",
+  (err, req, res, next) => {
+    console.log(err);
+    res.render("pages/error", { error: err });
+  },
+  checkPath,
+  router
+);
 app.post("*/*", router);
 app.get("*/*", authRouter);
 app.post("*/*", authRouter);

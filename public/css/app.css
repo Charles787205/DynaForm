@@ -768,6 +768,10 @@ video {
   height: 3rem;
 }
 
+.h-14 {
+  height: 3.5rem;
+}
+
 .h-16 {
   height: 4rem;
 }
@@ -784,12 +788,20 @@ video {
   height: 1rem;
 }
 
+.h-40 {
+  height: 10rem;
+}
+
 .h-5 {
   height: 1.25rem;
 }
 
 .h-52 {
   height: 13rem;
+}
+
+.h-6 {
+  height: 1.5rem;
 }
 
 .h-7 {
@@ -1052,6 +1064,10 @@ video {
   gap: 1.25rem;
 }
 
+.gap-8 {
+  gap: 2rem;
+}
+
 .gap-\[16px\] {
   gap: 16px;
 }
@@ -1063,12 +1079,6 @@ video {
 .gap-x-6 {
   -moz-column-gap: 1.5rem;
        column-gap: 1.5rem;
-}
-
-.space-y-5 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
 }
 
 .self-stretch {
@@ -1167,6 +1177,11 @@ video {
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
+.border-gray-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
 .border-gray-500 {
   --tw-border-opacity: 1;
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
@@ -1182,6 +1197,11 @@ video {
   border-color: rgb(163 163 163 / var(--tw-border-opacity));
 }
 
+.border-neutral-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(115 115 115 / var(--tw-border-opacity));
+}
+
 .border-stone-300 {
   --tw-border-opacity: 1;
   border-color: rgb(214 211 209 / var(--tw-border-opacity));
@@ -1195,6 +1215,11 @@ video {
 .border-zinc-400 {
   --tw-border-opacity: 1;
   border-color: rgb(161 161 170 / var(--tw-border-opacity));
+}
+
+.bg-\[\#eee\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(238 238 238 / var(--tw-bg-opacity));
 }
 
 .bg-\[\#efefef\] {
@@ -1315,6 +1340,11 @@ video {
 
 .p-6 {
   padding: 1.5rem;
+}
+
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .px-10 {
@@ -1444,6 +1474,14 @@ video {
 
 .font-sans {
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.text-2xl {
+  font-size: 1.563rem;
+}
+
+.text-3xl {
+  font-size: 1.953rem;
 }
 
 .text-4xl {
@@ -1691,6 +1729,12 @@ video {
   overflow-x: hidden;
 }
 
+.figtree {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .content-container {
   position: relative;
   background-color: transparent;
@@ -1773,7 +1817,7 @@ img[image-loaded="true"]:hover,
   visibility: visible;
 }
 
-.template {
+.template{
   padding: 0px 2em 0px 2rem;
 }
 
@@ -1884,19 +1928,19 @@ img[image-loaded="true"]:hover,
   opacity: 1;
 }
 
-.load-indicator {
+.load-indicator{
   z-index: -20;
-  opacity: 0;
+  opacity:0;
 }
 
-.htmx-request .load-indicator {
+.htmx-request .load-indicator{
   z-index: 10;
-  opacity: 1;
+  opacity:1
 }
 
-.htmx-request.load-indicator {
+.htmx-request.load-indicator{
   z-index: 10;
-  opacity: 1;
+  opacity:1
 }
 
 [show-pl-click="false"]:focus:empty:before {
@@ -1935,7 +1979,7 @@ img[image-loaded="true"]:hover,
   display: none;
 }
 
-.active {
+.active{
   display: flex;
 }
 
@@ -1948,7 +1992,6 @@ img[image-loaded="true"]:hover,
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #eee;
 }
 
 .checkmark__circle {
@@ -2024,6 +2067,11 @@ img[image-loaded="true"]:hover,
   cursor: default;
 }
 
+.hover\:bg-\[\#7ac142\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(122 193 66 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
@@ -2066,6 +2114,11 @@ img[image-loaded="true"]:hover,
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:shadow-lg:hover {

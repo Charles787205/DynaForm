@@ -20,6 +20,11 @@ router
   .get(FormController.viewForm)
   .post(ResponseController.submitResponse);
 router
+  .route("/form/r/:id")
+  .get(FormController.resForm)
+  .post(ResponseController.submitResponse);
+  
+router
   .route("/form/:id/edit")
   .get(FormController.editForm)
   .post(FormController.updateForm);

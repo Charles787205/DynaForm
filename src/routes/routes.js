@@ -49,6 +49,7 @@ router.post("/publish/:id", FormController.publish);
 
 // RESPONSE
 router.route("/response/:form_id").post(ResponseController.submitResponse);
+router.get("/response/:form_id", ResponseController.getResponse);
 router.get("/response/feedback", (req, res) => {
 	res.render("pages/thankyou");
 });

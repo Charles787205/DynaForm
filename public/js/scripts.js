@@ -1,4 +1,3 @@
-
 function triggerHxLoad() {
   document.querySelectorAll('[hx-trigger="load"]').forEach((element) => {
     // Manually trigger the load event for HTMX
@@ -16,10 +15,10 @@ function check() {
 }
 
 async function submitForm(from = "create") {
-	/**
-	 * Published Button on navbar
-	 */
-	const formData = getFormData() ?? [];
+  /**
+   * Published Button on navbar
+   */
+  const formData = getFormData() ?? [];
 
   const userInput = await Swal.fire({
     title: "Are you sure?",

@@ -1,8 +1,6 @@
 import Response from "../models/response.models.js";
-import { Component } from "../models/component.model.js";
-import { ObjectId } from "mongodb";
-import Form from "../models/form.models.js";
-import { response } from "express";
+import FormModel from "../models/form.models.js";
+import Form from "../objects/form.js";
 const submitResponse = async (req, res) => {
 	try {
 		const formId = req.params.form_id;
@@ -16,32 +14,40 @@ const submitResponse = async (req, res) => {
 			user_id: userId,
 			responses: responses,
 		});
-		res.render("");
+		res.status(200).json(response);
 	} catch (error) {
 		console.error("Error processing form:", error);
 		return res.status(500).send(error);
 	}
 };
 
-const getSummary = async (req, res) => {
-	const formId = req.params.form_id;
+const getResponseDetails = async (req, res) => {
+	//if req headers is content json
+	if (req.headers["content-type"] === "application/json") {
+		try {
+			const response = await Response.findById(req.params.response_id);
+			return res.status(200).json(response.responses);
+		} catch (error) {
+			console.log(error);
+			return res.status(500).send("Error viewing response");
+		}
+	}
 	try {
-		const response = await Response.find({ form_id: formId }, { responses: 1 });
-		const form = await Form.findById(formId);
+		const response = await Response.findById(req.params.response_id);
+		const form = await FormModel.findById(response.form_id);
+		console.log(response.toObject().responses);
+		const formObject = new Form({
+			...form.toObject(),
+			responses: response.toObject().responses,
+		});
 
-		console.log(form.components);
-		const responses = response.map((r) => r.responses);
-		const values = responses.map((r) => r.map((v) => v.value));
-		const final_values = values.flat();
-		console.log("responses: ", final_values);
-
-		return res.render("pages/response", {
-			responses: final_values,
-			form: form,
+		return res.render("pages/responseDetail", {
+			form: formObject,
+			response_id: response._id,
 		});
 	} catch (error) {
-		console.error("Error processing form:", error);
-		return res.status(500).send();
+		console.log(error);
+		return res.status(404).send("Response not found");
 	}
 };
 export default { submitResponse, getSummary };

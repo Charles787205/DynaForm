@@ -8,13 +8,19 @@
     , initial-scale=1.0"
     />
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/css/app.css" />
   </head>
   <body>
     <main>
       <section>
-        <div class="flex justify-center items-center min-h-screen">
-          <div class="space-y-5">
+        <div class="flex justify-center items-center min-h-screen bg-[#eee]">
+          <div class="flex flex-col items-center gap-8">
             <div class="wrapper">
               <svg
                 class="checkmark"
@@ -35,7 +41,36 @@
                 />
               </svg>
             </div>
-            <h1>Thank you for submitting the form!.</h1>
+            <h1 class="text-3xl font-semibold figtree">
+              Thank you for submitting the form!
+            </h1>
+            <h1 class="text-xl text-gray-600 font-semibold figtree">
+              Your response has been saved.
+            </h1>
+            <h1 class="text-lg text-gray-500 font-semibold figtree">
+              Created with Dynaform
+            </h1>
+
+            <div class="flex gap-5 items-center">
+              <div class="w-5 h-6">
+                <svg
+                  width="24"
+                  height="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                >
+                  <path
+                    d="M12 0c-6.623 0-12 5.377-12 12s5.377 12 12 12 12-5.377 12-12-5.377-12-12-12zm0 1c-6.071 0-11 4.929-11 11s4.929 11 11 11 11-4.929 11-11-4.929-11-11-11zm4.828 11.5l-4.608 3.763.679.737 6.101-5-6.112-5-.666.753 4.604 3.747h-11.826v1h11.828z"
+                  />
+                </svg>
+              </div>
+              <button
+                class="flex gap-2 figtree border border-gray-400 px-3 py-2 rounded-lg font-serifh hover:text-white transition-all hover:bg-[#7ac142]"
+              >
+                Create your own form now!
+              </button>
+            </div>
           </div>
         </div>
       </section>

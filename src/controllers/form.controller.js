@@ -105,13 +105,12 @@ const editForm = async (req, res) => {
 
     console.log("RETRIEVED FORM : ", form);
     if (!form) {
-      res.redirect(`/form/${form_id}`);
+      return res.redirect(`/form/${form_id}`);
     }
 
     res.render("pages/editform", { form: form.toJSON() });
   } catch (e) {
-    console.log(e);
-    // res.render("pages/error", { message: "No Form Found" });
+    res.render("pages/error", { message: "No Form Found" });
   }
 };
 

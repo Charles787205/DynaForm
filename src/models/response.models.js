@@ -7,11 +7,7 @@ const response_schema = new Schema({
     required: [true, "Form ID is required"],
     ref: "Form",
   },
-  user_id: {
-    type: Schema.Types.ObjectId,
-    required: [true, "User ID is required"],
-    ref: "User",
-  },
+
   responses: [
     {
       component_id: {

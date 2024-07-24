@@ -25,12 +25,12 @@ const submitResponse = async (req, res) => {
 const getResponse = async (req, res) => {
 	const formId = req.params.form_id;
 	try {
-		const response = Response.findOne({ form_id: formId });
-		console.log(response);
+		const response = await Response.find({ form_id: formId });
+
+		res.render("pages/response", { formId, response });
 	} catch (error) {
 		console.error("Error processing form:", error);
 		return res.status(500).send;
 	}
-	res.render("pages/response", { formId });
 };
 export default { submitResponse, getResponse };

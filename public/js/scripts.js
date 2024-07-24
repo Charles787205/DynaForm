@@ -116,16 +116,16 @@ function getFormData() {
   for (let i = 0; i < inputBlock.length; i++) {
     const block = inputBlock[i];
 
-		const contentContainer = block.querySelector(".content-container");
-		const id = block.id;
-		const name = contentContainer.getAttribute("data-name");
-		const type = contentContainer.getAttribute("data-type");
-		const forAttr = contentContainer.getAttribute("data-for");
-		const required = contentContainer.getAttribute("required");
-		var placeholder = contentContainer.getAttribute("placeholder");
-		const content = contentContainer.textContent.replaceAll("/n","");
-		const checked = contentContainer.getAttribute("checked");
-		const focus = contentContainer.hasAttribute("autofocus");
+    const contentContainer = block.querySelector(".content-container");
+    const id = block.id;
+    const name = contentContainer.getAttribute("data-name");
+    const type = contentContainer.getAttribute("data-type");
+    const forAttr = contentContainer.getAttribute("data-for");
+    const required = contentContainer.getAttribute("required");
+    var placeholder = contentContainer.getAttribute("placeholder");
+    const content = contentContainer.textContent.replaceAll("/n", "");
+    const checked = contentContainer.getAttribute("checked");
+    const focus = contentContainer.hasAttribute("autofocus");
 
     //initialize the component with the id
     const component = { id };
@@ -232,7 +232,7 @@ function submitResponse(event) {
   event.preventDefault();
   console.log(event.target.id);
   const { form_id, responses } = getFormResponse();
-  fetch(`/response/${event.target.id}`, {
+  fetch(`/response/f/${event.target.id}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

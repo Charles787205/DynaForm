@@ -1,4 +1,3 @@
-
 function triggerHxLoad() {
   document.querySelectorAll('[hx-trigger="load"]').forEach((element) => {
     // Manually trigger the load event for HTMX
@@ -16,17 +15,10 @@ function check() {
 }
 
 async function submitForm(from = "create") {
-<<<<<<< HEAD
   /**
    * Published Button on navbar
    */
   const formData = getFormData() ?? [];
-=======
-	/**
-	 * Published Button on navbar
-	 */
-	const formData = getFormData() ?? [];
->>>>>>> 8b118b3d63d951b05defd3c97f7df2c0493d7103
 
   const userInput = await Swal.fire({
     title: "Are you sure?",
@@ -236,7 +228,6 @@ function auto_grow(element) {
   showTooltip(element);
 }
 
-<<<<<<< HEAD
 let draggedElement = null;
 let currentDropZone = null;
 let targetBlock = null;
@@ -414,8 +405,6 @@ function handleSwap(e) {
   }
 }
 
-=======
->>>>>>> 8b118b3d63d951b05defd3c97f7df2c0493d7103
 function submitResponse(event) {
   event.preventDefault();
   console.log(event.target.id);
@@ -463,7 +452,6 @@ function getFormResponse() {
 
   return { responses };
 }
-<<<<<<< HEAD
 
 //Listeners
 
@@ -474,5 +462,3 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("htmx:afterSwap", function (e) {
   handleSwap(e);
 });
-=======
->>>>>>> 8b118b3d63d951b05defd3c97f7df2c0493d7103

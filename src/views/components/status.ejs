@@ -1,0 +1,21 @@
+<%switch (stat) {
+					case 'Closed':
+						color = "text-red-500";
+						text = "Close";		
+						break;
+					case 'Unpublish':
+						color = "text-yellow-500";
+						text = "Unpublished";							
+						break;
+					case 'Publish':
+						color = "text-green-500";
+						text = "Open";						
+						break;
+					default:
+						color = "";
+						text = "";
+						break;
+				} %>
+			<div class="<%= color %> font-bold">
+				<%= text %>
+			</div>

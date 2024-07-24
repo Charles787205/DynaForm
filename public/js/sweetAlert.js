@@ -60,3 +60,53 @@ function confirmDelete(component, message = "This action is irreversible.", titl
 		}
 	});
 }
+
+function confirmClose(component, message = "This will closes the form and will not accept any response.", title = "Are you sure?"){
+	 Swal.fire({
+		title: title,
+		text: message,
+		icon: "question",
+		allowEscapeKey:true,
+		showConfirmButton: true,
+		showCancelButton: true,
+		cancelButtonColor: '#3085d6',
+		confirmButtonText: 'Close Form'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			htmx.trigger(component, 'confirmed'); 
+			Swal.fire({
+				title: 'Closed!',
+				text: 'Form is closed!',
+				icon: 'success',
+				showConfirmButton: false,
+				timer: 1000
+				});
+			return result;
+		}
+	});
+}
+
+function confirmOpen(component, message = "This will open the form and will accept agian any response.", title = "Are you sure?"){
+	 Swal.fire({
+		title: title,
+		text: message,
+		icon: "question",
+		allowEscapeKey:true,
+		showConfirmButton: true,
+		showCancelButton: true,
+		cancelButtonColor: '#3085d6',
+		confirmButtonText: 'Open Form'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			htmx.trigger(component, 'confirmed'); 
+			Swal.fire({
+				title: 'Closed!',
+				text: 'Form is Open!',
+				icon: 'success',
+				showConfirmButton: false,
+				timer: 1000
+				});
+			return result;
+		}
+	});
+}

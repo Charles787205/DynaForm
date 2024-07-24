@@ -1,0 +1,77 @@
+<% if(stat === "Unpublish"){ %>
+<a
+  href="/form/<%= id %>/edit"
+  class="flex flex-row z-20 gap-2 justify-start w-full items-center text-center font-bold text-md hover:bg-zinc-100 p-2 rounded-lg"
+>
+  <div class="h-5 w-5">
+    <svg
+      width="20"
+      height="19"
+      viewBox="0 0 20 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.04163 5.5415H5.24996C4.83003 5.5415 4.42731 5.70832 4.13037 6.00525C3.83344 6.30218 3.66663 6.70491 3.66663 7.12484V14.2498C3.66663 14.6698 3.83344 15.0725 4.13037 15.3694C4.42731 15.6664 4.83003 15.8332 5.24996 15.8332H12.375C12.7949 15.8332 13.1976 15.6664 13.4945 15.3694C13.7915 15.0725 13.9583 14.6698 13.9583 14.2498V13.4582"
+        stroke="black"
+        stroke-width="1.58333"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M13.1667 3.95842L15.5417 6.33342M16.6381 5.21321C16.9499 4.90141 17.1251 4.47853 17.1251 4.03758C17.1251 3.59664 16.9499 3.17375 16.6381 2.86196C16.3263 2.55016 15.9034 2.375 15.4625 2.375C15.0216 2.375 14.5987 2.55016 14.2869 2.86196L7.625 9.50008V11.8751H10L16.6381 5.21321Z"
+        stroke="#545454"
+        stroke-width="1.58333"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </div>
+  Edit Form
+</a>
+<% } %> <% if(stat === "Publish"){%>
+<button
+  class="close-btn flex flex-row w-full gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
+  hx-post="/close/<%= id %>"
+  hx-trigger="confirmed"
+  hx-on:click="confirmClose(this)"
+>
+  <svg
+    width="19"
+    height="21"
+    viewBox="0 0 19 21"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M9 20V18H2V2.00001H12V6.00001H16V11H18V5.00001L13 8.05906e-06H0.999C0.868251 -0.000518162 0.738679 0.0247305 0.617694 0.0743107C0.496708 0.123891 0.386681 0.196831 0.293902 0.288959C0.201123 0.381088 0.127412 0.4906 0.076982 0.611234C0.0265523 0.731868 0.000393164 0.861258 0 0.992008V19.008C0.00209465 19.2706 0.107418 19.5219 0.293218 19.7075C0.479017 19.8931 0.730378 19.9982 0.993 20H9ZM18.536 19.121L16.414 17L18.536 14.879L17.121 13.464L15.001 15.586L12.879 13.464L11.465 14.879L13.585 16.999L11.465 19.121L12.879 20.535L15 18.415L17.121 20.535L18.536 19.121Z"
+      fill="black"
+    />
+  </svg>
+
+  <h1 class="text-black-700 font-bold text-md">Close Form</h1>
+</button>
+
+<%}%> <% if(stat === "Closed"){%>
+<button
+  class="open-btn flex flex-row w-full gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
+  hx-post="/publish/<%= id %>"
+  hx-on:click="confirmOpen(this)"
+  hx-trigger="confirmed"
+>
+  <svg
+    width="20"
+    height="21"
+    viewBox="0 0 20 21"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M11 20H2C0.9 20 0 19.1 0 18V2C0 0.9 0.9 0 2 0H10L16 6V12H14V7H9V2H2V18H11V20ZM15 19.66V17.42L17.95 20.37L19.36 18.96L16.41 16H18.65V14H13V19.66H15Z"
+      fill="black"
+    />
+  </svg>
+  <h1 class="text-black-700 font-bold text-md">Open Form</h1>
+</button>
+
+<%}%>

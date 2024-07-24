@@ -18,6 +18,9 @@ const getCreatePage = async (req, res) => {
 	 * Handles the creation of a form.
 	 * route "/create" get
 	 */
+	if(req.isAuthenticated()){
+		return res.redirect("/");
+	}
 	res.render("pages/create");
 };
 
@@ -80,9 +83,15 @@ const resForm = async (req, res) => {
 	const form_id = req.params.id;
 	try {
 		const form = await Form.findById(form_id);
-		res.render("pages/responseView", { form: form.toJSON() });
+		if(form.status === "Publish"){
+			return res.render("pages/responseView", { form: form.toJSON() });
+		}
+		if(form.status === "Unpublish"){
+			return res.render("pages/error",{errorType:"FORM NOT FOUND", description : "Form is not yet created or it is still in working"});
+		} 
+		res.render("pages/error",{errorType:"FORM CLOSED", description : "Sorry, but the form is already closed. <br> Contact the owner for further questions"});
 	} catch (error) {
-		return res.status(500).send("Error viewing form");
+		res.render("pages/error",{errorType:"FORM NOT FOUND", description : "Form is not yet created or it is still in working"});
 	}
 };
 
@@ -105,7 +114,7 @@ const editForm = async (req, res) => {
 
 		console.log("RETRIEVED FORM : ", form);
 		if (!form) {
-			return res.redirect(`/form/${form_id}`);
+			return res.render("pages/error",{errorType:"FORM NOT FOUND", description : "Form is not yet created or it is still in working"});
 		}
 
 		res.render("pages/editform", { form: form.toJSON() });
@@ -317,8 +326,62 @@ const publish = async (req, res) => {
 	}
 };
 
+const closeForm = async (req, res) => {
+	const form_id = req.params.id;
+	try {
+		await Form.findByIdAndUpdate(form_id, { status: "Closed" });
+		return;
+	} catch (error) {
+		console.log("Error opening form:", error);
+	}
+};
+
 const errorPage = async (req, res) => {
 	res.render(`pages/error`);
+};
+
+const getStatus = async (req, res) => {
+	const form_id = req.params.id;
+	try {
+		const form = await Form.findOne({ _id: form_id });
+
+		let color;
+		let text;
+		switch (form.status) {
+					case 'Closed':
+						color = "text-red-500";
+						text = "Close";		
+						break;
+					case 'Unpublish':
+						color = "text-yellow-500";
+						text = "Unpublished";							
+						break;
+					case 'Publish':
+						color = "text-green-500";
+						text = "Open";						
+						break;
+					default:
+						color = "";
+						text = "";
+						break;
+		}
+		console.log("TRIGGERED");
+		const wrapper = `<div class="${color}">${text}</div>`
+
+		res.status(200).send(wrapper)
+	} catch (error) {
+		console.log("Error opening form:", error);
+	}
+};
+
+const getStatusBut = async (req, res) => {
+	const form_id = req.params.id;
+	try {
+		const form = await Form.findOne({ _id: form_id });
+		res.render('components/statusButton',{stat : form.status, id : form._id.toString()})
+	} catch (error) {
+		console.log("Error opening form:", error);
+	}
 };
 
 export default {
@@ -338,5 +401,8 @@ export default {
 	giveAccess,
 	search,
 	publish,
+	closeForm,
 	errorPage,
+	getStatus,
+	getStatusBut
 };

@@ -31,8 +31,8 @@
         <div class="p-2.5 flex-col justify-center items-center gap-[50px] flex">
             <div><span class="text-[#575757] text-[266px] font-extrabold">Oops</span><span class="text-[#f50000] text-[266px] font-extrabold">!!!</span></div>
             <div class="p-2.5 flex-col justify-center items-center gap-[16px] flex">
-                <div class="text-black text-[32px] font-extrabold">404 - PAGE NOT FOUND <br> </div>
-                <div class="text-black text-[25px] font-extralight">The page might nonexistent, or it might be moved, or removed by the admin.</div>
+                <div class="text-black text-[32px] font-extrabold"><%= errorType ? errorType:"404 - PAGE NOT FOUND" %><br> </div>
+                <div class="text-black text-[25px] font-extralight"><%= description?description:"The page might nonexistent, or it might be moved, or removed by the admin." %></div>
             </div>    
         </div>
       </div>

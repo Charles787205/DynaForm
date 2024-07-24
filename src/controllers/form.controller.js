@@ -77,13 +77,13 @@ const viewForm = async (req, res) => {
 };
 //view responseView
 const resForm = async (req, res) => {
-	const form_id = req.params.id;
-	try {
-		const form = await Form.findById(form_id);
-		res.render("pages/responseView", { form: form.toJSON() });
-	} catch (error) {
-		return res.status(500).send("Error viewing form");
-	}
+  const form_id = req.params.id;
+  try {
+    const form = await Form.findById(form_id);
+    res.render("pages/responseView", { form: form.toJSON() });
+  } catch (error) {
+    return res.status(500).send("Error viewing form");
+  }
 };
 
 const editForm = async (req, res) => {
@@ -92,7 +92,7 @@ const editForm = async (req, res) => {
    * route "/forms/:id/edit" post
    */
 
-  const { email } = req.body;
+  const email = req.user.email;
   const form_id = req.params.id;
   const user_id = req.user._id;
   try {
@@ -103,14 +103,15 @@ const editForm = async (req, res) => {
       ],
     });
 
-    // console.log("RETRIEVED FORM : ", form);
+    console.log("RETRIEVED FORM : ", form);
     if (!form) {
       res.redirect(`/form/${form_id}`);
     }
 
     res.render("pages/editform", { form: form.toJSON() });
-  } catch {
-    res.render("pages/error", { message: "No Form Found" });
+  } catch (e) {
+    console.log(e);
+    // res.render("pages/error", { message: "No Form Found" });
   }
 };
 
@@ -309,20 +310,20 @@ const errorPage = async (req, res) => {
 };
 
 export default {
-	index,
-	getCreatePage,
-	submit,
-	list,
-	editForm,
-	viewForm,
-	resForm,
-	updateForm,
-	preview,
-	deleteAllForms,
-	deleteForm,
-	removeAuthorizedEmail,
-	getAuthorizedEmails,
-	giveAccess,
-	search,
-	errorPage
+  index,
+  getCreatePage,
+  submit,
+  list,
+  editForm,
+  viewForm,
+  resForm,
+  updateForm,
+  preview,
+  deleteAllForms,
+  deleteForm,
+  removeAuthorizedEmail,
+  getAuthorizedEmails,
+  giveAccess,
+  search,
+  errorPage,
 };

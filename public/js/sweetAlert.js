@@ -20,25 +20,15 @@
 // 	});
 // });
 
-function shareModal(component, message = "This action is irreversible.", title = "Are you sure?"){
+function greet(component, message = "Thank you for submitting! Your response has been saved.", title = "Form Submitted"){
 	const wrapper = document.createElement('div');
-	wrapper.innerHTML = "";
 
 	Swal.fire({
 		title: title,
 		text: message,
-		content: content,
-	}).then((result) => {
-		if (result.isConfirmed) {
-			htmx.trigger(component, 'confirmed'); 
-			
-			Swal.fire({
-				title: "Deleted!",
-				text: "Your file has been deleted.",
-				icon: "success",
-			});
-			return result;
-		}
+		icon: 'success',
+		showConfirmButton: false,
+		timer: 1000
 	});
 }
 

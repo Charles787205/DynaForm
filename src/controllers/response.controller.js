@@ -1,7 +1,8 @@
 import Response from "../models/response.models.js";
 import { Component } from "../models/component.model.js";
 import { ObjectId } from "mongodb";
-import Form from "../models/form.models.js";
+import FormModel from "../models/form.models.js";
+import Form from "../objects/form.js";
 const submitResponse = async (req, res) => {
   try {
     const formId = req.params.form_id;
@@ -22,9 +23,21 @@ const submitResponse = async (req, res) => {
   }
 };
 
-const getResponse = async (req, res) => {
-  const formId = req.params.id;
-
-  res.render("pages/response", { formId });
+const getResponseDetails = async (req, res) => {
+  try {
+    const response = await Response.findById(req.params.response_id);
+    const form = await FormModel.findById(response.form_id);
+    console.log(response.toObject().responses);
+    const formObject = new Form({
+      ...form.toObject(),
+      responses: response.toObject().responses,
+    });
+    return res.status(200).json(formObject.toResponseFormDetail());
+  } catch (error) {
+    console.log(error);
+    return res.status(404).send("Response not found");
+  }
+  if (response) {
+  }
 };
-export default { submitResponse, getResponse };
+export default { submitResponse, getResponseDetails };

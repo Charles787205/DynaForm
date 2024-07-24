@@ -232,7 +232,7 @@ function submitResponse(event) {
   event.preventDefault();
   console.log(event.target.id);
   const { form_id, responses } = getFormResponse();
-  fetch(`/response/${event.target.id}`, {
+  fetch(`/response/f/${event.target.id}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

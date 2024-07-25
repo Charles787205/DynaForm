@@ -65,12 +65,11 @@ app.all("*", function (req, res, next) {
 
 app.get(
   "*/*",
-  (err, req, res, next) => {
-    console.log(err);
-    res.render("pages/error", { error: err });
-  },
   checkPath,
-  router
+  router,
+  (req, res) => {
+    res.render("pages/error",{errorType:"404 - PAGE NOT FOUND", description : "The page might nonexistent, or it might be moved, or removed by the admin."});
+  },
 );
 app.post("*/*", router);
 app.get("*/*", authRouter);

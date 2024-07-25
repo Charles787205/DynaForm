@@ -285,7 +285,6 @@ const removeAuthorizedEmail = async (req, res) => {
 //getAuthEmails
 const getAuthorizedEmails = async (req, res) => {
   const form_id = req.params.form_id;
-  console.log("triggered");
   try {
     const form = await Form.findById(form_id);
     if (!form) {
@@ -357,13 +356,17 @@ const preview = async (req, res) => {
   res.render(`pages/preview`);
 };
 
+const getStatusFromId = async (req, res) => {
+  res.render(`pages/preview`);
+};
+
 const publish = async (req, res) => {
   const form_id = req.params.id;
   // console.log("Form id:", form_id);
   try {
-    const a = await Form.findByIdAndUpdate(form_id, { status: "Publish" });
+    const form = await Form.findByIdAndUpdate(form_id, { status: "Publish" });
 
-    return;
+    res.status(200).redirect(`/status/${form.id}`);
   } catch (error) {
     console.log("Error opening form:", error);
   }
@@ -371,9 +374,11 @@ const publish = async (req, res) => {
 
 const closeForm = async (req, res) => {
   const form_id = req.params.id;
+  console.log("triggered closed form");
+
   try {
-    await Form.findByIdAndUpdate(form_id, { status: "Closed" });
-    return;
+    const form = await Form.findByIdAndUpdate(form_id, { status: "Closed" });
+    res.status(200).redirect(`/status/${form.id}`);
   } catch (error) {
     console.log("Error opening form:", error);
   }

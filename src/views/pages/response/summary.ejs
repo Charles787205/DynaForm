@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/app.css" />
+
+    <script
+        src="https://unpkg.com/htmx.org@2.0.0"
+        integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw"
+        crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <script src="/js/scripts.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+        rel="stylesheet"
+    />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,regular,500"
+        media="all"
+    />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap"
+        rel="stylesheet"
+    />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap"
+        rel="stylesheet"
+    />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Jost:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Oxygen:wght@300;400;700&display=swap"
+        rel="stylesheet"
+    />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:ital,wght@0,300..900;1,300..900&family=Jost:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Oxygen:wght@300;400;700&display=swap"
+        rel="stylesheet"
+    />
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <title>Document</title>
+</head>
+<body>
+
+   <div class="app">
+        <%- include('../../components/homeNavbar'); %>
+
+        <main class="mainscreen w-screen items-start inline-flex" id="main">
+            <div class="relative min-h-screen w-screen pt-16">
+
+                <div class="flex justify-center my-10">
+                    <div class="max-w-screen-lg w-full ">
+                            <div class="py-4 flex justify-between w-full">
+                                <div class="flex text-4xl font-bold gap-4 title">
+                                    <h1>FORM TITLE</h1>
+                                    <svg width="39" height="38" viewBox="0 0 39 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M24.6471 6.56563L30.8235 12.873M20.5294 36H37M4.05882 27.5902L2 36L10.2353 33.8975L34.0888 9.5385C34.8608 8.74997 35.2944 7.68062 35.2944 6.56563C35.2944 5.45064 34.8608 4.3813 34.0888 3.59276L33.7347 3.23114C32.9625 2.44284 31.9154 2 30.8235 2C29.7317 2 28.6845 2.44284 27.9124 3.23114L4.05882 27.5902Z" stroke="#888686" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                        
+                                </div>
+                                <div class="flex gap-10">
+                                    <button type="button" class="flex gap-2 items-center"><svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.04163 5.5415H5.24996C4.83003 5.5415 4.42731 5.70832 4.13037 6.00525C3.83344 6.30218 3.66663 6.70491 3.66663 7.12484V14.2498C3.66663 14.6698 3.83344 15.0725 4.13037 15.3694C4.42731 15.6664 4.83003 15.8332 5.24996 15.8332H12.375C12.7949 15.8332 13.1976 15.6664 13.4945 15.3694C13.7915 15.0725 13.9583 14.6698 13.9583 14.2498V13.4582" stroke="#545454" stroke-width="1.58333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M13.1667 3.95842L15.5417 6.33342M16.6381 5.21321C16.9499 4.90141 17.1251 4.47853 17.1251 4.03758C17.1251 3.59664 16.9499 3.17375 16.6381 2.86196C16.3263 2.55016 15.9034 2.375 15.4625 2.375C15.0216 2.375 14.5987 2.55016 14.2869 2.86196L7.625 9.50008V11.8751H10L16.6381 5.21321Z" stroke="#545454" stroke-width="1.58333" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span>Edit</span></button>
+                                    <button type="button" class="flex gap-2 items-center"><svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.24872 11.4282C8.32652 11.5057 8.38824 11.5978 8.43036 11.6993C8.47248 11.8007 8.49416 11.9095 8.49416 12.0193C8.49416 12.1291 8.47248 12.2379 8.43036 12.3393C8.38824 12.4408 8.32652 12.5329 8.24872 12.6104L7.89266 12.9665C7.5147 13.3458 7.06529 13.6465 6.5704 13.8511C6.07552 14.0557 5.54498 14.1601 5.00947 14.1584C4.20302 14.1587 3.41462 13.9197 2.74399 13.4718C2.07337 13.0239 1.55067 12.3871 1.24202 11.6421C0.933372 10.897 0.852641 10.0772 1.01004 9.28622C1.16745 8.49528 1.55591 7.7688 2.12628 7.19868L4.54285 4.78212C5.05686 4.26819 5.69888 3.90098 6.40247 3.71852C7.10605 3.53605 7.84562 3.54496 8.54461 3.74431C9.24359 3.94367 9.87659 4.32623 10.3781 4.85239C10.8796 5.37854 11.2313 6.02918 11.3969 6.73693C11.4243 6.84454 11.43 6.95654 11.4135 7.06637C11.3971 7.1762 11.3589 7.28165 11.3013 7.37653C11.2436 7.47142 11.1675 7.55384 11.0776 7.61896C10.9876 7.68408 10.8856 7.73059 10.7774 7.75576C10.6692 7.78094 10.5571 7.78428 10.4477 7.76558C10.3382 7.74688 10.2336 7.70652 10.1399 7.64686C10.0463 7.58721 9.96544 7.50946 9.90221 7.41817C9.83897 7.32688 9.7946 7.22389 9.77168 7.11523C9.67343 6.69745 9.46537 6.31349 9.16903 6.00304C8.87268 5.6926 8.4988 5.46694 8.08603 5.34939C7.67326 5.23184 7.23658 5.22667 6.82114 5.33441C6.40571 5.44215 6.02658 5.6589 5.72297 5.96224L3.3064 8.3788C2.96955 8.71538 2.74007 9.14429 2.647 9.6113C2.55392 10.0783 2.60143 10.5624 2.7835 11.0024C2.96558 11.4424 3.27405 11.8186 3.6699 12.0832C4.06575 12.3479 4.5312 12.4893 5.00739 12.4894C5.32379 12.4903 5.63723 12.4285 5.92957 12.3074C6.2219 12.1864 6.48732 12.0086 6.71046 11.7843L7.06582 11.4282C7.14336 11.3503 7.23552 11.2885 7.33702 11.2463C7.43852 11.2041 7.54735 11.1824 7.65727 11.1824C7.76718 11.1824 7.87601 11.2041 7.97751 11.2463C8.07901 11.2885 8.17118 11.3503 8.24872 11.4282ZM15.8739 1.44412C15.1091 0.679525 14.0719 0.25 12.9904 0.25C11.9089 0.25 10.8717 0.679525 10.1069 1.44412L9.75151 1.79948C9.59474 1.95625 9.50667 2.16888 9.50667 2.39058C9.50667 2.61229 9.59474 2.82492 9.75151 2.98169C9.90828 3.13846 10.1209 3.22653 10.3426 3.22653C10.5643 3.22653 10.7769 3.13846 10.9337 2.98169L11.2898 2.62563C11.7416 2.17377 12.3545 1.91991 12.9935 1.91991C13.6326 1.91991 14.2454 2.17377 14.6973 2.62563C15.1492 3.0775 15.403 3.69036 15.403 4.3294C15.403 4.96844 15.1492 5.5813 14.6973 6.03317L12.2766 8.44626C12.0534 8.67058 11.788 8.84841 11.4957 8.96945C11.2033 9.09049 10.8899 9.15234 10.5735 9.15141C10.0307 9.15102 9.50399 8.96729 9.07873 8.63001C8.65347 8.29273 8.35461 7.82169 8.23064 7.29326C8.18047 7.07765 8.04671 6.89081 7.85878 6.77383C7.67085 6.65684 7.44415 6.61931 7.22854 6.66947C7.01294 6.71964 6.82609 6.8534 6.70911 7.04133C6.59213 7.22926 6.55459 7.45596 6.60476 7.67157C6.81415 8.56648 7.31972 9.36441 8.03946 9.93597C8.75921 10.5075 9.65093 10.8192 10.57 10.8204H10.5735C11.1092 10.8219 11.64 10.7171 12.135 10.5122C12.63 10.3072 13.0795 10.0061 13.4574 9.62638L15.8739 7.20981C16.2526 6.83126 16.5529 6.38183 16.7578 5.88718C16.9628 5.39254 17.0682 4.86238 17.0682 4.32697C17.0682 3.79156 16.9628 3.26139 16.7578 2.76675C16.5529 2.27211 16.2526 1.82267 15.8739 1.44412Z" fill="black"/>
+                                    </svg>
+                                    <span>Link</span></button>
+                                    <button type="button" class="flex gap-2 items-center"><svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4.16675 6.47917H17.8334M9.29175 9.89583V15.0208M12.7084 9.89583V15.0208M5.02091 6.47917L5.87508 16.7292C5.87508 17.1822 6.05507 17.6168 6.37544 17.9371C6.69582 18.2575 7.13034 18.4375 7.58341 18.4375H14.4167C14.8698 18.4375 15.3043 18.2575 15.6247 17.9371C15.9451 17.6168 16.1251 17.1822 16.1251 16.7292L16.9792 6.47917M8.43758 6.47917V3.91667C8.43758 3.69013 8.52757 3.47287 8.68776 3.31268C8.84795 3.15249 9.06521 3.0625 9.29175 3.0625H12.7084C12.935 3.0625 13.1522 3.15249 13.3124 3.31268C13.4726 3.47287 13.5626 3.69013 13.5626 3.91667V6.47917" stroke="#545454" stroke-width="1.70833" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span>Delete</span></button>
+                                </div>
+                            </div>
+                            <div class="flex justify-between w-full border-b">
+                                
+                                <div class="flex gap-10 tab-btns ">
+                                        <button type="button" class="tablinks" onclick="openCity(event, 'summary-tab')">Summary</button>
+                                        <button type="button" class="tablinks active" onclick="openCity(event, 'response-tab')">Submissions</button>
+                                
+
+                                </div>
+                                
+                            </div>
+                            <div class="tab-container">
+                                <div id="summary-tab" class="tabcontent">
+                                    <div class="response-field">
+                                        <h1 class="response-label">Radio Label</h1>
+                                        <div class="flex gap-2 items-center w-full max-w-[25rem]">
+                                            <div class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4">
+                                                <h1 >Radio box 1</h1>
+                                                <h1 class="font-bold">100%</h1>
+                                            </div>
+                                            <div class="flex gap-2">3<span>Responses</span></div>
+                                        </div>
+                                        <div class="flex gap-2 items-center w-full max-w-[25rem]">
+                                            <div class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4">
+                                                <h1 >Radio box 2</h1>
+                                                <h1 class="font-bold">0%</h1>
+                                            </div>
+                                            <div class="flex gap-2">0<span>Responses</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="response-field">
+                                        <h1 class="response-label space-y">Checkbox Label</h1>
+                                        <div class="flex gap-2 items-center w-full max-w-[25rem]">
+                                            <div class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4">
+                                                <h1 >Check box 1</h1>
+                                                <h1 class="font-bold">100%</h1>
+                                            </div>
+                                            <div class="flex gap-2">3<span>Responses</span></div>
+                                        </div>
+                                        <div class="flex gap-2 items-center w-full max-w-[25rem]">
+                                            <div class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4">
+                                                <h1 >Check box 2</h1>
+                                                <h1 class="font-bold">0%</h1>
+                                            </div>
+                                            <div class="flex gap-2">0<span>Responses</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="response-tab" class="tabcontent active">
+                                    <h1>Total Submissions: 10</h1>
+                                    <% for (let i = 0; i < 10; i++) { %>
+                                        <%- include('../../components/responseCard.ejs') %>
+                                   <% } %>
+                                   <div class="flex w-full justify-center items-center">
+                                       <div class="pagination">
+                                        <a href="#">&laquo;</a>
+                                        <a href="#">1</a>
+                                        <a href="#" class="active">2</a>
+                                        <a href="#">3</a>
+                                        <a href="#">4</a>
+                                        <a href="#">5</a>
+                                        <a href="#">6</a>
+                                        <a href="#">&raquo;</a>
+                                        </div>
+                                   </div>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+                <!-- <button hx-post="components/summary" hx-trigger="click" hx-swap="innerHTML" hx-target=".heads" class="self-stretch flex-col justify-center items-start gap-2.5 inline-flex">
+                <div class="text-neutral-500 text-base font-semibold">Summary</div>
+                </button>
+                <button hx-post="components/submission" hx-trigger="click" hx-swap="innerHTML" hx-target=".heads" class="self-stretch border-b border-black flex-col justify-center items-start gap-2.5 inline-flex">
+                <div class="text-black text-base font-semibold">Submissions</div>
+                </button>
+
+
+                <button 
+                hx-post="components/summary"
+                hx-trigger="click"
+                hx-swap="innerHTML"
+                hx-target=".heads"
+                class="self-stretch border-b border-black flex-col justify-center items-start gap-2.5 inline-flex">
+                    <div class="text-black text-base font-semibold">Summary</div>
+                </button>
+                <button
+                hx-post="components/submission"
+                hx-trigger="click"
+                hx-swap="innerHTML"
+                hx-target=".heads"
+                class="self-stretch flex-col justify-center items-start gap-2.5 inline-flex">
+                    <div class="text-neutral-500 text-base font-semibold">Submission</div>
+                </button> -->
+            </div>
+        </main>
+    </div>
+    <script>
+        function openCity(evt, id) {
+            var i, tabcontent, tablinks;
+
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            const element = document.getElementById(id);
+            element.style.display = "flex";
+
+            if(!element.classList.contains('active')){
+               element.classList.add('active');
+            }
+
+
+            evt.currentTarget.className += " active";
+            }
+    </script>
+</body>
+</html>

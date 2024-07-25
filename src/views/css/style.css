@@ -320,6 +320,84 @@ img[image-loaded="true"]:hover,
   color: black;
 }
 
+.tab-btns {
+  overflow: hidden;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab-btns button {
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  border-bottom: 2px solid #e8e8e8;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab-btns button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab-btns button.active {
+  /* background-color: #ccc; */
+  border-bottom: 2px solid black;
+}
+
+.tab-btns button:focus {
+  border-bottom: 2px solid black;
+}
+
+.tabcontent {
+  display: none;
+  gap: 8px;
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: none;
+}
+.response-field {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tabcontent.active {
+  margin-top: 15px;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #2d88ff;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+.response-label {
+  font-size: larger;
+  font-weight: bold;
+}
+
 /* .htmx-settling > .input-block {
   background: black;
 } */

@@ -53,9 +53,7 @@ router.post("/close/:id", FormController.closeForm);
 
 // RESPONSE
 router.route("/response/f/:form_id").post(ResponseController.submitResponse);
-router.get("/response/feedback", (req, res) => {
-  res.render("pages/thankyou");
-});
+router.get("/response/feedback/:response_id", ResponseController.getFeedback);
 router
   .route("/response/r/:response_id")
   .get(ResponseController.getResponseDetails);

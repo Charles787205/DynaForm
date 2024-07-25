@@ -52,7 +52,10 @@ class FormComponent {
         content: this.content,
         id: this.id,
       };
-      if (this.type == "label") component.forAttr = this.forAttr;
+      if (this.type == "label") {
+        console.log("THIS IS LABEL");
+        component.forAttr = this.forAttr;
+      }
 
       return component;
     } else if (button.includes(this.type)) {

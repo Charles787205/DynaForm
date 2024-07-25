@@ -1,6 +1,7 @@
 import Response from "../models/response.models.js";
 import FormModel from "../models/form.models.js";
 import Form from "../objects/form.js";
+
 const submitResponse = async (req, res) => {
   try {
     const formId = req.params.form_id;
@@ -9,12 +10,13 @@ const submitResponse = async (req, res) => {
 
     const components = [];
 
-    const response = Response.create({
+    const response = await new Response({
       form_id: formId,
       user_id: userId,
       responses: responses,
-    });
-    res.status(200).json(response);
+    }).save();
+
+    res.status(200).json({ response_id: response._id });
   } catch (error) {
     console.error("Error processing form:", error);
     return res.status(500).send(error);
@@ -50,4 +52,9 @@ const getResponseDetails = async (req, res) => {
     return res.status(404).send("Response not found");
   }
 };
-export default { submitResponse, getResponseDetails };
+
+const getFeedback = (req, res) => {
+  const url = "/response/r/" + req.params.response_id;
+  res.render("pages/thankyou", { response_url: url });
+};
+export default { submitResponse, getResponseDetails, getFeedback };

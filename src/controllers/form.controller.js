@@ -35,11 +35,30 @@ const submit = async (req, res) => {
     const formData = req.body.formData;
     const fromPage = req.body.fromPage;
     const components = [];
-    formData.formComponents.forEach((component) => {
+
+    for (let i = 0; i < formData.formComponents.length; i++) {
+      const component = formData.formComponents[i];
+      if (
+        component.type === "label" &&
+        i < formData.formComponents.length - 1
+      ) {
+        const nextComponent = formData.formComponents[i + 1];
+        console.log(nextComponent);
+        const inputTypes = [
+          "textarea",
+          "checkbox",
+          "radiobox",
+          "inputfield",
+          "checkbox",
+        ];
+        if (inputTypes.includes(nextComponent.type)) {
+          component.forAttr = nextComponent.id;
+        }
+      }
       const formComponent = new FormComponent(component);
       const newComponent = new Component(formComponent.toCreateFormModel());
       components.push(newComponent);
-    });
+    }
 
     const form = new FormObject({
       user_id: req.user._id,
@@ -78,6 +97,7 @@ const viewForm = async (req, res) => {
     return res.status(500).send("Error viewing form");
   }
 };
+
 //view responseView
 const resForm = async (req, res) => {
   const form_id = req.params.id;
@@ -143,12 +163,19 @@ const updateForm = async (req, res) => {
    */
   const formData = req.body;
   const components = [];
-  formData.formComponents.forEach((component) => {
+  for (let i = 0; i < formData.formComponents.length; i++) {
+    const component = formData.formComponents[i];
+    if (component.type === "label" && i < formData.formComponents.length - 1) {
+      const nextComponent = formData.formComponents[i + 1];
+      console.log(nextComponent);
+      if (nextComponent.type == "inputfield") {
+        component.forAttr = nextComponent.id;
+      }
+    }
     const formComponent = new FormComponent(component);
     const newComponent = new Component(formComponent.toCreateFormModel());
     components.push(newComponent);
-    655;
-  });
+  }
 
   const newForm = {
     name: formData.formName,

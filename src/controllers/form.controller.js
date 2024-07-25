@@ -82,7 +82,7 @@ const submit = async (req, res) => {
 
 const list = async (req, res) => {
   if (!req.isAuthenticated()) {
-    res.redirect("/auth/google");
+    return res.redirect("/auth/google");
   }
 
   res.render("pages/listform");

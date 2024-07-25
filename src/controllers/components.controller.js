@@ -18,7 +18,7 @@ const getField = async (req, res) => {
 		id: uuidv4(),
 		...req.body,
 	};
-	res.render(`components/fields/${componentName}`, { id: uuidv4(), ...req.body });
+	res.render(`components/fields/${componentName}`, { query });
 };
 
 //TEMPLATES

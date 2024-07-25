@@ -50,13 +50,15 @@ router.get("/statusBut/:id", FormController.getStatusBut);
 // publish button
 router.post("/publish/:id", FormController.publish);
 router.post("/close/:id", FormController.closeForm);
+router.route("/response/f/:form_id").post(ResponseController.submitResponse);
+router.get("/response/feedback/:response_id", ResponseController.getFeedback);
+router
+	.route("/response/r/:response_id")
+	.get(ResponseController.getResponseDetails);
+router.get("/response/:form_id", ResponseController.getSummary);
 
 // RESPONSE
-router.route("/response/:form_id").post(ResponseController.submitResponse);
-router.get("/response/:form_id", ResponseController.getSummary);
-router.get("/response/feedback", (req, res) => {
-	res.render("pages/thankyou");
-});
+
 //PREVIEW
 router.post("/preview", FormController.preview);
 

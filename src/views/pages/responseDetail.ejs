@@ -47,7 +47,7 @@
                   hx-vals='js:{"view": true, "options": "<%= item.options %>","name": "<%= item.name %>", "content": "<%=item.content%>","placeholder":"<%= item.placeholder && item.placeholder.replace(/\n\s*/g, '') %>", "id": "<%= item._id %>"}'
                   class="form-field"></div>
                 <% }); %>
-              <div hx-post="/components/button" hx-swap="outerHTML" hx-trigger="load" hx-vals='js:{"type": "submit"}'></div>
+              <div hx-post="/components/button" hx-swap="outerHTML" hx-trigger="load" hx-vals='js:{"type": "button"}'></div>
             </form>
           </div>
         </div>
@@ -71,12 +71,41 @@
       
       responses.forEach((response) => {
         const component = document.getElementById(response.component_id);
+        component.setAttribute("readonly", true);
+        //  id is set on the grand parent div in the select, checkbox, and radiobox components
+        const inputElement = component.querySelector('input');
+        const selectElement = component.querySelector('select');
+
+        if(inputElement) { 
+          //input element is checkbox or radiobox
+          //check again
+          if(inputElement.type == "checkbox" || inputElement.type == "radio") {
+            
+            inputElement.checked = response.value == 'true';
+            //inputElement.setAttribute("checked", response.value)
+            
+            inputElement.addEventListener('click', (e) => {
+              e.preventDefault();
+              return response.value == 'true';
+            });
+            
+          }  
+        }else if(selectElement) {
+          //select element is select
+          selectElement.value = response.value;
+          selectElement.disabled = true;
+        }
+
+
+        console.log({inputElement, selectElement})
         if(component.type == "radio" || component.type == "checkbox"){
-          component.checked= component.value;
+          //component.checked= true;
+          
+
         }else{
 
           component.value = response.value;
-          component.isContentEditable = false;
+          component.setAttribute("readonly", true);
         }
       })
       

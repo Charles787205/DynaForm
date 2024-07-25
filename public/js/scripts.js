@@ -69,39 +69,8 @@ async function createForm(from = "list") {
 
 function getFormData() {
 	if (!document.getElementById("form")) {
-		return (FormData = {
-			formName: "Untitled Form",
-			formDescription: "defaultDescription",
-			formComponents: [
-				{
-					id: "7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
-					name: "heading_7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
-					type: "heading",
-					placeholder: "Add a heading",
-				},
-				{
-					id: "67a46c3c-d4e7-4032-ac0a-2277b9d90741",
-					name: "textfield_67a46c3c-d4e7-4032-ac0a-2277b9d90741",
-					type: "textfield",
-					focus: "true",
-					placeholder: "Start typing text or add a block.",
-				},
-				{
-					id: "b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
-					name: "textfield_b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
-					type: "textfield",
-					placeholder: "Start typing text or add a block.",
-				},
-				{
-					id: "c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
-					name: "textfield_c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
-					type: "textfield",
-					placeholder: "Start typing text or add a block.",
-				},
-			],
-		});
+		return getDefaultFormData();
 	}
-
 	const form = document.getElementById("form");
 	const formName =
 		document.getElementById("form-title").value || "defaultFormName";
@@ -203,6 +172,40 @@ function getFormData() {
 	//component is new not dropdown
 }
 
+function getDefaultFormData() {
+	return (FormData = {
+		formName: "Untitled Form",
+		formDescription: "defaultDescription",
+		formComponents: [
+			{
+				id: "7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
+				name: "heading_7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
+				type: "heading",
+				placeholder: "Add a heading",
+			},
+			{
+				id: "67a46c3c-d4e7-4032-ac0a-2277b9d90741",
+				name: "textfield_67a46c3c-d4e7-4032-ac0a-2277b9d90741",
+				type: "textfield",
+				focus: "true",
+				placeholder: "Start typing text or add a block.",
+			},
+			{
+				id: "b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
+				name: "textfield_b1e09f10-cbe2-4a1f-b3a5-c5e99b3f49c8",
+				type: "textfield",
+				placeholder: "Start typing text or add a block.",
+			},
+			{
+				id: "c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
+				name: "textfield_c7e99cb7-ae17-43f9-b0e4-a193ff48fbcf",
+				type: "textfield",
+				placeholder: "Start typing text or add a block.",
+			},
+		],
+	});
+}
+
 function updateForm() {
 	const formData = getFormData();
 	const form = document.getElementById("formID");
@@ -231,7 +234,7 @@ function auto_grow(element) {
 
 function submitResponse(event) {
 	event.preventDefault();
-	console.log(event.target.id);
+
 	const { form_id, responses } = getFormResponse();
 	fetch(`/response/f/${event.target.id}`, {
 		method: "POST",
@@ -239,7 +242,7 @@ function submitResponse(event) {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify(responses),
-	}).then((response) => {
+	}).then(async (response) => {
 		if (!response.ok) {
 			Swal.fire({
 				title: "Oops! Something has occured.",
@@ -251,9 +254,11 @@ function submitResponse(event) {
 			throw new Error("Failed adding to database:");
 		} else if (response.status == 401) {
 			window.open("/auth/google", "_self");
+		} else if (response.status == 200) {
+			const { response_id } = await response.json();
+
+			window.open(`/response/feedback/${response_id}`, "_self");
 		}
-		console.log("ASD");
-		window.open("/response/feedback", "_self");
 	});
 }
 

@@ -2046,6 +2046,10 @@ img[image-loaded="true"]:hover,
   }
 }
 
+.cancel-btn {
+  color: black;
+}
+
 /* .htmx-settling > .input-block {
   background: black;
 } */

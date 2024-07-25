@@ -62,7 +62,7 @@
 					<div
 						hx-get="/statusBut/<%= options.id %>"
 						hx-swap="outerHTML"
-						hx-trigger="load, click from:"
+						hx-trigger="load, confirmed from:.option-btn"
 					></div>
 
 					<button
@@ -97,12 +97,12 @@
 		<div class="text-zinc-600 text-xs font-light flex gap-4">
 			<div><%= options.date %></div>
 			<div
+				id="status-<%= options.id %>"
 				hx-get="/status/<%= options.id %>"
-				hx-swap="outerHTML"
-				hx-trigger="load, click from:.open-btn"
-			>
-				Something
-			</div>
+				class="status"
+				hx-indicator="#spinner"
+				hx-trigger="load"
+			></div>
 		</div>
 	</div>
 	<div class="h-11 p-2.5 justify-start items-center gap-2.5 flex">

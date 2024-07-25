@@ -35,11 +35,30 @@ const submit = async (req, res) => {
 		const formData = req.body.formData;
 		const fromPage = req.body.fromPage;
 		const components = [];
-		formData.formComponents.forEach((component) => {
+
+		for (let i = 0; i < formData.formComponents.length; i++) {
+			const component = formData.formComponents[i];
+			if (
+				component.type === "label" &&
+				i < formData.formComponents.length - 1
+			) {
+				const nextComponent = formData.formComponents[i + 1];
+				console.log(nextComponent);
+				const inputTypes = [
+					"textarea",
+					"checkbox",
+					"radiobox",
+					"inputfield",
+					"checkbox",
+				];
+				if (inputTypes.includes(nextComponent.type)) {
+					component.forAttr = nextComponent.id;
+				}
+			}
 			const formComponent = new FormComponent(component);
 			const newComponent = new Component(formComponent.toCreateFormModel());
 			components.push(newComponent);
-		});
+		}
 
 		const form = new FormObject({
 			user_id: req.user._id,
@@ -63,7 +82,7 @@ const submit = async (req, res) => {
 
 const list = async (req, res) => {
 	if (!req.isAuthenticated()) {
-		res.redirect("/auth/google");
+		return res.redirect("/auth/google");
 	}
 
 	res.render("pages/listform");
@@ -78,6 +97,7 @@ const viewForm = async (req, res) => {
 		return res.status(500).send("Error viewing form");
 	}
 };
+
 //view responseView
 const resForm = async (req, res) => {
 	const form_id = req.params.id;
@@ -143,12 +163,19 @@ const updateForm = async (req, res) => {
 	 */
 	const formData = req.body;
 	const components = [];
-	formData.formComponents.forEach((component) => {
+	for (let i = 0; i < formData.formComponents.length; i++) {
+		const component = formData.formComponents[i];
+		if (component.type === "label" && i < formData.formComponents.length - 1) {
+			const nextComponent = formData.formComponents[i + 1];
+			console.log(nextComponent);
+			if (nextComponent.type == "inputfield") {
+				component.forAttr = nextComponent.id;
+			}
+		}
 		const formComponent = new FormComponent(component);
 		const newComponent = new Component(formComponent.toCreateFormModel());
 		components.push(newComponent);
-		655;
-	});
+	}
 
 	const newForm = {
 		name: formData.formName,
@@ -258,7 +285,6 @@ const removeAuthorizedEmail = async (req, res) => {
 //getAuthEmails
 const getAuthorizedEmails = async (req, res) => {
 	const form_id = req.params.form_id;
-	console.log("triggered");
 	try {
 		const form = await Form.findById(form_id);
 		if (!form) {
@@ -330,13 +356,17 @@ const preview = async (req, res) => {
 	res.render(`pages/preview`);
 };
 
+const getStatusFromId = async (req, res) => {
+	res.render(`pages/preview`);
+};
+
 const publish = async (req, res) => {
 	const form_id = req.params.id;
 	// console.log("Form id:", form_id);
 	try {
-		const a = await Form.findByIdAndUpdate(form_id, { status: "Publish" });
+		const form = await Form.findByIdAndUpdate(form_id, { status: "Publish" });
 
-		return;
+		res.status(200).redirect(`/status/${form.id}`);
 	} catch (error) {
 		console.log("Error opening form:", error);
 	}
@@ -344,9 +374,11 @@ const publish = async (req, res) => {
 
 const closeForm = async (req, res) => {
 	const form_id = req.params.id;
+	console.log("triggered closed form");
+
 	try {
-		await Form.findByIdAndUpdate(form_id, { status: "Closed" });
-		return;
+		const form = await Form.findByIdAndUpdate(form_id, { status: "Closed" });
+		res.status(200).redirect(`/status/${form.id}`);
 	} catch (error) {
 		console.log("Error opening form:", error);
 	}

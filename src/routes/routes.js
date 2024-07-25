@@ -44,8 +44,12 @@ router.post("/search", FormController.search); // search
 
 router.get("/error", FormController.errorPage); // error
 
+router.get("/status/:id", FormController.getStatus);
+router.get("/statusBut/:id", FormController.getStatusBut);
+
 // publish button
 router.post("/publish/:id", FormController.publish);
+router.post("/close/:id", FormController.closeForm);
 
 // RESPONSE
 router.route("/response/f/:form_id").post(ResponseController.submitResponse);

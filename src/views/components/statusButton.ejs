@@ -31,9 +31,11 @@
 </a>
 <% } %> <% if(stat === "Publish"){%>
 <button
-  class="close-btn flex flex-row w-full gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
+  class="option-btn flex flex-row w-full gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
   hx-post="/close/<%= id %>"
   hx-trigger="confirmed"
+  id="option-<%= id %>"
+  hx-target="#status-<%= id %>"
   hx-on:click="confirmClose(this)"
 >
   <svg
@@ -54,10 +56,12 @@
 
 <%}%> <% if(stat === "Closed"){%>
 <button
-  class="open-btn flex flex-row w-full gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
+  class="option-btn flex flex-row w-full gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
   hx-post="/publish/<%= id %>"
+  id="option-<%= id %>"
   hx-on:click="confirmOpen(this)"
   hx-trigger="confirmed"
+  hx-target="#status-<%= id %>"
 >
   <svg
     width="20"

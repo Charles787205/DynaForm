@@ -1221,11 +1221,6 @@ video {
   border-color: rgb(161 161 170 / var(--tw-border-opacity));
 }
 
-.bg-\[\#dddddd\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(221 221 221 / var(--tw-bg-opacity));
-}
-
 .bg-\[\#eee\] {
   --tw-bg-opacity: 1;
   background-color: rgb(238 238 238 / var(--tw-bg-opacity));

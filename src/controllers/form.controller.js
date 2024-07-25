@@ -308,6 +308,10 @@ const preview = async (req, res) => {
   res.render(`pages/preview`);
 };
 
+const getStatusFromId = async (req, res) => {
+  res.render(`pages/preview`);
+};
+
 const publish = async (req, res) => {
   const form_id = req.params.id;
   // console.log("Form id:", form_id);

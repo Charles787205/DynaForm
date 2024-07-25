@@ -2,6 +2,7 @@ import Response from "../models/response.models.js";
 import FormModel from "../models/form.models.js";
 import Form from "../objects/form.js";
 import mongoose from "mongoose";
+import { resolveShowConfigPath } from "@babel/core/lib/config/files/index.js";
 
 const submitResponse = async (req, res) => {
 	try {
@@ -62,53 +63,51 @@ const getSummary = async (req, res) => {
 			console.log("Form not found.");
 			return res.status(404).json({ message: "Form not found." });
 		}
-
-		const responses = await Response.aggregate([
-			{ $match: { form_id: new mongoose.Types.ObjectId(formId) } },
-			{ $unwind: "$responses" },
+		const find_response = await Response.find({ form_id: formId });
+		console.log(find_response);
+		const responses = await FormModel.aggregate([
+			{ $match: { _id: new mongoose.Types.ObjectId(formId) } },
+			{ $unwind: { path: "$components", includeArrayIndex: "componentIndex" } },
 			{
 				$lookup: {
-					from: "forms",
-					let: { componentId: "$responses.component_id" },
+					from: "responses",
+					let: { componentId: "$components._id", formId: "$_id" },
 					pipeline: [
+						{ $unwind: "$responses" },
 						{
 							$match: {
-								$expr: { $in: ["$$componentId", "$components._id"] },
+								$expr: {
+									$and: [
+										{ $eq: ["$form_id", "$$formId"] },
+										{ $eq: ["$responses.component_id", "$$componentId"] },
+									],
+								},
 							},
 						},
-						{ $unwind: "$components" },
-						{
-							$match: {
-								$expr: { $eq: ["$$componentId", "$components._id"] },
-							},
-						},
-						{
-							$project: {
-								_id: "$components._id",
-								type: "$components.component_type",
-								content: "$components.content",
-								name: "$components.name",
-							},
-						},
+						{ $project: { _id: 0, value: "$responses.value" } },
 					],
-					as: "componentDetails",
+					as: "matchedResponses",
 				},
 			},
-			{ $unwind: "$componentDetails" },
 			{
 				$group: {
-					_id: "$responses.component_id",
-					component: { $first: "$componentDetails" },
-					responses: { $push: "$responses.value" },
+					_id: "$components._id",
+					component: { $first: "$components" },
+					responses: { $push: "$matchedResponses.value" },
+					componentIndex: { $first: "$componentIndex" },
 				},
 			},
 
 			{
 				$project: {
-					_id: 1,
+					_id: 0,
 					component: 1,
 					responses: 1,
+					componentIndex: 1,
 				},
+			},
+			{
+				$sort: { componentIndex: 1 },
 			},
 		]);
 
@@ -118,22 +117,19 @@ const getSummary = async (req, res) => {
 				.status(404)
 				.json({ message: "No responses found for this form." });
 		}
+		const summary = responses.map(({ component, responses }) => ({
+			component: {
+				id: component._id,
+				type: component.component_type,
+				content: component.content,
+				name: component.name,
+			},
+			responses,
+		}));
 
-		const summary = {
-			formId: form._id,
-			responses: responses.map(({ component, responses }) => ({
-				component: {
-					id: component._id,
-					type: component.type,
-					content: component.content,
-					name: component.name,
-				},
-				responses,
-			})),
-		};
+		console.log(JSON.stringify(summary));
 
-		console.log(summary);
-		res.status(200).json(summary);
+		return res.render("pages/response", { formId, summary: summary });
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: "Server error." });
@@ -141,3 +137,6 @@ const getSummary = async (req, res) => {
 };
 
 export default { submitResponse, getSummary, getResponseDetails };
+
+// if (component.type === input) {
+// }

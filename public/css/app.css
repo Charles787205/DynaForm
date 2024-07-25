@@ -1333,6 +1333,11 @@ video {
   padding: 1.5rem;
 }
 
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -1807,7 +1812,6 @@ img[image-loaded="true"]:hover,
   visibility: visible;
 }
 
-.template {
 .template {
   padding: 0px 2em 0px 2rem;
 }

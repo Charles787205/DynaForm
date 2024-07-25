@@ -1,6 +1,8 @@
 import Response from "../models/response.models.js";
 import FormModel from "../models/form.models.js";
 import Form from "../objects/form.js";
+import mongoose from "mongoose";
+
 const submitResponse = async (req, res) => {
 	try {
 		const formId = req.params.form_id;
@@ -50,4 +52,92 @@ const getResponseDetails = async (req, res) => {
 		return res.status(404).send("Response not found");
 	}
 };
-export default { submitResponse, getSummary };
+
+const getSummary = async (req, res) => {
+	try {
+		const formId = req.params.form_id;
+
+		const form = await FormModel.findById(formId);
+		if (!form) {
+			console.log("Form not found.");
+			return res.status(404).json({ message: "Form not found." });
+		}
+
+		const responses = await Response.aggregate([
+			{ $match: { form_id: new mongoose.Types.ObjectId(formId) } },
+			{ $unwind: "$responses" },
+			{
+				$lookup: {
+					from: "forms",
+					let: { componentId: "$responses.component_id" },
+					pipeline: [
+						{
+							$match: {
+								$expr: { $in: ["$$componentId", "$components._id"] },
+							},
+						},
+						{ $unwind: "$components" },
+						{
+							$match: {
+								$expr: { $eq: ["$$componentId", "$components._id"] },
+							},
+						},
+						{
+							$project: {
+								_id: "$components._id",
+								type: "$components.component_type",
+								content: "$components.content",
+								name: "$components.name",
+							},
+						},
+					],
+					as: "componentDetails",
+				},
+			},
+			{ $unwind: "$componentDetails" },
+			{
+				$group: {
+					_id: "$responses.component_id",
+					component: { $first: "$componentDetails" },
+					responses: { $push: "$responses.value" },
+				},
+			},
+
+			{
+				$project: {
+					_id: 1,
+					component: 1,
+					responses: 1,
+				},
+			},
+		]);
+
+		if (!responses.length) {
+			console.log("No responses found for this form.");
+			return res
+				.status(404)
+				.json({ message: "No responses found for this form." });
+		}
+
+		const summary = {
+			formId: form._id,
+			responses: responses.map(({ component, responses }) => ({
+				component: {
+					id: component._id,
+					type: component.type,
+					content: component.content,
+					name: component.name,
+				},
+				responses,
+			})),
+		};
+
+		console.log(summary);
+		res.status(200).json(summary);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Server error." });
+	}
+};
+
+export default { submitResponse, getSummary, getResponseDetails };

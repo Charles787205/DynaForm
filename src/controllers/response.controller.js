@@ -58,15 +58,15 @@ const getFeedback = (req, res) => {
   res.render("pages/thankyou", { response_url: url });
 };
 
-const getResponse = (req, res) => {
+const getResponseList = (req, res) => {
   const url = "/response/r/" + req.params.response_id;
   res.render("pages/thankyou", { response_url: url });
 };
+
 const getSummary = (req, res) => {
   const formId = req.params.form_id;
   console.log("FORM ID:", formId);
-  res.render("pages/response/summary.ejs", { formId } );
+  res.render("pages/response/summary.ejs", { formId });
 };
-
 
 export default { submitResponse, getResponseDetails, getFeedback, getSummary };

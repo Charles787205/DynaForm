@@ -30,7 +30,7 @@
 
 <body>
   <div class="app">
-    <%- include('../components/viewNavbar'); %>
+    <%- include('../components/viewNavbar', {form_id: form._id});  %>
       <div class="load-indicator w-screen h-screen fixed bg-white flex justify-center items-center" id="spinner"><img src="/assets/1490.gif" class="object-contain" /></div>
       <main class="mainscreen w-screen items-start inline-flex">
         <div class="relative min-h-screen w-screen pt-16" id="form">

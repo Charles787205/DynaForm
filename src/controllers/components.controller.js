@@ -37,15 +37,12 @@ const showModal = async (req, res) => {
 
 const showShareModal = async (req, res) => {
 	const form_id = req.body.formId;
-		const form = await Form.findById(form_id);
-		console.log("formId: ", form._id, "authEmails: ", form.authorized_emails);
-		res.render("components/modal/share/index", {
-			formId: form._id,
-			authorized_emails: form.authorized_emails
+	const form = await Form.findById(form_id);
+	console.log("formId: ", form._id, "authEmails: ", form.authorized_emails);
+	res.render("components/modal/share/index", {
+		formId: form._id,
+		authorized_emails: form.authorized_emails,
 	});
-	
-
-
 };
 
 //Component Preview In Modal
@@ -66,5 +63,5 @@ export default {
 	getTemplate,
 	showComponentPreview,
 	getFormList,
-	showShareModal
+	showShareModal,
 };

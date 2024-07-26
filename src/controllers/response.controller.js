@@ -69,8 +69,7 @@ const getSummary = async (req, res) => {
 			console.log("Form not found.");
 			return res.status(404).json({ message: "Form not found." });
 		}
-		const find_response = await Response.find({ form_id: formId });
-		console.log(find_response);
+		const total_response = await Response.find({ form_id: formId });
 		const responses = await FormModel.aggregate([
 			{ $match: { _id: new mongoose.Types.ObjectId(formId) } },
 			{ $unwind: { path: "$components", includeArrayIndex: "componentIndex" } },
@@ -96,46 +95,183 @@ const getSummary = async (req, res) => {
 				},
 			},
 			{
-				$group: {
-					_id: "$components._id",
-					component: { $first: "$components" },
-					responses: { $push: "$matchedResponses.value" },
-					componentIndex: { $first: "$componentIndex" },
+				$facet: {
+					labels: [
+						{ $match: { "components.type": "label" } },
+						{
+							$project: {
+								_id: 0,
+								component: "label",
+								componentIndex: 1,
+								placeholder: "$components.content",
+								responses: "$$REMOVE",
+							},
+						},
+					],
+					others: [
+						{
+							$match: {
+								"components.type": {
+									$in: [
+										"radiobox",
+										"dropdown",
+										"checkbox",
+										"textarea",
+										"inputfield",
+									],
+								},
+							},
+						},
+						{
+							$group: {
+								_id: "$components._id",
+								component: { $first: "$components.type" },
+								responses: { $push: "$matchedResponses.value" },
+								placeholder: { $first: "$components.placeholder" },
+								componentIndex: { $first: "$componentIndex" },
+							},
+						},
+						{
+							$project: {
+								_id: 0,
+								component: 1,
+								componentIndex: 1,
+								placeholder: 1,
+								responses: {
+									$cond: {
+										if: {
+											$in: ["$component", ["radiobox", "dropdown", "checkbox"]],
+										},
+										then: {
+											true_value: {
+												$size: {
+													$filter: {
+														input: {
+															$arrayElemAt: ["$responses", 0],
+														},
+														as: "response",
+														cond: { $eq: ["$$response", "true"] },
+													},
+												},
+											},
+											false_value: {
+												$size: {
+													$filter: {
+														input: {
+															$arrayElemAt: ["$responses", 0],
+														},
+														as: "response",
+														cond: { $eq: ["$$response", "false"] },
+													},
+												},
+											},
+											total_responses: {
+												$size: {
+													$filter: {
+														input: {
+															$arrayElemAt: ["$responses", 0],
+														},
+														as: "response",
+														cond: {
+															$in: ["$$response", ["true", "false"]],
+														},
+													},
+												},
+											},
+										},
+										else: {
+											$cond: {
+												if: { $in: ["$component", ["textarea", "inputfield"]] },
+												then: { $slice: ["$responses", 3] },
+												else: "$responses",
+											},
+										},
+									},
+								},
+								percentage_true: {
+									$cond: {
+										if: {
+											$gt: [
+												{
+													$size: {
+														$filter: {
+															input: { $arrayElemAt: ["$responses", 0] },
+															as: "response",
+															cond: { $eq: ["$$response", "true"] },
+														},
+													},
+												},
+												0,
+											],
+										},
+										then: {
+											$round: [
+												{
+													$multiply: [
+														{
+															$divide: [
+																{
+																	$size: {
+																		$filter: {
+																			input: {
+																				$arrayElemAt: ["$responses", 0],
+																			},
+																			as: "response",
+																			cond: { $eq: ["$$response", "true"] },
+																		},
+																	},
+																},
+																{
+																	$size: {
+																		$filter: {
+																			input: {
+																				$arrayElemAt: ["$responses", 0],
+																			},
+																			as: "response",
+																			cond: {
+																				$in: ["$$response", ["true", "false"]],
+																			},
+																		},
+																	},
+																},
+															],
+														},
+														100,
+													],
+												},
+												2,
+											],
+										},
+										else: 0,
+									},
+								},
+							},
+						},
+					],
 				},
 			},
-
 			{
 				$project: {
-					_id: 0,
-					component: 1,
-					responses: 1,
-					componentIndex: 1,
+					components: { $concatArrays: ["$labels", "$others"] },
 				},
 			},
-			{
-				$sort: { componentIndex: 1 },
-			},
+			{ $unwind: "$components" },
+			{ $replaceRoot: { newRoot: "$components" } },
+			{ $sort: { componentIndex: 1 } },
 		]);
 
-		if (!responses.length) {
+		if (!response_list.length) {
 			console.log("No responses found for this form.");
 			return res
 				.status(404)
 				.json({ message: "No responses found for this form." });
 		}
-		const summary = responses.map(({ component, responses }) => ({
-			component: {
-				id: component._id,
-				type: component.component_type,
-				content: component.content,
-				name: component.name,
-			},
-			responses,
-		}));
 
-		console.log(JSON.stringify(summary));
-
-		return res.render("pages/response", { formId, summary: summary });
+		return res.render("pages/response", {
+			formId,
+			summary: responses,
+			total_response: total_response.length,
+		});
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: "Server error." });
@@ -146,3 +282,33 @@ export default { submitResponse, getSummary, getResponseDetails, getFeedback };
 
 // if (component.type === input) {
 // }
+
+// [
+// 	{
+// 		componentIndex: 4,
+// 		component: "label",
+// 		placeholder: "question",
+// 	},
+// 	{
+// 		component: "radiobox",
+// 		placeholder: "a",
+// 		componentIndex: 5,
+// 		responses: {
+// 			true_value: 2,
+// 			false_value: 1,
+// 			total_responses: 3,
+// 		},
+// 		percentage_true: 66.67,
+// 	},
+// 	{
+// 		component: "radiobox",
+// 		placeholder: "b",
+// 		componentIndex: 6,
+// 		responses: {
+// 			true_value: 1,
+// 			false_value: 2,
+// 			total_responses: 3,
+// 		},
+// 		percentage_true: 33.33,
+// 	},
+// ];

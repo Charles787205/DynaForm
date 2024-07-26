@@ -73,7 +73,7 @@ Component.discriminator(
 		type: {
 			type: String,
 			required: true,
-			enum: ["textarea", "checkbox", "radiobox", "inputfield", "dropdown"],
+			enum: ["textarea", "inputfield"],
 		},
 		placeholder: {
 			type: String,

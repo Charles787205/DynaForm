@@ -178,7 +178,7 @@ const getSummary = async (req, res) => {
 											$cond: {
 												if: { $in: ["$component", ["textarea", "inputfield"]] },
 												then: {
-													$slice: [{ $arrayElemAt: ["$responses", 0] }, 3],
+													$slice: [{ $arrayElemAt: ["$responses", 0] }, -3],
 												},
 												else: "$responses",
 											},

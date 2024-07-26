@@ -177,7 +177,9 @@ const getSummary = async (req, res) => {
 										else: {
 											$cond: {
 												if: { $in: ["$component", ["textarea", "inputfield"]] },
-												then: { $slice: ["$responses", 3] },
+												then: {
+													$slice: [{ $arrayElemAt: ["$responses", 0] }, 3],
+												},
 												else: "$responses",
 											},
 										},
@@ -254,7 +256,7 @@ const getSummary = async (req, res) => {
 			{ $replaceRoot: { newRoot: "$components" } },
 			{ $sort: { componentIndex: 1 } },
 		]);
-
+		console.log(responses);
 		if (!total_response) {
 			console.log("No responses found for this form.");
 			return res

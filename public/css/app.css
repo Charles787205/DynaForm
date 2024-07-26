@@ -662,6 +662,11 @@ video {
   margin-right: auto;
 }
 
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -939,6 +944,10 @@ video {
   max-width: 20rem;
 }
 
+.max-w-\[25rem\] {
+  max-width: 25rem;
+}
+
 .max-w-\[35rem\] {
   max-width: 35rem;
 }
@@ -985,6 +994,10 @@ video {
 
 .-translate-y-1\/2 {
   --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1038,6 +1051,10 @@ video {
 
 .gap-1 {
   gap: 0.25rem;
+}
+
+.gap-10 {
+  gap: 2.5rem;
 }
 
 .gap-2 {
@@ -1624,6 +1641,11 @@ video {
   color: rgb(64 64 64 / var(--tw-text-opacity));
 }
 
+.text-neutral-800 {
+  --tw-text-opacity: 1;
+  color: rgb(38 38 38 / var(--tw-text-opacity));
+}
+
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
@@ -2048,6 +2070,88 @@ img[image-loaded="true"]:hover,
 
 .cancel-btn {
   color: black;
+}
+
+.tab-btns {
+  overflow: hidden;
+}
+
+/* Style the buttons that are used to open the tab content */
+
+.tab-btns button {
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  border-bottom: 2px solid #e8e8e8;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+
+.tab-btns button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+
+.tab-btns button.active {
+  /* background-color: #ccc; */
+  border-bottom: 2px solid black;
+}
+
+.tab-btns button:focus {
+  border-bottom: 2px solid black;
+}
+
+.tabcontent {
+  display: none;
+  gap: 8px;
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: none;
+}
+
+.response-field {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tabcontent.active {
+  margin-top: 15px;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a.active {
+  background-color: #2d88ff;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+.response-label {
+  font-size: larger;
+  font-weight: bold;
 }
 
 /* .htmx-settling > .input-block {

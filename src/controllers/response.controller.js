@@ -7,14 +7,14 @@ import { resolveShowConfigPath } from "@babel/core/lib/config/files/index.js";
 const submitResponse = async (req, res) => {
 	try {
 		const formId = req.params.form_id;
-		const userId = req.user._id;
+		// const userId = req.user._id; << - ERROR WHEN USER NOT LOGGED IN AND SUBMITTED RESPONSE. REMOVED
 		const responses = req.body;
 
 		const components = [];
 
 		const response = await new Response({
 			form_id: formId,
-			user_id: userId,
+			//user_id: userId,  << - ERROR WHEN USER NOT LOGGED IN AND SUBMITTED RESPONSE. REMOVED
 			responses: responses,
 		}).save();
 
@@ -53,11 +53,6 @@ const getResponseDetails = async (req, res) => {
 		console.log(error);
 		return res.status(404).send("Response not found");
 	}
-};
-
-const getFeedback = (req, res) => {
-	const url = "/response/r/" + req.params.response_id;
-	res.render("pages/thankyou", { response_url: url });
 };
 
 const getSummary = async (req, res) => {
@@ -278,37 +273,8 @@ const getSummary = async (req, res) => {
 	}
 };
 
-export default { submitResponse, getSummary, getResponseDetails, getFeedback };
-
-// if (component.type === input) {
-// }
-
-// [
-// 	{
-// 		componentIndex: 4,
-// 		component: "label",
-// 		placeholder: "question",
-// 	},
-// 	{
-// 		component: "radiobox",
-// 		placeholder: "a",
-// 		componentIndex: 5,
-// 		responses: {
-// 			true_value: 2,
-// 			false_value: 1,
-// 			total_responses: 3,
-// 		},
-// 		percentage_true: 66.67,
-// 	},
-// 	{
-// 		component: "radiobox",
-// 		placeholder: "b",
-// 		componentIndex: 6,
-// 		responses: {
-// 			true_value: 1,
-// 			false_value: 2,
-// 			total_responses: 3,
-// 		},
-// 		percentage_true: 33.33,
-// 	},
-// ];
+const getFeedback = (req, res) => {
+	const url = "/response/r/" + req.params.response_id;
+	res.render("pages/thankyou", { response_url: url });
+};
+export default { submitResponse, getResponseDetails, getFeedback, getSummary };

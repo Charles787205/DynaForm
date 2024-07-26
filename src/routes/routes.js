@@ -52,6 +52,7 @@ router.post("/publish/:id", FormController.publish);
 router.post("/close/:id", FormController.closeForm);
 router.route("/response/f/:form_id").post(ResponseController.submitResponse);
 router.get("/response/feedback/:response_id", ResponseController.getFeedback);
+router.get("/response/:form_id", ResponseController.getSummary);
 router
 	.route("/response/r/:response_id")
 	.get(ResponseController.getResponseDetails);

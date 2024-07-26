@@ -255,14 +255,14 @@ const getSummary = async (req, res) => {
 			{ $sort: { componentIndex: 1 } },
 		]);
 
-		if (!response_list.length) {
+		if (!total_response) {
 			console.log("No responses found for this form.");
 			return res
 				.status(404)
 				.json({ message: "No responses found for this form." });
 		}
 
-		return res.render("pages/response", {
+		return res.render("pages/response/summary.ejs", {
 			formId,
 			summary: responses,
 			total_response: total_response.length,
@@ -273,6 +273,9 @@ const getSummary = async (req, res) => {
 	}
 };
 
+const getResponseList = (req, res) => {
+	const response_list = Response.find({ form_id: req.params.form_id });
+};
 const getFeedback = (req, res) => {
 	const url = "/response/r/" + req.params.response_id;
 	res.render("pages/thankyou", { response_url: url });

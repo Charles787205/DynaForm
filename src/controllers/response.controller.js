@@ -263,11 +263,13 @@ const getSummary = async (req, res) => {
 				.status(404)
 				.json({ message: "No responses found for this form." });
 		}
+    const response_list = Response.find({ form_id: req.params.form_id });
 
 		return res.render("pages/response/summary.ejs", {
 			formId,
 			summary: responses,
 			total_response: total_response.length,
+      response_list
 		});
 	} catch (error) {
 		console.error(error);

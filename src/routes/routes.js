@@ -24,6 +24,7 @@ router
   .get(FormController.resForm)
   .post(ResponseController.submitResponse);
 
+router.route("/form/:id/copy").get(FormController.getFormJson);
 router
   .route("/form/:id/edit")
   .get(FormController.editForm)

@@ -67,13 +67,14 @@ async function createForm(from = "list") {
   }
 }
 
-function getFormData() {
+function getFormData(isCopied = false) {
   if (!document.getElementById("form")) {
     return getDefaultFormData();
   }
   const form = document.getElementById("form");
-  const formName =
-    document.getElementById("form-title").value || "defaultFormName";
+  const formName = isCopied
+    ? ""
+    : document.getElementById("form-title").value || "defaultFormName";
   const formDescription =
     form.getAttribute("data-form-description") || "defaultDescription";
 
@@ -289,4 +290,25 @@ function getFormResponse() {
   });
 
   return { responses };
+}
+
+async function copyForm(id) {
+  //copy form json to clipboard
+  fetch(`/form/${id}/copy`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) {
+      //copy response to clipboard
+      const res = response.json();
+      navigator.clipboard.writeText(JSON.stringify(res));
+      Swal.fire({
+        title: "Form Copied!",
+        text: "Your form has been copied to clipboard.",
+        icon: "success",
+      });
+    }
+  });
 }

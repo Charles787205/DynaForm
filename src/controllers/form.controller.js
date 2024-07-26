@@ -435,6 +435,26 @@ const getStatusBut = async (req, res) => {
   }
 };
 
+const getFormJson = async (req, res) => {
+  const form_id = req.params.id;
+  console.log("DSFDF");
+  try {
+    const form = await Form.findById(form_id, {
+      _id: 0,
+      __v: 0,
+      "components._id": 0,
+      "components.__v": 0,
+      status: 0,
+      authorized_emails: 0,
+      user_id: 0,
+    });
+    res.status(200).json(form);
+  } catch (error) {
+    console.log("sdfsd");
+    console.log("Error getting form json", error);
+  }
+};
+
 export default {
   index,
   getCreatePage,
@@ -456,4 +476,5 @@ export default {
   errorPage,
   getStatus,
   getStatusBut,
+  getFormJson,
 };

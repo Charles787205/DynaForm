@@ -11,33 +11,33 @@ router.post("/components/fields/:name", Components.getField);
 router.post("/template/:template", Components.getTemplate);
 //FORMS
 router
-  .route("/create")
-  .get(FormController.getCreatePage)
-  .post(FormController.submit);
+	.route("/create")
+	.get(FormController.getCreatePage)
+	.post(FormController.submit);
 router.get("/forms", FormController.list);
 router
-  .route("/form/:id")
-  .get(FormController.viewForm)
-  .post(ResponseController.submitResponse);
+	.route("/form/:id")
+	.get(FormController.viewForm)
+	.post(ResponseController.submitResponse);
 router
-  .route("/form/r/:id")
-  .get(FormController.resForm)
-  .post(ResponseController.submitResponse);
+	.route("/form/r/:id")
+	.get(FormController.resForm)
+	.post(ResponseController.submitResponse);
 
 router.route("/form/:id/copy").get(FormController.getFormJson);
 router
-  .route("/form/:id/edit")
-  .get(FormController.editForm)
-  .post(FormController.updateForm);
+	.route("/form/:id/edit")
+	.get(FormController.editForm)
+	.post(FormController.updateForm);
 router.delete("/deleteAll", FormController.deleteAllForms);
 router.delete("/delete/:form_id", FormController.deleteForm);
 router.route("/accessForm/:form_id").post(FormController.giveAccess);
 router
-  .route("/accessForm/:form_id/authorizedemails")
-  .post(FormController.getAuthorizedEmails);
+	.route("/accessForm/:form_id/authorizedemails")
+	.post(FormController.getAuthorizedEmails);
 router
-  .route("/accessForm/:form_id/removeAuthorizedEmail")
-  .post(FormController.removeAuthorizedEmail);
+	.route("/accessForm/:form_id/removeAuthorizedEmail")
+	.post(FormController.removeAuthorizedEmail);
 router.post("/components/modal/share", Components.showShareModal);
 router.get("/forms", FormController.list); // list of forms page
 
@@ -51,13 +51,16 @@ router.get("/statusBut/:id", FormController.getStatusBut);
 // publish button
 router.post("/publish/:id", FormController.publish);
 router.post("/close/:id", FormController.closeForm);
-
-// RESPONSE
 router.route("/response/f/:form_id").post(ResponseController.submitResponse);
 router.get("/response/feedback/:response_id", ResponseController.getFeedback);
+router.get("/response/:form_id", ResponseController.getSummary);
 router
-  .route("/response/r/:response_id")
-  .get(ResponseController.getResponseDetails);
+	.route("/response/r/:response_id")
+	.get(ResponseController.getResponseDetails);
+router.get("/response/:form_id", ResponseController.getSummary);
+
+// RESPONSE
+
 //PREVIEW
 router.post("/preview", FormController.preview);
 

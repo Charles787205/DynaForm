@@ -81,7 +81,9 @@ const submit = async (req, res) => {
 };
 
 const list = async (req, res) => {
+  console.log("asdfasdfsa");
   if (!req.isAuthenticated()) {
+    console.log("Not authenticated");
     return res.redirect("/auth/google");
   }
 

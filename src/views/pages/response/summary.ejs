@@ -135,14 +135,14 @@
 								<div class="flex gap-10 tab-btns">
 									<button
 										type="button"
-										class="tablinks"
+										class="tablinks active"
 										onclick="openCity(event, 'summary-tab')"
 									>
 										Summary
 									</button>
 									<button
 										type="button"
-										class="tablinks active"
+										class="tablinks"
 										onclick="openCity(event, 'response-tab')"
 									>
 										Submissions
@@ -150,51 +150,38 @@
 								</div>
 							</div>
 							<div class="tab-container">
-								<div id="summary-tab" class="tabcontent">
+								<div id="summary-tab" class="tabcontent active">
 									<div class="response-field">
-										<h1 class="response-label">Radio Label</h1>
-										<div class="flex gap-2 items-center w-full max-w-[25rem]">
-											<div
-												class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4"
-											>
-												<h1>Radio box 1</h1>
-												<h1 class="font-bold">100%</h1>
-											</div>
-											<div class="flex gap-2">3<span>Responses</span></div>
-										</div>
-										<div class="flex gap-2 items-center w-full max-w-[25rem]">
-											<div
-												class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4"
-											>
-												<h1>Radio box 2</h1>
-												<h1 class="font-bold">0%</h1>
-											</div>
-											<div class="flex gap-2">0<span>Responses</span></div>
-										</div>
-									</div>
-									<div class="response-field">
-										<h1 class="response-label space-y">Checkbox Label</h1>
-										<div class="flex gap-2 items-center w-full max-w-[25rem]">
-											<div
-												class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4"
-											>
-												<h1>Check box 1</h1>
-												<h1 class="font-bold">100%</h1>
-											</div>
-											<div class="flex gap-2">3<span>Responses</span></div>
-										</div>
-										<div class="flex gap-2 items-center w-full max-w-[25rem]">
-											<div
-												class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4"
-											>
-												<h1>Check box 2</h1>
-												<h1 class="font-bold">0%</h1>
-											</div>
-											<div class="flex gap-2">0<span>Responses</span></div>
-										</div>
+										<% summary.map((res)=> { console.log(res)
+											if(res.component ==="label"){ %>
+												<h1 class="response-label"><%= res.placeholder %></h1>
+											<% }else if(res.component ==="inputfield"){
+												res.responses[0].forEach(element => {%>
+													<div class="flex gap-2 items-center w-full max-w-[25rem]">
+														<div
+															class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4"
+														>
+															<h1><%=element%></h1>
+														</div>
+													</div>
+												<%});
+											}else{
+												%>
+													<div class="flex gap-2 items-center w-full max-w-[25rem]">
+														<div
+															class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4"
+														>
+															<h1><%=res.placeholder%></h1>
+															<h1 class="font-bold"><%=res.percentage_true%>%</h1>
+														</div>
+														<div class="flex gap-2"><%=res.responses.true_value%> <span>Responses</span></div>
+													</div>
+												<%
+											}
+										}) %>
 									</div>
 								</div>
-								<div id="response-tab" class="tabcontent active">
+								<div id="response-tab" class="tabcontent">
 									<h1>Total Submissions: 10</h1>
 									<% for (let i = 0; i < 10; i++) { %> <%-
 									include('../../components/responseCard.ejs') %> <% } %>

@@ -64,6 +64,7 @@ const getSummary = async (req, res) => {
 			console.log("Form not found.");
 			return res.status(404).json({ message: "Form not found." });
 		}
+		console.log("form", form);
 		const total_response = await Response.find({ form_id: formId });
 		const responses = await FormModel.aggregate([
 			{ $match: { _id: new mongoose.Types.ObjectId(formId) } },
@@ -103,17 +104,49 @@ const getSummary = async (req, res) => {
 							},
 						},
 					],
+					dropdown: [
+						{ $match: { "components.type": "dropdown" } },
+						{
+							$unwind: "$matchedResponses",
+						},
+						{
+							$group: {
+								_id: "$matchedResponses.value",
+								total: { $sum: 1 },
+								componentType: { $first: "$components.type" },
+								componentIndex: { $first: "$componentIndex" },
+								options: { $first: "$components.options" },
+							},
+						},
+						{
+							$group: {
+								_id: "$componentIndex",
+								componentType: { $first: "$componentType" },
+								componentIndex: { $first: "$componentIndex" },
+								options: { $first: "$options" },
+								responses: {
+									$push: {
+										options: "$_id",
+										total: "$total",
+									},
+								},
+							},
+						},
+						{
+							$project: {
+								_id: 0,
+								component: "$componentType",
+								componentIndex: 1,
+								options: 1,
+								responses: 1,
+							},
+						},
+					],
 					others: [
 						{
 							$match: {
 								"components.type": {
-									$in: [
-										"radiobox",
-										"dropdown",
-										"checkbox",
-										"textarea",
-										"inputfield",
-									],
+									$in: ["radiobox", "checkbox", "textarea", "inputfield"],
 								},
 							},
 						},
@@ -135,7 +168,7 @@ const getSummary = async (req, res) => {
 								responses: {
 									$cond: {
 										if: {
-											$in: ["$component", ["radiobox", "dropdown", "checkbox"]],
+											$in: ["$component", ["radiobox", "checkbox"]],
 										},
 										then: {
 											true_value: {
@@ -249,14 +282,14 @@ const getSummary = async (req, res) => {
 			},
 			{
 				$project: {
-					components: { $concatArrays: ["$labels", "$others"] },
+					components: { $concatArrays: ["$labels", "$dropdown", "$others"] },
 				},
 			},
 			{ $unwind: "$components" },
 			{ $replaceRoot: { newRoot: "$components" } },
 			{ $sort: { componentIndex: 1 } },
 		]);
-		console.log(responses);
+		console.log(JSON.stringify(responses));
 		if (!total_response) {
 			console.log("No responses found for this form.");
 			return res

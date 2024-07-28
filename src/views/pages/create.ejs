@@ -65,5 +65,19 @@
         ></div>
       </main>
     </div>
+    <script>
+      document.addEventListener("paste", (event) => {
+        console.log(event.target);
+        if (event.target.getAttribute("contenteditable")) {
+          return;
+        }
+        event.preventDefault();
+        let paste = (event.clipboardData || window.clipboardData).getData(
+          "text"
+        );
+        console.log(event.target);
+        console.log(paste);
+      });
+    </script>
   </body>
 </html>

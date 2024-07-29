@@ -145,7 +145,6 @@ const editForm = async (req, res) => {
       ],
     });
 
-    console.log("RETRIEVED FORM : ", form);
     if (!form) {
       return res.render("pages/error", {
         errorType: "FORM NOT FOUND",
@@ -272,20 +271,20 @@ const removeAuthorizedEmail = async (req, res) => {
 const getAuthorizedEmails = async (req, res) => {
   const form_id = req.params.form_id;
   const variant1 = req.body.variant1;
-  console.log("Request",req.body.variant1);
+  console.log("Request", req.body.variant1);
   try {
     const form = await Form.findById(form_id);
     if (!form) {
       return res.status(404).send("Form not found");
     }
-    console.log('AUTH NUM: ', form.authorized_emails);
-    if(form.authorized_emails == 0) {
-      console.log('EXECUTED');
+    console.log("AUTH NUM: ", form.authorized_emails);
+    if (form.authorized_emails == 0) {
+      console.log("EXECUTED");
       return res.status(200).send('<div class="font-bold">No editors.</div>');
     }
-      res
+    res
       .status(200)
-        .send(
+      .send(
         form.authorized_emails
           .map(
             (email) =>
@@ -293,8 +292,6 @@ const getAuthorizedEmails = async (req, res) => {
           )
           .join("")
       );
-
-
   } catch (error) {
     console.error("Error fetching authorized emails:", error);
     return res
@@ -372,6 +369,8 @@ const publish = async (req, res) => {
       components: form.components,
       version: version,
     });
+
+    await Form.findByIdAndUpdate(form_id, { status: "Publish" });
     res.status(200).redirect(`/status/${form.id}`);
   } catch (error) {
     console.log("Error opening form:", error);

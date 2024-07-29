@@ -94,7 +94,7 @@ const viewForm = async (req, res) => {
   const form_id = req.params.id;
   try {
     const form = await Form.findById(form_id);
-
+    console.log("FORM FROM VIEW: ", form);
     res.render("pages/viewform", { form: form.toJSON() });
   } catch (error) {
     return res.status(500).send("Error viewing form");
@@ -272,20 +272,20 @@ const removeAuthorizedEmail = async (req, res) => {
 const getAuthorizedEmails = async (req, res) => {
   const form_id = req.params.form_id;
   const variant1 = req.body.variant1;
-  console.log("Request",req.body.variant1);
+  console.log("Request", req.body.variant1);
   try {
     const form = await Form.findById(form_id);
     if (!form) {
       return res.status(404).send("Form not found");
     }
-    console.log('AUTH NUM: ', form.authorized_emails);
-    if(form.authorized_emails == 0) {
-      console.log('EXECUTED');
+    console.log("AUTH NUM: ", form.authorized_emails);
+    if (form.authorized_emails == 0) {
+      console.log("EXECUTED");
       return res.status(200).send('<div class="font-bold">No editors.</div>');
     }
-      res
+    res
       .status(200)
-        .send(
+      .send(
         form.authorized_emails
           .map(
             (email) =>
@@ -293,8 +293,6 @@ const getAuthorizedEmails = async (req, res) => {
           )
           .join("")
       );
-
-
   } catch (error) {
     console.error("Error fetching authorized emails:", error);
     return res

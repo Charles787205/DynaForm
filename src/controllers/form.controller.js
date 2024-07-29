@@ -133,10 +133,10 @@ const editForm = async (req, res) => {
    * route "/forms/:id/edit" post
    */
 
-  const email = req.user.email;
-  const form_id = req.params.id;
-  const user_id = req.user._id;
   try {
+    const email = req.user.email;
+    const form_id = req.params.id;
+    const user_id = req.user._id;
     const form = await Form.findOne({
       $and: [
         { _id: form_id },
@@ -442,14 +442,16 @@ const getFormJson = async (req, res) => {
   console.log("DSFDF");
   try {
     const form = await Form.findById(form_id, {
+      "components.component_type": 1,
+      "components.type": 1,
+      "components.placeholder": 1,
+      "components.options": 1,
+      "components.id": 1,
+      "components.name": 1,
+      "components.content": 1,
       _id: 0,
-      __v: 0,
-      "components._id": 0,
-      "components.__v": 0,
-      status: 0,
-      authorized_emails: 0,
-      user_id: 0,
     });
+
     res.status(200).json(form);
   } catch (error) {
     console.log("sdfsdy");

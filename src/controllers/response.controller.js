@@ -24,7 +24,6 @@ const submitResponse = async (req, res) => {
     return res.status(500).send(error);
   }
 };
-
 const getResponseDetails = async (req, res) => {
   //if req headers is content json
   if (req.headers["content-type"] === "application/json") {
@@ -337,6 +336,7 @@ const getSummary = async (req, res) => {
     return res.render("pages/response/summary.ejs", {
       formId,
       status: form.status,
+      title: form.name,
       summary: responses,
       total_response: total_response.length,
       response_list,

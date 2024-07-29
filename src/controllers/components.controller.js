@@ -37,9 +37,11 @@ const showModal = async (req, res) => {
 
 const showShareModal = async (req, res) => {
 	const form_id = req.body.formId;
+	const loc = req.body.loc;
 	const form = await Form.findById(form_id);
 	console.log("formId: ", form._id, "authEmails: ", form.authorized_emails);
 	res.render("components/modal/share/index", {
+		loc: loc,
 		formId: form._id,
 		authorized_emails: form.authorized_emails,
 	});

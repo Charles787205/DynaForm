@@ -2,6 +2,7 @@ import Response from "../models/response.models.js";
 import FormModel from "../models/form.models.js";
 import Form from "../objects/form.js";
 import mongoose from "mongoose";
+import { ObjectId } from "mongodb";
 const submitResponse = async (req, res) => {
 	try {
 		const formId = req.params.form_id;
@@ -11,7 +12,7 @@ const submitResponse = async (req, res) => {
 		const components = [];
 
 		const response = await new Response({
-			form_id: formId,
+			form_id: ObjectId.createFromHexString(formId),
 			//user_id: userId,  << - ERROR WHEN USER NOT LOGGED IN AND SUBMITTED RESPONSE. REMOVED
 			responses: responses,
 		}).save();
@@ -322,7 +323,7 @@ const getSummary = async (req, res) => {
 			{ $replaceRoot: { newRoot: "$components" } },
 			{ $sort: { componentIndex: 1 } },
 		]);
-		console.log(responses);
+		console.log(JSON.stringify(responses));
 		if (!total_response) {
 			console.log("No responses found for this form.");
 			return res

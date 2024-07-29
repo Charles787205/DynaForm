@@ -52,7 +52,6 @@ export async function upsertFormData(formData, form) {
     components: new_components,
   };
   await Form.findByIdAndUpdate(form._id, { ...newForm });
-  console.log(form1);
 }
 
 export default { upsertFormData };

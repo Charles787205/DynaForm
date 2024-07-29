@@ -167,11 +167,10 @@
               </div>
               <div class="tab-container">
                 <div id="summary-tab" class="tabcontent active">
-                  <div class="response-field" hx-get="">
+                  <div class="response-field">
                     <% if(response_list.length == 0) { %><div>No responses</div><%} else { summary.map((res)=> { if(res.component ==="label"){ %>
                     <h1 class="response-label"><%= res.placeholder %></h1>
-                    <% }else if(res.component ==="inputfield" || res.component
-                    ==="textarea"){ res.responses.forEach(element => {%>
+                    <% }else if(res.component ==="inputfield" || res.component ==="textarea"){ res.responses.forEach(element => {%>
                     <div class="flex gap-2 items-center w-full max-w-[25rem]">
                       <div
                         class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4"
@@ -179,8 +178,32 @@
                         <h1><%=element%></h1>
                       </div>
                     </div>
-                    <%}) }else{ %>
-                    <div class="flex gap-2 items-center w-full max-w-[25rem]">
+                    <%}) }else if(res.component ==="dropdown"){ 
+                       percentage = 0;
+                       response = 0;
+                       res.options.forEach(element => { 
+                          res.responses.map((rem)=>{
+                              if(rem.options===element){
+                                percentage = rem.percentage;
+                                response = rem.total;
+                              }
+                            })
+                        %>
+                          <div class="flex gap-2 items-center w-full max-w-[25rem]">
+                          <div
+                            class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4"
+                          > 
+                            <h1><%=element%></h1>
+                            <h1 class="font-bold"><%=percentage%>%</h1>
+                          </div>
+                          <div class="flex gap-2">
+                            <%=response%> <span>Responses</span>
+                          </div>
+                        </div>
+                      <% }); %>
+                       
+                    <% }else{%>
+                      <div class="flex gap-2 items-center w-full max-w-[25rem]">
                       <div
                         class="flex justify-between w-full bg-[#f6f6f6] px-2 py-4"
                       >

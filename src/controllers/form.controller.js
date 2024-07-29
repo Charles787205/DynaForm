@@ -168,7 +168,7 @@ const updateForm = async (req, res) => {
   const components = [];
   const form = await Form.findById(req.params.id);
   try {
-    upsertFormData(formData, form);
+    await upsertFormData(formData, form);
     return res.status(200).send("Form updated");
   } catch (e) {
     console.log("Error updating form:", e);

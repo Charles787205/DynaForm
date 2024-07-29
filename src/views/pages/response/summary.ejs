@@ -151,7 +151,7 @@
                 <div class="flex gap-10 tab-btns">
                   <button
                     type="button"
-                    class="tablinks active"
+                    class="tablinks"
                     onclick="openCity(event, 'summary-tab')"
                   >
                     Summary
@@ -163,10 +163,17 @@
                   >
                     Submissions
                   </button>
+                  <button
+                  type="button"
+                  class="tablinks active"
+                  onclick="openCity(event, 'details-tab')"
+                >
+                    Details
+                </button>
                 </div>
               </div>
               <div class="tab-container">
-                <div id="summary-tab" class="tabcontent active">
+                <div id="summary-tab" class="tabcontent">
                   <div class="response-field" hx-get="">
                     <% if(response_list.length == 0) { %><div>No responses</div><%} else { summary.map((res)=> { if(res.component ==="label"){ %>
                     <h1 class="response-label"><%= res.placeholder %></h1>
@@ -226,10 +233,10 @@
                       </div>
                       <button
                         hx-delete="/response/d/<%= response._id %>"
-						hx-trigger="click"
-					  	hx-swap="delete"
-						hx-target="closest .formcard"
-						hx-on="htmx:trigger: "
+                        hx-trigger="click"
+                          hx-swap="delete"
+                        hx-target="closest .formcard"
+                        hx-on="htmx:trigger: "
                         class="w-fit px-3 h-fit py-1 text-neutral-800 rounded-full justify-center gap-2 items-center flex cursor-pointer"
                       >
                         <div
@@ -250,33 +257,40 @@
                     </div>
                   </div>
                 </div>
+                <div id="details-tab" class="tabcontent active space-y-6">
+                    <div id="editor-list" class="space-y-3">
+                      <div class="flex justify-between">
+                        <h1>Editors</h1>
+                        <button type="button" class="bg-blue-500 hover:bg-blue-600 rounded-lg px-3 py-2 text-white">+</button>
+                      
+                        </div>
+                        <ul class="grid grid-cols-3 gap-2">
+                          <%if(authorized_emails.length == 0) { %>
+                            <h1 class="font-bold">No added editors</h1>
+                          <% }else{ authorized_emails.forEach((email) => { %>
+                            <ul class="hover:bg-gray-100 flex items-center justify-between px-2 py-2"><%= email %></ul>
+                          <% })} %>
+                          
+                        </ul>
+                    </div>
+                    <div id="version-list" class="space-y-6">
+                      <h1>Versions</h1>
+                      <div class="space-y-2">
+                        <% for(let i=0; i <10; i++) { %>
+                          <div class="flex px-2">
+                            <p class="w-8"><%= i+1 %>.</p>
+                            <div>
+                            <h1 class="text-slate-800 font-bold">Untitled Form</h1>
+                            <h1 class="text-slate-500">Last Saved: 08 / 02 / 2024</h1>  
+                          </div>
+                          </div>
+                        <% } %>
+                      </div>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
-          <!-- <button hx-post="components/summary" hx-trigger="click" hx-swap="innerHTML" hx-target=".heads" class="self-stretch flex-col justify-center items-start gap-2.5 inline-flex">
-                <div class="text-neutral-500 text-base font-semibold">Summary</div>
-                </button>
-                <button hx-post="components/submission" hx-trigger="click" hx-swap="innerHTML" hx-target=".heads" class="self-stretch border-b border-black flex-col justify-center items-start gap-2.5 inline-flex">
-                <div class="text-black text-base font-semibold">Submissions</div>
-                </button>
-
-
-                <button 
-                hx-post="components/summary"
-                hx-trigger="click"
-                hx-swap="innerHTML"
-                hx-target=".heads"
-                class="self-stretch border-b border-black flex-col justify-center items-start gap-2.5 inline-flex">
-                    <div class="text-black text-base font-semibold">Summary</div>
-                </button>
-                <button
-                hx-post="components/submission"
-                hx-trigger="click"
-                hx-swap="innerHTML"
-                hx-target=".heads"
-                class="self-stretch flex-col justify-center items-start gap-2.5 inline-flex">
-                    <div class="text-neutral-500 text-base font-semibold">Submission</div>
-                </button> -->
         </div>
       </main>
     </div>

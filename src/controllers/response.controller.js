@@ -130,6 +130,42 @@ const getSummary = async (req, res) => {
 										total: "$total",
 									},
 								},
+								totalResponses: { $sum: 1 },
+							},
+						},
+						{
+							$addFields: {
+								totalResponses: { $sum: "$responses.total" },
+							},
+						},
+						{
+							$addFields: {
+								responses: {
+									$map: {
+										input: "$responses",
+										as: "response",
+										in: {
+											options: "$$response.options",
+											total: "$$response.total",
+											percentage: {
+												$round: [
+													{
+														$multiply: [
+															{
+																$divide: [
+																	"$$response.total",
+																	"$totalResponses",
+																],
+															},
+															100,
+														],
+													},
+													2,
+												],
+											},
+										},
+									},
+								},
 							},
 						},
 						{
@@ -139,6 +175,7 @@ const getSummary = async (req, res) => {
 								componentIndex: 1,
 								options: 1,
 								responses: 1,
+								totalResponses: 1,
 							},
 						},
 					],

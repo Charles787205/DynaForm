@@ -59,14 +59,12 @@ const submit = async (req, res) => {
 			const newComponent = new Component(formComponent.toCreateFormModel());
 			components.push(newComponent);
 		}
-
 		const form = new FormObject({
 			user_id: req.user._id,
 			name: formData.formName,
 			description: formData.formDescription,
 			components: components,
 		});
-
 		const newForm = await new Form(form.toCreateFormModel()).save();
 		// console.log("ADDED TO DB", JSON.stringify(form));
 		if (fromPage === "create") {
@@ -458,6 +456,9 @@ const getFormJson = async (req, res) => {
 	}
 };
 
+const update_form = async (req, res) => {
+	const form_id = req.params.id;
+};
 export default {
 	index,
 	getCreatePage,

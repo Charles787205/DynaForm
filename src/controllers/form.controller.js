@@ -11,13 +11,12 @@ const index = async (req, res) => {
    *  index page
    * route "/" get
    */
-
   res.render("index");
 };
 
 const getCreatePage = async (req, res) => {
   /**
-   
+   *
    * Handles the creation of a form.
    * route "/create" get
    */

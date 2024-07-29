@@ -24,7 +24,6 @@ const submitResponse = async (req, res) => {
     return res.status(500).send(error);
   }
 };
-
 const getResponseDetails = async (req, res) => {
   //if req headers is content json
   if (req.headers["content-type"] === "application/json") {
@@ -64,7 +63,6 @@ const getSummary = async (req, res) => {
       console.log("Form not found.");
       return res.status(404).json({ message: "Form not found." });
     }
-    console.log("form", form);
     const total_response = await Response.find({ form_id: formId });
     const responses = await FormModel.aggregate([
       { $match: { _id: new mongoose.Types.ObjectId(formId) } },
@@ -333,16 +331,25 @@ const getSummary = async (req, res) => {
         .status(404)
         .json({ message: "No responses found for this form." });
     }
-
+    const response_list = await Response.find({ form_id: req.params.form_id });
+    console.log("RESPOSNELLIST: ", response_list);
     return res.render("pages/response/summary.ejs", {
       formId,
+      status: form.status,
+      authorized_emails: form.authorized_emails,
+      title: form.name,
       summary: responses,
       total_response: total_response.length,
+      response_list,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error." });
   }
+};
+
+const getResponseFromComponents = (req, res) => {
+  const response_list = Response.find({ form_id: req.params.form_id });
 };
 
 const getResponseList = (req, res) => {
@@ -352,4 +359,28 @@ const getFeedback = (req, res) => {
   const url = "/response/r/" + req.params.response_id;
   res.render("pages/thankyou", { response_url: url });
 };
-export default { submitResponse, getResponseDetails, getFeedback, getSummary };
+const deleteResponse = async (req, res) => {
+  const responseId = req.params.response_id;
+
+  if (!req.isAuthenticated()) {
+    res.redirect("/auth/google");
+  }
+  try {
+    const deleteRes = await Response.deleteOne({ _id: responseId });
+    if (deleteRes) {
+      return res.status(200).send();
+    }
+    return res.status(404).send("Response not found");
+  } catch (error) {
+    res.status(500).send("Error deleting form");
+  }
+
+  res.render("pages/thankyou", { response_url: url });
+};
+export default {
+  submitResponse,
+  getResponseDetails,
+  getFeedback,
+  getSummary,
+  deleteResponse,
+};

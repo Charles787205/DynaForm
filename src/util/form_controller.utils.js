@@ -5,10 +5,10 @@ import { Component } from "../models/component.model.js";
 
 //form data is form from the edit form (client)
 //form is the form from the database
-export function upsertFormData(formData, form) {
+export async function upsertFormData(formData, form) {
   const new_components = [];
   const components = form.components;
-
+  console.log({ formData });
   for (let i = 0; i < formData.formComponents.length; i++) {
     const component = formData.formComponents[i];
     if (component.type === "label" && i < formData.formComponents.length - 1) {
@@ -51,7 +51,8 @@ export function upsertFormData(formData, form) {
     description: formData.formDescription,
     components: new_components,
   };
-  Form.findByIdAndUpdate(form._id, newForm);
+  const form1 = await Form.findByIdAndUpdate(form._id, { ...newForm });
+  console.log(form1);
 }
 
 export default { upsertFormData };

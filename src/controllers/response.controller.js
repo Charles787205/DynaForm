@@ -335,6 +335,7 @@ const getSummary = async (req, res) => {
     return res.render("pages/response/summary.ejs", {
       formId,
       status: form.status,
+      authorized_emails: form.authorized_emails,
       title: form.name,
       summary: responses,
       total_response: total_response.length,

@@ -2,8 +2,7 @@ import Response from "../models/response.models.js";
 import FormModel from "../models/form.models.js";
 import Form from "../objects/form.js";
 import mongoose from "mongoose";
-import { resolveShowConfigPath } from "@babel/core/lib/config/files/index.js";
-
+import { ObjectId } from "mongodb";
 const submitResponse = async (req, res) => {
 	try {
 		const formId = req.params.form_id;
@@ -57,6 +56,7 @@ const getResponseDetails = async (req, res) => {
 
 const getSummary = async (req, res) => {
 	try {
+		console.time("summary");
 		const formId = req.params.form_id;
 
 		const form = await FormModel.findById(formId);
@@ -326,7 +326,7 @@ const getSummary = async (req, res) => {
 			{ $replaceRoot: { newRoot: "$components" } },
 			{ $sort: { componentIndex: 1 } },
 		]);
-		console.log(JSON.stringify(responses));
+		console.timeEnd("summary");
 		if (!total_response) {
 			console.log("No responses found for this form.");
 			return res

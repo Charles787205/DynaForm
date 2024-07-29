@@ -60,9 +60,11 @@
 						View Form
 					</a>
 					<div
+						class="flex w-full justify-center items-center"
+						id="check_<%= options.id %>"
 						hx-get="/statusBut/<%= options.id %>"
-						hx-swap="outerHTML"
-						hx-trigger="load, confirmed from:.option-btn"
+						hx-swap="innerHTML"
+						hx-trigger="load, afterSwap from:#status-<%= options.id %>, confirmed"
 					></div>
 
 					<button
@@ -96,13 +98,30 @@
 		</div>
 		<div class="text-zinc-600 text-xs font-light flex gap-4">
 			<div><%= options.date %></div>
-			<div
-				id="status-<%= options.id %>"
-				hx-get="/status/<%= options.id %>"
-				class="status"
-				hx-indicator="#spinner"
-				hx-trigger="load"
-			></div>
+				<div
+					id="status-<%= options.id %>"
+				><%switch (options.status) {
+						case 'Closed':
+							color = "text-red-500";
+							text = "Close";		
+							break;
+						case 'Unpublish':
+							color = "text-yellow-500";
+							text = "Unpublished";							
+							break;
+						case 'Publish':
+							color = "text-green-500";
+							text = "Open";						
+							break;
+						default:
+							color = "";
+							text = "";
+							break;
+					} %>
+				<div class="<%= color %>">
+					<%= text %>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="h-11 p-2.5 justify-start items-center gap-2.5 flex">

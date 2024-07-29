@@ -3,16 +3,15 @@ const Schema = mongoose.Schema;
 import validators from "validator";
 import { Component } from "./component.model.js";
 
-const form_schema = new Schema(
+const form_history_schema = new Schema(
   {
-    user_id: {
+    form_id: {
       type: Schema.Types.ObjectId,
-      required: [true, "User ID is required"],
-      ref: "User",
+      required: [true, "Form ID is required"],
+      ref: "Form",
     },
-    current_version: {
+    version: {
       type: Number,
-      default: 1,
       required: [true, "Version is required"],
     },
     name: {
@@ -27,18 +26,6 @@ const form_schema = new Schema(
       maxLength: 255,
     },
 
-    status: {
-      type: String,
-      required: true,
-      default: "Unpublish",
-      enum: ["Unpublish", "Publish", "Closed"],
-    },
-
-    authorized_emails: {
-      type: [String],
-      required: false,
-    },
-
     components: [Component.schema],
   },
   {
@@ -46,6 +33,6 @@ const form_schema = new Schema(
   }
 );
 
-const Form = mongoose.model("Form", form_schema);
+const FormHistory = mongoose.model("FormHistory", form_history_schema);
 
-export default Form;
+export default FormHistory;

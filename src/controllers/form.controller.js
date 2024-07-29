@@ -2,8 +2,10 @@ import { Component } from "../models/component.model.js";
 import FormComponent from "../objects/component.js";
 import FormObject from "../objects/form.js";
 import Form from "../models/form.models.js";
-import { ObjectId } from "mongodb";
+import FormHistory from "../models/form_history.model.js";
+import { upsertFormData } from "../util/form_controller.utils.js";
 import validators from "validator";
+
 const index = async (req, res) => {
   /**
    *  index page
@@ -164,31 +166,13 @@ const updateForm = async (req, res) => {
    */
   const formData = req.body;
   const components = [];
-  for (let i = 0; i < formData.formComponents.length; i++) {
-    const component = formData.formComponents[i];
-    if (component.type === "label" && i < formData.formComponents.length - 1) {
-      const nextComponent = formData.formComponents[i + 1];
-      console.log(nextComponent);
-      if (nextComponent.type == "inputfield") {
-        component.forAttr = nextComponent.id;
-      }
-    }
-    const formComponent = new FormComponent(component);
-    const newComponent = new Component(formComponent.toCreateFormModel());
-    components.push(newComponent);
-  }
-
-  const newForm = {
-    name: formData.formName,
-    description: formData.formDescription,
-    components: components,
-  };
-  const form_id = req.params.id;
-  const form = await Form.findByIdAndUpdate(form_id, newForm, { new: true });
-  console.log("UPDATED FORM: ", form);
-
-  if (form) {
+  const form = await Form.findById(req.params.id);
+  try {
+    upsertFormData(formData, form);
     return res.status(200).send("Form updated");
+  } catch (e) {
+    console.log("Error updating form:", e);
+    return res.status(500).send("Error updating form");
   }
 };
 
@@ -374,8 +358,20 @@ const publish = async (req, res) => {
   const form_id = req.params.id;
   // console.log("Form id:", form_id);
   try {
-    const form = await Form.findByIdAndUpdate(form_id, { status: "Publish" });
+    const form = await Form.findById(form_id);
+    let version =
+      form.status !== "Closed"
+        ? form.current_version
+        : form.current_version + 1;
 
+    await FormHistory.create({
+      form_id: form._id,
+      version: form.version,
+      name: form.name,
+      description: form.description,
+      components: form.components,
+      version: version,
+    });
     res.status(200).redirect(`/status/${form.id}`);
   } catch (error) {
     console.log("Error opening form:", error);
@@ -467,9 +463,6 @@ const getFormJson = async (req, res) => {
   }
 };
 
-const update_form = async (req, res) => {
-  const form_id = req.params.id;
-};
 export default {
   index,
   getCreatePage,

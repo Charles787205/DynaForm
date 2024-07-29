@@ -287,22 +287,30 @@ const removeAuthorizedEmail = async (req, res) => {
 //getAuthEmails
 const getAuthorizedEmails = async (req, res) => {
   const form_id = req.params.form_id;
+  const variant1 = req.body.variant1;
+  console.log("Request",req.body.variant1);
   try {
     const form = await Form.findById(form_id);
     if (!form) {
       return res.status(404).send("Form not found");
     }
-
-    res
+    console.log('AUTH NUM: ', form.authorized_emails);
+    if(form.authorized_emails == 0) {
+      console.log('EXECUTED');
+      return res.status(200).send('<div class="font-bold">No editors.</div>');
+    }
+      res
       .status(200)
-      .send(
+        .send(
         form.authorized_emails
           .map(
             (email) =>
-              `<div class="email-item flex justify-between text-md px-2 max-w-full mt-6" ><div class="font-bold text-md w-full overflow-hidden break-all pr-5">${email}</div><button hx-post="/accessForm/${form_id}/removeAuthorizedEmail" hx-vals='js:{"email": "${email}"}' hx-trigger="click" hx-swap="delete" hx-target="closest .email-item"  class="remove-em-btn text-gray-400">Remove</button></div>`
+              `<div class="email-item flex justify-between text-md px-2 max-w-full mt-6" ><div class="font-bold text-md w-full overflow-hidden break-all pr-5">${email}</div><button class="remove-email" hx-post="/accessForm/${form_id}/removeAuthorizedEmail" hx-vals='js:{"email": "${email}"}' hx-trigger="click" hx-swap="delete" hx-target="closest .email-item"  class="remove-em-btn text-gray-400">Remove</button></div>`
           )
           .join("")
       );
+
+
   } catch (error) {
     console.error("Error fetching authorized emails:", error);
     return res

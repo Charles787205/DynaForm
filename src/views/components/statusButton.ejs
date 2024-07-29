@@ -36,6 +36,7 @@
   hx-trigger="confirmed"
   id="option-<%= id %>"
   hx-target="#status-<%= id %>"
+  hx-sync="#check_<%= id %>:queue first "
   hx-on:click="confirmClose(this)"
 >
   <svg
@@ -62,6 +63,7 @@
   hx-on:click="confirmOpen(this)"
   hx-trigger="confirmed"
   hx-target="#status-<%= id %>"
+  hx-sync="#check_<%= id %>:queue first "
 >
   <svg
     width="20"

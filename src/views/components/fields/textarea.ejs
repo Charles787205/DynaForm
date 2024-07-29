@@ -8,14 +8,23 @@
 <% } else { %>
   <div class="input-block" draggable="true" id="<%= query.id %>">
     <div class="block-container">
+      <div class="flex input-flex py-2 gap-3">
       <div
         class="content-container w-full max-w-80 h-28 overflow-y-scroll px-2 py-2.5 rounded-lg shadow border border-zinc-400 self-stretch grow shrink basis-0 text-neutral-600 text-[1rem] font-extralight outline-none"
         contentEditable="true" data-type="textarea" data-name="textarea_<%= query.id %>" show-pl-click="true"
         placeholder="Start typing a placeholder"></div>
       <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
       <%- include("../tooltip") %>
+            <% if (query.labelled !=='true' ) { %>
+              <button class="option" type="button" hx-post="/components/fields/label" hx-trigger="click" tabindex="-1"
+                hx-target="closest .input-block" hx-vals='js:{"placeholder": "Label", "for": "<%= query.id %>"}'
+                hx-swap="beforebegin" onclick="handleClick(this)">Add
+                label</button>
+              <% } %>
+
         <div class="move-dropzone" data-position="below"></div>
         <div class="move-dropzone" data-position="top"></div>
+      </div>
     </div>
   </div> 
 <% } %>

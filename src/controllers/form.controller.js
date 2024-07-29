@@ -30,9 +30,7 @@ const submit = async (req, res) => {
 	 * route "/create" post
 	 *
 	 */
-
 	if (req.isUnauthenticated()) return res.status(401).send("Unauthorized");
-	console.time("submit");
 	try {
 		const formData = req.body.formData;
 		const fromPage = req.body.fromPage;
@@ -78,7 +76,6 @@ const submit = async (req, res) => {
 		console.error("Error processing form:", error);
 		return res.status(500).send(error);
 	}
-	console.timeEnd("submit");
 };
 
 const list = async (req, res) => {
@@ -95,7 +92,7 @@ const viewForm = async (req, res) => {
 	const form_id = req.params.id;
 	try {
 		const form = await Form.findById(form_id);
-		console.log("RETRIEVED FORM : ", form);
+
 		res.render("pages/viewform", { form: form.toJSON() });
 	} catch (error) {
 		return res.status(500).send("Error viewing form");
@@ -165,7 +162,6 @@ const updateForm = async (req, res) => {
 	 * Handles the edit made in the form
 	 * /forms/:id/edit postunValidators: true
 	 */
-	console.time("updateForm1");
 	const formData = req.body;
 	const components = [];
 	for (let i = 0; i < formData.formComponents.length; i++) {
@@ -188,14 +184,12 @@ const updateForm = async (req, res) => {
 		components: components,
 	};
 	const form_id = req.params.id;
-	const form = await Form.findByIdAndUpdate(form_id, newForm);
+	const form = await Form.findByIdAndUpdate(form_id, newForm, { new: true });
+	console.log("UPDATED FORM: ", form);
 
 	if (form) {
-		console.timeEnd("updateForm1");
-
 		return res.status(200).send("Form updated");
 	}
-	console.timeEnd("updateForm1");
 };
 
 //Delete Form
@@ -331,20 +325,17 @@ const search = async (req, res) => {
 	const search_input = req.body.search;
 	let search_forms = [];
 	try {
-		console.time("search1");
 		if (search_input) {
 			search_forms = await Form.find({
 				$and: [
 					{ name: { $regex: search_input, $options: "i" } },
 					{ user_id: req.user._id },
 				],
-			}).lean();
+			});
 		} else {
 			search_forms = await Form.find({
 				user_id: req.user._id,
-			})
-				.sort({ createdAt: -1 })
-				.lean();
+			}).sort({ createdAt: -1 });
 		}
 
 		const forms = search_forms.map((form) => {
@@ -356,7 +347,6 @@ const search = async (req, res) => {
 				status: form.status,
 			};
 		});
-		console.timeEnd("search1");
 		return res.render("components/listcontainer", { forms });
 	} catch (error) {
 		console.log("Error retrieving forms:", error);

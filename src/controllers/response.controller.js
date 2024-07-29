@@ -58,7 +58,7 @@ const getResponseDetails = async (req, res) => {
 const getSummary = async (req, res) => {
   try {
     const formId = req.params.form_id;
-    console.log("FORM ID: ", formId);
+
     const form = await FormModel.findById(formId);
     if (!form) {
       console.log("Form not found.");
@@ -95,7 +95,7 @@ const getSummary = async (req, res) => {
             { $match: { "components.type": "label" } },
             {
               $project: {
-                _id: 1,
+                _id: 0,
                 component: "label",
                 componentIndex: 1,
                 placeholder: "$components.content",
@@ -128,7 +128,7 @@ const getSummary = async (req, res) => {
             },
             {
               $project: {
-                _id: 1,
+                _id: 0,
                 component: 1,
                 componentIndex: 1,
                 placeholder: 1,
@@ -178,7 +178,7 @@ const getSummary = async (req, res) => {
                       $cond: {
                         if: { $in: ["$component", ["textarea", "inputfield"]] },
                         then: {
-                          $slice: [{ $arrayElemAt: ["$responses", 0] }, -3],
+                          $slice: [{ $arrayElemAt: ["$responses", 0] }, 3],
                         },
                         else: "$responses",
                       },
@@ -259,7 +259,6 @@ const getSummary = async (req, res) => {
     console.log(responses);
     if (!total_response) {
       console.log("No responses found for this form.");
-
       return res
         .status(404)
         .json({ message: "No responses found for this form." });
@@ -269,7 +268,6 @@ const getSummary = async (req, res) => {
     return res.render("pages/response/summary.ejs", {
       formId,
       status: form.status,
-      title: form.name,
       summary: responses,
       total_response: total_response.length,
       response_list,

@@ -294,15 +294,18 @@ function getFormResponse() {
 
 async function copyForm(id) {
   //copy form json to clipboard
+  console.log(`/form/${id}/copy`);
   fetch(`/form/${id}/copy`, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((response) => {
+  }).then(async (response) => {
     if (response.ok) {
       //copy response to clipboard
-      const res = response.json();
+
+      const res = await response.json();
+
       navigator.clipboard.writeText(JSON.stringify(res));
       Swal.fire({
         title: "Form Copied!",
@@ -311,4 +314,84 @@ async function copyForm(id) {
       });
     }
   });
+}
+
+async function getDataFromPaste(event) {
+  if (event.target.getAttribute("contenteditable")) {
+    return;
+  }
+  event.preventDefault();
+  let pasteData = (event.clipboardData || window.clipboardData).getData("text");
+
+  try {
+    const { components } = JSON.parse(pasteData);
+
+    if (components) {
+      const existingElements = document.getElementsByClassName("input-block");
+      Array.from(existingElements).map((el) => {
+        el.remove();
+      });
+
+      for (let index = 0; index < components.length; index++) {
+        const component = components[index];
+
+        if (component.placeholder) {
+          component.content = component.placeholder;
+        }
+        if (component.type == "dropdown") {
+          if (component.options) {
+            const options = [];
+            component.options.forEach((option) => {
+              const newComponent = {
+                component_type: component.component_type,
+                id: component.id,
+                type: component.type,
+                content: option,
+              };
+              options.push(newComponent);
+            });
+            components.splice(index, 1, ...options);
+          }
+        }
+      }
+      addCopiedElements(components);
+    }
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+function addCopiedElements(components) {
+  const form = document.createElement("form");
+  const formElement = document.getElementsByTagName("form")[0];
+  const button = formElement.querySelector("#submit-button");
+
+  for (let i = 0; i < components.length; i++) {
+    const tempDiv = document.createElement("div");
+    form.appendChild(tempDiv);
+  }
+  form.appendChild(button);
+  components.forEach((element, index) => {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", `/components/fields/${element.type}`);
+    xhttp.setRequestHeader("Content-type", "application/json", "HX-Request");
+    xhttp.send(JSON.stringify(element));
+
+    xhttp.onreadystatechange = function () {
+      const button = formElement.querySelector("#submit-button");
+      if (this.readyState == 4 && this.status == 200) {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = xhttp.response;
+        console.log(tempDiv.querySelector(".input-block"));
+
+        const range = document.createRange();
+
+        const fragment = range.createContextualFragment(xhttp.response);
+        form.replaceChild(fragment, form.children[index]);
+      }
+    };
+  });
+  //document.body.replaceChild(form, formElement);
+  form.className = formElement.className;
+  formElement.replaceWith(form);
 }

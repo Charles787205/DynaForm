@@ -382,7 +382,12 @@ function addCopiedElements(components) {
       if (this.readyState == 4 && this.status == 200) {
         const tempDiv = document.createElement("div");
         tempDiv.innerHTML = xhttp.response;
-        form.replaceChild(tempDiv, form.childNodes[index]);
+        console.log(tempDiv.querySelector(".input-block"));
+
+        const range = document.createRange();
+
+        const fragment = range.createContextualFragment(xhttp.response);
+        form.replaceChild(fragment, form.children[index]);
       }
     };
   });

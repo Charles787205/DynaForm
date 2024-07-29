@@ -49,6 +49,7 @@ Component.discriminator(
 		},
 	})
 );
+
 // text component schema
 Component.discriminator(
 	"text",

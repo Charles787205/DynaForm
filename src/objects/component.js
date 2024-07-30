@@ -30,7 +30,14 @@ class FormComponent {
       "checkbox",
     ];
     const optionTypes = ["dropdown"];
-    const textTypes = ["heading", "label", "textfield"];
+    const textTypes = [
+      "heading",
+      "heading2",
+      "heading3",
+      "label",
+      "textfield",
+      "title",
+    ];
     const button = ["button"];
     const divider = ["divider"];
     if (inputTypes.includes(this.type)) {

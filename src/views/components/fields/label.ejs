@@ -1,20 +1,35 @@
 <% if (query.view){ %>
-  <label for="<%= query.for %>" data-type="label" class="text-[1rem] w-full label outline-none resize-none mt-4">
-    <%= query.label ?? query.content%>
-  </label>
-  <% } else { %>
+<div class="input-block py-2">
+  <div class="block-container">
+    <label
+      for="<%= query.for %>"
+      data-type="label"
+      class="text-[1rem] w-full label outline-none resize-none"
+    >
+      <%= query.label ?? query.content%>
+    </label>
+  </div>
+</div>
+<% } else { %>
 
-
-    <div class="input-block" draggable="true" id="<%= query.id %>">
-      <div class="block-container">
-        <div contenteditable="true" show-pl-click="true"
-          class="content-container text-[1rem] label outline-none resize-none" data-type="label"
-          data-for="<%= query.for %>" data-name="label_<%= query.id %>" id="input_<%= query.id %>"
-          placeholder="<%= query.placeholder ?? 'Label'%>"><%= query.content %></div>
-        <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
-        <%- include("../tooltip") %>
-          <div class="move-dropzone" data-position="below"></div>
-          <div class="move-dropzone" data-position="top"></div>
-      </div>
+<div class="input-block" draggable="true" id="<%= query.id %>">
+  <div class="block-container">
+    <div
+      contenteditable="true"
+      show-pl-click="true"
+      class="content-container my-2 text-[1rem] label outline-none resize-none"
+      data-type="label"
+      data-for="<%= query.for %>"
+      data-name="label_<%= query.id %>"
+      id="input_<%= query.id %>"
+      placeholder="<%= query.placeholder ?? 'Label'%>"
+    >
+      <%= query.content %>
     </div>
-    <% } %>
+    <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
+    <%- include("../tooltip") %>
+    <div class="move-dropzone" data-position="below"></div>
+    <div class="move-dropzone" data-position="top"></div>
+  </div>
+</div>
+<% } %>

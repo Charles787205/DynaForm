@@ -85,12 +85,24 @@ const list = async (req, res) => {
 	return res.render("pages/listform");
 };
 
+const viewHistory = async (req, res) => {
+  const history_id = req.params.id;
+
+  try{
+    const form = await FormHistory.findById(history_id);
+
+		res.render("pages/viewform", { form: form.toJSON() });
+  }catch(e){
+    return res.status(500).send("Error viewing form");
+  }
+}
+
 //route "/forms/:id" get
 const viewForm = async (req, res) => {
 	const form_id = req.params.id;
 	try {
 		const form = await Form.findById(form_id);
-		console.log("FORM FROM VIEW: ", form);
+
 		res.render("pages/viewform", { form: form.toJSON() });
 	} catch (error) {
 		return res.status(500).send("Error viewing form");
@@ -477,4 +489,5 @@ export default {
 	getStatus,
 	getStatusBut,
 	getFormJson,
+  viewHistory
 };

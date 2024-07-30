@@ -41,7 +41,9 @@
     <!-- sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <title>Document</title>
+    <link rel="icon" href="/assets/ic.png" type="image/icon type">
+
+		<title>DynaForm</title>
   </head>
   <body>
     <div class="app">
@@ -286,15 +288,17 @@
                     <div id="version-list" class="space-y-6">
                       <h1>Versions</h1>
                       <div class="space-y-2">
-                        <% for(let i=0; i <10; i++) { %>
+                        <% version_list.map((version, index) => { %>   
                           <div class="flex px-2">
-                            <p class="w-8"><%= i+1 %>.</p>
+                            <p class="w-8"><%= index+1 %>.</p>
                             <div>
-                            <h1 class="text-slate-800 font-bold">Untitled Form</h1>
-                            <h1 class="text-slate-500">Last Saved: 08 / 02 / 2024</h1>  
+                            <a href="/form/history/<%= version._id %>"><h1 class="text-slate-800 font-bold"><%= version.name %></h1></a>
+                            <h1 class="text-slate-500">Last Saved:
+                              <%= new Date(version.createdAt).toLocaleDateString() %> 
+                              <%= new Date(version.createdAt).toLocaleTimeString() %></h1>  
                           </div>
                           </div>
-                        <% } %>
+                        <% }) %>
                       </div>
                     </div>
                 </div>

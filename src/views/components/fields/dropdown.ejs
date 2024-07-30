@@ -33,8 +33,7 @@
         <div contenteditable="true" show-pl-click="true" spellcheck="false" data-for="<%= query.for %>"
           class="content-container mt-2 mb-1 relative text-[1.1rem] outline-none resize-none w-10 text-black pl-10"
           data-type="dropdown" data-name="dropdown_<%= query.id %>" id="input_<%= query.id %>" <%=query.focus==="true"? "autofocus" : "" %>
-          placeholder="<%= query.placeholder || `Option` %>"><%= query.content %>
-        </div>
+          placeholder="<%= query.placeholder || `Option` %>"><%= query.content %></div>
         <div class="absolute top-0 bottom-0 left-1 flex justify-center items-center">
           <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path

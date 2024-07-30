@@ -5,9 +5,7 @@
       for="<%= query.for %>"
       data-type="label"
       class="text-[1rem] w-full label outline-none resize-none"
-    >
-      <%= query.label ?? query.content%>
-    </label>
+    ><%= query.label ?? query.content%></label>
   </div>
 </div>
 <% } else { %>
@@ -23,9 +21,7 @@
       data-name="label_<%= query.id %>"
       id="input_<%= query.id %>"
       placeholder="<%= query.placeholder ?? 'Label'%>"
-    >
-      <%= query.content %>
-    </div>
+    ><%= query.content %></div>
     <!-- <div hx-post="components/tooltip" hx-swap="outerHTML" hx-trigger="load"></div> -->
     <%- include("../tooltip") %>
     <div class="move-dropzone" data-position="below"></div>

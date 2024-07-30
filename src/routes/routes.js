@@ -23,7 +23,7 @@ router
 	.route("/form/r/:id")
 	.get(FormController.resForm)
 	.post(ResponseController.submitResponse);
-
+router.get("/form/history/:id", FormController.viewHistory); // list of forms page
 router.route("/form/:id/copy").get(FormController.getFormJson);
 router
 	.route("/form/:id/edit")

@@ -1556,8 +1556,8 @@ video {
   font-size: 1rem;
 }
 
-.text-\[2\.5rem\] {
-  font-size: 2.5rem;
+.text-\[2\.2rem\] {
+  font-size: 2.2rem;
 }
 
 .text-\[25px\] {
@@ -1582,10 +1582,6 @@ video {
 
 .text-xl {
   font-size: 1.25rem;
-}
-
-.text-\[2\.2rem\] {
-  font-size: 2.2rem;
 }
 
 .font-black {
@@ -2367,6 +2363,10 @@ img[image-loaded="true"]:hover,
 @media (min-width: 1024px) {
   .lg\:-left-36 {
     left: -9rem;
+  }
+
+  .lg\:-left-\[6\.2rem\] {
+    left: -6.2rem;
   }
 
   .lg\:px-8 {

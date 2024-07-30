@@ -60,7 +60,7 @@ const getSummary = async (req, res) => {
 	try {
 		console.time("getSummary");
 		const formId = req.params.form_id;
-		const [form, responses, response_list] = await Promise.all([
+		const [form, responses, response_list, version_list] = await Promise.all([
 			FormModel.findById(formId).lean(),
 			FormModel.aggregate([
 				{ $match: { _id: new mongoose.Types.ObjectId(formId) } },
@@ -330,8 +330,10 @@ const getSummary = async (req, res) => {
 				{ $sort: { componentIndex: 1 } },
 			]),
 			Response.find({ form_id: formId }).lean(),
+      FormHistory.find({form_id: formId}).lean()
 		]);
 
+    console.log("VERSION_LIST", version_list);
 		if (!form) {
 			console.log("Form not found.");
 			return res.status(404).json({ message: "Form not found." });
@@ -344,7 +346,6 @@ const getSummary = async (req, res) => {
 				.status(404)
 				.json({ message: "No responses found for this form." });
 		}
-		console.timeEnd("getSummary");
 		return res.render("pages/response/summary.ejs", {
 			formId,
 			status: form.status,
@@ -353,6 +354,7 @@ const getSummary = async (req, res) => {
 			summary: responses,
 			total_response: response_list.length,
 			response_list,
+      version_list
 		});
 	} catch (error) {
 		console.error(error);

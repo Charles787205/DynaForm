@@ -234,9 +234,14 @@ function auto_grow(element) {
 }
 
 function submitResponse(event) {
+
   event.preventDefault();
 
-  const { form_id, responses } = getFormResponse();
+  const { responses } = getFormResponse(event.target);
+
+  console.log("RESPONSES BEFORE: ", responses);
+
+
   fetch(`/response/f/${event.target.id}`, {
     method: "POST",
     headers: {
@@ -263,26 +268,32 @@ function submitResponse(event) {
   });
 }
 
-function getFormResponse() {
-  const form = document.getElementById("form");
-
+function getFormResponse(form) {
+  console.log("FORM ", form);
   const responses = [];
   const inputBlocks = form.querySelectorAll(".input-block");
   inputBlocks.forEach((block) => {
     const input = block.querySelector("input");
     const select = block.querySelector("select");
     const textarea = block.querySelector("textarea");
-    const response = { component_id: block.id };
+    const response = {};
+
     if (input || select || textarea) {
       if (input) {
+        response.component_id = input.id;
+
         if (input.type == "checkbox" || input.type == "radio") {
           response.value = input.checked;
         } else {
           (response.component_id = input.id), (response.value = input.value);
         }
       } else if (select) {
+        response.component_id = select.id;
+
         response.value = select.value;
       } else if (textarea) {
+        response.component_id = textarea.id;
+
         response.value = textarea.value;
       }
       responses.push(response);

@@ -9,6 +9,7 @@ export function submitResponse(event) {
    * ]
    */
   event.preventDefault();
+  console.log("ENTRIES: ", event.target);
   const formData = new FormData(event.target);
   const responses = [];
   for (const [key, value] of formData.entries()) {

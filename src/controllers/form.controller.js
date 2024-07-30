@@ -102,7 +102,7 @@ const viewForm = async (req, res) => {
 	const form_id = req.params.id;
 	try {
 		const form = await Form.findById(form_id);
-
+    console.log("FORM FROM VIEW: ",form.toJSON())
 		res.render("pages/viewform", { form: form.toJSON() });
 	} catch (error) {
 		return res.status(500).send("Error viewing form");

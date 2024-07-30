@@ -667,6 +667,11 @@ video {
   margin-bottom: 2.5rem;
 }
 
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -739,10 +744,6 @@ video {
 
 .mt-2 {
   margin-top: 0.5rem;
-}
-
-.mt-4 {
-  margin-top: 1rem;
 }
 
 .mt-6 {
@@ -1547,8 +1548,16 @@ video {
   font-size: 1.1rem;
 }
 
+.text-\[1\.5rem\] {
+  font-size: 1.5rem;
+}
+
 .text-\[1rem\] {
   font-size: 1rem;
+}
+
+.text-\[2\.5rem\] {
+  font-size: 2.5rem;
 }
 
 .text-\[25px\] {
@@ -1573,6 +1582,10 @@ video {
 
 .text-xl {
   font-size: 1.25rem;
+}
+
+.text-\[2\.2rem\] {
+  font-size: 2.2rem;
 }
 
 .font-black {

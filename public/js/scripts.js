@@ -179,10 +179,10 @@ function getDefaultFormData() {
     formDescription: "defaultDescription",
     formComponents: [
       {
-        id: "7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
-        name: "heading_7e6d9889-e71c-4bfa-9ef5-9a3163c47246",
-        type: "heading",
-        placeholder: "Add a heading",
+        id: "7e6d9889-e71c-4bfa-9ef5-9a3163c47232",
+        name: "title_7e6d9889-e71c-4bfa-9ef5-9a3163c47232",
+        type: "title",
+        placeholder: "Add a title",
       },
       {
         id: "67a46c3c-d4e7-4032-ac0a-2277b9d90741",

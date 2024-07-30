@@ -94,7 +94,7 @@ const viewForm = async (req, res) => {
   const form_id = req.params.id;
   try {
     const form = await Form.findById(form_id);
-
+    console.log("FORM FROM VIEW: ", form);
     res.render("pages/viewform", { form: form.toJSON() });
   } catch (error) {
     return res.status(500).send("Error viewing form");
@@ -347,10 +347,6 @@ const preview = async (req, res) => {
   res.render(`pages/preview`);
 };
 
-const getStatusFromId = async (req, res) => {
-  res.render(`pages/preview`);
-};
-
 const publish = async (req, res) => {
   const form_id = req.params.id;
   // console.log("Form id:", form_id);
@@ -361,7 +357,7 @@ const publish = async (req, res) => {
         ? form.current_version
         : form.current_version + 1;
 
-    await FormHistory.create({
+    const asd = await FormHistory.create({
       form_id: form._id,
       version: form.version,
       name: form.name,

@@ -1584,6 +1584,10 @@ video {
   font-size: 1.25rem;
 }
 
+.text-\[2\.2rem\] {
+  font-size: 2.2rem;
+}
+
 .font-black {
   font-weight: 900;
 }

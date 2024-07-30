@@ -24,7 +24,9 @@ router
 	.get(FormController.resForm)
 	.post(ResponseController.submitResponse);
 router.get("/form/history/:id", FormController.viewHistory); // list of forms page
-router.route("/form/:id/copy").get(FormController.getFormJson);
+
+router.post("/form/:id/getformjson", FormController.getFormJson);
+
 router
 	.route("/form/:id/edit")
 	.get(FormController.editForm)

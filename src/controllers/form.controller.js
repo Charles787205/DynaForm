@@ -38,6 +38,9 @@ const submit = async (req, res) => {
 		const fromPage = req.body.fromPage;
 		const components = [];
 
+		console.log(formData);
+
+		//this for loop checks if the label is followed by an input field
 		for (let i = 0; i < formData.formComponents.length; i++) {
 			const component = formData.formComponents[i];
 			if (
@@ -102,7 +105,7 @@ const viewForm = async (req, res) => {
 	const form_id = req.params.id;
 	try {
 		const form = await Form.findById(form_id);
-    console.log("FORM FROM VIEW: ",form.toJSON())
+    
 		res.render("pages/viewform", { form: form.toJSON() });
 	} catch (error) {
 		return res.status(500).send("Error viewing form");
@@ -447,9 +450,9 @@ const getStatusBut = async (req, res) => {
 
 const getFormJson = async (req, res) => {
 	const form_id = req.params.id;
-	console.log("DSFDF");
+	
 	try {
-		const form = await Form.findById(form_id, {
+		const form = (await Form.findById(form_id, {
 			"components.component_type": 1,
 			"components.type": 1,
 			"components.placeholder": 1,
@@ -458,6 +461,12 @@ const getFormJson = async (req, res) => {
 			"components.name": 1,
 			"components.content": 1,
 			_id: 0,
+		})).toObject();
+		form.components.forEach((component) => {
+			if(component.component_type === "input"){
+				component.content = component.placeholder;
+				component.placeholder = "";
+			}
 		});
 
 		return res.status(200).json(form);

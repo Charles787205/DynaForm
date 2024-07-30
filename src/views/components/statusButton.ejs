@@ -1,33 +1,16 @@
-<% if(stat === "Unpublish"){ %>
+<% if(stat === "Unpublish"||stat === "Closed"){ %>
 <a
-  href="/form/<%= id %>/edit"
-  class="flex flex-row z-20 gap-2 justify-start w-full items-center text-center font-bold text-md hover:bg-zinc-100 p-2 rounded-lg"
+  href="/form/<%= id %>/edit" 
+  class="flex flex-row w-full gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
 >
   <div class="h-5 w-5">
-    <svg
-      width="20"
-      height="19"
-      viewBox="0 0 20 19"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M6.04163 5.5415H5.24996C4.83003 5.5415 4.42731 5.70832 4.13037 6.00525C3.83344 6.30218 3.66663 6.70491 3.66663 7.12484V14.2498C3.66663 14.6698 3.83344 15.0725 4.13037 15.3694C4.42731 15.6664 4.83003 15.8332 5.24996 15.8332H12.375C12.7949 15.8332 13.1976 15.6664 13.4945 15.3694C13.7915 15.0725 13.9583 14.6698 13.9583 14.2498V13.4582"
-        stroke="black"
-        stroke-width="1.58333"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M13.1667 3.95842L15.5417 6.33342M16.6381 5.21321C16.9499 4.90141 17.1251 4.47853 17.1251 4.03758C17.1251 3.59664 16.9499 3.17375 16.6381 2.86196C16.3263 2.55016 15.9034 2.375 15.4625 2.375C15.0216 2.375 14.5987 2.55016 14.2869 2.86196L7.625 9.50008V11.8751H10L16.6381 5.21321Z"
-        stroke="#545454"
-        stroke-width="1.58333"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
+    <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4.04163 4.5415H3.24996C2.83003 4.5415 2.42731 4.70832 2.13037 5.00525C1.83344 5.30218 1.66663 5.70491 1.66663 6.12484V13.2498C1.66663 13.6698 1.83344 14.0725 2.13037 14.3694C2.42731 14.6664 2.83003 14.8332 3.24996 14.8332H10.375C10.7949 14.8332 11.1976 14.6664 11.4945 14.3694C11.7915 14.0725 11.9583 13.6698 11.9583 13.2498V12.4582" stroke="black" stroke-width="1.58333" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11.1667 2.95842L13.5417 5.33342M14.6381 4.21321C14.9499 3.90141 15.1251 3.47853 15.1251 3.03758C15.1251 2.59664 14.9499 2.17375 14.6381 1.86196C14.3263 1.55016 13.9034 1.375 13.4625 1.375C13.0216 1.375 12.5987 1.55016 12.2869 1.86196L5.625 8.50008V10.8751H8L14.6381 4.21321Z" stroke="black" stroke-width="1.58333" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
+
   </div>
-  Edit Form
+  <h1 class="text-black-700 font-bold text-md">Edit Form</h1>
 </a>
 <% } %> <% if(stat === "Publish"){%>
 <button

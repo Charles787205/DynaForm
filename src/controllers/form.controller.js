@@ -348,10 +348,6 @@ const preview = async (req, res) => {
   res.render(`pages/preview`);
 };
 
-const getStatusFromId = async (req, res) => {
-  res.render(`pages/preview`);
-};
-
 const publish = async (req, res) => {
   const form_id = req.params.id;
   // console.log("Form id:", form_id);
@@ -362,7 +358,7 @@ const publish = async (req, res) => {
         ? form.current_version
         : form.current_version + 1;
 
-    await FormHistory.create({
+    const asd = await FormHistory.create({
       form_id: form._id,
       version: form.version,
       name: form.name,

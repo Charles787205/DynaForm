@@ -145,7 +145,6 @@ const editForm = async (req, res) => {
       ],
     });
 
-    console.log("RETRIEVED FORM : ", form);
     if (!form) {
       return res.render("pages/error", {
         errorType: "FORM NOT FOUND",
@@ -366,6 +365,8 @@ const publish = async (req, res) => {
       components: form.components,
       version: version,
     });
+
+    await Form.findByIdAndUpdate(form_id, { status: "Publish" });
     res.status(200).redirect(`/status/${form.id}`);
   } catch (error) {
     console.log("Error opening form:", error);

@@ -23,7 +23,7 @@ const getCreatePage = async (req, res) => {
 	if (req.isAuthenticated()) {
 		return res.redirect("/");
 	}
-	res.render("pages/create");
+	return res.render("pages/create");
 };
 
 const submit = async (req, res) => {
@@ -68,12 +68,10 @@ const submit = async (req, res) => {
 			components: components,
 		});
 		const newForm = await new Form(form.toCreateFormModel()).save();
-		// console.log("ADDED TO DB", JSON.stringify(form));
 		if (fromPage === "create") {
-			res.redirect(`/forms`);
-		} else {
-			res.status(200).json({ formId: newForm._id });
+			return res.redirect(`/forms`);
 		}
+		return res.status(200).json({ formId: newForm._id });
 	} catch (error) {
 		console.error("Error processing form:", error);
 		return res.status(500).send(error);
@@ -81,21 +79,19 @@ const submit = async (req, res) => {
 };
 
 const list = async (req, res) => {
-	console.log("asdfasdfsa");
 	if (!req.isAuthenticated()) {
-		console.log("Not authenticated");
 		return res.redirect("/auth/google");
 	}
-
-	res.render("pages/listform");
+	return res.render("pages/listform");
 };
+
 //route "/forms/:id" get
 const viewForm = async (req, res) => {
 	const form_id = req.params.id;
 	try {
-		const form = await Form.findById(form_id);
+		const form = await Form.findById(form_id).lean();
 
-		res.render("pages/viewform", { form: form.toJSON() });
+		return res.render("pages/viewform", { form: form });
 	} catch (error) {
 		return res.status(500).send("Error viewing form");
 	}
@@ -104,24 +100,26 @@ const viewForm = async (req, res) => {
 //view responseView
 const resForm = async (req, res) => {
 	const form_id = req.params.id;
+
 	try {
-		const form = await Form.findById(form_id);
-		if (form.status === "Publish") {
-			return res.render("pages/responseView", { form: form.toJSON() });
+		const form = await Form.findById(form_id).lean();
+		switch (form.status) {
+			case "Publish":
+				return res.render("pages/responseView", { form: form });
+			case "Unpublish":
+				return res.render("pages/error", {
+					errorType: "FORM NOT FOUND",
+					description: "Form is not yet created or it is still in working",
+				});
+			default:
+				return res.render("pages/error", {
+					errorType: "FORM CLOSED",
+					description:
+						"Sorry, but the form is already closed. <br> Contact the owner for further questions",
+				});
 		}
-		if (form.status === "Unpublish") {
-			return res.render("pages/error", {
-				errorType: "FORM NOT FOUND",
-				description: "Form is not yet created or it is still in working",
-			});
-		}
-		res.render("pages/error", {
-			errorType: "FORM CLOSED",
-			description:
-				"Sorry, but the form is already closed. <br> Contact the owner for further questions",
-		});
 	} catch (error) {
-		res.render("pages/error", {
+		return res.render("pages/error", {
 			errorType: "FORM NOT FOUND",
 			description: "Form is not yet created or it is still in working",
 		});
@@ -143,71 +141,36 @@ const editForm = async (req, res) => {
 				{ _id: form_id },
 				{ $or: [{ authorized_emails: email }, { user_id: user_id }] },
 			],
-		});
+		}).lean();
 
-    if (!form) {
-      return res.render("pages/error", {
-        errorType: "FORM NOT FOUND",
-        description: "Form is not yet created or it is still in working",
-      });
-    }
+		if (!form) {
+			return res.render("pages/error", {
+				errorType: "FORM NOT FOUND",
+				description: "Form is not yet created or it is still in working",
+			});
+		}
 
-		res.render("pages/editform", { form: form.toJSON() });
+		return res.render("pages/editform", { form: form });
 	} catch (e) {
-		res.render("pages/error", { message: "No Form Found" });
+		return res.render("pages/error", { message: "No Form Found" });
 	}
 };
 
 const updateForm = async (req, res) => {
-<<<<<<< HEAD
 	/**
 	 * Handles the edit made in the form
 	 * /forms/:id/edit postunValidators: true
 	 */
 	const formData = req.body;
 	const components = [];
-	for (let i = 0; i < formData.formComponents.length; i++) {
-		const component = formData.formComponents[i];
-		if (component.type === "label" && i < formData.formComponents.length - 1) {
-			const nextComponent = formData.formComponents[i + 1];
-			console.log(nextComponent);
-			if (nextComponent.type == "inputfield") {
-				component.forAttr = nextComponent.id;
-			}
-		}
-		const formComponent = new FormComponent(component);
-		const newComponent = new Component(formComponent.toCreateFormModel());
-		components.push(newComponent);
-	}
-
-	const newForm = {
-		name: formData.formName,
-		description: formData.formDescription,
-		components: components,
-	};
-	const form_id = req.params.id;
-	const form = await Form.findByIdAndUpdate(form_id, newForm, { new: true });
-	console.log("UPDATED FORM: ", form);
-
-	if (form) {
+	const form = await Form.findById(req.params.id);
+	try {
+		await upsertFormData(formData, form);
 		return res.status(200).send("Form updated");
+	} catch (e) {
+		console.log("Error updating form:", e);
+		return res.status(500).send("Error updating form");
 	}
-=======
-  /**
-   * Handles the edit made in the form
-   * /forms/:id/edit postunValidators: true
-   */
-  const formData = req.body;
-  const components = [];
-  const form = await Form.findById(req.params.id);
-  try {
-    await upsertFormData(formData, form);
-    return res.status(200).send("Form updated");
-  } catch (e) {
-    console.log("Error updating form:", e);
-    return res.status(500).send("Error updating form");
-  }
->>>>>>> f63bbaad1462f552fadceb5aa0ea956958b13ba5
 };
 
 //Delete Form
@@ -223,7 +186,7 @@ const deleteForm = async (req, res) => {
 		}
 		return res.status(404).send("Form not found");
 	} catch (error) {
-		res.status(500).send("Error deleting form");
+		return res.status(500).send("Error deleting form");
 	}
 };
 
@@ -231,7 +194,6 @@ const deleteForm = async (req, res) => {
 const giveAccess = async (req, res) => {
 	const email = req.body.email;
 	const form_id = req.params.form_id;
-
 	const isValidEmail = validators.isEmail(email);
 
 	if (!isValidEmail) {
@@ -293,10 +255,10 @@ const removeAuthorizedEmail = async (req, res) => {
 		if (updatedForm.matchedCount === 0) {
 			return res.status(404).send("Form not found or user not authorized");
 		}
-		res.status(200).send();
+		return res.status(200).send();
 	} catch (error) {
 		console.error("Error removing email:", error);
-		res
+		return res
 			.status(500)
 			.send({ error: "An error occurred while removing the email." });
 	}
@@ -304,21 +266,26 @@ const removeAuthorizedEmail = async (req, res) => {
 
 //getAuthEmails
 const getAuthorizedEmails = async (req, res) => {
-<<<<<<< HEAD
 	const form_id = req.params.form_id;
+	const variant1 = req.body.variant1;
+	console.log("Request", req.body.variant1);
 	try {
 		const form = await Form.findById(form_id);
 		if (!form) {
 			return res.status(404).send("Form not found");
 		}
-
-		res
+		console.log("AUTH NUM: ", form.authorized_emails);
+		if (form.authorized_emails == 0) {
+			console.log("EXECUTED");
+			return res.status(200).send('<div class="font-bold">No editors.</div>');
+		}
+		return res
 			.status(200)
 			.send(
 				form.authorized_emails
 					.map(
 						(email) =>
-							`<div class="email-item flex justify-between text-md px-2 max-w-full mt-6" ><div class="font-bold text-md w-full overflow-hidden break-all pr-5">${email}</div><button hx-post="/accessForm/${form_id}/removeAuthorizedEmail" hx-vals='js:{"email": "${email}"}' hx-trigger="click" hx-swap="delete" hx-target="closest .email-item"  class="remove-em-btn text-gray-400">Remove</button></div>`
+							`<div class="email-item flex justify-between text-md px-2 max-w-full mt-6" ><div class="font-bold text-md w-full overflow-hidden break-all pr-5">${email}</div><button class="remove-email" hx-post="/accessForm/${form_id}/removeAuthorizedEmail" hx-vals='js:{"email": "${email}"}' hx-trigger="click" hx-swap="delete" hx-target="closest .email-item"  class="remove-em-btn text-gray-400">Remove</button></div>`
 					)
 					.join("")
 			);
@@ -328,46 +295,15 @@ const getAuthorizedEmails = async (req, res) => {
 			.status(500)
 			.send({ error: "An error occurred while fetching emails." });
 	}
-=======
-  const form_id = req.params.form_id;
-  const variant1 = req.body.variant1;
-  console.log("Request", req.body.variant1);
-  try {
-    const form = await Form.findById(form_id);
-    if (!form) {
-      return res.status(404).send("Form not found");
-    }
-    console.log("AUTH NUM: ", form.authorized_emails);
-    if (form.authorized_emails == 0) {
-      console.log("EXECUTED");
-      return res.status(200).send('<div class="font-bold">No editors.</div>');
-    }
-    res
-      .status(200)
-      .send(
-        form.authorized_emails
-          .map(
-            (email) =>
-              `<div class="email-item flex justify-between text-md px-2 max-w-full mt-6" ><div class="font-bold text-md w-full overflow-hidden break-all pr-5">${email}</div><button class="remove-email" hx-post="/accessForm/${form_id}/removeAuthorizedEmail" hx-vals='js:{"email": "${email}"}' hx-trigger="click" hx-swap="delete" hx-target="closest .email-item"  class="remove-em-btn text-gray-400">Remove</button></div>`
-          )
-          .join("")
-      );
-  } catch (error) {
-    console.error("Error fetching authorized emails:", error);
-    return res
-      .status(500)
-      .send({ error: "An error occurred while fetching emails." });
-  }
->>>>>>> f63bbaad1462f552fadceb5aa0ea956958b13ba5
 };
 
 const deleteAllForms = async (req, res) => {
 	try {
 		await Form.deleteMany({ user_id: req.user._id });
-		res.status(200).send("All forms deleted");
+		return res.status(200).send("All forms deleted");
 	} catch (error) {
 		console.error("Error deleting forms:", error);
-		res.status(500).send("Error deleting forms");
+		return res.status(500).send("Error deleting forms");
 	}
 };
 
@@ -413,41 +349,29 @@ const getStatusFromId = async (req, res) => {
 };
 
 const publish = async (req, res) => {
-<<<<<<< HEAD
 	const form_id = req.params.id;
 	// console.log("Form id:", form_id);
 	try {
-		const form = await Form.findByIdAndUpdate(form_id, { status: "Publish" });
+		const form = await Form.findById(form_id);
+		let version =
+			form.status !== "Closed"
+				? form.current_version
+				: form.current_version + 1;
 
-		res.status(200).redirect(`/status/${form.id}`);
+		await FormHistory.create({
+			form_id: form._id,
+			version: form.version,
+			name: form.name,
+			description: form.description,
+			components: form.components,
+			version: version,
+		});
+
+		await Form.findByIdAndUpdate(form_id, { status: "Publish" });
+		return res.status(200).redirect(`/status/${form.id}`);
 	} catch (error) {
 		console.log("Error opening form:", error);
 	}
-=======
-  const form_id = req.params.id;
-  // console.log("Form id:", form_id);
-  try {
-    const form = await Form.findById(form_id);
-    let version =
-      form.status !== "Closed"
-        ? form.current_version
-        : form.current_version + 1;
-
-    await FormHistory.create({
-      form_id: form._id,
-      version: form.version,
-      name: form.name,
-      description: form.description,
-      components: form.components,
-      version: version,
-    });
-
-    await Form.findByIdAndUpdate(form_id, { status: "Publish" });
-    res.status(200).redirect(`/status/${form.id}`);
-  } catch (error) {
-    console.log("Error opening form:", error);
-  }
->>>>>>> f63bbaad1462f552fadceb5aa0ea956958b13ba5
 };
 
 const closeForm = async (req, res) => {
@@ -456,7 +380,7 @@ const closeForm = async (req, res) => {
 
 	try {
 		const form = await Form.findByIdAndUpdate(form_id, { status: "Closed" });
-		res.status(200).redirect(`/status/${form.id}`);
+		return res.status(200).redirect(`/status/${form.id}`);
 	} catch (error) {
 		console.log("Error opening form:", error);
 	}
@@ -528,19 +452,13 @@ const getFormJson = async (req, res) => {
 			_id: 0,
 		});
 
-		res.status(200).json(form);
+		return res.status(200).json(form);
 	} catch (error) {
 		console.log("sdfsdy");
 		console.log("Error getting form json", error);
 	}
 };
 
-<<<<<<< HEAD
-const update_form = async (req, res) => {
-	const form_id = req.params.id;
-};
-=======
->>>>>>> f63bbaad1462f552fadceb5aa0ea956958b13ba5
 export default {
 	index,
 	getCreatePage,

@@ -3,6 +3,7 @@ import FormModel from "../models/form.models.js";
 import Form from "../objects/form.js";
 import mongoose from "mongoose";
 import { ObjectId } from "mongodb";
+import FormHistory from "../models/form_history.model.js";
 
 const submitResponse = async (req, res) => {
   try {
@@ -63,7 +64,6 @@ const getSummary = async (req, res) => {
       console.log("Form not found.");
       return res.status(404).json({ message: "Form not found." });
     }
-    const total_response = await Response.find({ form_id: formId });
     const responses = await FormModel.aggregate([
       { $match: { _id: new mongoose.Types.ObjectId(formId) } },
       { $unwind: { path: "$components", includeArrayIndex: "componentIndex" } },
@@ -325,22 +325,27 @@ const getSummary = async (req, res) => {
       { $sort: { componentIndex: 1 } },
     ]);
     console.log(JSON.stringify(responses));
-    if (!total_response) {
+
+    const response_list = await Response.find({ form_id: req.params.form_id });
+    const version_list = await FormHistory.find({
+      form_id: req.params.form_id,
+    });
+
+    if (!response_list) {
       console.log("No responses found for this form.");
       return res
         .status(404)
         .json({ message: "No responses found for this form." });
     }
-    const response_list = await Response.find({ form_id: req.params.form_id });
-    console.log("RESPOSNELLIST: ", response_list);
     return res.render("pages/response/summary.ejs", {
       formId,
       status: form.status,
       authorized_emails: form.authorized_emails,
       title: form.name,
       summary: responses,
-      total_response: total_response.length,
+      total_response: response_list.length,
       response_list,
+      version_list,
     });
   } catch (error) {
     console.error(error);
@@ -348,13 +353,6 @@ const getSummary = async (req, res) => {
   }
 };
 
-const getResponseFromComponents = (req, res) => {
-  const response_list = Response.find({ form_id: req.params.form_id });
-};
-
-const getResponseList = (req, res) => {
-  const response_list = Response.find({ form_id: req.params.form_id });
-};
 const getFeedback = (req, res) => {
   const url = "/response/r/" + req.params.response_id;
   res.render("pages/thankyou", { response_url: url });

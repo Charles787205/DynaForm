@@ -15,7 +15,7 @@
 <% } %> <% if(stat === "Publish"){%>
 <button
   class="option-btn flex flex-row w-full gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
-  hx-post="/close/<%= id %>"
+  hx-post="/form/close/<%= id %>"
   hx-trigger="confirmed"
   id="option-<%= id %>"
   hx-target="#status-<%= id %>"
@@ -41,7 +41,7 @@
 <%}%> <% if(stat === "Closed"){%>
 <button
   class="option-btn flex flex-row w-full gap-2 justify-start items-center hover:bg-zinc-100 p-2 rounded-lg"
-  hx-post="/publish/<%= id %>"
+  hx-post="/form/publish/<%= id %>"
   id="option-<%= id %>"
   hx-on:click="confirmOpen(this)"
   hx-trigger="confirmed"

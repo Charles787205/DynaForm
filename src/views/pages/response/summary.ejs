@@ -109,11 +109,11 @@
                   <button
                     type="button"
                     class="flex gap-2 items-center"
-                    hx-delete="/delete/<%= formId %>"
+                    hx-delete="/form/delete/<%= formId %>"
                     hx-swap="delete"
                     hx-trigger="confirmed"
                     hx-on:click="confirmDelete(this)"
-                    hx-on::trigger='window.open("/forms", "_self")'
+                    hx-on::trigger='window.open("/form/myforms", "_self")'
                   >
                     <svg
                       width="22"
@@ -281,7 +281,7 @@
                         class="bg-blue-500 hover:bg-blue-600 rounded-lg px-3 py-2 text-white">+</button>
                       
                         </div>
-                        <ul class="grid grid-cols-3 gap-2" id="emails" hx-target="#emails" hx-post="/accessForm/<%= formId %>/authorizedemails" hx-trigger="load, click from:#addEmail, click from:.remove-em-btn, click from:#editor-btn">
+                        <ul class="grid grid-cols-3 gap-2" id="emails" hx-target="#emails" hx-post="/form/access/<%= formId %>/authorizedemails" hx-trigger="load, click from:#addEmail, click from:.remove-em-btn, click from:#editor-btn">
                          
                         </ul>
                     </div>

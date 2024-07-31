@@ -20,7 +20,7 @@ async function importFormJsonFile(){
                 formDescription: "Imported Form Description",
                 formComponents : data.components
             }
-            createForm("list", form)
+            createForm("list", form)    
             
         }
         reader.readAsText(file)

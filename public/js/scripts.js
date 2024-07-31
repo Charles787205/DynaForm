@@ -297,7 +297,7 @@ function getFormResponse(form) {
         response.component_id = textarea.id;
 
         response.value = textarea.value;
-      }
+      } 
       responses.push(response); 
     }
   });

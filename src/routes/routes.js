@@ -20,19 +20,11 @@ router.use("/components",ComponentRouter);
 
 router.use("/response",ResponseRouter);
 
-
-
-
 router.get("/error", FormController.errorPage); // error
-
-
-// publish button
-
 
 
 //PREVIEW
 router.post("/preview", FormController.preview);
 
-// MODAL
 
 export default router;

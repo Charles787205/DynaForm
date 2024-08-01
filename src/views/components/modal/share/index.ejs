@@ -182,7 +182,7 @@
               name="email"
               class="rounded-full bg-slate-200 w-full py-2 pl-4 pr-28 h-12"
               hx-indicator="#add-spinner"
-              hx-post="form/access/<%= formId %>"
+              hx-post="/form/access/<%= formId %>"
               hx-on:keyup="document.getElementById('error').innerHTML = ''"
               hx-trigger="click from:#addEmail"
               hx-swap="innerHTML"

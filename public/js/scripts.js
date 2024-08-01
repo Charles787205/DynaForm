@@ -34,9 +34,11 @@ async function submitForm(from = "create") {
   }
 }
 
-async function createForm(from = "list") {
+
+//create form is used to create a new form and save it to database
+async function createForm(from = "list", data) {
   //** when creating a new form */
-  const formData = getFormData();
+  const formData = data ? data : getFormData();
   const response = await fetch("/create", {
     method: "POST",
     headers: {
@@ -295,8 +297,8 @@ function getFormResponse(form) {
         response.component_id = textarea.id;
 
         response.value = textarea.value;
-      }
-      responses.push(response);
+      } 
+      responses.push(response); 
     }
   });
 
@@ -306,8 +308,9 @@ function getFormResponse(form) {
 async function copyForm(id) {
   //copy form json to clipboard
   console.log(`/form/${id}/copy`);
-  fetch(`/form/${id}/copy`, {
-    method: "GET",
+  fetch(`/form/${id}/getformjson`, {
+    method: "POST",
+    body: JSON.stringify({method: "copy"}), 
     headers: {
       "Content-Type": "application/json",
     },
@@ -323,6 +326,27 @@ async function copyForm(id) {
         text: "Your form has been copied to clipboard.",
         icon: "success",
       });
+    }
+  });
+}
+
+async function downloadForm(id) {
+  //download form json
+  fetch(`/form/${id}/getformjson`, {
+    method: "POST",
+    body: JSON.stringify({method: "download"}),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(async (response) => {
+    if (response.ok) {
+      const res = await response.json();
+      const element = document.createElement("a");
+      const file = new Blob([JSON.stringify(res)], { type: "application/json" });
+      element.href = URL.createObjectURL(file);
+      element.download = "form.json";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
     }
   });
 }
@@ -346,9 +370,7 @@ async function getDataFromPaste(event) {
       for (let index = 0; index < components.length; index++) {
         const component = components[index];
 
-        if (component.placeholder) {
-          component.content = component.placeholder;
-        }
+        
         if (component.type == "dropdown") {
           if (component.options) {
             const options = [];
@@ -368,7 +390,7 @@ async function getDataFromPaste(event) {
       addCopiedElements(components);
     }
   } catch (err) {
-    console.log(err);
+    
     return;
   }
 }
@@ -389,12 +411,9 @@ function addCopiedElements(components) {
     xhttp.send(JSON.stringify(element));
 
     xhttp.onreadystatechange = function () {
-      const button = formElement.querySelector("#submit-button");
+  
       if (this.readyState == 4 && this.status == 200) {
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = xhttp.response;
-        console.log(tempDiv.querySelector(".input-block"));
-
+     
         const range = document.createRange();
 
         const fragment = range.createContextualFragment(xhttp.response);

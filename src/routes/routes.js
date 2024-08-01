@@ -1,72 +1,38 @@
 import { Router } from "express";
 import FormController from "../controllers/form.controller.js";
-import Components from "../controllers/components.controller.js";
-import ResponseController from "../controllers/response.controller.js";
+
+import {router as FormRouter} from "./form.routes.js";
+import {router as ComponentRouter} from "./component.routes.js";
+import {router as ResponseRouter} from "./response.routes.js";
+
 const router = Router();
+
 
 // COMPONENTS
 router.route("/").get(FormController.index);
-router.post("/components/:name", Components.getComponent);
-router.post("/components/fields/:name", Components.getField);
-router.post("/template/:template", Components.getTemplate);
-//FORMS
-router
-	.route("/create")
-	.get(FormController.getCreatePage)
-	.post(FormController.submit);
-router.get("/forms", FormController.list);
-router
-	.route("/form/:id")
-	.get(FormController.viewForm)
-	.post(ResponseController.submitResponse);
-router
-	.route("/form/r/:id")
-	.get(FormController.resForm)
-	.post(ResponseController.submitResponse);
-router.get("/form/history/:id", FormController.viewHistory); // list of forms page
-router.route("/form/:id/copy").get(FormController.getFormJson);
-router
-	.route("/form/:id/edit")
-	.get(FormController.editForm)
-	.post(FormController.updateForm);
-router.delete("/deleteAll", FormController.deleteAllForms);
-router.delete("/delete/:form_id", FormController.deleteForm);
-router.route("/accessForm/:form_id").post(FormController.giveAccess);
-router
-	.route("/accessForm/:form_id/authorizedemails")
-	.post(FormController.getAuthorizedEmails);
-router
-	.route("/accessForm/:form_id/removeAuthorizedEmail")
-	.post(FormController.removeAuthorizedEmail);
-router.post("/components/modal/share", Components.showShareModal);
-router.get("/forms", FormController.list); // list of forms page
 
-router.post("/search", FormController.search); // search
+//FORMS
+router.get("/create",FormController.getCreatePage)
+router.post("/create",FormController.submit);
+
+router.use("/form",FormRouter);
+router.use("/components",ComponentRouter);
+
+router.use("/response",ResponseRouter);
+
+
+
 
 router.get("/error", FormController.errorPage); // error
 
-router.get("/status/:id", FormController.getStatus);
-router.get("/statusBut/:id", FormController.getStatusBut);
 
 // publish button
-router.post("/publish/:id", FormController.publish);
-router.post("/close/:id", FormController.closeForm);
-router.route("/response/f/:form_id").post(ResponseController.submitResponse);
-router.get("/response/feedback/:response_id", ResponseController.getFeedback);
-router.get("/response/:form_id", ResponseController.getSummary);
-router.delete("/response/d/:response_id", ResponseController.deleteResponse);
-router
-	.route("/response/r/:response_id")
-	.get(ResponseController.getResponseDetails);
-router.get("/response/:form_id", ResponseController.getSummary);
 
-// RESPONSE
+
 
 //PREVIEW
 router.post("/preview", FormController.preview);
 
 // MODAL
-router.post("/components/modal/show", Components.showModal);
-router.post("/components/modal/preview", Components.showComponentPreview);
 
 export default router;

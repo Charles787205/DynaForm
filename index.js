@@ -68,6 +68,7 @@ app.post("*/*", router);
 app.get("*/*", authRouter);
 app.post("*/*", authRouter);
 app.use(router, (req, res) => {
+	console.log(req.url);
 	res.render("pages/error", {
 		errorType: "404 - PAGE NOT FOUND",
 		description:

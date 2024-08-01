@@ -38,6 +38,9 @@ const submit = async (req, res) => {
 		const fromPage = req.body.fromPage;
 		const components = [];
 
+		console.log(formData);
+
+		//this for loop checks if the label is followed by an input field
 		for (let i = 0; i < formData.formComponents.length; i++) {
 			const component = formData.formComponents[i];
 			if (
@@ -69,7 +72,7 @@ const submit = async (req, res) => {
 		});
 		const newForm = await new Form(form.toCreateFormModel()).save();
 		if (fromPage === "create") {
-			return res.redirect(`/forms`);
+			return res.redirect(`/form/myforms`);
 		}
 		return res.status(200).json({ formId: newForm._id });
 	} catch (error) {
@@ -97,12 +100,12 @@ const viewHistory = async (req, res) => {
   }
 }
 
-//route "/forms/:id" get
+//route "/form/:id" get
 const viewForm = async (req, res) => {
 	const form_id = req.params.id;
 	try {
 		const form = await Form.findById(form_id);
-    console.log("FORM FROM VIEW: ",form.toJSON())
+    
 		res.render("pages/viewform", { form: form.toJSON() });
 	} catch (error) {
 		return res.status(500).send("Error viewing form");
@@ -141,7 +144,7 @@ const resForm = async (req, res) => {
 const editForm = async (req, res) => {
 	/**
 	 * Handles the submission of a form.
-	 * route "/forms/:id/edit" post
+	 * route "/form/:id/edit" post
 	 */
 
 	try {
@@ -171,7 +174,7 @@ const editForm = async (req, res) => {
 const updateForm = async (req, res) => {
 	/**
 	 * Handles the edit made in the form
-	 * /forms/:id/edit postunValidators: true
+	 * /form/:id/edit postunValidators: true
 	 */
 	const formData = req.body;
 	const components = [];
@@ -235,7 +238,7 @@ const giveAccess = async (req, res) => {
 const removeAuthorizedEmail = async (req, res) => {
 	/**
 	 * Handles the removal of an email from authorized_emails.
-	 * Route: POST /accessForm/:form_id/removeEmail
+	 * Route: POST /form/access/:form_id/removeEmail
 	 */
 
 	const email = req.body.email;
@@ -297,7 +300,7 @@ const getAuthorizedEmails = async (req, res) => {
 				form.authorized_emails
 					.map(
 						(email) =>
-							`<div class="email-item flex justify-between text-md px-2 max-w-full mt-6" ><div class="font-bold text-md w-full overflow-hidden break-all pr-5">${email}</div><button class="remove-email" hx-post="/accessForm/${form_id}/removeAuthorizedEmail" hx-vals='js:{"email": "${email}"}' hx-trigger="click" hx-swap="delete" hx-target="closest .email-item"  class="remove-em-btn text-gray-400">Remove</button></div>`
+							`<div class="email-item flex justify-between text-md px-2 max-w-full mt-6" ><div class="font-bold text-md w-full overflow-hidden break-all pr-5">${email}</div><button class="remove-email" hx-post="/form/access/${form_id}/removeAuthorizedEmail" hx-vals='js:{"email": "${email}"}' hx-trigger="click" hx-swap="delete" hx-target="closest .email-item"  class="remove-em-btn text-gray-400">Remove</button></div>`
 					)
 					.join("")
 			);
@@ -376,7 +379,7 @@ const publish = async (req, res) => {
 		});
 
 		await Form.findByIdAndUpdate(form_id, { status: "Publish" });
-		return res.status(200).redirect(`/status/${form.id}`);
+		return res.status(200).redirect(`/form/status/${form.id}`);
 	} catch (error) {
 		console.log("Error opening form:", error);
 	}
@@ -388,7 +391,7 @@ const closeForm = async (req, res) => {
 
 	try {
 		const form = await Form.findByIdAndUpdate(form_id, { status: "Closed" });
-		return res.status(200).redirect(`/status/${form.id}`);
+		return res.status(200).redirect(`/form/status/${form.id}`);
 	} catch (error) {
 		console.log("Error opening form:", error);
 	}
@@ -447,9 +450,9 @@ const getStatusBut = async (req, res) => {
 
 const getFormJson = async (req, res) => {
 	const form_id = req.params.id;
-	console.log("DSFDF");
+	
 	try {
-		const form = await Form.findById(form_id, {
+		const form = (await Form.findById(form_id, {
 			"components.component_type": 1,
 			"components.type": 1,
 			"components.placeholder": 1,
@@ -458,6 +461,12 @@ const getFormJson = async (req, res) => {
 			"components.name": 1,
 			"components.content": 1,
 			_id: 0,
+		})).toObject();
+		form.components.forEach((component) => {
+			if(component.component_type === "input"){
+				component.content = component.placeholder;
+				component.placeholder = "";
+			}
 		});
 
 		return res.status(200).json(form);

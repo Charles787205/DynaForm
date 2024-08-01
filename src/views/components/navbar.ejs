@@ -7,7 +7,7 @@
     <div class="flex gap-2 items-center">
       <a
         class="outline-none text-black text-xl font-black cursor-pointer w-fit"
-        href="/forms"
+        href="/form/myforms"
       >
         <svg
           width="35"
@@ -107,7 +107,7 @@
       <% } else { %>
       <button
         class="p-2 mr-3 hover:font-semibold text-md"
-        hx-post="/preview"
+        hx-post="/form/preview"
         onclick="check()"
         hx-trigger="click"
         hx-target=".mainscreen"
@@ -135,14 +135,14 @@
       <% } %> <% if(isLogin) { %>
       <button
         id="publishButton"
-        hx-post="/publish/<%= id%>"
+        hx-post="/form/publish/<%= id%>"
         hx-trigger="confirmed"
         onClick="Swal.fire({title: 'Publish Form', text:'Publishing a form will open the form for responses. Publish it now to accept responses!',
 						showCancelButton: true, confirmButtonText: 'Yes, Publish!', cancelButtonText: 'Do not Publish!', confirmButtonColor: '#3b82f6', cancelButtonColor: '#eee', customClass: { confirmButton: 'confirm-btn', cancelButton: 'cancel-btn' }
 						}).then((result)=>{
             				if(result.isConfirmed){
             					  htmx.trigger(this, 'confirmed');  
-								   window.location = '/forms';
+								   window.location = '/form/myforms';
             				} 
 						});"
         class="rounded-full text-sm font-bold text-white text-center px-3 py-2 bg-neutral-800"

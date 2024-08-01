@@ -72,42 +72,34 @@
       responses = await res.json();
       
       responses.forEach((response) => {
+        
         const component = document.getElementById(response.component_id);
         component.setAttribute("readonly", true);
         //  id is set on the grand parent div in the select, checkbox, and radiobox components
-        const inputElement = component.querySelector('input');
-        const selectElement = component.querySelector('select');
-
-        if(inputElement) { 
+       
+        console.log({component});
+        if(component) { 
           //input element is checkbox or radiobox
           //check again
-          if(inputElement.type == "checkbox" || inputElement.type == "radio") {
+          
+          if(component.type == "checkbox" || component.type == "radio") {
+            component.checked = response.value == 'true';
+           // inputElement.setAttribute("checked", true)
             
-            inputElement.checked = response.value == 'true';
-            //inputElement.setAttribute("checked", response.value)
-            
-            inputElement.addEventListener('click', (e) => {
+            component.addEventListener('click', (e) => {
               e.preventDefault();
-              return response.value == 'true';
+              return response.value == response.value;
             });
             
-          }  
-        }else if(selectElement) {
+          } else if(component.tagName == "SELECT") {
           //select element is select
-          selectElement.value = response.value;
-          selectElement.disabled = true;
-        }
-
-
-        console.log({inputElement, selectElement})
-        if(component.type == "radio" || component.type == "checkbox"){
-          //component.checked= true;
-          
-
-        }else{
-
           component.value = response.value;
-          component.setAttribute("readonly", true);
+          component.disabled = true;
+          }else{
+            console.log(component);
+            component.value = response.value;
+            component.setAttribute("readonly", true);
+          } 
         }
       })
       

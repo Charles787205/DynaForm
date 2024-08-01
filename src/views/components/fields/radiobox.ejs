@@ -27,7 +27,8 @@
           data-type="radiobox"
           data-for="<%= query.for %>"
           placeholder="Radio"
-          data-name="radio_<%= query.id %>"
+          data-name="<%= query.name && query.name.trim() !== '' ? query.name : `radio_${query.id}` %>"
+          
         >
           <%= query.content %>
         </div>
@@ -38,7 +39,7 @@
           tabindex="-1"
           hx-trigger="click"
           hx-target="closest .input-block"
-          hx-vals='js:{"id": "<%= query.id %>"}'
+          hx-vals='js:{"name": "radio_<%= query.id %>"}'
           hx-swap="afterend"
           onclick="handleClick(this)"
         >

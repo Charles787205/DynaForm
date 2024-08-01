@@ -127,22 +127,22 @@
                 class="form-field"
               ></div>
               <% }else if(item.component_type==="option"){
-              item.options.forEach(element => {%>
+              item.options.forEach(element => { %> 
               <div
                 hx-post="/components/fields/<%=item.type%>"
                 hx-indicator="#spinner"
                 hx-trigger="load"
                 hx-swap="outerHTML"
-                hx-vals='js:{"content":"<%=element?element.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>"}'
+                hx-vals='js:{"content":"<%=element?element.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>" }'
                 class="form-field"
               ></div>
-              <%}); }else{ %>
+              <%}); }else{ console.log("element: ", item)%>
               <div
                 hx-post="/components/fields/<%=item.type%>"
                 hx-indicator="#spinner"
                 hx-trigger="load"
                 hx-swap="outerHTML"
-                hx-vals='js:{"content":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>", "options": "<%= item.options %>"}'
+                hx-vals='js:{"content":"<%=item.placeholder?item.placeholder.replace(/\n\s*/g, ""):""%>", "id":"<%=item.id%>", "options": "<%= item.options %>", "name": "<%= item.name %>"}'
                 class="form-field"
               ></div>
               <% }}); %>

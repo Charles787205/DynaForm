@@ -15,13 +15,13 @@
       <div class="block-container">
         <div class="justify-start items-center gap-2.5 inline-flex">
           <div class="ml-4 h-4 w-4 border border-gray-500"></div>
-          <div contenteditable="true" show-pl-click="true" placeholder="Checkbox" data-name="checkbox_<%= query.id %>"
+          <div contenteditable="true" show-pl-click="true" placeholder="Checkbox" data-name="<%= query.name && query.name.trim() !== '' ? query.name : `radio_${query.id}` %>"
             data-type="checkbox" <% query.checked ? "checked" : "" %>
             class="content-container text-neutral-600 text-md outline-none font-extralight min-w-28 max-w-80">
             <%= query.content %>
           </div>
           <button class="option" type="button" hx-post="/components/fields/checkbox" hx-trigger="click"
-            hx-target="closest .input-block" hx-vals='js:{"id": "<%= query.id %>"}' hx-swap="afterend"
+            hx-target="closest .input-block" hx-vals='js:{"name": "checkbox_<%= query.id %>"}' hx-swap="afterend"
             onclick="handleClick(this)" tabindex="-1">
             Add option
           </button>
